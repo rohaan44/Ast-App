@@ -4,7 +4,7 @@ class AppColor {
   AppColor._();
 
   // Primary Palette
-  
+
   static const Color background = Color(0xFF121212);
   static const red = Color(0xffFF3A2F); // Error
   static const blue = Color(0xff4D9BDA);
@@ -111,4 +111,5 @@ class AppColor {
 
   static const c03D34E = Color(0xff03D34E);
   static const c11E25C = Color(0xff11E25C);
+  static const primary = Color(0xffFF3A2F);
 }

@@ -31,12 +31,15 @@ class AppButton extends StatelessWidget {
     this.isRow = false,
     this.svg,
     this.boxShadow,
+    this.showIcon = false,
+    this.icon,
+    this.iconSpacing = 8.0,
   });
 
   final String? text;
   final Color? textColor;
   final Widget? child;
- final List<BoxShadow>? boxShadow;
+  final List<BoxShadow>? boxShadow;
   final TextStyle? textStyle;
   final VoidCallback onPressed;
   final double? width;
@@ -59,6 +62,11 @@ class AppButton extends StatelessWidget {
   final Widget? svg;
   final bool? fromAuthScreen;
 
+  // 🔹 New properties for icon support
+  final bool showIcon;
+  final Widget? icon;
+  final double iconSpacing;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -75,15 +83,14 @@ class AppButton extends StatelessWidget {
         height: height ?? ch(51),
         decoration: buttonStyle ??
             BoxDecoration(
-              boxShadow:boxShadow ??
-          [
-            BoxShadow(
-              // ignore: deprecated_member_use
-              color: AppColor.c000000.withOpacity(0.10),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
+              boxShadow: boxShadow ??
+                  [
+                    BoxShadow(
+                      color: AppColor.c000000.withOpacity(0.10),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
               borderRadius: BorderRadius.circular(borderRadius ?? cw(12)),
               color: isButtonEnable
                   ? (buttonColor ?? AppColor.red)
@@ -91,16 +98,22 @@ class AppButton extends StatelessWidget {
               border: isBorder
                   ? Border.all(
                       color: borderColor ?? AppColor.cFFF7EF,
-                      width: borderWidth)
+                      width: borderWidth,
+                    )
                   : null,
             ),
         child: child ??
             (!isLoading
                 ? Row(
-                    mainAxisAlignment: isRow
-                        ? MainAxisAlignment.spaceBetween
-                        : MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
+                      // 🔹 Optional icon (centered with text)
+                      if (showIcon && icon != null) ...[
+                        icon!,
+                        if (text != null) SizedBox(width: iconSpacing),
+                      ],
+
                       if (text != null)
                         Text(
                           text!,
@@ -118,10 +131,11 @@ class AppButton extends StatelessWidget {
                                 height: textHeight,
                               ),
                         ),
+
                       if (isRow && svg != null) ...[
                         const Spacer(),
                         svg!,
-                      ]
+                      ],
                     ],
                   )
                 : const CircularProgressIndicator(color: AppColor.white)),
