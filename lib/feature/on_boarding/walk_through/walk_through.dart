@@ -237,7 +237,7 @@ Widget onBaordContentct({
           ),
           SizedBox(
             height: ch(150),
-          ),
+          )
         ],
       ),
     ),
