@@ -1,7 +1,6 @@
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:flutter/material.dart';
-import '../../../utils/font_size.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({
@@ -120,7 +119,7 @@ class AppButton extends StatelessWidget {
                           style: textStyle ??
                               TextStyle(
                                 fontFamily: "SF-Pro",
-                                fontSize: fontSize ?? AppFontSize.f16,
+                                fontSize: fontSize ?? 16,
                                 color: isButtonEnable
                                     ? textColor ?? AppColor.white
                                     : AppColor.white.withOpacity(0.5),

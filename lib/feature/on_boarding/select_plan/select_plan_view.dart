@@ -1,3 +1,5 @@
+import 'package:ast_official/app_ui_helpers/app_router/app_router.dart';
+import 'package:ast_official/feature/on_boarding/sign_in/sign_in_view.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
@@ -125,12 +127,14 @@ class _SelectPlanState extends State<SelectPlan> {
             const Spacer(),
             AppButton(
               buttonColor: AppColor.cFFFFFF,
-              onPressed: () {},
+              onPressed: () {
+                goTo(context, const SignIn());
+              },
               child: AppText(
                 txt: "Continuare",
                 color: AppColor.black,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
               ),
             ),
             SizedBox(
@@ -156,7 +160,7 @@ class SelectType {
 }
 
 final List<SelectType> selectTypeList = [
-  SelectType(title: "ASASAS", subtitle: "Asa", color: AppColor.primary),
-  SelectType(title: "aSAS", subtitle: "ada", color: AppColor.black),
-  SelectType(title: "aEWEWD", subtitle: "ewewee", color: AppColor.brown),
+  SelectType(title: "ASASAS", subtitle: "Asa", color: AppColor.c66151F),
+  SelectType(title: "aSAS", subtitle: "ada", color: AppColor.c483312),
+  SelectType(title: "aEWEWD", subtitle: "ewewee", color: AppColor.c162F28),
 ];

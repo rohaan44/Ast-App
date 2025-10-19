@@ -25,29 +25,32 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
       "title": "Benvenuti in\nMetodo AST.",
       "subtitle":
           "Allenamento e nutrizione personalizzati\nbasati sul Metodo A.S.T.®.",
-      "image":
-          "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQWWk0c4HHqv3k4058hngIFoOMp9X8urC3L9YBvygP1gA8F838o",
+      "image": AssetUtils.walkthrogh1
+      // "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQWWk0c4HHqv3k4058hngIFoOMp9X8urC3L9YBvygP1gA8F838o",
     },
     {
       "title": "Allenatore che\nanalizza i progressi.",
       "subtitle":
           "Gestisci gli atleti, approva i piani, monitora\nle royalties e fai crescere il tuo coaching.",
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLlF75L9aNEgkI-wcBV-5H4r1IZHALpuAzD02H5j-n60Pfmvf-A9HsIUWOYZdwGX_62gU&usqp=CAU",
+      "image": AssetUtils.walkthrogh2
+
+      // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLlF75L9aNEgkI-wcBV-5H4r1IZHALpuAzD02H5j-n60Pfmvf-A9HsIUWOYZdwGX_62gU&usqp=CAU",
     },
     {
       "title": "Interfaccia della\nclasse online",
       "subtitle":
           "Fornisci certificazioni, gestisci corsi e fai\ncrescere la rete A.S.T.®.",
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPoWPK1gabfYBM-9ea-q4PyabGe4ZF1cbjn6yfhmX3CaqfsfsPNbFP_3M9bK1sDg4nZTs&usqp=CAU",
+      "image": AssetUtils.walkthrogh3
+
+      // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPoWPK1gabfYBM-9ea-q4PyabGe4ZF1cbjn6yfhmX3CaqfsfsPNbFP_3M9bK1sDg4nZTs&usqp=CAU",
     },
     {
       "title": "Allenatore che\nanalizza i progressi.",
       "subtitle":
           "Gestisci gli atleti, approva i piani, monitora\nle royalties e fai crescere il tuo coaching.",
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLlF75L9aNEgkI-wcBV-5H4r1IZHALpuAzD02H5j-n60Pfmvf-A9HsIUWOYZdwGX_62gU&usqp=CAU",
+      "image": AssetUtils.walkthrogh4
+
+      // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLlF75L9aNEgkI-wcBV-5H4r1IZHALpuAzD02H5j-n60Pfmvf-A9HsIUWOYZdwGX_62gU&usqp=CAU",
     },
   ];
 
@@ -192,7 +195,7 @@ Widget onBaordContentct({
     height: 100.h,
     width: 100.h,
     decoration: BoxDecoration(
-        image: DecorationImage(image: NetworkImage(image), fit: BoxFit.cover)),
+        image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
     child: Padding(
       padding: EdgeInsets.symmetric(horizontal: cw(20)),
       child: Column(
@@ -226,14 +229,15 @@ Widget onBaordContentct({
             fontSize: 36,
             fontWeight: FontWeight.w500,
             color: AppColor.cFFFFFF,
-            height: 1.5,
+          ),
+          SizedBox(
+            height: ch(12),
           ),
           AppText(
             txt: subtitle,
             fontSize: 16,
             fontWeight: FontWeight.w500,
             color: AppColor.cFFFFFF.withOpacity(0.8),
-            height: 1.5,
           ),
           SizedBox(
             height: ch(150),
