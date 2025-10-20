@@ -10,4 +10,7 @@ class RoutePaths {
   static const String personHeight = '/personHeight';
   
   static const String otpView = '/otpView';
+  
+    static const String dateOfBirth = '/dateOfBirth';
+    static const String selectWeight = '/selectWeight';
 }

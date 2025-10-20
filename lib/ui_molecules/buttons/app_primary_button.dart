@@ -1,5 +1,6 @@
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/utils/colors_utils.dart';
+import 'package:ast_official/utils/font_size.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
@@ -92,7 +93,7 @@ class AppButton extends StatelessWidget {
               //     ],
               borderRadius: BorderRadius.circular(borderRadius ?? cw(50)),
               color: isButtonEnable
-                  ? (buttonColor ?? AppColor.red)
+                  ? (buttonColor ?? AppColor.white)
                   : AppColor.c252525,
               border: isBorder
                   ? Border.all(
@@ -119,11 +120,11 @@ class AppButton extends StatelessWidget {
                           style: textStyle ??
                               TextStyle(
                                 fontFamily: "SF-Pro",
-                                fontSize: fontSize ?? 16,
+                                fontSize: fontSize ?? AppFontSize.f16,
                                 color: isButtonEnable
-                                    ? textColor ?? AppColor.white.withOpacity(0.5)
+                                    ? textColor ?? AppColor.background
                                     : AppColor.white.withOpacity(0.5),
-                                fontWeight: fontWeight ?? FontWeight.w400,
+                                fontWeight: fontWeight ?? FontWeight.w600,
                                 decoration:
                                     textDecoration ?? TextDecoration.none,
                                 letterSpacing: 0,

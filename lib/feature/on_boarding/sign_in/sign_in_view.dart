@@ -35,7 +35,7 @@ class _SignInViewState extends State<SignInView> {
       body: AppDismissKeyboard(
         child: Stack(
           children: [
-onboaridngAppBar(context: context, activeSegments: 1, totalSegments: 5),
+onboaridngAppBar(context: context, activeSegments: 1, totalSegments: 6),
             Padding(
               padding: EdgeInsets.only(top: ch(114)),
               child: Column(
@@ -124,7 +124,7 @@ onboaridngAppBar(context: context, activeSegments: 1, totalSegments: 5),
                               borderRadius: cw(50),
                               onPressed: () {
                                
-                                Navigator.pushNamedAndRemoveUntil(context, RoutePaths.selectGender, (route) => false);
+                                Navigator.pushNamedAndRemoveUntil(context, RoutePaths.otpView, (route) => false);
                                
                               },
                               buttonColor: AppColor.cFFFFFF,

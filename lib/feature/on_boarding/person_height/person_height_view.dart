@@ -1,4 +1,5 @@
 
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/person_height/person_height_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
@@ -18,7 +19,7 @@ class PersonHeightView extends StatelessWidget {
       body: Stack(
         children: [
           onboaridngAppBar(
-              context: context, activeSegments: 2, totalSegments: 5),
+              context: context, activeSegments: 4, totalSegments: 6),
           SizedBox(
             height: ch(114),
           ),
@@ -157,7 +158,9 @@ class PersonHeightView extends StatelessWidget {
                   const Spacer(),
                   AppButton(
                       buttonColor: AppColor.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(context, RoutePaths.selectWeight, (route) => false);
+                      },
                       text: "Avanti",
                       fontSize: AppFontSize.f16,
                       textColor: AppColor.background,

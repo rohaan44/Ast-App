@@ -1,5 +1,5 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
-import 'package:ast_official/feature/on_boarding/select_sex/select_gender_controller.dart';
+import 'package:ast_official/feature/on_boarding/select_gender/select_gender_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/appbar/appbar.dart';
@@ -18,7 +18,7 @@ class SelectGenderView extends StatelessWidget {
       body: Stack(
         children: [
           onboaridngAppBar(
-              context: context, activeSegments: 2, totalSegments: 5),
+              context: context, activeSegments: 3, totalSegments: 6),
           SizedBox(
             height: ch(114),
           ),
