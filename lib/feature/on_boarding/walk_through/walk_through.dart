@@ -1,10 +1,12 @@
 import 'package:ast_official/app_ui_helpers/app_router/app_router.dart';
-import 'package:ast_official/feature/on_boarding/select_plan/select_plan_view.dart';
+import 'package:ast_official/feature/on_boarding/select_role/select_role_view.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
+import 'package:ast_official/ui_molecules/buttons/app_glass_button.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
+import 'package:ast_official/utils/font_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
@@ -90,27 +92,30 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
             bottom: ch(30),
             child: Row(
               children: [
-                AppButton(
-                  height: ch(66),
-                  width: cw(66),
-                  borderRadius: cw(24.91),
-                  buttonColor: AppColor.cFFFFFF.withOpacity(0.5),
-                  onPressed: () {
-                    pageController.previousPage(
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.ease,
-                    );
-                  },
-                  child: Center(
-                    child: AppText(
-                      txt: "Salta",
-                      color: AppColor.cFFFFFF,
-                      height: 1.5,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
+                GlassButton(text: "Salta", onPressed: (){},width: cw(66),height: ch(66),borderRadius: cw(24.91),),
+                
+                // AppButton(
+                //   height: ch(66),
+                //   width: cw(66),
+                //   borderRadius: cw(24.91),
+                //   buttonColor: AppColor.cFFFFFF.withOpacity(0.5),
+                //   onPressed: () {
+                //     pageController.previousPage(
+                //       duration: const Duration(milliseconds: 400),
+                //       curve: Curves.ease,
+                //     );
+                //   },
+                //   child: 
+                //   Center(
+                //     child: AppText(
+                //       txt:,
+                //       color: AppColor.cFFFFFF,
+                //       height: 1.5,
+                //       fontSize: 14,
+                //       fontWeight: FontWeight.w600,
+                //     ),
+                //   ),
+                // ),
                 const Spacer(),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: cw(24)),
@@ -195,7 +200,7 @@ Widget onBaordContentct({
     height: 100.h,
     width: 100.h,
     decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
+        image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover,colorFilter: ColorFilter.mode(AppColor.black.withOpacity(0.30), BlendMode.srcATop))),
     child: Padding(
       padding: EdgeInsets.symmetric(horizontal: cw(20)),
       child: Column(
@@ -208,6 +213,7 @@ Widget onBaordContentct({
             children: [
               SvgPicture.asset(AssetUtils.walkthroughIcon),
               const Spacer(),
+              
               Container(
                 height: ch(30),
                 padding: EdgeInsets.symmetric(horizontal: cw(10)),
@@ -216,6 +222,7 @@ Widget onBaordContentct({
                     borderRadius: BorderRadius.circular(16)),
                 child: Center(
                   child: AppText(
+                  fontSize: AppFontSize.f15,
                     txt: "Registrazione",
                     fontWeight: FontWeight.w800,
                   ),
@@ -225,17 +232,19 @@ Widget onBaordContentct({
           ),
           const Spacer(),
           AppText(
+            isItalic: true,
             txt: title,
-            fontSize: 36,
-            fontWeight: FontWeight.w500,
+            fontSize: AppFontSize.f29,
+            fontWeight: FontWeight.w600,
             color: AppColor.cFFFFFF,
+            
           ),
           SizedBox(
             height: ch(12),
           ),
           AppText(
             txt: subtitle,
-            fontSize: 16,
+            fontSize: AppFontSize.f19,
             fontWeight: FontWeight.w500,
             color: AppColor.cFFFFFF.withOpacity(0.8),
           ),

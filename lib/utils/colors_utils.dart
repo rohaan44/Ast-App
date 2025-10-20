@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppColor {
   AppColor._();
@@ -9,6 +10,8 @@ class AppColor {
   static const red = Color(0xffFF3A2F); // Error
   static const blue = Color(0xff4D9BDA);
   static const brown = Color(0xff8B6E4A);
+  static const  cFFB236 =Color(0xffFFB236);
+  static const  c336255 =Color(0xff336255);
   static const darkblue = Color(0xff346094);
   static const beige = Color(0xffB8A999);
   static const white = Color(0xffffffff);

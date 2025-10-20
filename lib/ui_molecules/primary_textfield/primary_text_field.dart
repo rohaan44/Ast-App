@@ -8,7 +8,8 @@ import 'package:ast_official/utils/font_size.dart';
 
 Widget primaryTextField({
   required String hintText, // ✅ hint text required
-  required Widget prefixIcon, // ✅ prefix required
+  Widget? prefixIcon, // ✅ prefix required
+  Widget? suffixIcon,
   TextEditingController? controller,
   Function(String)? onChanged,
   Function()? onTap,
@@ -28,18 +29,20 @@ Widget primaryTextField({
   FocusNode? focusNode,
 }) {
   return Container(
-    width: cw(327),
+    // width: cw(327),
     height: ch(52),
     padding: EdgeInsets.zero,
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(cw(16)),
-      border: Border.all(color: AppColor.c252525.withOpacity(0.5)),
+      borderRadius: BorderRadius.circular(cw(14)),
+      border: Border.all(color: AppColor.c252525),
       color: fillColor ?? AppColor.c151515,
     ),
     child: Padding(
       padding: EdgeInsets.symmetric(horizontal: ch(16)),
       child: Center(
         child: TextFormField(
+           autovalidateMode: AutovalidateMode.onUserInteraction,
+            cursorColor: AppColor.red,
           controller: controller,
           focusNode: focusNode,
           readOnly: readOnly,
@@ -48,16 +51,18 @@ Widget primaryTextField({
           textInputAction: textInputAction,
           keyboardType: keyboardType,
           // cursorColor: AppColor.grey,
-          cursorHeight: (2.3).h,
+          // cursorHeight: (2.3).h,
           maxLength: maxLength,
           inputFormatters: inputFormatters ??
               InputFormatterHelper.allowCharactersNumbersAndSpace,
           style: textStyle ??
               TextStyle(
+                
                 color: AppColor.white,
                 fontSize: AppFontSize.f16,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
               ),
+            
           decoration: InputDecoration(
             counterText: "",
             fillColor: fillColor ?? AppColor.c151515,
@@ -68,6 +73,7 @@ Widget primaryTextField({
                 ),
             enabledBorder: border ??
                 UnderlineInputBorder(
+                  
                   borderSide: BorderSide(color: AppColor.white, width: cw(1)),
                 ),
             focusedBorder: border ??
@@ -82,18 +88,27 @@ Widget primaryTextField({
             hintText: hintText, // ✅ only hint text
             hintStyle: hintStyle ??
                 TextStyle(
-                  fontSize: 14,
-                  height: 1,
+                  fontSize: AppFontSize.f15,
+                  //height: 1,
                   fontWeight: FontWeight.w400,
                   color: AppColor.cFFFFFF.withOpacity(0.5),
                 ),
             prefixIcon: Padding(
-              padding: EdgeInsets.only(right: ch(8)),
-              child: prefixIcon, // ✅ required
-            ),
-            prefixIconConstraints: const BoxConstraints(),
+  padding: EdgeInsets.only(right: cw(8)), // 👈 adds space between icon and text
+  child: prefixIcon,
+),
+prefixIconConstraints: BoxConstraints(
+  minWidth: cw(24),
+  minHeight: ch(24),
+),
+            suffixIcon:  Padding(
+  padding: EdgeInsets.only(right: cw(8)), // 👈 adds space between icon and text
+  child: suffixIcon,
+),
+suffixIconConstraints: const BoxConstraints(),
+          //  prefixIconConstraints: const BoxConstraints(),
             isDense: true,
-            contentPadding: EdgeInsets.only(bottom: ch(4)),
+            // contentPadding: EdgeInsets.only(bottom: ch(4)),
           ),
           onChanged: onChanged,
           onTap: onTap,

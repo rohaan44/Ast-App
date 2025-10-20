@@ -82,14 +82,14 @@ class AppButton extends StatelessWidget {
         height: height ?? ch(51),
         decoration: buttonStyle ??
             BoxDecoration(
-              boxShadow: boxShadow ??
-                  [
-                    BoxShadow(
-                      color: AppColor.c000000.withOpacity(0.10),
-                      blurRadius: 4,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
+              // boxShadow: boxShadow ??
+              //     [
+              //       BoxShadow(
+              //         color: AppColor.c000000.withOpacity(0.10),
+              //         blurRadius: 4,
+              //         offset: const Offset(0, 2),
+              //       ),
+              //     ],
               borderRadius: BorderRadius.circular(borderRadius ?? cw(12)),
               color: isButtonEnable
                   ? (buttonColor ?? AppColor.red)
@@ -121,7 +121,7 @@ class AppButton extends StatelessWidget {
                                 fontFamily: "SF-Pro",
                                 fontSize: fontSize ?? 16,
                                 color: isButtonEnable
-                                    ? textColor ?? AppColor.white
+                                    ? textColor ?? AppColor.white.withOpacity(0.5)
                                     : AppColor.white.withOpacity(0.5),
                                 fontWeight: fontWeight ?? FontWeight.w400,
                                 decoration:

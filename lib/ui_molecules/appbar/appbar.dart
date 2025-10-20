@@ -99,11 +99,11 @@ Widget customSlider(int totalSegments, int activeSegments, Color color) {
       bool isActive = index < activeSegments;
       return Expanded(
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: cw(4)),
+          margin: EdgeInsets.symmetric(horizontal: cw(2)),
           height: ch(4),
-          width: cw(2),
+          width: cw(30),
           decoration: BoxDecoration(
-            color: isActive ? color : AppColor.cDDDDDD,
+            color: isActive ? color : AppColor.white.withOpacity(0.35),
             borderRadius: BorderRadius.circular(cw(10)),
           ),
         ),

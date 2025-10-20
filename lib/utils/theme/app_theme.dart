@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData darkTheme = ThemeData(
+        splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
     brightness: Brightness.dark,
     scaffoldBackgroundColor: AppColor.background,
     // primaryColor: AppColor.primary,
@@ -13,6 +15,11 @@ class AppTheme {
       // secondary: AppColors.secondary,
       // surface: AppColors.secondary,
       // error: AppColors.error,
+    ),
+     textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: AppColor.red, // blinking cursor
+      selectionColor: AppColor.background, // background highlight
+      selectionHandleColor: AppColor.red, // drag handle color
     ),
     fontFamily: 'SF-Pro',
     textTheme: TextTheme(

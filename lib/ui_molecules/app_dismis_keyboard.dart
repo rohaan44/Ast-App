@@ -7,7 +7,11 @@ class AppDismissKeyboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+  //    splashColor: Colors.transparent,    // disables splash animation
+  // highlightColor: Colors.transparent, // disables highlight color
+  // hoverColor: Colors.transparent, 
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
       },

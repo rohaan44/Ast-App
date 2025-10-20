@@ -1,11 +1,12 @@
 import 'package:ast_official/utils/colors_utils.dart';
+import 'package:ast_official/utils/font_size.dart';
 
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class AppText extends StatelessWidget {
   AppText({
-    Key? key,
+    super.key,
     required this.txt,
     this.fontSize,
     this.fontWeight,
@@ -20,7 +21,9 @@ class AppText extends StatelessWidget {
     this.maxLines,
     this.decorationColor,
     this.overflow,
-  }) : super(key: key);
+    this.isItalic= false,
+    
+  });
   final String txt;
   double? fontSize;
   FontWeight? fontWeight;
@@ -34,6 +37,7 @@ class AppText extends StatelessWidget {
   double? wordspacing;
   int? maxLines;
   TextOverflow? overflow;
+   bool isItalic;
 
   Color? decorationColor;
   @override
@@ -46,13 +50,15 @@ class AppText extends StatelessWidget {
       style: textStyle ??
           TextStyle(
             // fontFamily: fontFamily ,
-            fontSize: fontSize ?? 14,
+            fontSize: fontSize ?? AppFontSize.f14,
+            fontFamily: "SF-Pro",
             fontWeight: fontWeight ?? FontWeight.w500,
             color: color ?? AppColor.cFFFFFF,
             height: height ?? 1.0,
             letterSpacing: letterspacing ?? 0,
             wordSpacing: wordspacing ?? 0,
             decorationColor: decorationColor,
+            fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
             decoration: decoration ?? TextDecoration.none,
           ),
     );

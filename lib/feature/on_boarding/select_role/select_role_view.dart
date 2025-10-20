@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:ast_official/app_ui_helpers/app_router/app_router.dart';
 import 'package:ast_official/feature/on_boarding/sign_in/sign_in_view.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
@@ -5,6 +6,7 @@ import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
+import 'package:ast_official/utils/font_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -20,7 +22,7 @@ class _SelectPlanState extends State<SelectPlan> {
   //   "title": ["ASASAS", "aSAS", "aEWEWD"],
   //   "subtitle": ["Asa", "ada", "ewewee"],
   // };
-  int currentIndex = 0;
+  int?currentIndex;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +50,7 @@ class _SelectPlanState extends State<SelectPlan> {
             ),
             AppText(
               txt: "Dicci chi sei per continuare.",
-              fontSize: 20,
+              fontSize: AppFontSize.f22,
               fontWeight: FontWeight.w500,
               color: AppColor.cFFFFFF,
               height: 1.5,
@@ -56,7 +58,7 @@ class _SelectPlanState extends State<SelectPlan> {
             AppText(
               txt:
                   "Seleziona l’opzione che ti descrive meglio. Questo\npersonalizzerà la tua esperienza.",
-              fontSize: 12,
+              fontSize: AppFontSize.f16,
               fontWeight: FontWeight.w400,
               color: AppColor.cFFFFFF.withOpacity(0.8),
               height: 1.5,
@@ -76,17 +78,22 @@ class _SelectPlanState extends State<SelectPlan> {
                       });
                     },
                     child: Container(
-                      height: ch(80),
+                      height: ch(100),
                       padding: EdgeInsets.symmetric(
                         horizontal: cw(16),
                       ),
                       decoration: BoxDecoration(
-                        color: selectTypeList[index].color,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                            color: currentIndex == index
-                                ? AppColor.yellow
-                                : AppColor.grey),
+                        image: DecorationImage(image: AssetImage(selectTypeList[index].image),fit: BoxFit.fill),
+                        borderRadius: BorderRadius.circular(cw(12)),border: Border.all(
+  color: currentIndex == index
+      ? (index == 0
+          ? AppColor.red
+          : index == 1
+              ? AppColor.cFFB236
+              : index == 2
+                  ? AppColor.c336255
+                  : AppColor.transparent)
+      : AppColor.transparent, width: 2),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -97,22 +104,25 @@ class _SelectPlanState extends State<SelectPlan> {
                             children: [
                               AppText(
                                 txt: selectTypeList[index].title,
-                                fontSize: 16,
+                                fontSize: AppFontSize.f19,
                                 fontWeight: FontWeight.w800,
                                 color: AppColor.cFFFFFF,
                                 height: 1.5,
                               ),
-                              AppText(
-                                txt: selectTypeList[index].subtitle,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.cFFFFFF.withOpacity(0.8),
-                                height: 1.5,
+                              SizedBox(
+                                width: cw(172),
+                                child: AppText(
+                                  txt: selectTypeList[index].subtitle,
+                                  fontSize: AppFontSize.f15,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.cFFFFFF.withOpacity(0.8),
+                                  height: 1.5,
+                                ),
                               ),
                             ],
                           ),
                           const Spacer(),
-                          SvgPicture.asset(AssetUtils.walkthroughIcon),
+                         
                         ],
                       ),
                     ),
@@ -125,21 +135,24 @@ class _SelectPlanState extends State<SelectPlan> {
                 },
                 itemCount: selectTypeList.length),
             const Spacer(),
+           if(currentIndex!=null)...[
             AppButton(
               buttonColor: AppColor.cFFFFFF,
               onPressed: () {
-                goTo(context, const SignIn());
+                 goTo(context, const SignIn());
+               // log(currentIndex.toString());
               },
               child: AppText(
                 txt: "Continuare",
                 color: AppColor.black,
-                fontSize: 16,
+                fontSize: AppFontSize.f16,
                 fontWeight: FontWeight.w400,
               ),
             ),
             SizedBox(
-              height: ch(30),
+              height: ch(40),
             ),
+           ], 
           ],
         ),
       ),
@@ -150,17 +163,17 @@ class _SelectPlanState extends State<SelectPlan> {
 class SelectType {
   final String title;
   final String subtitle;
-  final Color color;
+  final String image;
 
   SelectType({
     required this.title,
     required this.subtitle,
-    required this.color,
+    required this.image,
   });
 }
 
 final List<SelectType> selectTypeList = [
-  SelectType(title: "ASASAS", subtitle: "Asa", color: AppColor.c66151F),
-  SelectType(title: "aSAS", subtitle: "ada", color: AppColor.c483312),
-  SelectType(title: "aEWEWD", subtitle: "ewewee", color: AppColor.c162F28),
+  SelectType(title: "Atleta", subtitle: "Ottieni piani di allenamento e nutrizione su misura per te.", image: AssetUtils.selectedRoleAthlete),
+  SelectType(title: "Allenatore", subtitle: "Gestisci gli atleti e sviluppa la tua carriera da coach.", image: AssetUtils.selectedRoleCoach),
+  SelectType(title: "Tutor", subtitle: "Eroga corsi e certifica nuovi coach.",image: AssetUtils.selectedRoleTutor),
 ];
