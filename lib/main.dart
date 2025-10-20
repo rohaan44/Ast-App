@@ -1,4 +1,8 @@
+import 'package:ast_official/app_ui_helpers/app_routes/app_routes.dart';
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/feature/on_boarding/person_height/person_height_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
+import 'package:ast_official/feature/on_boarding/select_sex/select_gender_controller.dart';
 import 'package:ast_official/feature/splash_screen/splash_screen.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/theme/app_theme.dart';
@@ -12,6 +16,8 @@ void main() {
   runApp(
     MultiProvider(providers: [
   ChangeNotifierProvider(create: (context) => SelectRoleController()),
+    ChangeNotifierProvider(create: (context) => SelectGenderController()),
+      ChangeNotifierProvider(create: (context) => PersonHeightController()),
   ], child: const MyApp(),));
 
   // runApp(const MyApp());
@@ -38,7 +44,9 @@ class MyApp extends StatelessWidget {
         title: 'AST®️ Official App',
         theme: AppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
-        home: const SplashScreen(),
+        // home: const SplashScreen(),
+        initialRoute: RoutePaths.selectGender,
+       onGenerateRoute: AppRouter.generateRoute,
       );
     });
   }

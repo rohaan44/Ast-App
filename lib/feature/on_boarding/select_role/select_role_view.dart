@@ -1,5 +1,5 @@
-import 'dart:developer';
 import 'package:ast_official/app_ui_helpers/app_router/app_router.dart';
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/sign_in/sign_in_view.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
@@ -10,19 +10,19 @@ import 'package:ast_official/utils/font_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class SelectPlan extends StatefulWidget {
-  const SelectPlan({super.key});
+class SelectRoleView extends StatefulWidget {
+  const SelectRoleView({super.key});
 
   @override
-  State<SelectPlan> createState() => _SelectPlanState();
+  State<SelectRoleView> createState() => _SelectRoleViewState();
 }
 
-class _SelectPlanState extends State<SelectPlan> {
+class _SelectRoleViewState extends State<SelectRoleView> {
   // final Map<String, dynamic> selectType = {
   //   "title": ["ASASAS", "aSAS", "aEWEWD"],
   //   "subtitle": ["Asa", "ada", "ewewee"],
   // };
-  int?currentIndex;
+  int? currentIndex;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,17 +83,21 @@ class _SelectPlanState extends State<SelectPlan> {
                         horizontal: cw(16),
                       ),
                       decoration: BoxDecoration(
-                        image: DecorationImage(image: AssetImage(selectTypeList[index].image),fit: BoxFit.fill),
-                        borderRadius: BorderRadius.circular(cw(12)),border: Border.all(
-  color: currentIndex == index
-      ? (index == 0
-          ? AppColor.red
-          : index == 1
-              ? AppColor.cFFB236
-              : index == 2
-                  ? AppColor.c336255
-                  : AppColor.transparent)
-      : AppColor.transparent, width: 2),
+                        image: DecorationImage(
+                            image: AssetImage(selectTypeList[index].image),
+                            fit: BoxFit.fill),
+                        borderRadius: BorderRadius.circular(cw(12)),
+                        border: Border.all(
+                            color: currentIndex == index
+                                ? (index == 0
+                                    ? AppColor.red
+                                    : index == 1
+                                        ? AppColor.cFFB236
+                                        : index == 2
+                                            ? AppColor.c336255
+                                            : AppColor.transparent)
+                                : AppColor.transparent,
+                            width: 2),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -122,7 +126,6 @@ class _SelectPlanState extends State<SelectPlan> {
                             ],
                           ),
                           const Spacer(),
-                         
                         ],
                       ),
                     ),
@@ -135,24 +138,26 @@ class _SelectPlanState extends State<SelectPlan> {
                 },
                 itemCount: selectTypeList.length),
             const Spacer(),
-           if(currentIndex!=null)...[
-            AppButton(
-              buttonColor: AppColor.cFFFFFF,
-              onPressed: () {
-                 goTo(context, const SignIn());
-               // log(currentIndex.toString());
-              },
-              child: AppText(
-                txt: "Continuare",
-                color: AppColor.black,
-                fontSize: AppFontSize.f16,
-                fontWeight: FontWeight.w400,
+            if (currentIndex != null) ...[
+              AppButton(
+                buttonColor: AppColor.cFFFFFF,
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, RoutePaths.signIn, (route) => false);
+                  //  goTo(context, const SignIn());
+                  // log(currentIndex.toString());
+                },
+                child: AppText(
+                  txt: "Continuare",
+                  color: AppColor.black,
+                  fontSize: AppFontSize.f16,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
-            ),
-            SizedBox(
-              height: ch(40),
-            ),
-           ], 
+              SizedBox(
+                height: ch(40),
+              ),
+            ],
           ],
         ),
       ),
@@ -173,7 +178,16 @@ class SelectType {
 }
 
 final List<SelectType> selectTypeList = [
-  SelectType(title: "Atleta", subtitle: "Ottieni piani di allenamento e nutrizione su misura per te.", image: AssetUtils.selectedRoleAthlete),
-  SelectType(title: "Allenatore", subtitle: "Gestisci gli atleti e sviluppa la tua carriera da coach.", image: AssetUtils.selectedRoleCoach),
-  SelectType(title: "Tutor", subtitle: "Eroga corsi e certifica nuovi coach.",image: AssetUtils.selectedRoleTutor),
+  SelectType(
+      title: "Atleta",
+      subtitle: "Ottieni piani di allenamento e nutrizione su misura per te.",
+      image: AssetUtils.selectedRoleAthlete),
+  SelectType(
+      title: "Allenatore",
+      subtitle: "Gestisci gli atleti e sviluppa la tua carriera da coach.",
+      image: AssetUtils.selectedRoleCoach),
+  SelectType(
+      title: "Tutor",
+      subtitle: "Eroga corsi e certifica nuovi coach.",
+      image: AssetUtils.selectedRoleTutor),
 ];

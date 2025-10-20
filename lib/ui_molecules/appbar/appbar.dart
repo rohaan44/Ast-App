@@ -1,7 +1,12 @@
 
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
+import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
+import 'package:ast_official/utils/gradients/app_gradients.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 
 
@@ -111,3 +116,42 @@ Widget customSlider(int totalSegments, int activeSegments, Color color) {
     }),
   );
 }
+
+
+Widget onboaridngAppBar({required BuildContext context,required int activeSegments, required int totalSegments}){return 
+
+
+            Container(
+              padding: EdgeInsets.all(cw(20)),
+              height: ch(150),
+              decoration: const BoxDecoration(gradient: AppGradients.redGradient),
+              child:Row(
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+    // Left logo
+    SvgPicture.asset(
+      AssetUtils.logoIcon,
+      width: cw(60),
+      height: ch(25),
+    ),
+
+    SizedBox(width: cw(12)),
+
+    Expanded(
+      child: customSlider(totalSegments, activeSegments, AppColor.white),
+    ),
+
+    SizedBox(width: cw(57)),
+
+    GestureDetector(
+      onTap: (){
+        Navigator.pushNamedAndRemoveUntil(context, RoutePaths.selectRole, (route) => false);
+      },
+      child: SvgPicture.asset(
+        AssetUtils.appCrossIcon,
+      ),
+    ),
+  ],
+)
+
+            );}

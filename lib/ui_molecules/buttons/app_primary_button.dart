@@ -90,7 +90,7 @@ class AppButton extends StatelessWidget {
               //         offset: const Offset(0, 2),
               //       ),
               //     ],
-              borderRadius: BorderRadius.circular(borderRadius ?? cw(12)),
+              borderRadius: BorderRadius.circular(borderRadius ?? cw(50)),
               color: isButtonEnable
                   ? (buttonColor ?? AppColor.red)
                   : AppColor.c252525,

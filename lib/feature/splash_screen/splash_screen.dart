@@ -1,9 +1,6 @@
 import 'dart:async';
-
-import 'package:ast_official/app_ui_helpers/app_router/app_router.dart';
-import 'package:ast_official/feature/on_boarding/walk_through/walk_through.dart';
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/utils/asset_utils.dart';
-import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/gradients/app_gradients.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(const Duration(seconds: 3), () {
-      goToReplace(context, const WalkThroughScreen());
+      Navigator.pushNamedAndRemoveUntil(context, RoutePaths.walkthrough, (route) => false);
     });
     super.initState();
   }

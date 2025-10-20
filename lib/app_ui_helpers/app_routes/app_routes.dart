@@ -1,0 +1,76 @@
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/feature/on_boarding/person_height/person_height_view.dart';
+import 'package:ast_official/feature/on_boarding/select_role/select_role_view.dart';
+import 'package:ast_official/feature/on_boarding/select_sex/select_gender_view.dart';
+import 'package:ast_official/feature/on_boarding/sign_in/sign_in_view.dart';
+import 'package:ast_official/feature/on_boarding/walk_through/walk_through_view.dart';
+import 'package:ast_official/feature/splash_screen/splash_screen.dart';
+import 'package:flutter/cupertino.dart';
+
+class AppRouter {
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      // Walkthrougn screens
+      case RoutePaths.walkthrough:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const WalkThroughScreen();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+
+      case RoutePaths.splashScreen:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const SplashScreen();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+      case RoutePaths.selectRole:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const SelectRoleView();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+      case RoutePaths.signIn:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const SignInView();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+
+      case RoutePaths.selectGender:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const SelectGenderView();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+         case RoutePaths.personHeight:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const PersonHeightView();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+      default:
+        return CupertinoPageRoute(
+          builder: (context) => Container(),
+        );
+    }
+  }
+}

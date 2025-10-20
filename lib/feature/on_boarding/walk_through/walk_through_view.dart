@@ -1,4 +1,5 @@
 import 'package:ast_official/app_ui_helpers/app_router/app_router.dart';
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/select_role/select_role_view.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
@@ -135,7 +136,8 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                   buttonColor: AppColor.cFFFFFF,
                   onPressed: () {
                     if (currentPage == onboardingData.length - 1) {
-                      goToReplace(context, const SelectPlan());
+                      // goToReplace(context, const SelectPlan());
+                      Navigator.pushNamedAndRemoveUntil(context, RoutePaths.selectRole, (route) => false);
                     } else {
                       pageController.nextPage(
                         duration: const Duration(milliseconds: 400),
@@ -214,18 +216,11 @@ Widget onBaordContentct({
               SvgPicture.asset(AssetUtils.walkthroughIcon),
               const Spacer(),
               
-              Container(
-                height: ch(30),
-                padding: EdgeInsets.symmetric(horizontal: cw(10)),
-                decoration: BoxDecoration(
-                    color: AppColor.c252525.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(16)),
-                child: Center(
-                  child: AppText(
-                  fontSize: AppFontSize.f15,
-                    txt: "Registrazione",
-                    fontWeight: FontWeight.w800,
-                  ),
+              Center(
+                child: AppText(
+                fontSize: AppFontSize.f15,
+                  txt: "Registrazione",
+                  fontWeight: FontWeight.w800,
                 ),
               )
             ],
