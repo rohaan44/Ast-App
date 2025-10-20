@@ -1,3 +1,4 @@
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
@@ -119,15 +120,16 @@ onboaridngAppBar(context: context, activeSegments: 1, totalSegments: 5),
                               height: ch(24),
                             ),
                             AppButton(
-                              isButtonEnable: isEnbleBtn,
+                              // isButtonEnable: isEnbleBtn,
                               borderRadius: cw(50),
                               onPressed: () {
-                                if (isEnbleBtn) {
-                                  print("==>>> enble");
-                                }
+                               
+                                Navigator.pushNamedAndRemoveUntil(context, RoutePaths.selectGender, (route) => false);
+                               
                               },
                               buttonColor: AppColor.cFFFFFF,
                               text: "Continua",
+                              fontWeight: FontWeight.w600,
                               textColor: AppColor.black,
                             ),
                             SizedBox(

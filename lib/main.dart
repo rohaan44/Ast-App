@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
         // home: const SplashScreen(),
-        initialRoute: RoutePaths.selectGender,
+        initialRoute: RoutePaths.splashScreen,
        onGenerateRoute: AppRouter.generateRoute,
       );
     });

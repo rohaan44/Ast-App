@@ -8,4 +8,6 @@ class RoutePaths {
   static const String selectGender = '/selectGender';
   
   static const String personHeight = '/personHeight';
+  
+  static const String otpView = '/otpView';
 }
