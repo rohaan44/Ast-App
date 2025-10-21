@@ -1,5 +1,6 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/payment_flow/wallet/wallet_controller.dart';
+import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
@@ -101,7 +102,14 @@ class WalletView extends StatelessWidget {
                     SizedBox(
                       height: ch(20),
                     ),
-                    paymentSummaryCard("Base", "€79.00"),
+
+                    if(context.read<SelectRoleController>().selectedRole=="Athlete")...[
+                      
+                    paymentSummaryCard("Piano","Base","Importo" ,"€79.00"),
+                    ]else if(context.read<SelectRoleController>().selectedRole=="Coach")...[
+                      
+             paymentSummaryCard("Certificazione", "Quota di certificazione", "Una tantum", "€599.00")
+                    ],
 
                    const Spacer(),
                    AppButton(onPressed: (){
@@ -114,7 +122,7 @@ class WalletView extends StatelessWidget {
   }
 }
 
-Widget paymentSummaryCard(String type, String price) {
+Widget paymentSummaryCard(String pkg,String pkgFees, String type, String price) {
   return Container(
       padding: EdgeInsets.all(cw(16)),
       height: ch(133),
@@ -128,7 +136,7 @@ Widget paymentSummaryCard(String type, String price) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             AppText(
-              txt: "Piano",
+              txt: pkg,
               fontSize: AppFontSize.f16,
               color: AppColor.white.withOpacity(0.5),
               fontWeight: FontWeight.normal,
@@ -148,7 +156,7 @@ Widget paymentSummaryCard(String type, String price) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             AppText(
-              txt: "Importo",
+              txt: pkgFees,
               fontSize: AppFontSize.f16,
               color: AppColor.white.withOpacity(0.5),
               fontWeight: FontWeight.normal,

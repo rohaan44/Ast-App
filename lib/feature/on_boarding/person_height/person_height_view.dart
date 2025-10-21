@@ -162,7 +162,7 @@ class PersonHeightView extends StatelessWidget {
                       textColor: AppColor.background,
                       fontWeight: FontWeight.w600),
                   SizedBox(
-                    height: ch(80),
+                    height: ch(40),
                   )
                 ],
               ),

@@ -10,7 +10,6 @@ import 'package:ast_official/feature/on_boarding/select_objective/select_objecti
 import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_gender/select_gender_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_weight/select_weight_controller.dart';
-import 'package:ast_official/feature/welcome_screen/welcome_view.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/theme/app_theme.dart';
 import 'package:flutter/material.dart';

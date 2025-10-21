@@ -1,4 +1,5 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
@@ -8,6 +9,7 @@ import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class ChooseYourPlanView extends StatelessWidget {
   const ChooseYourPlanView({super.key});
@@ -34,24 +36,50 @@ class ChooseYourPlanView extends StatelessWidget {
               SizedBox(
                 height: ch(30),
               ),
-              AppText(
+ if (context.read<SelectRoleController>().selectedRole ==
+                "Coach") ...[
+ AppText(
+                txt: "Piano di Certificazione",
+                fontSize: AppFontSize.f24,
+                fontWeight: FontWeight.w500,
+                color: AppColor.cFFFFFF,
+                height: 1,
+              ),
+                ]else...[
+                    AppText(
                 txt: "Scegli il tuo piano",
                 fontSize: AppFontSize.f24,
                 fontWeight: FontWeight.w500,
                 color: AppColor.cFFFFFF,
                 height: 1,
               ),
+                ],
+
+            
               SizedBox(
                 height: ch(8),
               ),
+
+               if (context.read<SelectRoleController>().selectedRole ==
+                "Coach") ...[
+              AppText(
+                txt: "Allenatori che utilizzano l'app per l'allenamento Smart.",
+                fontSize: AppFontSize.f16,
+                color: AppColor.white.withOpacity(0.5),
+                textAlign: TextAlign.center,
+                fontWeight: FontWeight.w400,
+              ),
+            ] else ...[
               AppText(
                 txt:
                     "Atleti che utilizzano l’app per allenamento e nutrizione.",
-                fontSize: AppFontSize.f18,
+                fontSize: AppFontSize.f16,
+                color: AppColor.white.withOpacity(0.5),
+                textAlign: TextAlign.center,
                 fontWeight: FontWeight.w400,
-                color: AppColor.cFFFFFF.withOpacity(0.5),
-                height: 1.5,
               ),
+            ],
+              
               SizedBox(
                 height: ch(40),
               ),
@@ -73,10 +101,20 @@ class ChooseYourPlanView extends StatelessWidget {
               ),
               appDivider(),
               SizedBox(
-                height: ch(30),
+                height: ch(50),
               ),
 
-              plainCard("Piano Base", "€79/mese", "Mese"),
+              if (context.read<SelectRoleController>().selectedRole ==
+                "Coach") ...[
+                  plainCard("Quota di Certificazione ", "€549/mese", "(Una tantum)",true),
+                 SizedBox(
+                height: ch(10),
+              ),
+                   plainCard("Rinnovo della Licenza", "€549/mese", "Annuale",false),
+                 
+
+                ]else
+              plainCard("Piano Base", "€79/mese", "Mese",true),
 
               const Spacer(),
               AppButton(onPressed: (){
@@ -108,14 +146,14 @@ Widget isCheckItems(String text) {
   );
 }
 
-Widget plainCard(String title, String priceText, String subtitle) {
+Widget plainCard(String title, String priceText, String subtitle, bool isEnable) {
   return Container(
-    margin: const EdgeInsets.only(top: 24.0),
+    
     padding: const EdgeInsets.all(20.0),
     decoration: BoxDecoration(
-      color: AppColor.white.withOpacity(0.1),
+      color:isEnable? AppColor.white.withOpacity(0.1): AppColor.c252525.withOpacity(0.5),
       borderRadius: BorderRadius.circular(cw(16.0)),
-      border: Border.all(color: AppColor.c454545, width: 2.0),
+      border: Border.all(color:isEnable? AppColor.c454545:AppColor.transparent , width: 2.0),
     ),
     child: Row(
       children: [
@@ -128,22 +166,22 @@ Widget plainCard(String title, String priceText, String subtitle) {
                 txt: "$title - $priceText",
                 fontSize: AppFontSize.f18,
                 fontWeight: FontWeight.w600,
-                color: AppColor.white,
+                color:isEnable? AppColor.white: AppColor.c454545,
               ),
                SizedBox(height: ch(4)),
               AppText(
                 txt: subtitle,
                 fontSize: AppFontSize.f15,
                 fontWeight: FontWeight.normal,
-                color: AppColor.white,
+                color: isEnable? AppColor.white: AppColor.c454545,
               ),
             ],
           ),
         ),
 
         Radio<bool>(
-          activeColor: AppColor.white,
-          value: true, groupValue: true, 
+          activeColor:isEnable? AppColor.white: AppColor.c454545,
+          value: isEnable, groupValue: isEnable, 
           onChanged: (value){})
       ],
     ),

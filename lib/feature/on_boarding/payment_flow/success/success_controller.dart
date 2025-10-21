@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class SuccessController with ChangeNotifier {
    String paymentId = "003753536379333";
-  String amountPaid = "€599.00";
-  String paymentMethod = "stripe";
+  String amountPaid = "€79.00";
   String dateTime = "20 Ago 2025 • 01:03";
 
   void setPaymentDetails({
@@ -14,7 +13,7 @@ class SuccessController with ChangeNotifier {
   }) {
     paymentId = id;
     amountPaid = amount;
-    paymentMethod = method;
+    // paymentMethod = method;
     dateTime = date;
     notifyListeners();
   }

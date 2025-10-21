@@ -118,7 +118,7 @@ class WelcomeView extends StatelessWidget {
               fontWeight: FontWeight.w600,
               textColor: AppColor.black,
             ),
-              SizedBox(height: ch(70),),
+              SizedBox(height: ch(40),),
           ],
         ),
       ),

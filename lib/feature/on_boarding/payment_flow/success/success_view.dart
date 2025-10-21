@@ -1,10 +1,9 @@
-import 'dart:ui';
-
 import 'package:ast_official/feature/on_boarding/payment_flow/success/success_controller.dart';
+import 'package:ast_official/feature/on_boarding/payment_flow/wallet/wallet_controller.dart';
+import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
-import 'package:ast_official/utils/app_divider.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/dotted_line_divider.dart';
@@ -31,9 +30,18 @@ class SuccessView extends StatelessWidget {
                   Text("🎉", style: TextStyle(fontSize: AppFontSize.f40)),
                   const SizedBox(height: 16),
 
+                  if(context.read<SelectRoleController>().selectedRole=="Athlete")...[
+                    AppText(
+                    txt: "Abbonamento attivato con successo",
+                    fontSize: AppFontSize.f24,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.white,
+                    textAlign: TextAlign.center,
+                  ),
+                  ]else
                   // ✅ Title
                   AppText(
-                    txt: "Abbonamento attivato con successo",
+                    txt: "Tasse di rinnovo della licenza presentate",
                     fontSize: AppFontSize.f24,
                     fontWeight: FontWeight.w600,
                     color: AppColor.white,
@@ -41,8 +49,8 @@ class SuccessView extends StatelessWidget {
                   ),
                   SizedBox(height: ch(10)),
 
-                  // Subtitle
-                  AppText(
+                  if(context.read<SelectRoleController>().selectedRole=="Athlete")...[
+                    AppText(
                     txt:
                         "Ora hai accesso ai tuoi piani personalizzati, ai check-in settimanali e alla chat con il coach.",
                     fontSize: AppFontSize.f18,
@@ -50,6 +58,17 @@ class SuccessView extends StatelessWidget {
                     textAlign: TextAlign.center,
                     height: 1.5,
                   ),
+                  ]else...[
+                    AppText(
+                    txt:
+                        "Ora riprendi il tuo percorso di formazione e guadagno Smartly. Iniziamo a creare il tuo primo certificato.",
+                    fontSize: AppFontSize.f18,
+                    color: AppColor.white.withOpacity(0.6),
+                    textAlign: TextAlign.center,
+                    height: 1.5,
+                  ),
+                  ],
+                  
 
                   SizedBox(height: ch(30)),
                   DottedDivider(
@@ -86,10 +105,24 @@ class SuccessView extends StatelessWidget {
                       children: [
                         AppText(
                           txt: "Metodo di pagamento",
-                          fontSize: 14,
+                          fontSize: AppFontSize.f15,
                           color: AppColor.white.withOpacity(0.5),
                         ),
-                        SvgPicture.asset(AssetUtils.stripeIcon)
+                        if (context.read<WalletController>().selectedMethod ==
+                            "apple") ...[
+                          SvgPicture.asset(AssetUtils.appleIcon,height: ch(30),)
+                        ] else if(context.read<WalletController>().selectedMethod ==
+                            "stripe")...[
+                               SvgPicture.asset(AssetUtils.stripeIcon)
+                        ]else if(context.read<WalletController>().selectedMethod ==
+                            "paypal")...[
+                               SvgPicture.asset(AssetUtils.paypalIcon,height: ch(30))
+                        ]else if(context.read<WalletController>().selectedMethod ==
+                            "google")...[
+                               SvgPicture.asset(AssetUtils.googleIcon,height: ch(30))
+                        ]
+                        
+                        ,
                       ],
                     ),
                   ),
@@ -121,13 +154,17 @@ class SuccessView extends StatelessWidget {
 
                       // Right button
                       Expanded(
-                        child: AppButton(text: "Fato", onPressed: () {}),
+                        child: AppButton(
+                            text: "Fato",
+                            onPressed: () {
+                              
+                            }),
                       ),
-
-                     
                     ],
                   ),
-                  SizedBox(height: ch(10),)
+                  SizedBox(
+                    height: ch(10),
+                  )
                 ],
               );
             },

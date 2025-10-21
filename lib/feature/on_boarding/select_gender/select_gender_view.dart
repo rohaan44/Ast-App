@@ -101,7 +101,7 @@ class SelectGenderView extends StatelessWidget {
                       fontSize: AppFontSize.f16,
                       textColor: AppColor.background,
                       fontWeight: FontWeight.w600),
-                      SizedBox(height: ch(80),)
+                      SizedBox(height: ch(40),)
                 ],
               ),
             ),

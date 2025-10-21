@@ -170,7 +170,7 @@ class DateOfBirthView extends StatelessWidget {
               AppButton(onPressed: (){
                 Navigator.pushNamedAndRemoveUntil(context, RoutePaths.selectGender, (route) => false);
               },text: "Avanti",),
-              SizedBox(height: ch(70),)
+              SizedBox(height: ch(40),)
                   ],
                 ),
               )),
