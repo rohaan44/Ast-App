@@ -1,7 +1,10 @@
+import 'package:ast_official/helpers/app_layout_helper.dart';
+import 'package:ast_official/utils/font_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
+import 'package:sizer/sizer.dart';
 
 class PaymentOptionCard extends StatelessWidget {
   final String id;
@@ -24,23 +27,25 @@ class PaymentOptionCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+        height: ch(54),
+        margin: EdgeInsets.only(bottom: ch(12)),
+        padding:  EdgeInsets.symmetric(horizontal: cw(16), ),
         decoration: BoxDecoration(
           color: AppColor.c161616,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: isSelected ? AppColor.primary : Colors.transparent,
-            width: 1.8,
-          ),
+          // border: Border.all(
+          //   color: isSelected ? AppColor.white : Colors.transparent,
+          //   width: 1.8,
+          // ),
         ),
         child: Row(
           children: [
             SvgPicture.asset(iconPath, height: 22),
-            const SizedBox(width: 12),
+            SizedBox(width: cw(12)),
             Expanded(
               child: AppText(
                 txt: title,
+                fontSize: 14.8.sp,
                 color: AppColor.white,
                 fontWeight: FontWeight.w500,
               ),
@@ -52,7 +57,7 @@ class PaymentOptionCard extends StatelessWidget {
               activeColor: AppColor.primary,
               fillColor: MaterialStateProperty.resolveWith<Color>(
                 (states) => states.contains(MaterialState.selected)
-                    ? AppColor.primary
+                    ? AppColor.white
                     : AppColor.white.withOpacity(0.5),
               ),
             ),
