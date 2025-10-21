@@ -13,4 +13,5 @@ class RoutePaths {
   
     static const String dateOfBirth = '/dateOfBirth';
     static const String selectWeight = '/selectWeight';
+       static const String selectObjective = '/selectObjective';
 }

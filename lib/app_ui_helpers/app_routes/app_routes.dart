@@ -2,6 +2,7 @@ import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_view.dart';
 import 'package:ast_official/feature/on_boarding/otp_view/otp_view.dart';
 import 'package:ast_official/feature/on_boarding/person_height/person_height_view.dart';
+import 'package:ast_official/feature/on_boarding/select_objective/select_objective_view.dart';
 import 'package:ast_official/feature/on_boarding/select_role/select_role_view.dart';
 import 'package:ast_official/feature/on_boarding/select_gender/select_gender_view.dart';
 import 'package:ast_official/feature/on_boarding/select_weight/select_weight_view.dart';
@@ -95,6 +96,15 @@ class AppRouter {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const DateOfBirthView();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+         case RoutePaths.selectObjective:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const SelectObjectiveView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;

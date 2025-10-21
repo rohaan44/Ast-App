@@ -1,3 +1,4 @@
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/person_height/person_height_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_weight/select_weight_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
@@ -156,7 +157,9 @@ class SelectWeightView extends StatelessWidget {
                   const Spacer(),
                   AppButton(
                       buttonColor: AppColor.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(context, RoutePaths.selectObjective, (route) => false);
+                      },
                       text: "Avanti",
                       fontSize: AppFontSize.f16,
                       textColor: AppColor.background,

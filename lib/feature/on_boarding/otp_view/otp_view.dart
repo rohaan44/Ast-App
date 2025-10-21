@@ -22,43 +22,39 @@ class OtpView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppDismissKeyboard(
-        child: Stack(
-          children: [
-            Container(
-              padding: EdgeInsets.all(cw(20)),
-              height: ch(150),
-              decoration: const BoxDecoration(gradient: AppGradients.redGradient),
-              child:Row(
-  crossAxisAlignment: CrossAxisAlignment.center,
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  children: [
-    // Left logo
-    GestureDetector(
-      onTap: (){Navigator.pop(context);
-      },
-      child: SvgPicture.asset(
-        AssetUtils.backArrow,
-      ),
-    ),
-    SvgPicture.asset(
-      AssetUtils.logoIcon,
-      width: cw(60),
-      height: ch(25),
-    ),
-const    SizedBox.shrink(
-
-    )
-  ],
-)
-
-            ),
-            SizedBox(
-              height: ch(114),
-            ),
-             Padding(
-              padding: EdgeInsets.only(top: ch(114)),
-              child: Container(
+        body: AppDismissKeyboard(
+      child: Stack(children: [
+        Container(
+            padding: EdgeInsets.all(cw(20)),
+            height: ch(150),
+            decoration: const BoxDecoration(gradient: AppGradients.redGradient),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Left logo
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: SvgPicture.asset(
+                    AssetUtils.backArrow,
+                  ),
+                ),
+                SvgPicture.asset(
+                  AssetUtils.logoIcon,
+                  width: cw(60),
+                  height: ch(25),
+                ),
+                const SizedBox.shrink()
+              ],
+            )),
+        SizedBox(
+          height: ch(114),
+        ),
+        Padding(
+            padding: EdgeInsets.only(top: ch(114)),
+            child: Container(
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: cw(20)),
                 decoration: BoxDecoration(
@@ -67,66 +63,81 @@ const    SizedBox.shrink(
                         topLeft: Radius.circular(cw(25)),
                         topRight: Radius.circular(cw(25)))),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             SizedBox(
-                      height: ch(20),
-                    ),
-                    AppText(
-                      txt: "Verifica OTP",
-                      fontSize: AppFontSize.f20,
-                      fontWeight: FontWeight.w500,
-                      color: AppColor.cFFFFFF,
-                      height: 1,
-                    ),
-                    SizedBox(
-                      height: ch(12),
-                    ),
-                    AppText(
-                      txt:
-                          "Inserisci il codice di verifica che abbiamo inviato\n alla tua email kel**@gmail.com.   ",
-                      fontSize: AppFontSize.f18,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.cFFFFFF.withOpacity(0.5),
-                      height: 1.5,
-                    ),
-         SizedBox(
-                                height: ch(25),
-                              ),
-                     Consumer<OtpController>(
-                       builder: (context, model, child) {
-                         return primaryTextField(    
-                                    obscureText: true,
-                                      border: InputBorder.none,
-                                      hintText: "Inserisci il codice qui",
-                                      // prefixIcon: const Icon(CupertinoIcons.lock),
-                                      // suffixIcon: Icon(Icons.remove_red_eye),
-                                      controller: model.otpTextController);
-                       }
-                     ),
-                      SizedBox(
-                                height: ch(25),
-                              ),
-                              AppButton(onPressed: (){
-                               Navigator.pushNamedAndRemoveUntil(context, RoutePaths.dateOfBirth, (route) => false);
-                              },text: "Verifica",),
-                              SizedBox(height: ch(25),),
-                              Row(mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                AppText(txt: "Non hai ricevuto il codice?",color: AppColor.white.withOpacity(0.50),fontSize: AppFontSize.f15,),
-                                AppText(txt: "Invia di nuovo il codice",color: AppColor.white,fontSize: AppFontSize.f15,)
-                              ],)
-                        ],
-                      ),
-                    ))
-                  ])))
-            
-           ]),
-      )   
-    );
+                              height: ch(20),
+                            ),
+                            AppText(
+                              txt: "Verifica OTP",
+                              fontSize: AppFontSize.f20,
+                              fontWeight: FontWeight.w500,
+                              color: AppColor.cFFFFFF,
+                              height: 1,
+                            ),
+                            SizedBox(
+                              height: ch(12),
+                            ),
+                            AppText(
+                              txt:
+                                  "Inserisci il codice di verifica che abbiamo inviato\n alla tua email kel**@gmail.com.   ",
+                              fontSize: AppFontSize.f18,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.cFFFFFF.withOpacity(0.5),
+                              height: 1.5,
+                            ),
+                            SizedBox(
+                              height: ch(25),
+                            ),
+                            Consumer<OtpController>(
+                                builder: (context, model, child) {
+                              return primaryTextField(
+                                  obscureText: true,
+                                  border: InputBorder.none,
+                                  hintText: "Inserisci il codice qui",
+                                  // prefixIcon: const Icon(CupertinoIcons.lock),
+                                  // suffixIcon: Icon(Icons.remove_red_eye),
+                                  controller: model.otpTextController);
+                            }),
+                            SizedBox(
+                              height: ch(25),
+                            ),
+                            AppButton(
+                              onPressed: () {
+                                Navigator.pushNamedAndRemoveUntil(context,
+                                    RoutePaths.dateOfBirth, (route) => false);
+                              },
+                              text: "Verifica",
+                            ),
+                            SizedBox(
+                              height: ch(25),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AppText(
+                                  txt: "Non hai ricevuto il codice?",
+                                  color: AppColor.white.withOpacity(0.50),
+                                  fontSize: AppFontSize.f15,
+                                ),
+                                SizedBox(width: cw(5),),
+                                AppText(
+                                  txt: "Invia di nuovo il codice",
+                                  color: AppColor.white,
+                                  fontSize: AppFontSize.f15,
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ))
+                    ])))
+      ]),
+    ));
   }
 }

@@ -3,10 +3,12 @@ import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_controller.dart';
 import 'package:ast_official/feature/on_boarding/otp_view/otp_controller.dart';
 import 'package:ast_official/feature/on_boarding/person_height/person_height_controller.dart';
+import 'package:ast_official/feature/on_boarding/select_objective/select_objective_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_gender/select_gender_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_weight/select_weight_controller.dart';
 import 'package:ast_official/feature/splash_screen/splash_screen.dart';
+import 'package:ast_official/feature/welcome_screen/welcome_view.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/theme/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,8 @@ void main() {
       ChangeNotifierProvider(create: (context) => OtpController()),
       
       ChangeNotifierProvider(create: (context) => DateOfBirthController()),
+      
+      ChangeNotifierProvider(create: (context) => SelectObjectiveController()),
   ], child: const MyApp(),));
 
   // runApp(const MyApp());
@@ -52,8 +56,8 @@ class MyApp extends StatelessWidget {
         title: 'AST®️ Official App',
         theme: AppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
-        // home: const SplashScreen(),
-        initialRoute: RoutePaths.splashScreen,
+        home: WelcomeView(),
+        // initialRoute: RoutePaths.splashScreen,
        onGenerateRoute: AppRouter.generateRoute,
       );
     });

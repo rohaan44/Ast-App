@@ -112,6 +112,15 @@ class PersonHeightView extends StatelessWidget {
                       heightProvider.toggleUnit();
                     },
                     children:  [
+                       Center(
+                        child: AppText(txt:
+                          "cm",
+                            fontSize: AppFontSize.f16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                        
+                        ),
+                      ),
                       Center(
                         child: AppText(txt:
                           "piedi",
@@ -121,15 +130,7 @@ class PersonHeightView extends StatelessWidget {
                         
                         ),
                       ),
-                      Center(
-                        child: AppText(txt:
-                          "cm",
-                            fontSize: AppFontSize.f16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                        
-                        ),
-                      ),
+                     
                     ],
                   ),
                 ),

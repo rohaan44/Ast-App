@@ -16,6 +16,9 @@ class AssetUtils {
   //********** */ svg icons && images
 
   static const String backArrow = "${svg}back_arrow.svg";
+    static const String welcomeScreenIcon3 = "${svg}wellcome_screen_icon_3.svg";
+    static const String welcomeScreenIcon2 = "${svg}wellcome_screen_icon_2.svg";
+    static const String welcomeScreenIcon1 = "${svg}wellcome_screen_icon_1.svg";
   static const String logoIcon = "${svg}Logo.svg";
   static const String walkthroughIcon = "${svg}walkthrough_icon.svg";
   static const String googleIcon ="${svg}google_icon.svg";

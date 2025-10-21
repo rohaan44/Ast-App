@@ -9,7 +9,7 @@ class AppColor {
   static const Color background = Color(0xFF121212);
   static const red = Color(0xffFF3A2F); // Error
   static const blue = Color(0xff4D9BDA);
-  
+  static const c231F20 = Color(0xff231F20);
  static const c161616 = Color(0xff161616);
  static const c1E1E1E = Color(0xff1E1E1E);
   static const brown = Color(0xff8B6E4A);
