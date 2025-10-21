@@ -157,7 +157,7 @@ class SelectObjectiveView extends StatelessWidget {
                                 borderRadius: cw(50),
                                 onPressed: () {
                                  
-                                  // Navigator.pushNamedAndRemoveUntil(context, RoutePaths.otpView, (route) => false);
+                                   Navigator.pushNamedAndRemoveUntil(context, RoutePaths.welcomeView, (route) => false);
                                  
                                 },
                                 buttonColor: AppColor.cFFFFFF,

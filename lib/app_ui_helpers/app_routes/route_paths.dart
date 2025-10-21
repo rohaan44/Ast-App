@@ -14,4 +14,9 @@ class RoutePaths {
     static const String dateOfBirth = '/dateOfBirth';
     static const String selectWeight = '/selectWeight';
        static const String selectObjective = '/selectObjective';
+       
+       static const String welcomeView = '/welcomeView';
+       static const String chooseYourPlan = '/chooseYourPlan';
+       
+       static const String walletView = '/walletView';
 }

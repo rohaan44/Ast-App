@@ -1,13 +1,14 @@
 import 'package:ast_official/app_ui_helpers/app_routes/app_routes.dart';
-import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_controller.dart';
 import 'package:ast_official/feature/on_boarding/otp_view/otp_controller.dart';
+import 'package:ast_official/feature/on_boarding/payment_flow/choose_your_plan/choose_your_plan_controller.dart';
+import 'package:ast_official/feature/on_boarding/payment_flow/success/success_controller.dart';
+import 'package:ast_official/feature/on_boarding/payment_flow/wallet/wallet_controller.dart';
 import 'package:ast_official/feature/on_boarding/person_height/person_height_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_objective/select_objective_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_gender/select_gender_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_weight/select_weight_controller.dart';
-import 'package:ast_official/feature/splash_screen/splash_screen.dart';
 import 'package:ast_official/feature/welcome_screen/welcome_view.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/theme/app_theme.dart';
@@ -30,6 +31,11 @@ void main() {
       ChangeNotifierProvider(create: (context) => DateOfBirthController()),
       
       ChangeNotifierProvider(create: (context) => SelectObjectiveController()),
+      
+      ChangeNotifierProvider(create: (context) => ChooseYourPlanController()),
+      
+      ChangeNotifierProvider(create: (context) => WalletController()),
+      ChangeNotifierProvider(create: (context) => SuccessController()),
   ], child: const MyApp(),));
 
   // runApp(const MyApp());

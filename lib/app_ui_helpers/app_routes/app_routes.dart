@@ -1,6 +1,7 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_view.dart';
 import 'package:ast_official/feature/on_boarding/otp_view/otp_view.dart';
+import 'package:ast_official/feature/on_boarding/payment_flow/choose_your_plan/choose_your_plan_view.dart';
 import 'package:ast_official/feature/on_boarding/person_height/person_height_view.dart';
 import 'package:ast_official/feature/on_boarding/select_objective/select_objective_view.dart';
 import 'package:ast_official/feature/on_boarding/select_role/select_role_view.dart';
@@ -9,6 +10,7 @@ import 'package:ast_official/feature/on_boarding/select_weight/select_weight_vie
 import 'package:ast_official/feature/on_boarding/sign_in/sign_in_view.dart';
 import 'package:ast_official/feature/on_boarding/walk_through/walk_through_view.dart';
 import 'package:ast_official/feature/splash_screen/splash_screen.dart';
+import 'package:ast_official/feature/welcome_screen/welcome_view.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppRouter {
@@ -105,6 +107,24 @@ class AppRouter {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const SelectObjectiveView();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+         case RoutePaths.welcomeView:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const WelcomeView();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+        case RoutePaths.chooseYourPlan:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const ChooseYourPlanView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
