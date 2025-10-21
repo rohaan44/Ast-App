@@ -38,8 +38,8 @@ class SuccessView extends StatelessWidget {
                     color: AppColor.white,
                     textAlign: TextAlign.center,
                   ),
-                  ]else
-                  // ✅ Title
+                  ]else...[
+// ✅ Title
                   AppText(
                     txt: "Tasse di rinnovo della licenza presentate",
                     fontSize: AppFontSize.f24,
@@ -47,6 +47,8 @@ class SuccessView extends StatelessWidget {
                     color: AppColor.white,
                     textAlign: TextAlign.center,
                   ),
+                  ],
+                  
                   SizedBox(height: ch(10)),
 
                   if(context.read<SelectRoleController>().selectedRole=="Athlete")...[
@@ -78,7 +80,7 @@ class SuccessView extends StatelessWidget {
 
                   // Payment details
                   _detailRow("ID PAGAMENTO", provider.paymentId,
-                      "Importo pagato", provider.amountPaid),
+                      "Importo pagato", context.read<SelectRoleController>().selectedRole=="Athlete"?"€79.00":"€549.00"),
 
                   SizedBox(height: ch(20)),
 
