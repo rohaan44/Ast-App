@@ -6,6 +6,7 @@ import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
 import 'package:ast_official/utils/app_divider.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
+import 'package:ast_official/utils/dotted_line_divider.dart';
 import 'package:ast_official/utils/font_size.dart';
 import 'package:ast_official/utils/payment_option_card/payment_option_card.dart';
 import 'package:flutter/material.dart';
@@ -163,9 +164,7 @@ Widget paymentSummaryCard(String type, String price) {
         SizedBox(
           height: ch(10),
         ),
-        Divider(
-          color: AppColor.white.withOpacity(0.1),
-        ),
+        DottedDivider(color: AppColor.white.withOpacity(0.1),),
         SizedBox(
           height: ch(15),
         ),
