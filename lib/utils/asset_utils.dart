@@ -11,16 +11,30 @@ class AssetUtils {
   static const String walkthrogh4 = "${jpg}walkthrough_4.png";
   static const String selectedRoleAthlete = "${png}select_role_athlete.png";
   static const String selectedRoleCoach = "${png}select_role_coach.png";
-   static const String selectedRoleTutor = "${png}select_role_tutor.png";
-  
+  static const String selectedRoleTutor = "${png}select_role_tutor.png";
+
   //********** */ svg icons && images
 
   static const String backArrow = "${svg}back_arrow.svg";
   static const String logoIcon = "${svg}Logo.svg";
   static const String walkthroughIcon = "${svg}walkthrough_icon.svg";
-  static const String googleIcon ="${svg}google_icon.svg";
-    static const String appleIcon ="${svg}apple_icon.svg";
-    static const String isValidate = "${svg}isValidate.svg";
-    
-    static const String appCrossIcon = "${svg}app_cross_icon.svg";
+  static const String googleIcon = "${svg}google_icon.svg";
+  static const String appleIcon = "${svg}apple_icon.svg";
+  static const String isValidate = "${svg}isValidate.svg";
+  static const String icon = "${svg}Icon.svg";
+  static const String homeIcon = "${svg}home_icon.svg";
+  static const String icon1 = "${svg}Icon (1).svg";
+
+  static const String icon2 = "${svg}Icon (2).svg";
+  static const String icon3 = "${svg}Icon (3).svg";
+
+  static const String appCrossIcon = "${svg}app_cross_icon.svg";
+  static const String cloudIcon = "${svg}cloud.svg";
+  static const String footIcon = "${svg}foot.svg";
+
+  static const String weightLifting = "${svg}weight_lifting.svg";
+  static const String sofaIcon = "${svg}sofa.svg";
+
+  static const String walk = "${svg}walk.svg";
+  static const String bicepIcon = "${svg}bicep.svg";
 }

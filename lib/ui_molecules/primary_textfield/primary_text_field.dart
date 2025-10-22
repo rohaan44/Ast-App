@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sizer/sizer.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/helpers/input_formatters_helpers.dart';
 import 'package:ast_official/utils/colors_utils.dart';
@@ -41,8 +40,8 @@ Widget primaryTextField({
       padding: EdgeInsets.symmetric(horizontal: ch(16)),
       child: Center(
         child: TextFormField(
-           autovalidateMode: AutovalidateMode.onUserInteraction,
-            cursorColor: AppColor.red,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          cursorColor: AppColor.red,
           controller: controller,
           focusNode: focusNode,
           readOnly: readOnly,
@@ -57,12 +56,11 @@ Widget primaryTextField({
               InputFormatterHelper.allowCharactersNumbersAndSpace,
           style: textStyle ??
               TextStyle(
-                
                 color: AppColor.white,
                 fontSize: AppFontSize.f16,
                 fontWeight: FontWeight.w500,
               ),
-            
+
           decoration: InputDecoration(
             counterText: "",
             fillColor: fillColor ?? AppColor.c151515,
@@ -73,7 +71,6 @@ Widget primaryTextField({
                 ),
             enabledBorder: border ??
                 UnderlineInputBorder(
-                  
                   borderSide: BorderSide(color: AppColor.white, width: cw(1)),
                 ),
             focusedBorder: border ??
@@ -94,19 +91,21 @@ Widget primaryTextField({
                   color: AppColor.cFFFFFF.withOpacity(0.5),
                 ),
             prefixIcon: Padding(
-  padding: EdgeInsets.only(right: cw(8)), // 👈 adds space between icon and text
-  child: prefixIcon,
-),
-prefixIconConstraints: BoxConstraints(
-  minWidth: cw(24),
-  minHeight: ch(24),
-),
-            suffixIcon:  Padding(
-  padding: EdgeInsets.only(right: cw(8)), // 👈 adds space between icon and text
-  child: suffixIcon,
-),
-suffixIconConstraints: const BoxConstraints(),
-          //  prefixIconConstraints: const BoxConstraints(),
+              padding: EdgeInsets.only(
+                  right: cw(8)), // 👈 adds space between icon and text
+              child: prefixIcon,
+            ),
+            prefixIconConstraints: BoxConstraints(
+              minWidth: cw(24),
+              minHeight: ch(24),
+            ),
+            suffixIcon: Padding(
+              padding: EdgeInsets.only(
+                  right: cw(8)), // 👈 adds space between icon and text
+              child: suffixIcon,
+            ),
+            suffixIconConstraints: const BoxConstraints(),
+            //  prefixIconConstraints: const BoxConstraints(),
             isDense: true,
             // contentPadding: EdgeInsets.only(bottom: ch(4)),
           ),
