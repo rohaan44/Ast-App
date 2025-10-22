@@ -1,5 +1,5 @@
-import 'package:ast_official/feature/dashboard/dashboard_controller.dart';
-import 'package:ast_official/feature/home_screen/home_screen_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/home_screen/home_screen_view.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:flutter/material.dart';

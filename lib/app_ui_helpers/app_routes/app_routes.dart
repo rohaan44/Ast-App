@@ -1,9 +1,9 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
-import 'package:ast_official/feature/dashboard/dashboard_view.dart';
-import 'package:ast_official/feature/home_screen/home_screen_view.dart';
-import 'package:ast_official/feature/home_screen/sub_screen/personalize_your_experience/personalize_your_experience_view.dart';
-import 'package:ast_official/feature/home_screen/sub_screen/what_is_your_activity/what_is_your_activity_view.dart';
-import 'package:ast_official/feature/home_screen/sub_screen/what_is_your_diet_type/what_is_your_diet_type_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/home_screen/home_screen_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/home_screen/sub_screen/personalize_your_experience/personalize_your_experience_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/home_screen/sub_screen/what_is_your_activity/what_is_your_activity_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/home_screen/sub_screen/what_is_your_diet_type/what_is_your_diet_type_view.dart';
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_view.dart';
 import 'package:ast_official/feature/on_boarding/otp_view/otp_view.dart';
 import 'package:ast_official/feature/on_boarding/payment_flow/choose_your_plan/choose_your_plan_view.dart';
