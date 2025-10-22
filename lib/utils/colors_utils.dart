@@ -13,8 +13,8 @@ class AppColor {
  static const c161616 = Color(0xff161616);
  static const c1E1E1E = Color(0xff1E1E1E);
   static const brown = Color(0xff8B6E4A);
-  static const  cFFB236 =Color(0xffFFB236);
-  static const  c336255 =Color(0xff336255);
+  static const cFFB236 = Color(0xffFFB236);
+  static const c336255 = Color(0xff336255);
   static const darkblue = Color(0xff346094);
   static const beige = Color(0xffB8A999);
   static const white = Color(0xffffffff);
@@ -124,4 +124,5 @@ class AppColor {
   static const c483312 = Color(0xff483312);
   static const c162F28 = Color(0xff162F28);
   static const c151515 = Color(0xff151515);
+  static const c121212 = Color(0xff121212);
 }

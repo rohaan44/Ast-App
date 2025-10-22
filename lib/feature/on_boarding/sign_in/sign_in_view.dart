@@ -8,7 +8,6 @@ import 'package:ast_official/ui_molecules/primary_textfield/primary_text_field.d
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
-import 'package:ast_official/utils/gradients/app_gradients.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,15 +26,16 @@ class _SignInViewState extends State<SignInView> {
   final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    bool isEnbleBtn = nameController.text.isNotEmpty &&
-        emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty;
+    // bool isEnbleBtn = nameController.text.isNotEmpty &&
+    //     emailController.text.isNotEmpty &&
+    //     passwordController.text.isNotEmpty;
 
     return Scaffold(
       body: AppDismissKeyboard(
         child: Stack(
           children: [
-onboaridngAppBar(context: context, activeSegments: 1, totalSegments: 6),
+            onboaridngAppBar(
+                context: context, activeSegments: 1, totalSegments: 6),
             Padding(
               padding: EdgeInsets.only(top: ch(114)),
               child: Column(
@@ -45,8 +45,8 @@ onboaridngAppBar(context: context, activeSegments: 1, totalSegments: 6),
                       child: Container(
                         // height: 100.w,
                         width: 100.w,
-                        
-                      padding: EdgeInsets.symmetric(horizontal: cw(20)),
+
+                        padding: EdgeInsets.symmetric(horizontal: cw(20)),
                         decoration: BoxDecoration(
                             color: AppColor.background,
                             borderRadius: BorderRadius.only(
@@ -55,7 +55,9 @@ onboaridngAppBar(context: context, activeSegments: 1, totalSegments: 6),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: ch(20),),
+                            SizedBox(
+                              height: ch(20),
+                            ),
                             AppText(
                               txt: "Conosciamoci meglio",
                               fontSize: AppFontSize.f20,
@@ -109,8 +111,8 @@ onboaridngAppBar(context: context, activeSegments: 1, totalSegments: 6),
                             SizedBox(
                               height: ch(16),
                             ),
-                            primaryTextField(    
-                              obscureText: true,
+                            primaryTextField(
+                                obscureText: true,
                                 border: InputBorder.none,
                                 hintText: "Password",
                                 prefixIcon: const Icon(CupertinoIcons.lock),
@@ -123,9 +125,8 @@ onboaridngAppBar(context: context, activeSegments: 1, totalSegments: 6),
                               // isButtonEnable: isEnbleBtn,
                               borderRadius: cw(50),
                               onPressed: () {
-                               
-                                Navigator.pushNamedAndRemoveUntil(context, RoutePaths.otpView, (route) => false);
-                               
+                                Navigator.pushNamedAndRemoveUntil(context,
+                                    RoutePaths.otpView, (route) => false);
                               },
                               buttonColor: AppColor.cFFFFFF,
                               text: "Continua",
@@ -169,21 +170,29 @@ onboaridngAppBar(context: context, activeSegments: 1, totalSegments: 6),
                             ),
                             AppButton(
                               showIcon: true,
-                              icon: SvgPicture.asset(AssetUtils.googleIcon,width: cw(20),height: ch(20),),
+                              icon: SvgPicture.asset(
+                                AssetUtils.googleIcon,
+                                width: cw(20),
+                                height: ch(20),
+                              ),
                               borderRadius: cw(50),
                               onPressed: () {
                                 // Navigator.pushNamedAndRemoveUntil(context, newRouteName, (route) => false);
                               },
                               buttonColor: AppColor.c151515,
                               text: "Continua con Google",
-                                                            textColor: AppColor.white,
+                              textColor: AppColor.white,
                             ),
                             SizedBox(
                               height: ch(16),
                             ),
                             AppButton(
                               showIcon: true,
-                              icon: SvgPicture.asset(AssetUtils.appleIcon,width: cw(25),height: ch(25),),
+                              icon: SvgPicture.asset(
+                                AssetUtils.appleIcon,
+                                width: cw(25),
+                                height: ch(25),
+                              ),
                               borderRadius: cw(50),
                               onPressed: () {},
                               buttonColor: AppColor.c151515,
@@ -201,8 +210,6 @@ onboaridngAppBar(context: context, activeSegments: 1, totalSegments: 6),
                 ],
               ),
             ),
-
-               
           ],
         ),
       ),

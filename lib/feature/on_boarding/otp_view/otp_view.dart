@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/otp_view/otp_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
-import 'package:ast_official/ui_molecules/appbar/appbar.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
 import 'package:ast_official/ui_molecules/primary_textfield/primary_text_field.dart';
 import 'package:ast_official/utils/asset_utils.dart';
@@ -125,7 +122,6 @@ class OtpView extends StatelessWidget {
                                   color: AppColor.white.withOpacity(0.50),
                                   fontSize: AppFontSize.f15,
                                 ),
-                                SizedBox(width: cw(5),),
                                 AppText(
                                   txt: "Invia di nuovo il codice",
                                   color: AppColor.white,

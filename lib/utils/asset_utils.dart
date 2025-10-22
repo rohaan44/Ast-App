@@ -13,6 +13,8 @@ class AssetUtils {
   static const String selectedRoleCoach = "${png}select_role_coach.png";
   static const String selectedRoleTutor = "${png}select_role_tutor.png";
 
+  static const String selectedRoleTutor = "${png}select_role_tutor.png";
+
   //********** */ svg icons && images
 
   static const String backArrow = "${svg}back_arrow.svg";

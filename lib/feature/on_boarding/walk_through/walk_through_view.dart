@@ -1,6 +1,4 @@
-import 'package:ast_official/app_ui_helpers/app_router/app_router.dart';
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
-import 'package:ast_official/feature/on_boarding/select_role/select_role_view.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/buttons/app_glass_button.dart';
@@ -93,8 +91,14 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
             bottom: ch(30),
             child: Row(
               children: [
-                GlassButton(text: "Salta", onPressed: (){},width: cw(66),height: ch(66),borderRadius: cw(24.91),),
-                
+                GlassButton(
+                  text: "Salta",
+                  onPressed: () {},
+                  width: cw(66),
+                  height: ch(66),
+                  borderRadius: cw(24.91),
+                ),
+
                 // AppButton(
                 //   height: ch(66),
                 //   width: cw(66),
@@ -106,7 +110,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                 //       curve: Curves.ease,
                 //     );
                 //   },
-                //   child: 
+                //   child:
                 //   Center(
                 //     child: AppText(
                 //       txt:,
@@ -137,7 +141,8 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                   onPressed: () {
                     if (currentPage == onboardingData.length - 1) {
                       // goToReplace(context, const SelectPlan());
-                      Navigator.pushNamedAndRemoveUntil(context, RoutePaths.selectRole, (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, RoutePaths.selectRole, (route) => false);
                     } else {
                       pageController.nextPage(
                         duration: const Duration(milliseconds: 400),
@@ -202,7 +207,11 @@ Widget onBaordContentct({
     height: 100.h,
     width: 100.h,
     decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover,colorFilter: ColorFilter.mode(AppColor.black.withOpacity(0.30), BlendMode.srcATop))),
+        image: DecorationImage(
+            image: AssetImage(image),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                AppColor.black.withOpacity(0.30), BlendMode.srcATop))),
     child: Padding(
       padding: EdgeInsets.symmetric(horizontal: cw(20)),
       child: Column(
@@ -215,10 +224,9 @@ Widget onBaordContentct({
             children: [
               SvgPicture.asset(AssetUtils.walkthroughIcon),
               const Spacer(),
-              
               Center(
                 child: AppText(
-                fontSize: AppFontSize.f15,
+                  fontSize: AppFontSize.f15,
                   txt: "Registrazione",
                   fontWeight: FontWeight.w800,
                 ),
@@ -232,7 +240,6 @@ Widget onBaordContentct({
             fontSize: AppFontSize.f29,
             fontWeight: FontWeight.w600,
             color: AppColor.cFFFFFF,
-            
           ),
           SizedBox(
             height: ch(12),

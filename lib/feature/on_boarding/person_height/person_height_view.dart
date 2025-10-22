@@ -114,7 +114,7 @@ class PersonHeightView extends StatelessWidget {
                                       children: [
                                         Center(
                                           child: AppText(
-                                            txt: "cm",
+                                            txt: "piedi",
                                             fontSize: AppFontSize.f16,
                                             fontWeight: FontWeight.w500,
                                             color: Colors.white,
@@ -122,7 +122,7 @@ class PersonHeightView extends StatelessWidget {
                                         ),
                                         Center(
                                           child: AppText(
-                                            txt: "piedi",
+                                            txt: "cm",
                                             fontSize: AppFontSize.f16,
                                             fontWeight: FontWeight.w500,
                                             color: Colors.white,
@@ -154,8 +154,7 @@ class PersonHeightView extends StatelessWidget {
                   AppButton(
                       buttonColor: AppColor.white,
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, RoutePaths.selectWeight, (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(context, RoutePaths.selectWeight, (route) => false);
                       },
                       text: "Avanti",
                       fontSize: AppFontSize.f16,
