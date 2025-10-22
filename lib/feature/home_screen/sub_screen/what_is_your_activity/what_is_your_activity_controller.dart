@@ -12,13 +12,13 @@ class WhatIsYourActivityController with ChangeNotifier {
     ]
   };
 
-  int? _selectedIndex; // Initially none selected
+  int? _selectedIndex; 
 
   int? get selectedIndex => _selectedIndex;
 
   void setSelectIndex(int index) {
     if (_selectedIndex == index) {
-      _selectedIndex = null; // Unselect if already selected (optional)
+      _selectedIndex = null; 
     } else {
       _selectedIndex = index;
     }

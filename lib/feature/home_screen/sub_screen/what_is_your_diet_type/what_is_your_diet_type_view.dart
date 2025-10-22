@@ -82,78 +82,60 @@ class _WhatIsYourDietTypeViewState extends State<WhatIsYourDietTypeView> {
             SizedBox(
               height: ch(45),
             ),
-            Consumer<WhatIsYourDietTypeController>(
-              builder: (context, model, child) {
-                return GridView.builder(
-                  shrinkWrap: true,
-                  primary: false,
-                  itemCount: 4,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisExtent: cw(53),
-                      crossAxisSpacing: cw(20),
-                      mainAxisSpacing: cw(20)),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        model.setSelectIndex(index);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(cw(16)),
-                            border: Border.all(color: AppColor.c252525),
-                            color: model.selectIndex == index
-                                ? AppColor.primary
-                                : AppColor.c252525.withOpacity(0.2)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                                model.catType["iconImage"][index].toString()),
-                            SizedBox(
-                              width: cw(8),
-                            ),
-                            AppText(
-                              txt: model.catType["type"][index].toString(),
-                              fontSize: 17,
-                              fontWeight: FontWeight.w500,
-                              color: AppColor.cFFFFFF,
-                              height: 1,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-            SizedBox(
-              height: ch(20),
-            ),
-            Container(
-              height: ch(53),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(cw(16)),
-                  border: Border.all(color: AppColor.c252525),
-                  color: AppColor.c252525.withOpacity(0.2)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(AssetUtils.cloudIcon),
-                  SizedBox(
-                    width: cw(8),
-                  ),
-                  AppText(
-                    txt: "Basso contenuto di carboidrati",
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                    color: AppColor.cFFFFFF,
-                    height: 1,
-                  ),
-                ],
+          Consumer<WhatIsYourDietTypeController>(
+  builder: (context, model, child) {
+    final types = model.catType["type"]!;
+    final icons = model.catType["iconImage"]!;
+
+    return Wrap(
+      alignment: WrapAlignment.center,
+       spacing: cw(12), 
+      runSpacing: 16,
+      children: List.generate(types.length, (index) {
+        final isSelected = model.isSelected(index);
+final int itemCount = types.length;
+final int lastIndex = itemCount - 1;
+final bool isLastItem = index == lastIndex; 
+        
+        // Conditional width based on your specified logic
+        final double itemWidth = isLastItem ? cw(353) : cw(160);
+        return GestureDetector(
+          onTap: () => model.toggleSelection(index),
+          child: Container(
+            width:  itemWidth,
+            height: ch(54),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? AppColor.primary
+                  : AppColor.c252525.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: isSelected ? AppColor.primary : AppColor.c252525,
+                width: 1.2,
               ),
             ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  icons[index],
+                  width: 20,
+                ),
+                const SizedBox(width: 8),
+                AppText(
+                  txt: types[index],
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.cFFFFFF,
+                ),
+              ],
+            ),
+          ),
+        );
+      }),
+    );
+  },
+),
             const Spacer(),
             AppButton(
                 buttonColor: AppColor.primary,
