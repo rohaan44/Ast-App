@@ -13,10 +13,30 @@ class AssetUtils {
   static const String selectedRoleCoach = "${png}select_role_coach.png";
   static const String selectedRoleTutor = "${png}select_role_tutor.png";
 
-  static const String selectedRoleTutor = "${png}select_role_tutor.png";
-
   //********** */ svg icons && images
+  static const String cloudIcon = "${svg}cloudIcon.svg";
+  static const String homeIcon = "${svg}home_icon.svg";
 
+  static const String icon = "${svg}icon.svg";
+  static const String icon1 = "${svg}icon1.svg";
+  static const String icon2 = "${svg}icon2.svg";
+  static const String icon3 = "${svg}icon3.svg";
+  static const String sofaIcon = "${svg}sofa.svg";
+  static const String bicepIcon = "${svg}bicep.svg";
+
+
+
+ static const String weightLifting = "${svg}weightlifting.svg";
+  static const String tomato = "${svg}tomato.svg";
+  static const String rice = "${svg}rice.svg";
+  static const String legPiece = "${svg}leg_piece.svg";
+  static const String carrot = "${svg}carrot.svg";
+  static const String brocli = "${svg}brocli.svg";
+  static const String beef = "${svg}beef.svg";
+static const String avocado = "${svg}avocado.svg";
+
+
+  static const String walk = "${svg}walk.svg";
   static const String backArrow = "${svg}back_arrow.svg";
   static const String welcomeScreenIcon3 = "${svg}wellcome_screen_icon_3.svg";
   static const String welcomeScreenIcon2 = "${svg}wellcome_screen_icon_2.svg";

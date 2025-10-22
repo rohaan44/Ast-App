@@ -17,7 +17,7 @@ import 'package:ast_official/feature/on_boarding/select_weight/select_weight_vie
 import 'package:ast_official/feature/on_boarding/sign_in/sign_in_view.dart';
 import 'package:ast_official/feature/on_boarding/walk_through/walk_through_view.dart';
 import 'package:ast_official/feature/splash_screen/splash_screen.dart';
-import 'package:ast_official/feature/welcome_screen/welcome_view.dart';
+import 'package:ast_official/feature/on_boarding/welcome_screen/welcome_view.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppRouter {

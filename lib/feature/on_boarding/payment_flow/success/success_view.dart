@@ -1,3 +1,4 @@
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/payment_flow/success/success_controller.dart';
 import 'package:ast_official/feature/on_boarding/payment_flow/wallet/wallet_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
@@ -159,7 +160,7 @@ class SuccessView extends StatelessWidget {
                         child: AppButton(
                             text: "Fato",
                             onPressed: () {
-                              
+                              Navigator.pushNamedAndRemoveUntil(context, RoutePaths.homeScreenView, (route) => false);
                             }),
                       ),
                     ],

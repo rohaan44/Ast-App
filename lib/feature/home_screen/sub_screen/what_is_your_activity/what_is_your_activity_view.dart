@@ -4,6 +4,7 @@ import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/appbar/appbar.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
+import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
 import 'package:flutter/material.dart';
@@ -21,51 +22,51 @@ class _WhatIsYourActivityState extends State<WhatIsYourActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: AppColor.c252525,
-        centerTitle: true,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.keyboard_arrow_left,
-            color: AppColor.white,
-          ),
-        ),
-        title: customSlider(5, 2, AppColor.white),
-        actions: [
-          SizedBox(
-            width: cw(20),
-          ),
-          Container(
-            width: cw(57),
-            height: ch(26),
-            decoration: BoxDecoration(
-                color: AppColor.c252525,
-                borderRadius: BorderRadius.circular(cw(20))),
-            child: Center(
-              child: AppText(
-                txt: "2 of 5",
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: AppColor.cFFFFFF,
-                height: 1,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: cw(20),
-          ),
-        ],
-      ),
+      
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: cw(20)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+  SizedBox(
+              height: ch(50),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Left logo
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: SvgPicture.asset(
+                    AssetUtils.backArrow,
+                  ),
+                ),
+                SizedBox(
+                    width: cw(158), child: customSlider(5, 2, AppColor.white)),
+                Container(
+                  width: cw(57),
+                  height: ch(26),
+                  decoration: BoxDecoration(
+                      color: AppColor.c252525,
+                      borderRadius: BorderRadius.circular(cw(20))),
+                  child: Center(
+                    child: AppText(
+                      txt: "2 of 5",
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.cFFFFFF,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
             SizedBox(
-              height: ch(20),
+              height: ch(40),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -80,55 +81,58 @@ class _WhatIsYourActivityState extends State<WhatIsYourActivity> {
               ],
             ),
             SizedBox(
-              height: ch(45),
+              height: ch(50),
             ),
-            Consumer<WhatIsYourActivityController>(
-              builder: (context, model, child) {
-                return GridView.builder(
-                  shrinkWrap: true,
-                  primary: false,
-                  itemCount: model.catType.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisExtent: cw(53),
-                      crossAxisSpacing: cw(20),
-                      mainAxisSpacing: cw(20)),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        model.setSelectIndex(index);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(cw(16)),
-                            border: Border.all(color: AppColor.c252525),
-                            color: model.selectIndex == index
-                                ? AppColor.primary
-                                : AppColor.c252525.withOpacity(0.2)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                                model.catType["iconImage"][index].toString()),
-                            SizedBox(
-                              width: cw(8),
-                            ),
-                            AppText(
-                              txt: model.catType["type"][index].toString(),
-                              fontSize: 17,
-                              fontWeight: FontWeight.w500,
-                              color: AppColor.cFFFFFF,
-                              height: 1,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
+        Consumer<WhatIsYourActivityController>(
+  builder: (context, model, child) {
+    final types = model.catType["type"]!;
+    final icons = model.catType["iconImage"]!;
+
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: cw(12), // space between horizontal cards
+      runSpacing: 16, // space between rows
+      children: List.generate(types.length, (index) {
+        final isSelected = model.selectedIndex == index;
+
+        return GestureDetector(
+          onTap: () => model.setSelectIndex(index),
+          child: Container(
+            width:cw(160), // 2 per row
+            height: ch(53),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? AppColor.primary
+                  : AppColor.c252525.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: isSelected ? AppColor.primary : AppColor.c252525,
+                width: 1.2,
+              ),
             ),
-            const Spacer(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  icons[index],
+                  width: 20,
+                ),
+                const SizedBox(width: 8),
+                AppText(
+                  txt: types[index],
+                  fontSize:AppFontSize.f19,
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.cFFFFFF,
+                ),
+              ],
+            ),
+          ),
+        );
+      }),
+    );
+  },
+)
+,const Spacer(),
             AppButton(
                 buttonColor: AppColor.primary,
                 onPressed: () {

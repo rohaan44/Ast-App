@@ -106,7 +106,7 @@ Widget customSlider(int totalSegments, int activeSegments, Color color) {
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: cw(2)),
           height: ch(4),
-          width: cw(30),
+          width: cw(10),
           decoration: BoxDecoration(
             color: isActive ? color : AppColor.white.withOpacity(0.35),
             borderRadius: BorderRadius.circular(cw(10)),

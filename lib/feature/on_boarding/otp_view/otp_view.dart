@@ -94,6 +94,7 @@ class OtpView extends StatelessWidget {
                             Consumer<OtpController>(
                                 builder: (context, model, child) {
                               return primaryTextField(
+                                keyboardType:TextInputType.number,
                                   obscureText: true,
                                   border: InputBorder.none,
                                   hintText: "Inserisci il codice qui",
