@@ -4,6 +4,7 @@ import 'package:ast_official/feature/athelete_dashboard/home_screen/sub_screen/p
 import 'package:ast_official/feature/athelete_dashboard/home_screen/sub_screen/what_is_your_activity/what_is_your_activity_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/home_screen/sub_screen/what_is_your_diet_type/what_is_your_diet_type_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_management_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_profile/athlete_profile_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_controller.dart';
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_controller.dart';
 import 'package:ast_official/feature/on_boarding/otp_view/otp_controller.dart';
@@ -52,5 +53,5 @@ ChangeNotifierProvider(create: (context) => SelectObjectiveController()),
     ), 
     ChangeNotifierProvider(create: (context) => CoachHomeScreenController()),
  ChangeNotifierProvider(create: (context) => AthleteManagementController()),
-
+ChangeNotifierProvider(create: (context) => AthleteProfileController()),
 ];

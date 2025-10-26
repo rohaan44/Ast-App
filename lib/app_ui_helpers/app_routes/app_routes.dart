@@ -4,6 +4,7 @@ import 'package:ast_official/feature/athelete_dashboard/home_screen/home_screen_
 import 'package:ast_official/feature/athelete_dashboard/home_screen/sub_screen/personalize_your_experience/personalize_your_experience_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/home_screen/sub_screen/what_is_your_activity/what_is_your_activity_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/home_screen/sub_screen/what_is_your_diet_type/what_is_your_diet_type_view.dart';
+import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_profile/athelete_profile_view.dart';
 import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_view.dart';
 import 'package:ast_official/feature/coach_dashboard/notification/notification_screen.dart';
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_view.dart';
@@ -219,6 +220,15 @@ class AppRouter {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const NotificationScreen();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+         case RoutePaths.athleteProfileView:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const AthleteProfileView(athlete: null,);
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
