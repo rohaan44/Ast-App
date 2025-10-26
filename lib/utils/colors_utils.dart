@@ -5,7 +5,7 @@ class AppColor {
   AppColor._();
 
   // Primary Palette
-
+  static const c2C2C32 = Color(0xFF2C2C32);
   static const Color background = Color(0xFF121212);
   static const red = Color(0xffFF3A2F); // Error
   static const blue = Color(0xff4D9BDA);
@@ -27,9 +27,13 @@ class AppColor {
   static const cE8E9E9 = Color(0xffE8E9E9);
   static const c252525 = Color(0xff252525);
   static const c454545 = Color(0xff454545);
-  
+    static const c42A8FF = Color(0xff42A8FF);
   // Gray Scale Palette
   static const transparent = Colors.transparent;
+
+static const Color c1C1C1C = Color(0xFF1C1C1C); // A dark grey/black
+    static const Color c333333 = Color(0xFF333333); // A slightly lighter grey for the icon circle
+    static const Color cB0B0B0 = Color(0xFFB0B0B0); // A light grey for the subtitle
 
   // Color Code
   static const c6F6F6F = Color(0xff6F6F6F);

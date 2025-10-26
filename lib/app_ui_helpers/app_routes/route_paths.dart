@@ -29,4 +29,14 @@ class RoutePaths {
 
   static const String whatIsYourActivityView = '/whatIsYourActivityView';
   static const String whatIsYourDietTypeView = '/whatIsYourDietTypeView';
+
+
+
+
+  /////////////////Coaches Dashboard//////////////////////
+  
+
+    static const String coachHomeScreenView = '/coachHomeScreenView';
+    
+    static const String notificationScreen = '/notificationScreen';
 }

@@ -1,5 +1,7 @@
 import 'package:ast_official/app_ui_helpers/app_routes/app_routes.dart';
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/feature/coach_dashboard/coach_main_screen.dart';
+import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_view.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/main_provider/main_provider.dart';
 import 'package:ast_official/utils/theme/app_theme.dart';
@@ -39,9 +41,9 @@ class MyApp extends StatelessWidget {
         title: 'AST®️ Official App',
         theme: AppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
-        //home: WelcomeView(),
-        initialRoute: RoutePaths.splashScreen,
-        onGenerateRoute: AppRouter.generateRoute,
+        home: CoachMainScreen(),
+        // initialRoute: RoutePaths.splashScreen,
+         onGenerateRoute: AppRouter.generateRoute,
       );
     });
   }

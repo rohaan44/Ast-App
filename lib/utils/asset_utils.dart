@@ -12,6 +12,8 @@ class AssetUtils {
   static const String selectedRoleAthlete = "${png}select_role_athlete.png";
   static const String selectedRoleCoach = "${png}select_role_coach.png";
   static const String selectedRoleTutor = "${png}select_role_tutor.png";
+    static const String cardBg = "${png}card_back_image.png";
+
 
   //********** */ svg icons && images
   static const String cloudIcon = "${svg}cloudIcon.svg";
@@ -25,16 +27,19 @@ class AssetUtils {
   static const String bicepIcon = "${svg}bicep.svg";
 
 
+  static const String coachBottombar2 = "${svg}coach_bottombar_2.svg";
+static const String coachBottombar3 = "${svg}coach_bottombar_3.svg";
+static const String coachBottombar4 = "${svg}coach_bottombar_4.svg";
+static const String coachBottombar5 = "${svg}coach_bottombar_5.svg";
 
- static const String weightLifting = "${svg}weightlifting.svg";
+  static const String weightLifting = "${svg}weightlifting.svg";
   static const String tomato = "${svg}tomato.svg";
   static const String rice = "${svg}rice.svg";
   static const String legPiece = "${svg}leg_piece.svg";
   static const String carrot = "${svg}carrot.svg";
   static const String brocli = "${svg}brocli.svg";
   static const String beef = "${svg}beef.svg";
-static const String avocado = "${svg}avocado.svg";
-
+  static const String avocado = "${svg}avocado.svg";
 
   static const String walk = "${svg}walk.svg";
   static const String backArrow = "${svg}back_arrow.svg";
@@ -51,4 +56,9 @@ static const String avocado = "${svg}avocado.svg";
   static const String isValidate = "${svg}isValidate.svg";
 
   static const String appCrossIcon = "${svg}app_cross_icon.svg";
+
+  static const String profileIcon = "${svg}Profile.svg";
+  static const String arrowGoto = "${svg}arrow_goto.svg";
+  static const String arrowForward = "${svg}blue_forward_arrow.svg";
+    static const String bellIcon = "${svg}bel_icon.svg";
 }
