@@ -12,59 +12,60 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      body: Column(
-        children: [
-          SizedBox(height: ch(20),),
-           Padding(
-             padding:  EdgeInsets.all(cw(20)),
-             child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          GestureDetector(  
-                            onTap: (){
-                              Navigator.pop(context);
-                            },
-                            child: SvgPicture.asset(AssetUtils.backArrow),
-                          ),
-                          SizedBox(width: cw(20),),
-                          AppText(
-                            txt: "Notifiche",
-                            fontSize: AppFontSize.f24,
-                            isItalic: true,
-                            color: AppColor.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ],
-                      ),
-                      GestureDetector(
-                        child: SvgPicture.asset(
-                          AssetUtils.profileIcon,
-                          height: ch(40),
+      body: SafeArea(
+        child: Column(
+          children: [
+             Padding(
+               padding:  EdgeInsets.all(cw(20)),
+               child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            GestureDetector(  
+                              onTap: (){
+                                Navigator.pop(context);
+                              },
+                              child: SvgPicture.asset(AssetUtils.backArrow),
+                            ),
+                            SizedBox(width: cw(20),),
+                            AppText(
+                              txt: "Notifiche",
+                              fontSize: AppFontSize.f24,
+                              isItalic: true,
+                              color: AppColor.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ],
                         ),
-                      )
-                    ],
-                  ),
-           ),
-                
-        Expanded(child: 
-        SingleChildScrollView(
-          physics:const BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: cw(20)),
-          child: Column(
-            children: [
-                notificationCard(title: "Check-in", title_2: " In Ritardo", subtitle: "L'atleta John Doe ha una causa in sospeso"),
-            SizedBox(height: ch(15),),
-            notificationCard(title: "Nuovo Piano: ", title_2: " Parte Superiore Del Corpo", subtitle: "L'intelligenza artificiale ha generato un nuovo piano"),
-            SizedBox(height: ch(15),),
-            notificationCard(title: "Check-in ", title_2: " inviato", subtitle: "L'atleta Jane Roe ha inviato"),
-            
-
-            ],
-          ),
-        ))
-        ],
+                        GestureDetector(
+                          child: SvgPicture.asset(
+                            AssetUtils.profileIcon,
+                            height: ch(40),
+                          ),
+                        )
+                      ],
+                    ),
+             ),
+                  
+          Expanded(child: 
+          SingleChildScrollView(
+            physics:const BouncingScrollPhysics(),
+            padding: EdgeInsets.symmetric(horizontal: cw(20)),
+            child: Column(
+              children: [
+                  notificationCard(title: "Check-in", title_2: " In Ritardo", subtitle: "L'atleta John Doe ha una causa in sospeso"),
+              SizedBox(height: ch(15),),
+              notificationCard(title: "Nuovo Piano: ", title_2: " Parte Superiore Del Corpo", subtitle: "L'intelligenza artificiale ha generato un nuovo piano"),
+              SizedBox(height: ch(15),),
+              notificationCard(title: "Check-in ", title_2: " inviato", subtitle: "L'atleta Jane Roe ha inviato"),
+              
+        
+              ],
+            ),
+          ))
+          ],
+        ),
       ),
     );
   }
