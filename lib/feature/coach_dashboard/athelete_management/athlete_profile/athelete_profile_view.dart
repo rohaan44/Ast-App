@@ -11,6 +11,7 @@ import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
 import 'package:ast_official/utils/gradients/app_gradients.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +42,7 @@ class _AthleteProfileViewState extends State<AthleteProfileView>
 
   @override
   Widget build(BuildContext context) {
+    final model = context.read<AthleteProfileController>();
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
       body: SafeArea(
@@ -56,6 +58,7 @@ class _AthleteProfileViewState extends State<AthleteProfileView>
                 onTap: () {
                   log(widget.athlete.toString());
                   Navigator.pop(context);
+                  model.setTab(0);
                 },
                 child: SvgPicture.asset(AssetUtils.backArrow),
               ),
@@ -174,15 +177,18 @@ class _AthleteProfileViewState extends State<AthleteProfileView>
 
               // 🔹 Tab Views
               Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    _overviewTab(),
-                    _progressTab(),
-                    _checkinTab(),
-                    _plansTab(),
-                    _documentsTab(),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      _overviewTab(),
+                      _progressTab(),
+                      _checkinTab(),
+                      _plansTab(),
+                      _documentsTab(),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -260,8 +266,6 @@ class _AthleteProfileViewState extends State<AthleteProfileView>
             ],
           ),
           SizedBox(height: ch(20)),
-
-          // 🔸 Progress Chart Placeholder
           Container(
             width: double.infinity,
             padding: EdgeInsets.all(cw(16)),
@@ -755,154 +759,449 @@ class _AthleteProfileViewState extends State<AthleteProfileView>
     );
   }
 
-  Widget _plansTab() => const Center(child: Text("Piani Tab"));
+  Widget _plansTab() {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        children: [
+          trainingPlanCard(
+            title: "Fase 1 dell’ipertrofia",
+            createdDate: "15 gennaio 2025",
+            duration: "6 settimane",
+            status: "Attiva",
+            workouts: [
+              "Giorno 1: Corpo intero (squat, panca, rematore)",
+              "Giorno 2: Parte inferiore (stacco, affondi)",
+              "Giorno 3: Parte superiore (OHP, trazioni)",
+              "Giorno 4: Spinta (petto, spalle, tricipiti)",
+              "Giorno 5: Trazione (schiena, bicipiti)",
+              "Giorno 6: Gambe e glutei",
+            ],
+          ),
+          SizedBox(
+            height: ch(20),
+          ),
+          trainingPlanCard(
+            title: "Fase 1 dell’ipertrofia",
+            createdDate: "15 gennaio 2025",
+            duration: "6 settimane",
+            status: "Passato",
+            workouts: [
+              "Colaz.: 1 tazza avena in acqua/latte mandorle",
+              "Pranzo: petto di pollo alla griglia (150–200 g)",
+              "Cena: filetto di salmone (150–200 g) alla griglia o al forno",
+            ],
+          ),
+          SizedBox(
+            height: ch(50),
+          )
+        ],
+      ),
+    );
+  }
 
-  Widget _documentsTab() => const Center(child: Text("Documenti Tab"));
-}
-
-Widget activityCard({
-  required Widget child,
-  bool isGradient = true,
-  double borderRadius = 16,
-  double borderWidth = 2,
-  EdgeInsets? padding,
-  double? width,
-  ImageProvider? image,
-  double? height,
-}) {
-  return Container(
-    width: width,
-    height: height,
-    decoration: BoxDecoration(
-      image: image != null
-          ? DecorationImage(
-              image: image,
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(
-                  AppColor.background.withOpacity(0.8), BlendMode.darken))
-          : null,
-      border: Border.all(
-          width: isGradient == false ? 3 : 0,
-          color: isGradient == false ? AppColor.c2C2C32 : AppColor.transparent),
-      gradient: isGradient ? AppGradients.redGradient : null,
-      color: isGradient ? null : AppColor.transparent,
-      borderRadius: BorderRadius.circular(borderRadius),
-    ),
-    child: isGradient
-        ? Padding(
-            padding: EdgeInsets.all(borderWidth),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFF121212),
-                borderRadius: BorderRadius.circular(borderRadius - 1),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 6,
-                    offset: const Offset(0, 3),
+  Widget trainingPlanCard({
+    required String title,
+    required String createdDate,
+    required String duration,
+    required String status,
+    required List<String> workouts,
+  }) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: cw(15), vertical: ch(15)),
+      width: cw(353),
+      decoration: BoxDecoration(
+        color: AppColor.c1E1E1E,
+        borderRadius: BorderRadius.circular(cw(20)),
+        border: Border.all(width: 1, color: AppColor.cC6C6C6),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // 🔹 Header Row (Title + Status)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppText(
+                    txt: title,
+                    fontSize: AppFontSize.f19,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  SizedBox(height: ch(8)),
+                  AppText(
+                    txt: "Creato: $createdDate · Durata: $duration",
+                    fontSize: AppFontSize.f14 + 2,
+                    color: AppColor.white.withOpacity(0.7),
+                    fontWeight: FontWeight.w600,
                   ),
                 ],
               ),
-              padding: padding ?? const EdgeInsets.all(16),
-              child: child,
-            ),
-          )
-        : Padding(
-            padding: padding ?? const EdgeInsets.all(16),
-            child: child,
+              Container(
+                padding:
+                    EdgeInsets.symmetric(vertical: ch(5), horizontal: cw(8)),
+                decoration: BoxDecoration(
+                  color: _getStatusColor(status), // 👈 dynamic status color
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: AppText(
+                  txt: status,
+                  color: _getStatusTextColor(status),
+                  fontSize: AppFontSize.f12 + 5,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
-  );
-}
 
-Widget analysisCard({
+          SizedBox(height: ch(30)),
+          AppText(
+            txt: "Allenamenti:",
+            fontSize: AppFontSize.f14 + 5,
+            color: AppColor.white.withOpacity(0.7),
+            fontWeight: FontWeight.w600,
+          ),
+          SizedBox(height: ch(15)),
+
+          // 🔹 Dynamic list of workouts
+          for (var w in workouts) ...[
+            isCheckItems(w),
+            SizedBox(height: ch(10)),
+          ]
+        ],
+      ),
+    );
+  }
+
+  /// Optional helper for dynamic color
+  Color _getStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case "attiva":
+        return AppColor.green;
+      case "in attesa":
+        return AppColor.yellow;
+      case "completata":
+        return AppColor.red;
+      default:
+        return AppColor.c404040;
+    }
+  }
+
+  Color _getStatusTextColor(String status) {
+    switch (status.toLowerCase()) {
+      case "attiva":
+        return AppColor.white;
+      case "in attesa":
+        return AppColor.white;
+      case "completata":
+        return AppColor.white;
+      default:
+        return AppColor.white.withOpacity(0.08);
+    }
+  }
+
+  Widget isCheckItems(String text) {
+    return Row(
+      children: [
+        SvgPicture.asset(AssetUtils.greenCheckOutlined),
+        SizedBox(
+          width: cw(8),
+        ),
+        AppText(
+          txt: text,
+          fontSize: AppFontSize.f15 - 2,
+          fontWeight: FontWeight.normal,
+          color: AppColor.white,
+        )
+      ],
+    );
+  }
+
+  Widget _documentsTab() {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        children: [
+         documentCard(
+      title: "Referto medico",
+      date: "Sep 15, 2025",
+      type: "Medico",
+      iconPath: AssetUtils.pdfIcon,
+      onDownload: () {},
+    ),
+    SizedBox(height: ch(20)),
+     documentCard(
+      title: "Foto di progresso",
+      date: "Jul 05, 2025",
+      type: "Formazione",
+      iconPath: AssetUtils.galleryIcon,
+      onDownload: () {},
+    ),
+        SizedBox(height: ch(20)),
+    documentCard(
+      title: "Modulo di consenso.",
+      date: "Jul 05, 2025",
+      type: "Certificazione",
+      iconPath: AssetUtils.documentIcon,
+      onDownload: () {},
+    ),
+  
+   
+        ],
+      ),
+    );
+  }
+
+
+  Widget documentCard({
   required String title,
-  required String subtitle,
-  Color textColor = AppColor.white,
-  bool isBorder = false,
-  Color borderColor = AppColor.white,
-  Color backgroundColor = AppColor.red,
+  required String date,
+  required String type,
+  required String iconPath,
+  required VoidCallback onDownload,
 }) {
   return Container(
-    padding: EdgeInsets.all(cw(20)),
-    height: ch(80),
+    padding: EdgeInsets.symmetric(horizontal: cw(15), vertical: ch(15)),
     width: double.infinity,
+    height: ch(114),
     decoration: BoxDecoration(
-      color: backgroundColor,
+      color: AppColor.c1E1E1E,
       borderRadius: BorderRadius.circular(cw(20)),
-      border: isBorder
-          ? Border.all(
-              color: borderColor,
-              width: 1.5,
-            )
-          : null, // only show border if isBorder = true
+      border: Border.all(width: 1, color: AppColor.cC6C6C6),
     ),
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        AppText(
-          txt: title,
-          color: textColor,
-          fontSize: AppFontSize.f18,
-          fontWeight: FontWeight.w600,
+        // 🔹 Top Section (Icon + Title + Date)
+        Row(
+          children: [
+            Container(
+              width: cw(50),
+              height: cw(50),
+              padding: EdgeInsets.all(cw(15)),
+              decoration: BoxDecoration(
+                color: AppColor.c252525,
+                borderRadius: BorderRadius.circular(cw(50)),
+              ),
+              child: SvgPicture.asset(
+                iconPath,
+                color: AppColor.white,
+              ),
+            ),
+            SizedBox(width: cw(15)),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppText(
+                  txt: title,
+                  fontSize: AppFontSize.f19,
+                  fontWeight: FontWeight.w600,
+                ),
+                SizedBox(height: ch(8)),
+                AppText(
+                  txt: date,
+                  fontSize: AppFontSize.f14 + 2,
+                  color: AppColor.white.withOpacity(0.7),
+                  fontWeight: FontWeight.w600,
+                ),
+              ],
+            ),
+          ],
         ),
-        SizedBox(height: ch(8)),
-        AppText(
-          txt: subtitle,
-          color: textColor.withOpacity(0.9),
-          fontSize: AppFontSize.f18,
-          fontWeight: FontWeight.normal,
+
+        const Spacer(),
+
+        // 🔹 Bottom Section (Type + Download)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: ch(5),
+                horizontal: cw(10),
+              ),
+              decoration: BoxDecoration(
+                color: AppColor.c656565,
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: AppText(
+                txt: type,
+                color: AppColor.white,
+                fontSize: AppFontSize.f12 + 5,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            GestureDetector(
+              onTap: onDownload,
+              child: Container(
+                width: cw(22),
+                height: ch(22),
+                decoration: BoxDecoration(
+                  color: AppColor.green,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Icon(
+                  Icons.download,
+                  size: 16,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     ),
   );
 }
 
-Widget activityInfoContent({
-  required String topText,
-  required String mainValue,
-  required String changeValue,
-  required bool isPositiveChange,
-}) {
-  final Color changeColor =
-      isPositiveChange ? const Color(0xff4CAF50) : const Color(0xffF44336);
-  final IconData changeIcon =
-      isPositiveChange ? Icons.arrow_upward : Icons.arrow_downward;
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      AppText(
-        txt: topText,
-        color: Colors.white.withOpacity(0.7),
-        fontSize: AppFontSize.f16,
+
+ Widget activityCard({
+    required Widget child,
+    bool isGradient = true,
+    double borderRadius = 16,
+    double borderWidth = 2,
+    EdgeInsets? padding,
+    double? width,
+    ImageProvider? image,
+    double? height,
+  }) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        image: image != null
+            ? DecorationImage(
+                image: image,
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                    AppColor.background.withOpacity(0.8), BlendMode.darken))
+            : null,
+        border: Border.all(
+            width: isGradient == false ? 3 : 0,
+            color:
+                isGradient == false ? AppColor.c2C2C32 : AppColor.transparent),
+        gradient: isGradient ? AppGradients.redGradient : null,
+        color: isGradient ? null : AppColor.transparent,
+        borderRadius: BorderRadius.circular(borderRadius),
       ),
-      Center(
-        child: AppText(
-          txt: mainValue,
-          color: Colors.white,
-          fontSize: AppFontSize.f20,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      Row(
-        children: [
-          Icon(
-            changeIcon,
-            color: changeColor,
-            size: 16,
-          ),
-          const SizedBox(width: 5),
-          Text(
-            changeValue,
-            style: TextStyle(
-              color: changeColor,
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+      child: isGradient
+          ? Padding(
+              padding: EdgeInsets.all(borderWidth),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF121212),
+                  borderRadius: BorderRadius.circular(borderRadius - 1),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 6,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                padding: padding ?? const EdgeInsets.all(16),
+                child: child,
+              ),
+            )
+          : Padding(
+              padding: padding ?? const EdgeInsets.all(16),
+              child: child,
             ),
+    );
+  }
+
+  Widget analysisCard({
+    required String title,
+    required String subtitle,
+    Color textColor = AppColor.white,
+    bool isBorder = false,
+    Color borderColor = AppColor.white,
+    Color backgroundColor = AppColor.red,
+  }) {
+    return Container(
+      padding: EdgeInsets.all(cw(20)),
+      height: ch(80),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(cw(20)),
+        border: isBorder
+            ? Border.all(
+                color: borderColor,
+                width: 1.5,
+              )
+            : null, // only show border if isBorder = true
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AppText(
+            txt: title,
+            color: textColor,
+            fontSize: AppFontSize.f18,
+            fontWeight: FontWeight.w600,
+          ),
+          SizedBox(height: ch(8)),
+          AppText(
+            txt: subtitle,
+            color: textColor.withOpacity(0.9),
+            fontSize: AppFontSize.f18,
+            fontWeight: FontWeight.normal,
           ),
         ],
       ),
-    ],
-  );
+    );
+  }
+
+  Widget activityInfoContent({
+    required String topText,
+    required String mainValue,
+    required String changeValue,
+    required bool isPositiveChange,
+  }) {
+    final Color changeColor =
+        isPositiveChange ? const Color(0xff4CAF50) : const Color(0xffF44336);
+    final IconData changeIcon =
+        isPositiveChange ? Icons.arrow_upward : Icons.arrow_downward;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        AppText(
+          txt: topText,
+          color: Colors.white.withOpacity(0.7),
+          fontSize: AppFontSize.f16,
+        ),
+        Center(
+          child: AppText(
+            txt: mainValue,
+            color: Colors.white,
+            fontSize: AppFontSize.f20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Row(
+          children: [
+            Icon(
+              changeIcon,
+              color: changeColor,
+              size: 16,
+            ),
+            const SizedBox(width: 5),
+            Text(
+              changeValue,
+              style: TextStyle(
+                color: changeColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 }

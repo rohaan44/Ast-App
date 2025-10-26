@@ -38,8 +38,9 @@ static const String coachBottombar4 = "${svg}coach_bottombar_4.svg";
 static const String coachBottombar5 = "${svg}coach_bottombar_5.svg";
 
 static const String searchIcon = "${svg}search_icon.svg";
-
-
+ static const String pdfIcon = "${svg}pdf_icon.svg";
+static const String galleryIcon = "${svg}gallery_icon.svg";
+static const String documentIcon = "${svg}document_icon.svg";
   static const String weightLifting = "${svg}weightlifting.svg";
   static const String tomato = "${svg}tomato.svg";
   static const String rice = "${svg}rice.svg";
