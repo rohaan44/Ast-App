@@ -15,21 +15,8 @@ class TutorCourseSectionS1View extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TutorCourseSectionS1Controller(),
-      child: const _TutorCourseSectionS1Body(),
-    );
-  }
-}
-
-class _TutorCourseSectionS1Body extends StatelessWidget {
-  const _TutorCourseSectionS1Body();
-
-  @override
-  Widget build(BuildContext context) {
     final model = Provider.of<TutorCourseSectionS1Controller>(context);
     final course = model.course;
-
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -148,8 +135,11 @@ class _TutorCourseSectionS1Body extends StatelessWidget {
                                   fontSize: AppFontSize.f15,
                                   color: AppColor.cFFFFFF),
                               SizedBox(width: cw(12)),
-                              Icon(Icons.group,
-                                  size: cw(14), color: Colors.orangeAccent),
+                              Icon(
+                                Icons.group,
+                                size: cw(14),
+                                color: AppColor.cFF8D28,
+                              ),
                               AppText(
                                   txt: course["students"]!,
                                   fontSize: AppFontSize.f15,
@@ -157,7 +147,7 @@ class _TutorCourseSectionS1Body extends StatelessWidget {
                               SizedBox(width: cw(12)),
                               SvgPicture.asset(
                                 AssetUtils.intro,
-                                color: Colors.orangeAccent,
+                                color: AppColor.cFF8D28,
                               ),
                               AppText(
                                   txt: course["modules"]!,

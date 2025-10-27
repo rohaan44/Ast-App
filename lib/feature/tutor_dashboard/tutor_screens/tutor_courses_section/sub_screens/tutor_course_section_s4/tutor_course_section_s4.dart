@@ -12,19 +12,6 @@ import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 
 class TutorCourseSectionS4View extends StatelessWidget {
   const TutorCourseSectionS4View({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TutorCourseSectionS4Controller(),
-      child: const _TutorCourseSectionS4Body(),
-    );
-  }
-}
-
-class _TutorCourseSectionS4Body extends StatelessWidget {
-  const _TutorCourseSectionS4Body();
-
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<TutorCourseSectionS4Controller>(context);

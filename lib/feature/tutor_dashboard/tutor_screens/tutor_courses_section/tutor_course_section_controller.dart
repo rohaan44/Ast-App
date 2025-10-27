@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class TutorCourseSectionController with ChangeNotifier {
   final List<String> filterTabs = ['Tutti', 'Attivo', 'Completato', 'Bozza'];
 
+  final searchController = TextEditingController();
   int _selectedTab = 0;
   int get selectedTab => _selectedTab;
 
@@ -35,6 +36,12 @@ class TutorCourseSectionController with ChangeNotifier {
       'modules': 6,
       'students': 60,
       'status': 'Bozza',
+    },
+    {
+      'title': 'Certificazione di Specialista in Nutrizione (Trainee)',
+      'modules': 9,
+      'students': 35,
+      'status': 'Attivo',
     },
   ];
 

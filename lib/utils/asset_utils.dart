@@ -80,4 +80,5 @@ class AssetUtils {
   static const String video = "${svg}video.svg";
   static const String write = "${svg}write.svg";
   static const String scholarCap = "${svg}scholar_cap.svg";
+  static const String circularAdd = "${svg}circular_add.svg";
 }
