@@ -204,7 +204,7 @@ class CoachHomeScreenView extends StatelessWidget {
                                 decorationColor: AppColor.c42A8FF,
                               ),
                               SizedBox(width: cw(4),),
-                              SvgPicture.asset(AssetUtils.arrowForward)
+                              SvgPicture.asset(AssetUtils.arrowForward,color:  AppColor.c42A8FF,)
                             ],
                           ),
                         )

@@ -18,6 +18,7 @@ import 'package:ast_official/feature/on_boarding/select_role/select_role_control
 import 'package:ast_official/feature/on_boarding/select_weight/select_weight_controller.dart';
 import 'package:ast_official/feature/on_boarding/sign_in/sign_in_controller.dart';
 import 'package:ast_official/feature/on_boarding/welcome_screen/welcome_controller.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/bottombar/coach_bottombar/coach_bottombar_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -54,4 +55,5 @@ ChangeNotifierProvider(create: (context) => SelectObjectiveController()),
     ChangeNotifierProvider(create: (context) => CoachHomeScreenController()),
  ChangeNotifierProvider(create: (context) => AthleteManagementController()),
 ChangeNotifierProvider(create: (context) => AthleteProfileController()),
+ChangeNotifierProvider(create: (_) => FlowDataProvider()),
 ];

@@ -41,8 +41,8 @@ class MyApp extends StatelessWidget {
         title: 'AST®️ Official App',
         theme: AppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
-        home: CoachMainScreen(),
-        // initialRoute: RoutePaths.splashScreen,
+        // home: CoachMainScreen(),
+       initialRoute: RoutePaths.splashScreen,
          onGenerateRoute: AppRouter.generateRoute,
       );
     });

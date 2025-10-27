@@ -58,7 +58,10 @@ class _AthleteProfileViewState extends State<AthleteProfileView>
                   Navigator.pop(context);
                   model.setTab(0);
                 },
-                child: SvgPicture.asset(AssetUtils.backArrow),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  width: cw(200),
+                  child: SvgPicture.asset(AssetUtils.backArrow)),
               ),
 
               SizedBox(height: ch(20)),
