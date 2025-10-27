@@ -1,4 +1,4 @@
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s1/tutor_course_section_s1.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/tutor_course_section.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ast_official/ui_molecules/bottombar/tutor_bottombar/tutor_bottombar.dart';
@@ -40,7 +40,7 @@ class _TutorMainBody extends StatelessWidget {
           // index 3
           // TutorMessagesScreenView(),
           // index 4
-          TutorCourseSectionS1View(),
+          TutorCourseSectionView()
         ],
       ),
       bottomNavigationBar: tutorBottomBar(),

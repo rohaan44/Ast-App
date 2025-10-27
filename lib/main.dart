@@ -6,7 +6,7 @@ import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s3/tutor_course_section_s3.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s4/tutor_course_section_s4.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s5/tutor_course_section_s5.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/tutor_course_section_settings.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/tutor_course_section.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/main_provider/main_provider.dart';
 import 'package:ast_official/utils/theme/app_theme.dart';
@@ -46,8 +46,8 @@ class MyApp extends StatelessWidget {
         title: 'AST®️ Official App',
         theme: AppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
-        // home: CoachMainScreen(),
-        initialRoute: RoutePaths.splashScreen,
+        home: TutorMainScreen(),
+        // initialRoute: RoutePaths.splashScreen,
         onGenerateRoute: AppRouter.generateRoute,
       );
     });

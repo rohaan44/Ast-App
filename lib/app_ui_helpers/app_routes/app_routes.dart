@@ -27,6 +27,7 @@ import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s3/tutor_course_section_s3.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s4/tutor_course_section_s4.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s5/tutor_course_section_s5.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/tutor_course_section.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppRouter {
@@ -241,6 +242,15 @@ class AppRouter {
           },
         );
 //////// Tutor Profile Settings
+      case RoutePaths.tutorCourseSectionView:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const TutorCourseSectionView();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
       case RoutePaths.tutorCourseSectionS1View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {

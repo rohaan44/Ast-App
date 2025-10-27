@@ -36,11 +36,11 @@ class RoutePaths {
 
   static const String notificationScreen = '/notificationScreen';
 
+  static const String tutorCourseSectionView = '/tutorCourseSectionView';
   static const String tutorCourseSectionS1View = '/tutorCourseSectionS1View';
   static const String tutorCourseSectionS2View = '/tutorCourseSectionS2View';
   static const String tutorCourseSectionS3View = '/tutorCourseSectionS3View';
   static const String tutorCourseSectionS4View = '/tutorCourseSectionS4View';
   static const String tutorCourseSectionS5View = '/tutorCourseSectionS5View';
-
   static const String athleteProfileView = '/athleteProfileView';
 }

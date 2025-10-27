@@ -1,5 +1,4 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s2/tutor_course_section_s2_controller.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
 import 'package:ast_official/utils/asset_utils.dart';
@@ -7,29 +6,14 @@ import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 
 class TutorCourseSectionS2View extends StatelessWidget {
   const TutorCourseSectionS2View({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TutorCourseSectionS2Controller(),
-      child: const _TutorCourseSectionS2Body(),
-    );
-  }
-}
-
-class _TutorCourseSectionS2Body extends StatelessWidget {
-  const _TutorCourseSectionS2Body();
-
   @override
   Widget build(BuildContext context) {
     // final model = Provider.of<TutorCourseSectionS2Controller>(context);
-    // final course = model.course;
 
     return AppDismissKeyboard(
       child: Scaffold(
