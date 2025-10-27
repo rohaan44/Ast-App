@@ -13,6 +13,10 @@ class AssetUtils {
   static const String selectedRoleCoach = "${png}select_role_coach.png";
   static const String selectedRoleTutor = "${png}select_role_tutor.png";
   static const String cardBg = "${png}card_back_image.png";
+  static const String avatar = "${png}avatar.png";
+
+  static const String docIcon = "${png}docIcon.png";
+  // static const String cardBg = "${png}card_back_image.png";
   static const String tutorContainerBG = "${png}tutor_container_bg.png";
 
   //********** */ svg icons && images
@@ -20,6 +24,10 @@ class AssetUtils {
   static const String homeIcon = "${svg}home_icon.svg";
 
   static const String icon = "${svg}icon.svg";
+
+  static const String bodyBack = "${png}body_back.png";
+  static const String bodyFront = "${png}body_front.png";
+
   static const String icon1 = "${svg}icon1.svg";
   static const String icon2 = "${svg}icon2.svg";
   static const String icon3 = "${svg}icon3.svg";
@@ -31,6 +39,10 @@ class AssetUtils {
   static const String coachBottombar4 = "${svg}coach_bottombar_4.svg";
   static const String coachBottombar5 = "${svg}coach_bottombar_5.svg";
 
+  static const String searchIcon = "${svg}search_icon.svg";
+  static const String pdfIcon = "${svg}pdf_icon.svg";
+  static const String galleryIcon = "${svg}gallery_icon.svg";
+  static const String documentIcon = "${svg}document_icon.svg";
   static const String weightLifting = "${svg}weightlifting.svg";
   static const String tomato = "${svg}tomato.svg";
   static const String rice = "${svg}rice.svg";
@@ -58,7 +70,9 @@ class AssetUtils {
 
   static const String profileIcon = "${svg}Profile.svg";
   static const String arrowGoto = "${svg}arrow_goto.svg";
-  static const String arrowForward = "${svg}blue_forward_arrow.svg";
+  static const String blueArrowForward = "${svg}blue_forward_arrow.svg";
+  static const String arrowForward = "${svg}arrow_forward.svg";
+
   static const String bellIcon = "${svg}bel_icon.svg";
   static const String edit = "${svg}edit.svg";
   static const String intro = "${svg}intro.svg";

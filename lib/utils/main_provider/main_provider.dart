@@ -3,6 +3,8 @@ import 'package:ast_official/feature/athelete_dashboard/home_screen/home_screen_
 import 'package:ast_official/feature/athelete_dashboard/home_screen/sub_screen/personalize_your_experience/personalize_your_experience_Controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/home_screen/sub_screen/what_is_your_activity/what_is_your_activity_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/home_screen/sub_screen/what_is_your_diet_type/what_is_your_diet_type_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_management_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_profile/athlete_profile_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_controller.dart';
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_controller.dart';
 import 'package:ast_official/feature/on_boarding/otp_view/otp_controller.dart';
@@ -22,6 +24,7 @@ import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s3/tutor_course_section_s3_controller.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s4/tutor_course_section_s4_controller.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/tutor_course_section_settings_controller.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/bottombar/coach_bottombar/coach_bottombar_controller.dart';
 import 'package:ast_official/ui_molecules/bottombar/tutor_bottombar/tutor_bottombar_controller.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +54,7 @@ List<SingleChildWidget> providersList = [
   ChangeNotifierProvider(create: (context) => WhatIsYourActivityController()),
 
   ////////Coaches Dashboard//////
-  ChangeNotifierProvider(create: (context) => CoachHomeScreenController()),
+
   ChangeNotifierProvider(
     create: (context) => CoachBottomBar(),
   ),
@@ -79,4 +82,8 @@ List<SingleChildWidget> providersList = [
   ChangeNotifierProvider(
     create: (context) => TutorBottomBar(),
   ),
+  ChangeNotifierProvider(create: (context) => CoachHomeScreenController()),
+  ChangeNotifierProvider(create: (context) => AthleteManagementController()),
+  ChangeNotifierProvider(create: (context) => AthleteProfileController()),
+  ChangeNotifierProvider(create: (_) => FlowDataProvider()),
 ];

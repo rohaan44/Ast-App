@@ -6,6 +6,7 @@ import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
 import 'package:ast_official/utils/gradients/app_gradients.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -85,7 +86,7 @@ class CoachHomeScreenView extends StatelessWidget {
                         ),
                         Expanded(
                             child: activityCardItem(
-                              image: AssetImage(AssetUtils.cardBg),
+                              image:const AssetImage(AssetUtils.cardBg),
                           title: "Suggerimenti",
                           subtitle: "Dell'intelligenza\nArtificiale",
                           countLabel: "5 Suggerimenti",
@@ -168,7 +169,7 @@ class CoachHomeScreenView extends StatelessWidget {
                                 AppText(
                                   txt: "Nuovi Piani",
                                   fontWeight: FontWeight.w600,
-                                  fontSize: AppFontSize.f20 - 3,
+                                  fontSize: AppFontSize.f20 - 4,
                                 )
                               ],
                             ),
@@ -187,25 +188,25 @@ class CoachHomeScreenView extends StatelessWidget {
                           fontSize: AppFontSize.f19,
                           fontWeight: FontWeight.w600,
                         ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
+                        GestureDetector(
+                            onTap: () {
                                 Navigator.pushNamed(context, RoutePaths.notificationScreen);
                               },
-                              child: AppText(
+                            
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              AppText(
                                 txt: "Visualizza tutto",
                                 fontSize: AppFontSize.f16,
                                 color: AppColor.c42A8FF,
                                 decoration: TextDecoration.underline,
                                 decorationColor: AppColor.c42A8FF,
                               ),
-                
-                            ),
-                            SizedBox(width: cw(4),),
-                            SvgPicture.asset(AssetUtils.arrowForward)
-                          ],
+                              SizedBox(width: cw(4),),
+                              SvgPicture.asset(AssetUtils.arrowForward,color:  AppColor.c42A8FF,)
+                            ],
+                          ),
                         )
                       ],
                     )
@@ -245,7 +246,7 @@ Widget activityCard({
     height: height,
     decoration: BoxDecoration(
      image: image != null 
-          ? DecorationImage(image: image, fit: BoxFit.cover,colorFilter: ColorFilter.mode(AppColor.c000000.withOpacity(0.9), BlendMode.darken))
+          ? DecorationImage(image: image, fit: BoxFit.cover,colorFilter: ColorFilter.mode(AppColor.background.withOpacity(0.8), BlendMode.darken))
           : null,
       border: Border.all(
           width: isGradient == false ? 3 : 0,
@@ -341,10 +342,7 @@ Widget activityCardItem({
 }
 
 
-Widget notificationCard(
-
-
- {
+Widget notificationCard({
   required String title,
  required String title_2,
  required String subtitle,

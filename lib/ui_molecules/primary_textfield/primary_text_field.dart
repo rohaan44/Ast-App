@@ -26,13 +26,14 @@ Widget primaryTextField({
   bool isBorderColor = false,
   Color? borderColor,
   FocusNode? focusNode,
+  double? borderRadius,
 }) {
   return Container(
     // width: cw(327),
     height: ch(52),
     padding: EdgeInsets.zero,
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(cw(14)),
+      borderRadius: BorderRadius.circular(cw(borderRadius??14)),
       border: Border.all(color: AppColor.c252525),
       color: fillColor ?? AppColor.c151515,
     ),

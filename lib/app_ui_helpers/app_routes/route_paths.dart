@@ -31,7 +31,7 @@ class RoutePaths {
   static const String whatIsYourDietTypeView = '/whatIsYourDietTypeView';
 
   /////////////////Coaches Dashboard//////////////////////
-
+  static const String coachMainScreenView = '/coachMainScreenView';
   static const String coachHomeScreenView = '/coachHomeScreenView';
 
   static const String notificationScreen = '/notificationScreen';
@@ -41,4 +41,6 @@ class RoutePaths {
   static const String tutorCourseSectionS3View = '/tutorCourseSectionS3View';
   static const String tutorCourseSectionS4View = '/tutorCourseSectionS4View';
   static const String tutorCourseSectionS5View = '/tutorCourseSectionS5View';
+
+  static const String athleteProfileView = '/athleteProfileView';
 }

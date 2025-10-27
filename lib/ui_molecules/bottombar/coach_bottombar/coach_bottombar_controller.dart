@@ -19,4 +19,10 @@ class CoachBottomBar with ChangeNotifier {
     _selectedIndex = index;
     notifyListeners();
   }
+
+   @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 }

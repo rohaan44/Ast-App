@@ -3,6 +3,8 @@ import 'package:ast_official/feature/on_boarding/payment_flow/success/success_co
 import 'package:ast_official/feature/on_boarding/payment_flow/wallet/wallet_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
 import 'package:ast_official/utils/asset_utils.dart';
@@ -160,7 +162,14 @@ class SuccessView extends StatelessWidget {
                         child: AppButton(
                             text: "Fato",
                             onPressed: () {
+                              final athleteFlowData = context.read<FlowDataProvider>().getFlowData(customerOnboarding);
+                              if (athleteFlowData!["value"]=="Coach") {
+                                Navigator.pushNamedAndRemoveUntil(context, RoutePaths.coachMainScreenView, (route) => false);
+                              }
+                              else{
+                                
                               Navigator.pushNamedAndRemoveUntil(context, RoutePaths.homeScreenView, (route) => false);
+                              }
                             }),
                       ),
                     ],
