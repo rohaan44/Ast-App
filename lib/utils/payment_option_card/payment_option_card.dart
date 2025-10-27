@@ -1,5 +1,4 @@
 import 'package:ast_official/helpers/app_layout_helper.dart';
-import 'package:ast_official/utils/font_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ast_official/utils/colors_utils.dart';
@@ -29,7 +28,9 @@ class PaymentOptionCard extends StatelessWidget {
       child: Container(
         height: ch(54),
         margin: EdgeInsets.only(bottom: ch(12)),
-        padding:  EdgeInsets.symmetric(horizontal: cw(16), ),
+        padding: EdgeInsets.symmetric(
+          horizontal: cw(16),
+        ),
         decoration: BoxDecoration(
           color: AppColor.c161616,
           borderRadius: BorderRadius.circular(12),

@@ -20,6 +20,11 @@ import 'package:ast_official/feature/on_boarding/sign_in/sign_in_view.dart';
 import 'package:ast_official/feature/on_boarding/walk_through/walk_through_view.dart';
 import 'package:ast_official/feature/splash_screen/splash_screen.dart';
 import 'package:ast_official/feature/on_boarding/welcome_screen/welcome_view.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s1/tutor_course_section_s1.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s2/tutor_course_section_s2.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s3/tutor_course_section_s3.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s4/tutor_course_section_s4.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s5/tutor_course_section_s5.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppRouter {
@@ -112,7 +117,7 @@ class AppRouter {
             return child;
           },
         );
-         case RoutePaths.selectObjective:
+      case RoutePaths.selectObjective:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const SelectObjectiveView();
@@ -121,7 +126,7 @@ class AppRouter {
             return child;
           },
         );
-         case RoutePaths.welcomeView:
+      case RoutePaths.welcomeView:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const WelcomeView();
@@ -130,7 +135,7 @@ class AppRouter {
             return child;
           },
         );
-        case RoutePaths.chooseYourPlan:
+      case RoutePaths.chooseYourPlan:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const ChooseYourPlanView();
@@ -139,7 +144,7 @@ class AppRouter {
             return child;
           },
         );
-         case RoutePaths.walletView:
+      case RoutePaths.walletView:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const WalletView();
@@ -148,7 +153,7 @@ class AppRouter {
             return child;
           },
         );
-         case RoutePaths.successView:
+      case RoutePaths.successView:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const SuccessView();
@@ -204,8 +209,8 @@ class AppRouter {
           },
         );
 
-        /////////////////////////////Coach Dashboard//////////////////////////
-        case RoutePaths.coachHomeScreenView:
+      /////////////////////////////Coach Dashboard//////////////////////////
+      case RoutePaths.coachHomeScreenView:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const CoachHomeScreenView();
@@ -215,10 +220,56 @@ class AppRouter {
           },
         );
 
-           case RoutePaths.notificationScreen:
+      case RoutePaths.notificationScreen:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const NotificationScreen();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+//////// Tutor Profile Settings
+      case RoutePaths.tutorCourseSectionS1View:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const TutorCourseSectionS1View();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+      case RoutePaths.tutorCourseSectionS2View:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const TutorCourseSectionS2View();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+      case RoutePaths.tutorCourseSectionS3View:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const TutorCourseSectionS3View();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+      case RoutePaths.tutorCourseSectionS4View:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const TutorCourseSectionS4View();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+      case RoutePaths.tutorCourseSectionS5View:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const TutorCourseSectionS5View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;

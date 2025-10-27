@@ -56,8 +56,10 @@ class _HomeScreenviewState extends State<HomeScreenview> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.pushNamedAndRemoveUntil(context,
-                      RoutePaths.personalizeYourExperienceView, (route) => false);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      RoutePaths.personalizeYourExperienceView,
+                      (route) => false);
                 },
                 child: Container(
                   height: ch(63),
@@ -116,7 +118,6 @@ class _HomeScreenviewState extends State<HomeScreenview> {
                 height: ch(30),
               ),
               Container(
-                height: ch(154),
                 width: 100.w,
                 padding:
                     EdgeInsets.symmetric(horizontal: cw(14), vertical: ch(14)),
@@ -278,7 +279,7 @@ class _HomeScreenviewState extends State<HomeScreenview> {
                         )
                       ],
                     ),
-        
+
                     // CircularPercentIndicator(
                     //   radius: 25.0,
                     //   lineWidth: cw(7),

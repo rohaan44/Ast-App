@@ -16,7 +16,14 @@ import 'package:ast_official/feature/on_boarding/select_role/select_role_control
 import 'package:ast_official/feature/on_boarding/select_weight/select_weight_controller.dart';
 import 'package:ast_official/feature/on_boarding/sign_in/sign_in_controller.dart';
 import 'package:ast_official/feature/on_boarding/welcome_screen/welcome_controller.dart';
+import 'package:ast_official/feature/tutor_dashboard/home_screen/tutor_home_screen_controller.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s1/tutor_course_section_s1_controller.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s2/tutor_course_section_s2_controller.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s3/tutor_course_section_s3_controller.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s4/tutor_course_section_s4_controller.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/tutor_course_section_settings_controller.dart';
 import 'package:ast_official/ui_molecules/bottombar/coach_bottombar/coach_bottombar_controller.dart';
+import 'package:ast_official/ui_molecules/bottombar/tutor_bottombar/tutor_bottombar_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -31,22 +38,45 @@ List<SingleChildWidget> providersList = [
   ChangeNotifierProvider(create: (context) => SignInController()),
   ChangeNotifierProvider(create: (context) => HomeScreenController()),
   ChangeNotifierProvider(create: (context) => WhatIsYourDietTypeController()),
-  
+
   ChangeNotifierProvider(create: (context) => WalletController()),
-  
+
   ChangeNotifierProvider(create: (context) => ChooseYourPlanController()),
-    ChangeNotifierProvider(create: (context) => WelcomeController()),
+  ChangeNotifierProvider(create: (context) => WelcomeController()),
   ChangeNotifierProvider(create: (context) => SuccessController()),
-ChangeNotifierProvider(create: (context) => SelectObjectiveController()),
+  ChangeNotifierProvider(create: (context) => SelectObjectiveController()),
   ChangeNotifierProvider(
       create: (context) => PersonalizYourExperienceController()),
   ChangeNotifierProvider(create: (context) => HomeScreenController()),
   ChangeNotifierProvider(create: (context) => WhatIsYourActivityController()),
 
-
   ////////Coaches Dashboard//////
   ChangeNotifierProvider(create: (context) => CoachHomeScreenController()),
-    ChangeNotifierProvider(
-      create: (context) => CoachBottomBar(),
-    ),
+  ChangeNotifierProvider(
+    create: (context) => CoachBottomBar(),
+  ),
+  ChangeNotifierProvider(create: (context) => TutorHomeScreenController()),
+  ChangeNotifierProvider(
+    create: (context) => TutorBottomBar(),
+  ),
+  ChangeNotifierProvider(create: (context) => TutorCourseSectionController()),
+  ChangeNotifierProvider(
+    create: (context) => TutorBottomBar(),
+  ),
+  ChangeNotifierProvider(create: (context) => TutorCourseSectionS1Controller()),
+  ChangeNotifierProvider(
+    create: (context) => TutorBottomBar(),
+  ),
+  ChangeNotifierProvider(create: (context) => TutorCourseSectionS2Controller()),
+  ChangeNotifierProvider(
+    create: (context) => TutorBottomBar(),
+  ),
+  ChangeNotifierProvider(create: (context) => TutorCourseSectionS3Controller()),
+  ChangeNotifierProvider(
+    create: (context) => TutorBottomBar(),
+  ),
+  ChangeNotifierProvider(create: (context) => TutorCourseSectionS4Controller()),
+  ChangeNotifierProvider(
+    create: (context) => TutorBottomBar(),
+  ),
 ];

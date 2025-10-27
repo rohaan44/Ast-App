@@ -12,8 +12,8 @@ class AssetUtils {
   static const String selectedRoleAthlete = "${png}select_role_athlete.png";
   static const String selectedRoleCoach = "${png}select_role_coach.png";
   static const String selectedRoleTutor = "${png}select_role_tutor.png";
-    static const String cardBg = "${png}card_back_image.png";
-
+  static const String cardBg = "${png}card_back_image.png";
+  static const String tutorContainerBG = "${png}tutor_container_bg.png";
 
   //********** */ svg icons && images
   static const String cloudIcon = "${svg}cloudIcon.svg";
@@ -26,11 +26,10 @@ class AssetUtils {
   static const String sofaIcon = "${svg}sofa.svg";
   static const String bicepIcon = "${svg}bicep.svg";
 
-
   static const String coachBottombar2 = "${svg}coach_bottombar_2.svg";
-static const String coachBottombar3 = "${svg}coach_bottombar_3.svg";
-static const String coachBottombar4 = "${svg}coach_bottombar_4.svg";
-static const String coachBottombar5 = "${svg}coach_bottombar_5.svg";
+  static const String coachBottombar3 = "${svg}coach_bottombar_3.svg";
+  static const String coachBottombar4 = "${svg}coach_bottombar_4.svg";
+  static const String coachBottombar5 = "${svg}coach_bottombar_5.svg";
 
   static const String weightLifting = "${svg}weightlifting.svg";
   static const String tomato = "${svg}tomato.svg";
@@ -60,5 +59,11 @@ static const String coachBottombar5 = "${svg}coach_bottombar_5.svg";
   static const String profileIcon = "${svg}Profile.svg";
   static const String arrowGoto = "${svg}arrow_goto.svg";
   static const String arrowForward = "${svg}blue_forward_arrow.svg";
-    static const String bellIcon = "${svg}bel_icon.svg";
+  static const String bellIcon = "${svg}bel_icon.svg";
+  static const String edit = "${svg}edit.svg";
+  static const String intro = "${svg}intro.svg";
+  static const String quiz = "${svg}quiz.svg";
+  static const String video = "${svg}video.svg";
+  static const String write = "${svg}write.svg";
+  static const String scholarCap = "${svg}scholar_cap.svg";
 }

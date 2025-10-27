@@ -10,8 +10,8 @@ class AppColor {
   static const red = Color(0xffFF3A2F); // Error
   static const blue = Color(0xff4D9BDA);
   static const c231F20 = Color(0xff231F20);
- static const c161616 = Color(0xff161616);
- static const c1E1E1E = Color(0xff1E1E1E);
+  static const c161616 = Color(0xff161616);
+  static const c1E1E1E = Color(0xff1E1E1E);
   static const brown = Color(0xff8B6E4A);
   static const cFFB236 = Color(0xffFFB236);
   static const c336255 = Color(0xff336255);
@@ -27,13 +27,15 @@ class AppColor {
   static const cE8E9E9 = Color(0xffE8E9E9);
   static const c252525 = Color(0xff252525);
   static const c454545 = Color(0xff454545);
-    static const c42A8FF = Color(0xff42A8FF);
+  static const c42A8FF = Color(0xff42A8FF);
   // Gray Scale Palette
   static const transparent = Colors.transparent;
 
-static const Color c1C1C1C = Color(0xFF1C1C1C); // A dark grey/black
-    static const Color c333333 = Color(0xFF333333); // A slightly lighter grey for the icon circle
-    static const Color cB0B0B0 = Color(0xFFB0B0B0); // A light grey for the subtitle
+  static const Color c1C1C1C = Color(0xFF1C1C1C); // A dark grey/black
+  static const Color c333333 =
+      Color(0xFF333333); // A slightly lighter grey for the icon circle
+  static const Color cB0B0B0 =
+      Color(0xFFB0B0B0); // A light grey for the subtitle
 
   // Color Code
   static const c6F6F6F = Color(0xff6F6F6F);
@@ -129,4 +131,13 @@ static const Color c1C1C1C = Color(0xFF1C1C1C); // A dark grey/black
   static const c162F28 = Color(0xff162F28);
   static const c151515 = Color(0xff151515);
   static const c121212 = Color(0xff121212);
+  static const c34C759 = Color(0xff34C759);
+  static const c626262 = Color(0xff626262);
+  static const c6C6C6C = Color(0xff6C6C6C);
+  static const cEB5725 = Color(0xffEB5725);
+  static const c7E7E7E = Color(0xff7E7E7E);
+  static const c686868 = Color(0xff686868);
+  static const c292929 = Color(0xff292929);
+  static const cFF8D28 = Color(0xffFF8D28);
+  static const c00C3D0 = Color(0xff00C3D0);
 }

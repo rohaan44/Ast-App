@@ -192,7 +192,7 @@
 //       subtitle: "Eroga corsi e certifica nuovi coach.",
 //       image: AssetUtils.selectedRoleTutor),
 // ];
-import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart'; 
+import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
@@ -259,13 +259,15 @@ class SelectRoleView extends StatelessWidget {
                     final isSelected = controller.currentIndex == index;
                     final SelectType role = controller.selectTypeList[index];
                     return GestureDetector(
-                      onTap: () => controller.selectRole(index,role.english), // Call controller function
+                      onTap: () => controller.selectRole(
+                          index, role.english), // Call controller function
                       child: Container(
                         height: ch(100),
                         padding: EdgeInsets.symmetric(horizontal: cw(16)),
                         decoration: BoxDecoration(
-                           image: DecorationImage(
-                              image: AssetImage(controller.selectTypeList[index].image),
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  controller.selectTypeList[index].image),
                               fit: BoxFit.fill),
                           borderRadius: BorderRadius.circular(cw(12)),
                           border: Border.all(
@@ -298,7 +300,8 @@ class SelectRoleView extends StatelessWidget {
                                 SizedBox(
                                   width: cw(172),
                                   child: AppText(
-                                    txt: controller.selectTypeList[index].subtitle,
+                                    txt: controller
+                                        .selectTypeList[index].subtitle,
                                     fontSize: AppFontSize.f15,
                                     fontWeight: FontWeight.w400,
                                     color: AppColor.cFFFFFF.withOpacity(0.8),
@@ -318,9 +321,9 @@ class SelectRoleView extends StatelessWidget {
                   },
                   itemCount: controller.selectTypeList.length,
                 ),
-                
+
                 const Spacer(),
-                
+
                 // --- Continue Button ---
                 if (controller.currentIndex != null) ...[
                   AppButton(
