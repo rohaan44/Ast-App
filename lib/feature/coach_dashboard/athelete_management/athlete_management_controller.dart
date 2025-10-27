@@ -35,4 +35,10 @@ List<Map<String, String>> get filteredAthletes {
        return athlete['filterKey'] == selectedFilter;
     }).toList();
   }
+
+  @override
+    void dispose() {
+      searchController.dispose();
+      super.dispose();
+    }
 }

@@ -11,7 +11,6 @@ import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
 import 'package:ast_official/utils/gradients/app_gradients.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +26,6 @@ class AthleteProfileView extends StatefulWidget {
 class _AthleteProfileViewState extends State<AthleteProfileView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  @override
   @override
   void initState() {
     super.initState();
@@ -218,7 +216,7 @@ class _AthleteProfileViewState extends State<AthleteProfileView>
                         : controller.tabIndex == 3
                             ? "+ Nuovo piano"
                             : controller.tabIndex == 4
-                                ? ""
+                                ? "+ Carica documenti"
                                 : null,
                     fontSize: AppFontSize.f16,
                     fontWeight: FontWeight.w600,
@@ -498,7 +496,7 @@ class _AthleteProfileViewState extends State<AthleteProfileView>
               ),
               Center(
                 child: Container(
-                  width: cw(160),
+                  width: cw(140),
                   height: ch(118),
                   decoration: BoxDecoration(
                     color: Colors.white

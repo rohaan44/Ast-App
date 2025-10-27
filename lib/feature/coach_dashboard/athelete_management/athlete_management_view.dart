@@ -52,6 +52,9 @@ class AthleteManagementView extends StatelessWidget {
                 hintText: "Ricerca",
                 prefixIcon: SvgPicture.asset(AssetUtils.searchIcon),
                 controller: model.searchController,
+                onChanged: (value) {
+                  
+                },
                 border: InputBorder.none,
                 borderRadius: cw(50)),
             SizedBox(
