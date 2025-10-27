@@ -38,6 +38,10 @@ class AssetUtils {
   static const String coachBottombar3 = "${svg}coach_bottombar_3.svg";
   static const String coachBottombar4 = "${svg}coach_bottombar_4.svg";
   static const String coachBottombar5 = "${svg}coach_bottombar_5.svg";
+  static const String tutorBottomIcon1 = "${svg}tutorBottomIcon1.svg";
+  static const String tutorBottomIcon2 = "${svg}tutorBottomIcon2.svg";
+  static const String tutorBottomIcon3 = "${svg}tutorBottomIcon3.svg";
+  static const String tutorBottomIcon4 = "${svg}tutorBottomIcon4.svg";
 
   static const String searchIcon = "${svg}search_icon.svg";
   static const String pdfIcon = "${svg}pdf_icon.svg";

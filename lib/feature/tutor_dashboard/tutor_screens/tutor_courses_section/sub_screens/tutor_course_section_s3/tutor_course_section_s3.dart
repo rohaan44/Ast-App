@@ -29,7 +29,9 @@ class TutorCourseSectionS3View extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
                         child: SvgPicture.asset(
                           AssetUtils.backArrow,
                           height: ch(24),
@@ -264,8 +266,12 @@ class TutorCourseSectionS3View extends StatelessWidget {
                         height: ch(15),
                       ),
                       AppButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, RoutePaths.tutorCourseSectionS4View);
+                        },
                         text: "Salva modulo",
+                        fontSize: AppFontSize.f18,
                       )
                     ],
                   ),

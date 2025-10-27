@@ -159,10 +159,10 @@ class TutorCourseSectionS2View extends StatelessWidget {
                             const SizedBox(height: 20),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    RoutePaths.tutorCourseSectionS2View,
-                                    (route) => false);
+                                Navigator.pushNamed(
+                                  context,
+                                  RoutePaths.tutorCourseSectionS2View,
+                                );
                               },
                               child: Container(
                                 width: double.infinity,
@@ -252,13 +252,20 @@ class TutorCourseSectionS2View extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(height: ch(20),),
-                      AppButton(
-                        onPressed: () {},
-                        text: "Salva modifiche",
+                      SizedBox(
+                        height: ch(20),
                       ),
-                      
-                      SizedBox(height: ch(30),),
+                      AppButton(
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, RoutePaths.tutorCourseSectionS3View);
+                        },
+                        text: "Salva modifiche",
+                        fontSize: AppFontSize.f18,
+                      ),
+                      SizedBox(
+                        height: ch(30),
+                      ),
                     ],
                   ),
                 ),

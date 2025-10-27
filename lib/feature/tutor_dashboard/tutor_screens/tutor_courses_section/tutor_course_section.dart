@@ -34,14 +34,6 @@ class TutorCourseSectionView extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                     SizedBox(height: ch(16)),
-
-                    // primaryTextField(
-                    //     hintText: "Cerca Corsi...",
-                    //     prefixIcon: SvgPicture.asset(AssetUtils.searchIcon),
-                    //     controller: model.searchController,
-                    //     onChanged: (value) {},
-                    //     border: InputBorder.none,
-                    //     borderRadius: cw(50)),
                     Container(
                       height: ch(46),
                       decoration: BoxDecoration(
@@ -202,10 +194,10 @@ class TutorCourseSectionView extends StatelessWidget {
                       icon:
                           const Icon(Icons.add, color: Colors.black, size: 44),
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            RoutePaths.tutorCourseSectionS1View,
-                            (route) => false);
+                        Navigator.pushNamed(
+                          context,
+                          RoutePaths.tutorCourseSectionS1View,
+                        );
                       },
                     ),
                   ),

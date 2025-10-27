@@ -1,3 +1,4 @@
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s4/tutor_course_section_s4_controller.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
@@ -185,8 +186,12 @@ class TutorCourseSectionS4View extends StatelessWidget {
                         height: ch(15),
                       ),
                       AppButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, RoutePaths.tutorCourseSectionS5View);
+                        },
                         text: "Aggiorna e salva",
+                        fontSize: AppFontSize.f18,
                       )
                     ],
                   ),

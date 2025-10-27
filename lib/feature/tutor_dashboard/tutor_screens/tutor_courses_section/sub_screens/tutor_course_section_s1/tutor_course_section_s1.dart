@@ -21,8 +21,6 @@ class TutorCourseSectionS1View extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-
-
             Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: cw(20), vertical: ch(20)),
@@ -61,10 +59,9 @@ class TutorCourseSectionS1View extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     activityCard(
                       isGradient: true,
-                      child:  Column(
+                      child: Column(
                         children: [
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,10 +165,9 @@ class TutorCourseSectionS1View extends StatelessWidget {
                     //     borderRadius: BorderRadius.circular(cw(16)),
                     //   ),
                     //   child:),
-                   
-                   
-                   
-                   ,SizedBox(height: ch(24)),
+
+                    ,
+                    SizedBox(height: ch(24)),
                     AppText(
                       txt: "Moduli",
                       fontSize: AppFontSize.f20,
@@ -238,9 +234,9 @@ class TutorCourseSectionS1View extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(
-                            context,
-                            RoutePaths.tutorCourseSectionS2View,
-                            );
+                          context,
+                          RoutePaths.tutorCourseSectionS2View,
+                        );
                       },
                       child: Container(
                         width: double.infinity,
@@ -263,9 +259,9 @@ class TutorCourseSectionS1View extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(
-                            context,
-                            RoutePaths.tutorCourseSectionS2View,
-                            );
+                          context,
+                          RoutePaths.tutorCourseSectionS2View,
+                        );
                       },
                       child: Container(
                         width: double.infinity,
@@ -296,60 +292,56 @@ class TutorCourseSectionS1View extends StatelessWidget {
   }
 }
 
-
- Widget activityCard({
-    required Widget child,
-    bool isGradient = true,
-    double borderRadius = 16,
-    double borderWidth = 2,
-    EdgeInsets? padding,
-    double? width,
-    ImageProvider? image,
-    double? height,
-  }) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        image: image != null
-            ? DecorationImage(
-                image: image,
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                    AppColor.background.withOpacity(0.8), BlendMode.darken))
-            : null,
-        border: Border.all(
-            width: isGradient == false ? 3 : 0,
-            color:
-                isGradient == false ? AppColor.c2C2C32 : AppColor.transparent),
-        gradient: isGradient ? AppGradients.redGradient : null,
-        color: isGradient ? null : AppColor.transparent,
-        borderRadius: BorderRadius.circular(borderRadius),
-      ),
-      child: isGradient
-          ? Padding(
-              padding: EdgeInsets.all(borderWidth),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFF121212),
-                  borderRadius: BorderRadius.circular(borderRadius - 1),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      blurRadius: 6,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                padding: padding ?? const EdgeInsets.all(16),
-                child: child,
+Widget activityCard({
+  required Widget child,
+  bool isGradient = true,
+  double borderRadius = 16,
+  double borderWidth = 2,
+  EdgeInsets? padding,
+  double? width,
+  ImageProvider? image,
+  double? height,
+}) {
+  return Container(
+    width: width,
+    height: height,
+    decoration: BoxDecoration(
+      image: image != null
+          ? DecorationImage(
+              image: image,
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                  AppColor.background.withOpacity(0.8), BlendMode.darken))
+          : null,
+      border: Border.all(
+          width: isGradient == false ? 3 : 0,
+          color: isGradient == false ? AppColor.c2C2C32 : AppColor.transparent),
+      gradient: isGradient ? AppGradients.redGradient : null,
+      color: isGradient ? null : AppColor.transparent,
+      borderRadius: BorderRadius.circular(borderRadius),
+    ),
+    child: isGradient
+        ? Padding(
+            padding: EdgeInsets.all(borderWidth),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF121212),
+                borderRadius: BorderRadius.circular(borderRadius - 1),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 6,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
               ),
-            )
-          : Padding(
               padding: padding ?? const EdgeInsets.all(16),
               child: child,
             ),
-    );
-  }
-
- 
+          )
+        : Padding(
+            padding: padding ?? const EdgeInsets.all(16),
+            child: child,
+          ),
+  );
+}

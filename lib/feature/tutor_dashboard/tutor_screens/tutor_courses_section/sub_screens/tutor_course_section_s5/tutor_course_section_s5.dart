@@ -1,3 +1,4 @@
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
 import 'package:ast_official/utils/asset_utils.dart';
@@ -27,7 +28,9 @@ class TutorCourseSectionS5View extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
                         child: SvgPicture.asset(
                           AssetUtils.backArrow,
                           height: ch(24),
@@ -126,8 +129,12 @@ class TutorCourseSectionS5View extends StatelessWidget {
                         height: ch(15),
                       ),
                       AppButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, RoutePaths.tutorMainScreen);
+                        },
                         text: "Aggiorna e salva",
+                        fontSize: AppFontSize.f18,
                       )
                     ],
                   ),

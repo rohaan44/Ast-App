@@ -5,10 +5,10 @@ class TutorBottomBar with ChangeNotifier {
   final PageController pageController = PageController();
   final List<String> iconsList = [
     AssetUtils.homeIcon,
-    AssetUtils.coachBottombar2,
-    AssetUtils.coachBottombar3,
-    AssetUtils.coachBottombar4,
-    AssetUtils.coachBottombar5
+    AssetUtils.tutorBottomIcon1,
+    AssetUtils.tutorBottomIcon2,
+    AssetUtils.tutorBottomIcon3,
+    AssetUtils.tutorBottomIcon4
   ];
 
   int _selectedIndex = 0;
