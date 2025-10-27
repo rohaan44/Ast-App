@@ -5,28 +5,27 @@ import 'package:ast_official/ui_molecules/bottombar/tutor_bottombar/tutor_bottom
 import 'package:ast_official/ui_molecules/bottombar/tutor_bottombar/tutor_bottombar_controller.dart';
 import 'package:ast_official/feature/tutor_dashboard/home_screen/tutor_home_screen_view.dart';
 
+// class TutorMainScreen extends StatelessWidget {
+//   const TutorMainScreen({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return ChangeNotifierProvider(
+//       create: (_) => TutorBottomBar(),
+//       child: const _TutorMainBody(),
+//     );
+//   }
+// }
+
 class TutorMainScreen extends StatelessWidget {
   const TutorMainScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TutorBottomBar(),
-      child: const _TutorMainBody(),
-    );
-  }
-}
-
-class _TutorMainBody extends StatelessWidget {
-  const _TutorMainBody();
 
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<TutorBottomBar>(context);
 
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: PageView(
+       body: PageView(
         controller: model.pageController,
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (index) => model.setSelectedIndex(index),

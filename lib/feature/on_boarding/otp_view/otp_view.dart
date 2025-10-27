@@ -111,11 +111,16 @@ class OtpView extends StatelessWidget {
                               onPressed: () {
                                 final data =context.read<FlowDataProvider>().getFlowData(customerOnboarding);
                                 if (data!["value"]=="Tutor") {
-                                  //Add screen Name
-                                }
-                                Navigator.pushNamedAndRemoveUntil(context,
+                             Navigator.pushNamedAndRemoveUntil(context,
+                                    RoutePaths.tutorMainScreen, (route) => false);
+                                
+                                }else{
+                                  Navigator.pushNamedAndRemoveUntil(context,
                                     RoutePaths.dateOfBirth, (route) => false);
-                              },
+                             
+
+                                }
+                                 },
                               text: "Verifica",
                             ),
                             SizedBox(

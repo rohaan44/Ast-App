@@ -293,7 +293,7 @@ class SelectRoleView extends StatelessWidget {
                                 AppText(
                                   txt: controller.selectTypeList[index].title,
                                   fontSize: AppFontSize.f19,
-                                  fontWeight: FontWeight.w800,
+                                  fontWeight: FontWeight.w600,
                                   color: AppColor.cFFFFFF,
                                   height: 1.5,
                                 ),

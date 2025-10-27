@@ -33,7 +33,6 @@ class _TutorCourseSectionS3Body extends StatelessWidget {
 
     return AppDismissKeyboard(
       child: Scaffold(
-        backgroundColor: Colors.black,
         body: SafeArea(
           child: Column(
             children: [
@@ -267,8 +266,8 @@ class _TutorCourseSectionS3Body extends StatelessWidget {
                                 child: Center(
                                   child: AppText(
                                     txt: "+ Aggiungi nuovo collegamento",
-                                    fontSize: 14,
-                                    color: Colors.white,
+                                    fontSize: AppFontSize.f16,
+                                    color: AppColor.white,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),

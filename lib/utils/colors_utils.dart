@@ -6,6 +6,7 @@ class AppColor {
 
   // Primary Palette
   static const c2C2C32 = Color(0xFF2C2C32);
+    static const c313131 = Color(0xFF313131);
     static const c656565 = Color(0xFF656565);
   static const Color background = Color(0xFF121212);
   static const red = Color(0xffFF3A2F); // Error

@@ -58,32 +58,21 @@ List<SingleChildWidget> providersList = [
   ChangeNotifierProvider(
     create: (context) => CoachBottomBar(),
   ),
+  ChangeNotifierProvider(create: (context) => CoachHomeScreenController()),
+  ChangeNotifierProvider(create: (context) => AthleteManagementController()),
+  ChangeNotifierProvider(create: (context) => AthleteProfileController()),
+  ChangeNotifierProvider(create: (_) => FlowDataProvider()),
+  
+  ////////Tutor Dashboard//////
   ChangeNotifierProvider(create: (context) => TutorHomeScreenController()),
-  ChangeNotifierProvider(
-    create: (context) => TutorBottomBar(),
-  ),
+
   ChangeNotifierProvider(create: (context) => TutorCourseSectionController()),
-  ChangeNotifierProvider(
-    create: (context) => TutorBottomBar(),
-  ),
   ChangeNotifierProvider(create: (context) => TutorCourseSectionS1Controller()),
-  ChangeNotifierProvider(
-    create: (context) => TutorBottomBar(),
-  ),
   ChangeNotifierProvider(create: (context) => TutorCourseSectionS2Controller()),
   ChangeNotifierProvider(
     create: (context) => TutorBottomBar(),
   ),
   ChangeNotifierProvider(create: (context) => TutorCourseSectionS3Controller()),
-  ChangeNotifierProvider(
-    create: (context) => TutorBottomBar(),
-  ),
   ChangeNotifierProvider(create: (context) => TutorCourseSectionS4Controller()),
-  ChangeNotifierProvider(
-    create: (context) => TutorBottomBar(),
-  ),
-  ChangeNotifierProvider(create: (context) => CoachHomeScreenController()),
-  ChangeNotifierProvider(create: (context) => AthleteManagementController()),
-  ChangeNotifierProvider(create: (context) => AthleteProfileController()),
-  ChangeNotifierProvider(create: (_) => FlowDataProvider()),
+
 ];

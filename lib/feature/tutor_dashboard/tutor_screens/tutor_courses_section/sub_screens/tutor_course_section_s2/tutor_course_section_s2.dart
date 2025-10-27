@@ -33,7 +33,6 @@ class _TutorCourseSectionS2Body extends StatelessWidget {
 
     return AppDismissKeyboard(
       child: Scaffold(
-        backgroundColor: Colors.black,
         body: SafeArea(
           child: Column(
             children: [
@@ -46,7 +45,9 @@ class _TutorCourseSectionS2Body extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
                         child: SvgPicture.asset(
                           AssetUtils.backArrow,
                           height: ch(24),
@@ -67,6 +68,7 @@ class _TutorCourseSectionS2Body extends StatelessWidget {
               ),
               Expanded(
                 child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                       horizontal: cw(20), vertical: ch(16)),
                   child: Column(
@@ -266,10 +268,13 @@ class _TutorCourseSectionS2Body extends StatelessWidget {
                           ],
                         ),
                       ),
+                      SizedBox(height: ch(20),),
                       AppButton(
                         onPressed: () {},
                         text: "Salva modifiche",
-                      )
+                      ),
+                      
+                      SizedBox(height: ch(30),),
                     ],
                   ),
                 ),

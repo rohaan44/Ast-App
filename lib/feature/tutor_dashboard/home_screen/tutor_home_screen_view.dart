@@ -121,7 +121,7 @@ class TutorHomeScreenView extends StatelessWidget {
                             SizedBox(
                               width: cw(4),
                             ),
-                            SvgPicture.asset(AssetUtils.arrowForward)
+                            SvgPicture.asset(AssetUtils.arrowForward,color: AppColor.c42A8FF)
                           ],
                         )
                       ],

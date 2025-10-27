@@ -35,7 +35,9 @@ class RoutePaths {
   static const String coachHomeScreenView = '/coachHomeScreenView';
 
   static const String notificationScreen = '/notificationScreen';
+///////////////////////////Tutor Sectio//////////////////////////////
 
+  static const String tutorMainScreen = '/tutorMainScreen';
   static const String tutorCourseSectionS1View = '/tutorCourseSectionS1View';
   static const String tutorCourseSectionS2View = '/tutorCourseSectionS2View';
   static const String tutorCourseSectionS3View = '/tutorCourseSectionS3View';

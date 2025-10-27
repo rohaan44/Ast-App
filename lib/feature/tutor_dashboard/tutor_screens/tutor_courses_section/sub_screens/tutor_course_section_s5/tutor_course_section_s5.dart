@@ -32,7 +32,6 @@ class _TutorCourseSectionS5Body extends StatelessWidget {
 
     return AppDismissKeyboard(
       child: Scaffold(
-        backgroundColor: Colors.black,
         body: SafeArea(
           child: Column(
             children: [

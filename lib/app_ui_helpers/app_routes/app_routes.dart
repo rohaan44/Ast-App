@@ -22,6 +22,7 @@ import 'package:ast_official/feature/on_boarding/sign_in/sign_in_view.dart';
 import 'package:ast_official/feature/on_boarding/walk_through/walk_through_view.dart';
 import 'package:ast_official/feature/splash_screen/splash_screen.dart';
 import 'package:ast_official/feature/on_boarding/welcome_screen/welcome_view.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_main_screen.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s1/tutor_course_section_s1.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s2/tutor_course_section_s2.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_courses_section/sub_screens/tutor_course_section_s3/tutor_course_section_s3.dart';
@@ -241,6 +242,18 @@ class AppRouter {
           },
         );
 //////// Tutor Profile Settings
+
+case RoutePaths.tutorMainScreen:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const TutorMainScreen();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+
+
       case RoutePaths.tutorCourseSectionS1View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
