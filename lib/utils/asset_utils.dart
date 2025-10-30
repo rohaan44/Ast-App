@@ -22,9 +22,9 @@ class AssetUtils {
   //********** */ svg icons && images
   static const String cloudIcon = "${svg}cloudIcon.svg";
   static const String homeIcon = "${svg}home_icon.svg";
-
+  static const String nutritionIcon= "${svg}nutrition_icon.svg";
   static const String icon = "${svg}icon.svg";
-
+  static const String dumbelIcon = "${svg}dumbel_icon.svg";
   static const String bodyBack = "${png}body_back.png";
   static const String bodyFront = "${png}body_front.png";
 
@@ -56,6 +56,16 @@ class AssetUtils {
   static const String beef = "${svg}beef.svg";
   static const String avocado = "${svg}avocado.svg";
 
+
+  static const String broccoliIcon = "${svg}broccole_icon.svg";
+  static const String riceIcon = "${svg}rice_icon.svg";
+  static const String chickenIcon = "${svg}chicken_icon.svg";
+  static const String meatIcon = "${svg}meat_icon.svg";
+  static const String salmonIcon = "${svg}salmon_icon.svg";
+  static const String tofuIcon = "${svg}tofu_icon.svg";
+
+  static const String snackIcon = "${svg}snack_icon.svg";
+  static const String dietIcon = "${svg}diet_icon.svg";
   static const String walk = "${svg}walk.svg";
   static const String backArrow = "${svg}back_arrow.svg";
   static const String welcomeScreenIcon3 = "${svg}wellcome_screen_icon_3.svg";

@@ -120,7 +120,7 @@ class AppButton extends StatelessWidget {
                           style: textStyle ??
                               TextStyle(
                                 fontFamily: "SF-Pro",
-                                fontSize: fontSize ?? AppFontSize.f16,
+                                fontSize: fontSize ?? AppFontSize.f16-2,
                                 color: isButtonEnable
                                     ? textColor ?? AppColor.background
                                     : AppColor.white.withOpacity(0.5),

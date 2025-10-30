@@ -1,5 +1,7 @@
 import 'package:ast_official/app_ui_helpers/app_routes/app_routes.dart';
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/feature/coach_dashboard/plans/nutrition_plan/nutrition_plan_view.dart';
+import 'package:ast_official/feature/coach_dashboard/plans/trainning_plan/training_plan_view.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/main_provider/main_provider.dart';
 import 'package:ast_official/utils/theme/app_theme.dart';

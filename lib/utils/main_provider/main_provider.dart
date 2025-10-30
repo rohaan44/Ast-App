@@ -6,6 +6,10 @@ import 'package:ast_official/feature/athelete_dashboard/home_screen/sub_screen/w
 import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_management_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_profile/athlete_profile_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/plans/nutrition_plan/nutrition_plan_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/plans/plan_preview/plan_preview_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/plans/plans_management/plans_management_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/plans/trainning_plan/training_plan_controller.dart';
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_controller.dart';
 import 'package:ast_official/feature/on_boarding/otp_view/otp_controller.dart';
 import 'package:ast_official/feature/on_boarding/payment_flow/choose_your_plan/choose_your_plan_controller.dart';
@@ -61,8 +65,14 @@ List<SingleChildWidget> providersList = [
   ChangeNotifierProvider(create: (context) => CoachHomeScreenController()),
   ChangeNotifierProvider(create: (context) => AthleteManagementController()),
   ChangeNotifierProvider(create: (context) => AthleteProfileController()),
+  ChangeNotifierProvider(create: (_) => PlansManagementController()),
   ChangeNotifierProvider(create: (_) => FlowDataProvider()),
-  
+  ChangeNotifierProvider(create: (_) => PlanPreviewController()),
+  ChangeNotifierProvider(create: (_) => TrainingPlanController()),
+  ChangeNotifierProvider(create: (_) => NutritionPlanController()),
+
+
+
   ////////Tutor Dashboard//////
   ChangeNotifierProvider(create: (context) => TutorHomeScreenController()),
 
@@ -74,5 +84,4 @@ List<SingleChildWidget> providersList = [
   ),
   ChangeNotifierProvider(create: (context) => TutorCourseSectionS3Controller()),
   ChangeNotifierProvider(create: (context) => TutorCourseSectionS4Controller()),
-
 ];

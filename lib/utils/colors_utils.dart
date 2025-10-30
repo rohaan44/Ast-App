@@ -9,6 +9,7 @@ class AppColor {
     static const c313131 = Color(0xFF313131);
     static const c656565 = Color(0xFF656565);
   static const Color background = Color(0xFF121212);
+    static const Color c2A2A2A = Color(0xFF2A2A2A);
   static const red = Color(0xffFF3A2F); // Error
   static const blue = Color(0xff4D9BDA);
   static const c231F20 = Color(0xff231F20);

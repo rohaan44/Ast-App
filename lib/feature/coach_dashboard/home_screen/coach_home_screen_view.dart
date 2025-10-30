@@ -347,10 +347,8 @@ Widget notificationCard({
 ){
   return Container(
     alignment: Alignment.center,
-    height: ch(85),
-
-    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-    decoration: BoxDecoration(
+    padding:  EdgeInsets.symmetric(vertical: ch(16.0), horizontal: cw(16.0)),
+   decoration: BoxDecoration(
 
       color: AppColor.white.withOpacity(0.05),
       borderRadius: BorderRadius.circular(cw(20)), // Rounded corners

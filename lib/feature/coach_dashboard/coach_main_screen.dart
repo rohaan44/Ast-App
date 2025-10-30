@@ -1,5 +1,6 @@
 import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_management_view.dart';
 import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_view.dart';
+import 'package:ast_official/feature/coach_dashboard/plans/plans_management/plans_management_view.dart';
 import 'package:ast_official/ui_molecules/bottombar/coach_bottombar/coach_bottombar.dart';
 import 'package:ast_official/ui_molecules/bottombar/coach_bottombar/coach_bottombar_controller.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,8 @@ class CoachMainScreen extends StatelessWidget {
       controller: model.pageController,
       children: const[
         CoachHomeScreenView(),
-        AthleteManagementView()
+        AthleteManagementView(),
+        PlansManagementView(),
       ],
       ),
     );

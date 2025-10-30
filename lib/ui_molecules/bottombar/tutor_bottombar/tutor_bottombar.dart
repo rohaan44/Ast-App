@@ -31,13 +31,24 @@ Widget tutorBottomBar() {
               return InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {
-                  model.setSelectedIndex(index);
-                  model.pageController.animateToPage(
-                    index,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                },
+
+                   if (model.selectedIndex == index) return;
+  model.pageController.animateToPage(
+    index,
+    duration: const Duration(milliseconds: 300),
+    curve: Curves.easeInOut,
+  );
+  Future.delayed(const Duration(milliseconds: 50), () {
+    model.setSelectedIndex(index);
+  }); 
+
+                //   model.setSelectedIndex(index);
+                //   model.pageController.animateToPage(
+                //     index,
+                //     duration: const Duration(milliseconds: 300),
+                //     curve: Curves.easeInOut,
+                //   );
+                 },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
                   height: 55,
