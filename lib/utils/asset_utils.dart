@@ -22,9 +22,9 @@ class AssetUtils {
   //********** */ svg icons && images
   static const String cloudIcon = "${svg}cloudIcon.svg";
   static const String homeIcon = "${svg}home_icon.svg";
-
+  static const String nutritionIcon= "${svg}nutrition_icon.svg";
   static const String icon = "${svg}icon.svg";
-
+  static const String dumbelIcon = "${svg}dumbel_icon.svg";
   static const String bodyBack = "${png}body_back.png";
   static const String bodyFront = "${png}body_front.png";
 
