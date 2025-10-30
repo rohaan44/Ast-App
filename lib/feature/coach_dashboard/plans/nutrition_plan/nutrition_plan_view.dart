@@ -1,17 +1,15 @@
 import 'dart:math';
-import 'dart:ui';
 import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_view.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:ast_official/feature/coach_dashboard/plans/nutrition_plan/food_substitution/food_substitution_view.dart';
+import 'package:ast_official/feature/coach_dashboard/plans/nutrition_plan/shooping_list/shopping_list_view.dart';
+import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
-import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
-import 'package:ast_official/utils/gradients/app_gradients.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'nutrition_plan_controller.dart';
 
@@ -54,14 +52,14 @@ class NutritionPlanView extends StatelessWidget {
 
               Expanded(
                 child: SingleChildScrollView(
-                  physics:const BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
                       activityCard(
                           padding: const EdgeInsets.all(0),
                           isGradient: true,
                           child: Container(
-                            height: ch(610),
+                            padding: EdgeInsets.symmetric(vertical: ch(20)),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(cw(12)),
                               color: const Color(0xFF1A1A1A),
@@ -70,25 +68,29 @@ class NutritionPlanView extends StatelessWidget {
                               children: [
                                 //tabs
                                 Container(
-                                  padding: EdgeInsets.symmetric(vertical: ch(15)),
+                                  padding:
+                                      EdgeInsets.symmetric(vertical: ch(10)),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(16),
                                     // border: Border.all(color: AppColor.red, width: 1.5),
                                   ),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children:
-                                        List.generate(controller.tabs.length, (index) {
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: List.generate(
+                                        controller.tabs.length, (index) {
                                       final isSelected =
                                           controller.selectedTab == index;
-                      
+
                                       return Expanded(
                                         child: GestureDetector(
-                                          onTap: () => controller.selectTab(index),
+                                          onTap: () =>
+                                              controller.selectTab(index),
                                           child: AnimatedContainer(
-                                            duration: const Duration(milliseconds: 250),
-                                            padding:
-                                                EdgeInsets.symmetric(vertical: ch(15)),
+                                            duration: const Duration(
+                                                milliseconds: 250),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: ch(15)),
                                             decoration: BoxDecoration(
                                               border: Border(
                                                 bottom: BorderSide(
@@ -108,7 +110,8 @@ class NutritionPlanView extends StatelessWidget {
                                                 txt: controller.tabs[index],
                                                 color: isSelected
                                                     ? AppColor.white
-                                                    : AppColor.white.withOpacity(0.7),
+                                                    : AppColor.white
+                                                        .withOpacity(0.7),
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: AppFontSize.f16,
                                               ),
@@ -119,19 +122,26 @@ class NutritionPlanView extends StatelessWidget {
                                     }),
                                   ),
                                 ),
-                      
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: cw(15)),
+
+                                if (controller.selectedTab == 0)...[
+  Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: cw(15)),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Expanded(
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
+                                            SizedBox(height: ch(10),),
                                             AppText(
-                                              txt: controller.plan["title"],
+                                              txt:
+                                                  "Piano Alimentare Di Taglio\nGenerato AI",
                                               fontSize: AppFontSize.f20,
                                               fontWeight: FontWeight.w600,
                                               color: AppColor.white,
@@ -141,7 +151,8 @@ class NutritionPlanView extends StatelessWidget {
                                               txt: controller.plan["macros"],
                                               fontSize: AppFontSize.f15,
                                               height: 1.5,
-                                              color: AppColor.white.withOpacity(0.7),
+                                              color: AppColor.white
+                                                  .withOpacity(0.7),
                                             ),
                                           ],
                                         ),
@@ -155,14 +166,56 @@ class NutritionPlanView extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                              
-                              ...controller.plan["meals"].map<Widget>((meal) {
-                                    return Padding(
+                                SizedBox(
+                                  height: ch(20),
+                                ),
+                                ...controller.plan["meals"].map<Widget>((meal) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: ch(15),
+                                    ),
+                                    child: mealCard(meal),
+                                  );
+                                }).toList(),
 
-                                      padding: EdgeInsets.only(bottom: ch(15),),
-                                      child: mealCard(meal),
-                                    );
-                                  }).toList(),
+                                SizedBox(
+                                  height: ch(20),
+                                ),
+
+                                Padding(
+                                  padding:EdgeInsets.symmetric(horizontal: cw(20)),
+                                  child: Column(
+                                    children: [
+                                      AppButton(
+                                        onPressed: () {},
+                                        text: "Applica il piano",
+                                      ),
+                                  
+                                       SizedBox(
+                                    height: ch(10),
+                                  ),
+                                  AppButton(
+                                    onPressed: () {},
+                                    text: "Rigenerarsi con IA",
+                                    isBorder: true,
+                                    borderWidth: 1.5,
+                                    borderColor: AppColor.c333333,
+                                    buttonColor: AppColor.transparent,
+                                    textColor: AppColor.white,
+                                  ),
+                                    ],
+                                  ),
+                                ),
+
+                                ]
+  // AiMealPlanView(data: controller.plan)
+else if (controller.selectedTab == 1)
+  FoodSubstitutionView(mealData: controller.foodSubstitution)
+ else
+   const ShoppingListView()
+
+                              
+                               
                               
                               ],
                             ),
@@ -222,93 +275,7 @@ class NutritionPlanView extends StatelessWidget {
               //   ),
               // ),
 
-              SizedBox(height: ch(25)),
 
-              // 🔹 Plan Section
-              // Expanded(
-              //   child: SingleChildScrollView(
-              //     physics: const BouncingScrollPhysics(),
-              //     child: Container(
-              //       decoration: BoxDecoration(
-              //         gradient: AppGradients.redGradient,
-              //         borderRadius: BorderRadius.circular(cw(16)),
-              //       ),
-              //       padding: EdgeInsets.all(cw(2)),
-              //       child: Container(
-              //         decoration: BoxDecoration(
-              //           color: const Color(0xFF121212),
-              //           borderRadius: BorderRadius.circular(cw(14)),
-              //         ),
-              //         padding: EdgeInsets.all(cw(16)),
-              //         child: Column(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //           children: [
-              //             // 🔸 Header Row
-              //             Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               crossAxisAlignment: CrossAxisAlignment.start,
-              //               children: [
-              //                 Expanded(
-              //                   child: Column(
-              //                     crossAxisAlignment: CrossAxisAlignment.start,
-              //                     children: [
-              //                       AppText(
-              //                         txt: controller.plan["title"],
-              //                         fontSize: AppFontSize.f18 + 1,
-              //                         fontWeight: FontWeight.w600,
-              //                         color: AppColor.white,
-              //                       ),
-              //                       SizedBox(height: ch(6)),
-              //                       AppText(
-              //                         txt: controller.plan["macros"],
-              //                         fontSize: AppFontSize.f14 + 1,
-              //                         color: AppColor.white.withOpacity(0.7),
-              //                       ),
-              //                     ],
-              //                   ),
-              //                 ),
-              //                 progressRing(
-              //                   percent: controller.plan["progress"],
-              //                   size: 60,
-              //                   progressColor: AppColor.red,
-              //                   backgroundColor: AppColor.c252525,
-              //                 ),
-              //               ],
-              //             ),
-
-              //             SizedBox(height: ch(20)),
-
-              //             // 🔸 Meals Loop
-                          
-
-              //             SizedBox(height: ch(20)),
-
-              //             // 🔸 Buttons
-              //             AppButton(
-              //               text: "Applica il piano",
-              //               buttonColor: AppColor.white,
-              //               textColor: AppColor.background,
-              //               onPressed: () {},
-              //             ),
-              //             SizedBox(height: ch(15)),
-              //             AppButton(
-              //               text: "Rigenerarsi con IA",
-              //               buttonColor: AppColor.transparent,
-              //               isBorder: true,
-              //               borderColor: AppColor.white.withOpacity(0.3),
-              //               textColor: AppColor.white,
-              //               onPressed: () {},
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-            
-            
-            
-            
             ],
           ),
         ),
@@ -317,71 +284,80 @@ class NutritionPlanView extends StatelessWidget {
   }
 
   Widget mealCard(Map<String, dynamic> meal) {
-    return Container(
-      padding: EdgeInsets.all(cw(16)),
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColor.red.withOpacity(0.5)),
-        borderRadius: BorderRadius.circular(cw(12)),
-        color: AppColor.c1E1E1E,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppText(
-            txt: meal["title"],
-            fontSize: AppFontSize.f18,
-            color: AppColor.white,
-            fontWeight: FontWeight.w600,
-          ),
-          SizedBox(height: ch(10)),
-          ...meal["items"].map<Widget>((item) {
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: ch(6)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(cw(8)),
-                        decoration: BoxDecoration(
-                          color: AppColor.background,
-                          borderRadius: BorderRadius.circular(50),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: ch(10)),
+      child: Container(
+        padding: EdgeInsets.all(cw(16)),
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColor.red.withOpacity(0.5)),
+          borderRadius: BorderRadius.circular(cw(12)),
+          color: AppColor.c1E1E1E,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppText(
+              txt: meal["title"],
+              fontSize: AppFontSize.f18,
+              color: AppColor.white,
+              fontWeight: FontWeight.w600,
+            ),
+            SizedBox(height: ch(10)),
+            ...meal["items"].map<Widget>((item) {
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: ch(6)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(cw(8)),
+                          decoration: BoxDecoration(
+                            color: AppColor.c252525,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: SvgPicture.asset(
+                            item["icon"],
+                            height: ch(18),
+                          ),
                         ),
-                        child: SvgPicture.asset(
-                          item["icon"],
-                          height: ch(18),
+                        SizedBox(width: cw(10)),
+                        AppText(
+                          txt: item["name"],
+                          height: 1.5,
+                          fontSize: AppFontSize.f15,
                           color: AppColor.white,
                         ),
-                      ),
-                      SizedBox(width: cw(10)),
-                      AppText(
-                        txt: item["name"],
-                        fontSize: AppFontSize.f15,
-                        color: AppColor.white,
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      AppText(
-                        txt: item["secondary"],
-                        fontSize: AppFontSize.f15,
-                        color: AppColor.white,
-                      ),
-                      AppText(
-                        txt: item["macros"],
-                        fontSize: AppFontSize.f14,
-                        color: AppColor.white.withOpacity(0.6),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            );
-          }).toList(),
-        ],
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        AppText(
+                          txt: item["secondary1"],
+                          fontSize: AppFontSize.f14 + 2,
+                          color: AppColor.white.withOpacity(0.7),
+                        ),
+                        SizedBox(
+                          height: ch(6),
+                        ),
+                        AppText(
+                          txt: item["secondary2"],
+                          fontSize: AppFontSize.f14 + 2,
+                          color: AppColor.white.withOpacity(0.7),
+                        ),
+                      ],
+                    ),
+                    SvgPicture.asset(AssetUtils.arrowForward)
+                  ],
+                ),
+              );
+            }).toList(),
+          ],
+        ),
       ),
     );
   }

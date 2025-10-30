@@ -20,40 +20,102 @@ class NutritionPlanController with ChangeNotifier {
         "items": [
           {
             "icon": AssetUtils.nutritionIcon,
-            "name": "Farina d'avena + Frullato proteico",
-            "secondary": "400 kcal",
-            "macros": "30P / 40C / 10F"
+            "name": "Farina d'avena + \nFrullato proteico",
+            "secondary1": "400 kcal | 30P / 40C / 10F",
+            "secondary2": "480 kcal, 45P / 40C / 15F"
           },
-          {
-            "icon": AssetUtils.nutritionIcon,
-            "name": "Yogurt Greco + Frutti Di Bosco",
-            "secondary": "480 kcal",
-            "macros": "45P / 40C / 15F"
-          }
+          
         ]
       },
       {
         "title": "Pranzo",
         "items": [
           {
-            "icon": AssetUtils.nutritionIcon,
-            "name": "Insalata Di Pollo Alla Griglia",
-            "secondary": "220 kcal",
-            "macros": "20P / 30C / 15F"
-          }
+            "icon": AssetUtils.dietIcon,
+            "name": "Insalata Di\nPollo Alla Griglia",
+            "secondary1": "Yogurt Greco + Frutti Di Bosco",
+            "secondary2": "220 kcal, 20P / 30C / 15F"
+          },
+          // {
+          //   "icon": "",
+          //   "name": "Yogurt Greco + Frutti Di Bosco",
+          //   "secondary1": "480 kcal",
+          //   "secondary2": "45P / 40C / 15F"
+          // }
         ]
       },
       {
         "title": "Cena",
         "items": [
           {
-            "icon": AssetUtils.nutritionIcon,
-            "name": "Yogurt al Salmone + Frutti Di Bosco",
-            "secondary": "65 kcal",
-            "macros": "20P / 30C / 15F"
+            "icon": AssetUtils.snackIcon,
+            "name": "Yogurt al Salmone +\nFrutti Di Bosco",
+            "secondary1": "Vendure",
+            "secondary2": "65 kcal, 20P / 30C / 15FF"
           }
         ]
       }
     ]
   };
+
+
+  final Map<String, dynamic> foodSubstitution = {
+  "title": "Pranzo",
+  "current": {
+    
+    "name": "Insalata Di Pollo\nAlla Griglia",
+    "alt": "Green Yogurt + Berries",
+    "macros": "400 kcal, 30P / 40C / 10F",
+  },
+  "alternatives": [
+    {
+      "icon": AssetUtils.meatIcon,
+      "name": "Petto di tacchino",
+      "macros": "400 kcal, 30P / 40C / 10F",
+    },
+    {
+      "icon": AssetUtils.tofuIcon,
+      "name": "Tofu",
+      "macros": "400 kcal, 30P / 40C / 10F",
+    },
+    {
+      "icon": AssetUtils.salmonIcon,
+      "name": "Salmone (più grasso)",
+      "macros": "400 kcal, 30P / 40C / 10F",
+    },
+  ],
+  "quickSubs": [
+    {"icon": AssetUtils.chickenIcon, "name": "Pollo"},
+    {"icon": AssetUtils.riceIcon, "name": "Riso"},
+    {"icon": AssetUtils.broccoliIcon, "name": "Broccole"},
+  ],
+};
+
+ final Map<String, List<String>> shoppingList = {
+    "Proteine": [
+      "Petto di pollo (1,5 kg)",
+      "Salmone (1 kg)",
+      "Yogurt greco (6 tazze)"
+    ],
+    "Carboidrati": [
+      "Riso alle mandorle (2 kg)",
+      "Olio d'oliva (500 ml)",
+      "Burro di arachidi (1 barattolo)"
+    ],
+    "Verdure/Frutta": [
+      "Mela (mezzo kg)",
+      "Spinaci 500g",
+    ],
+  };
+
+  final Set<String> checkedItems = {};
+
+  void toggleItem(String item) {
+    if (checkedItems.contains(item)) {
+      checkedItems.remove(item);
+    } else {
+      checkedItems.add(item);
+    }
+    notifyListeners();
+  }
 }
