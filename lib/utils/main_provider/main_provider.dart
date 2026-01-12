@@ -1,5 +1,7 @@
 import 'package:ast_official/data/repository/auth_repo.dart';
+import 'package:ast_official/data/repository/onboarding_repo.dart';
 import 'package:ast_official/domain/repository/auth_repo_service.dart';
+import 'package:ast_official/domain/repository/onboarding_repo_service.dart';
 import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_chat/athelet_chat_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/dashboard_home_screen/dashboard_home_screen_controller.dart';
@@ -82,19 +84,31 @@ List<SingleChildWidget> providersList = [
   Provider<AuthRepository>(
     create: (context) => AuthRepository(),
   ),
+  Provider<OnboardingRepo>(
+    create: (context) => OnboardingRepo(),
+  ),
   Provider<AuthRepoService>(
     create: (context) => AuthRepoService(
       authRepository: context.read<AuthRepository>(),
     ),
   ),
+  Provider<OnboardingRepoService>(
+      create: (context) => OnboardingRepoService(
+          onboardingRepository: context.read<OnboardingRepo>())),
   ChangeNotifierProvider(create: (context) => SelectRoleController()),
-  ChangeNotifierProvider(create: (context) => SelectGenderController()),
+  ChangeNotifierProvider(
+      create: (context) => SelectGenderController(
+          onboardingRepoService: context.read<OnboardingRepoService>())),
   ChangeNotifierProvider(create: (context) => PersonHeightController()),
-  ChangeNotifierProvider(create: (context) => SelectWeightController()),
+  ChangeNotifierProvider(
+      create: (context) => SelectWeightController(
+          onboardingRepoService: context.read<OnboardingRepoService>())),
   ChangeNotifierProvider(
       create: (context) =>
           OtpController(authRepoService: context.read<AuthRepoService>())),
-  ChangeNotifierProvider(create: (context) => DateOfBirthController()),
+  ChangeNotifierProvider(
+      create: (context) => DateOfBirthController(
+          onboardingRepoService: context.read<OnboardingRepoService>())),
   ChangeNotifierProvider(create: (context) => DashboardController()),
   ChangeNotifierProvider(
       create: (context) =>
@@ -114,11 +128,13 @@ List<SingleChildWidget> providersList = [
   //         )),
   ChangeNotifierProvider(create: (context) => HomeScreenController()),
   ChangeNotifierProvider(create: (context) => WhatIsYourDietTypeController()),
-  ChangeNotifierProvider(create: (context) => WalletController()),
-  ChangeNotifierProvider(create: (context) => ChooseYourPlanController()),
+  ChangeNotifierProvider(create: (context) => WalletController(onboardingRepoService: context.read<OnboardingRepoService>())),
+  ChangeNotifierProvider(create: (context) => ChooseYourPlanController(onboardingRepoService: context.read<OnboardingRepoService>())),
   ChangeNotifierProvider(create: (context) => WelcomeController()),
   ChangeNotifierProvider(create: (context) => SuccessController()),
-  ChangeNotifierProvider(create: (context) => SelectObjectiveController()),
+  ChangeNotifierProvider(
+      create: (context) => SelectObjectiveController(
+          onboardingRepoService: context.read<OnboardingRepoService>())),
   ChangeNotifierProvider(
       create: (context) => PersonalizYourExperienceController()),
   ChangeNotifierProvider(create: (context) => HomeScreenController()),

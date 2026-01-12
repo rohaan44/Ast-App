@@ -1,4 +1,5 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/feature/on_boarding/payment_flow/choose_your_plan/choose_your_plan_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
@@ -19,7 +20,14 @@ class ChooseYourPlanView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
    final flowData = context.read<FlowDataProvider>().getFlowData(certificationRenew);
-final isRenew = flowData != null ? flowData["isRenew"] ?? false : false;
+  final isRenew = flowData != null ? flowData["isRenew"] ?? false : false;
+  final planController = context.watch<ChooseYourPlanController>();
+  
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (planController.plans.isEmpty && !planController.isLoading) {
+      planController.getPlans(context);
+    }
+  });
     return Scaffold(
       body: SafeArea(
         child: Padding(

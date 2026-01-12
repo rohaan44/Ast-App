@@ -10,9 +10,10 @@ class AuthRepoService {
   Future<AuthResponseModel> register(
       {required String email,
       required String password,
+      required String name,
       required String role}) async {
     final response = await authRepository.register(
-        email: email, password: password, role: role);
+        email: email, password: password, name: name, role: role);
 
     if (response.success == true && response.data != null) {
       if (response.data!.accessToken != null) {
@@ -64,7 +65,7 @@ class AuthRepoService {
     return false;
   }
 
- Future verifyOtp({required String email,
+ Future <Map<String, dynamic>> verifyOtp({required String email,
       required String code}) async {
     final response = await authRepository.verifyOtp(email: email,
         code: code);

@@ -1,6 +1,8 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/person_height/person_height_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/appbar/appbar.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
@@ -14,6 +16,8 @@ class PersonHeightView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<PersonHeightController>();
+
     return Scaffold(
       body: Stack(
         children: [
@@ -155,6 +159,13 @@ class PersonHeightView extends StatelessWidget {
                   AppButton(
                       buttonColor: AppColor.white,
                       onPressed: () {
+                       context.read<FlowDataProvider>().addOrUpdateFlow(
+                        flowTag: customerOnboarding, data: {
+                          "height": {
+                            "value": model.currentList[model.selectedIndex],
+                            "unit": model.isCm?"cm":"feet"
+                          }
+                        });
                         Navigator.pushNamedAndRemoveUntil(context, RoutePaths.selectWeight, (route) => false);
                       },
                       text: "Avanti",

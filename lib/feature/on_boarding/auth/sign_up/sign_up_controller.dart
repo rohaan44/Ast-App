@@ -28,9 +28,11 @@ class SignUpController with ChangeNotifier {
       bool canProceedToOtp = false;
       final email = emailController.text.trim();
       final password = passwordController.text.trim();
+      final name = nameController.text.trim();
 
       // 1️⃣ Try Register
       final registerResponse = await authRepoService.register(
+        name: name,
         email: email,
         password: password,
         role: role,
@@ -90,8 +92,6 @@ class SignUpController with ChangeNotifier {
         notifyListeners();
         return true;
       }
-
-      // 5️⃣ OTP Failed
       if (otpResponse is Map) {
         _errorMessage =
             otpResponse['message'] ?? otpResponse['error'] ?? 'OTP failed';
