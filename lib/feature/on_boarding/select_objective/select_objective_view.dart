@@ -153,12 +153,10 @@ class SelectObjectiveView extends StatelessWidget {
                 child: Column(children: [
                    const Spacer(),
                      AppButton(
-                                // isButtonEnable: isEnbleBtn,
+                      isLoading: controller.isLoading,
                                 borderRadius: cw(50),
                                 onPressed: () {
-                                 
-                                   Navigator.pushNamedAndRemoveUntil(context, RoutePaths.welcomeView, (route) => false);
-                                 
+                                controller.sendFitnessGoal(context);
                                 },
                                 buttonColor: AppColor.cFFFFFF,
                                 text: "Avanti",

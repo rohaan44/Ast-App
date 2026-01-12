@@ -22,8 +22,11 @@ class OtpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final flowData =
-        context.read<FlowDataProvider>().getFlowData(resetPassword);
+    final model = context.watch<OtpController>();
+    final data =
+        context.read<FlowDataProvider>().getFlowData(customerOnboarding);
+    final role = data?["value"] ?? "";
+
     return Scaffold(
         body: AppDismissKeyboard(
       child: Stack(children: [
@@ -118,13 +121,8 @@ class OtpView extends StatelessWidget {
                               height: ch(25),
                             ),
                             AppButton(
+                              isLoading: model.isLoading,
                               onPressed: () {
-                                final data = context
-                                    .read<FlowDataProvider>()
-                                    .getFlowData(customerOnboarding);
-
-                                final role = data?["value"] ?? "";
-
                                 if (role == "Tutor") {
                                   Navigator.pushNamedAndRemoveUntil(
                                     context,
@@ -132,10 +130,14 @@ class OtpView extends StatelessWidget {
                                     (route) => false,
                                   );
                                 } else {
-                                  Navigator.pushNamedAndRemoveUntil(
+                                  final data = context
+                                      .read<FlowDataProvider>()
+                                      .getFlowData(customerSignIn);
+                                  final email = data?["email"] ?? "";
+                                  model.verifyOtp(
                                     context,
-                                    RoutePaths.dateOfBirth,
-                                    (route) => false,
+                                    email,
+                                    model.otpTextController.text,
                                   );
                                 }
                               },

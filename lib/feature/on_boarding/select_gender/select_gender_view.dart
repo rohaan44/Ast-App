@@ -1,4 +1,3 @@
-import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/select_gender/select_gender_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
@@ -14,6 +13,7 @@ class SelectGenderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<SelectGenderController>();
     return Scaffold(
       body: Stack(
         children: [
@@ -92,10 +92,10 @@ class SelectGenderView extends StatelessWidget {
                   }),
                   const Spacer(),
                   AppButton(
+                    isLoading: model.isLoading,
                       buttonColor: AppColor.white,
                       onPressed: () {
-                        
-                        Navigator.pushNamedAndRemoveUntil(context, RoutePaths.personHeight, (route) => false);
+                       model.sendGender(context);
                       },
                       text: "Avanti",
                       fontSize: AppFontSize.f16,

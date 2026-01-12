@@ -1,4 +1,5 @@
-import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'dart:developer';
+
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
@@ -14,6 +15,7 @@ class DateOfBirthView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<DateOfBirthController>();
     return Scaffold(
       body: Stack(
         children: [
@@ -96,10 +98,9 @@ class DateOfBirthView extends StatelessWidget {
                                       childCount: dobProvider.days.length,
                                       builder: (context, index) => Center(
                                         child: AppText(
-                                          txt:dobProvider.days[index],
-                                          
-                                              fontSize: AppFontSize.f16,
-                                              color: AppColor.white,
+                                          txt: dobProvider.days[index],
+                                          fontSize: AppFontSize.f16,
+                                          color: AppColor.white,
                                         ),
                                       ),
                                     ),
@@ -121,13 +122,11 @@ class DateOfBirthView extends StatelessWidget {
                                         ListWheelChildBuilderDelegate(
                                       childCount: dobProvider.months.length,
                                       builder: (context, index) => Center(
-                                        child:AppText(
-                                          // Assuming AppText is similar to Text
-                                          txt:dobProvider.months[index],
-                                          
-                                              fontSize: AppFontSize.f16,
-                                              color: AppColor.white),
-                                        
+                                        child: AppText(
+                                            // Assuming AppText is similar to Text
+                                            txt: dobProvider.months[index],
+                                            fontSize: AppFontSize.f16,
+                                            color: AppColor.white),
                                       ),
                                     ),
                                   ),
@@ -148,13 +147,12 @@ class DateOfBirthView extends StatelessWidget {
                                         ListWheelChildBuilderDelegate(
                                       childCount: dobProvider.years.length,
                                       builder: (context, index) => Center(
-                                        child: AppText(txt:
-                                          // Assuming AppText is similar to Text
-                                          dobProvider.years[index],
-                                         
-                                             
-                                              fontSize: AppFontSize.f16,
-                                              color: AppColor.white,
+                                        child: AppText(
+                                          txt:
+                                              // Assuming AppText is similar to Text
+                                              dobProvider.years[index],
+                                          fontSize: AppFontSize.f16,
+                                          color: AppColor.white,
                                         ),
                                       ),
                                     ),
@@ -167,14 +165,20 @@ class DateOfBirthView extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-              AppButton(onPressed: (){
-                Navigator.pushNamedAndRemoveUntil(context, RoutePaths.selectGender, (route) => false);
-              },text: "Avanti",),
-              SizedBox(height: ch(40),)
+                    AppButton(
+                      isLoading: model.isLoading,
+                      onPressed: () {
+                        model.sendDateOfBirth(context, model.fullDate);
+                        //  log(model.fullDate.toString());
+                      },
+                      text: "Avanti",
+                    ),
+                    SizedBox(
+                      height: ch(40),
+                    )
                   ],
                 ),
               )),
-              
         ],
       ),
     );
