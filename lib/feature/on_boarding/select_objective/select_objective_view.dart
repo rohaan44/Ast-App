@@ -1,4 +1,3 @@
-import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
@@ -153,12 +152,10 @@ class SelectObjectiveView extends StatelessWidget {
                 child: Column(children: [
                    const Spacer(),
                      AppButton(
-                                // isButtonEnable: isEnbleBtn,
+                      isLoading: controller.isLoading,
                                 borderRadius: cw(50),
                                 onPressed: () {
-                                 
-                                   Navigator.pushNamedAndRemoveUntil(context, RoutePaths.welcomeView, (route) => false);
-                                 
+                                controller.sendFitnessGoal(context);
                                 },
                                 buttonColor: AppColor.cFFFFFF,
                                 text: "Avanti",

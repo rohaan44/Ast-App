@@ -14,7 +14,7 @@ class PersonHeightController with ChangeNotifier {
   /// Generate feet values (4.1 → 6.9)
   List<String> get piediList {
     List<String> values = [];
-    for (double i = 4.1; i <= 6.9; i += 0.1) {
+    for (double i = 4.1; i <= 8.0; i += 0.1) {
       values.add(i.toStringAsFixed(1));
     }
     return values;

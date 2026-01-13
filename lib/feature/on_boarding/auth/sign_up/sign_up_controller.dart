@@ -4,22 +4,21 @@ import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class SignInController with ChangeNotifier {
+class SignUpController with ChangeNotifier {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   final AuthRepoService authRepoService;
-  SignInController({required this.authRepoService});
+  SignUpController({required this.authRepoService});
   bool _isLoading = false;
   String? _errorMessage;
 
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
-  Future<bool> register(String role, BuildContext context) async {
+  Future<bool> register(String role, context) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
@@ -28,9 +27,11 @@ class SignInController with ChangeNotifier {
       bool canProceedToOtp = false;
       final email = emailController.text.trim();
       final password = passwordController.text.trim();
+      final name = nameController.text.trim();
 
       // 1️⃣ Try Register
       final registerResponse = await authRepoService.register(
+        name: name,
         email: email,
         password: password,
         role: role,
@@ -90,8 +91,6 @@ class SignInController with ChangeNotifier {
         notifyListeners();
         return true;
       }
-
-      // 5️⃣ OTP Failed
       if (otpResponse is Map) {
         _errorMessage =
             otpResponse['message'] ?? otpResponse['error'] ?? 'OTP failed';

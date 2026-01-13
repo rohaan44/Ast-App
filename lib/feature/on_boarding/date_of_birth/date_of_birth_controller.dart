@@ -1,7 +1,12 @@
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/domain/repository/onboarding_repo_service.dart';
+import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class DateOfBirthController extends ChangeNotifier {
-  DateOfBirthController() {
+  final OnboardingRepoService onboardingRepoService;
+  DateOfBirthController({required this.onboardingRepoService}) {
     // Initialize with default values if needed
     _selectedDay = days[0];
     _selectedMonth = months[0];
@@ -10,23 +15,34 @@ class DateOfBirthController extends ChangeNotifier {
     // You can also create a FixedExtentScrollController for each wheel
     // to programmatically set the initial item.
   }
-  
+
   // --- DATA LISTS ---
 
   // List of days (1-31)
-  final List<String> days = List.generate(31, (index) => (index + 1).toString());
+  final List<String> days =
+      List.generate(31, (index) => (index + 1).toString());
 
   // List of months in Italian
   final List<String> months = [
-    'Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu',
-    'Lug', 'Agos', 'Sett', 'Ott', 'Nov', 'Dic'
+    'Gen',
+    'Feb',
+    'Mar',
+    'Apr',
+    'Mag',
+    'Giu',
+    'Lug',
+    'Agos',
+    'Sett',
+    'Ott',
+    'Nov',
+    'Dic'
   ];
-  
+
   // List of years from 1960 to the current year
   final List<String> years = List.generate(
       DateTime.now().year - 1960 + 1, // Total number of years
       (index) => (1960 + index).toString() // Generate year string
-  ).reversed.toList(); // Reverse so recent years are at the top
+      ).reversed.toList(); // Reverse so recent years are at the top
 
   // --- SELECTED VALUES ---
   late String _selectedDay;
@@ -37,14 +53,16 @@ class DateOfBirthController extends ChangeNotifier {
   String get selectedDay => _selectedDay;
   String get selectedMonth => _selectedMonth;
   String get selectedYear => _selectedYear;
-  String get fullDate => '$_selectedDay $_selectedMonth $_selectedYear';
-
+  String get fullDate {
+    String day = _selectedDay.padLeft(2, '0');
+    int monthIndex = months.indexOf(_selectedMonth) + 1;
+    String month = monthIndex.toString().padLeft(2, '0');
+    return '$_selectedYear-$month-$day';
+  }
 
   // --- METHODS to update the state ---
   void setSelectedDay(int index) {
     _selectedDay = days[index];
-    // No need to call notifyListeners() if you only want to read the final date once
-    // Call it if other parts of the UI need to react to the change instantly.
   }
 
   void setSelectedMonth(int index) {
@@ -53,5 +71,49 @@ class DateOfBirthController extends ChangeNotifier {
 
   void setSelectedYear(int index) {
     _selectedYear = years[index];
+  }
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  Future sendDateOfBirth(context, String dateOfBirth) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final response =
+          await onboardingRepoService.sendDateOfBirth(dateOfBirth: dateOfBirth);
+
+      if (response['success'] == true) {
+        final bool success = response['success'] == true;
+        final String message = response['message'] ?? 'Something went wrong';
+        showApiSnackBar(
+          context,
+          title: "Success",
+          message: message,
+          isSuccess: success,
+        );
+        Navigator.pushNamedAndRemoveUntil(
+            context, RoutePaths.selectGender, (route) => false);
+      } else {
+        showApiSnackBar(
+          context,
+          title: "Error",
+          message: "${response['message']}",
+          isSuccess: false,
+        );
+      }
+    } catch (e) {
+      _isLoading = false;
+      notifyListeners();
+      showApiSnackBar(
+        context,
+        title: "Error",
+        message: e.toString(),
+        isSuccess: false,
+      );
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 }

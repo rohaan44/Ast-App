@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/payment_flow/wallet/wallet_controller.dart';
 import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
@@ -21,8 +23,11 @@ class WalletView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-       final flowData = context.read<FlowDataProvider>().getFlowData(certificationRenew);
-final isRenew = flowData != null ? flowData["isRenew"] ?? false : false;
+    final model = context.watch<SelectRoleController>();
+    final flowData =
+        context.read<FlowDataProvider>().getFlowData(certificationRenew);
+    final isRenew = flowData != null ? flowData["isRenew"] ?? false : false;
+
     return Scaffold(
       body: SafeArea(
           child: Padding(
@@ -35,12 +40,12 @@ final isRenew = flowData != null ? flowData["isRenew"] ?? false : false;
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-          highlightColor: AppColor.transparent,
-          focusColor: AppColor.transparent,
-          splashColor: AppColor.transparent,
-          icon: SvgPicture.asset(AssetUtils.backArrow),
-          onPressed: () => Navigator.pop(context),
-        ),
+                          highlightColor: AppColor.transparent,
+                          focusColor: AppColor.transparent,
+                          splashColor: AppColor.transparent,
+                          icon: SvgPicture.asset(AssetUtils.backArrow),
+                          onPressed: () => Navigator.pop(context),
+                        ),
                         SvgPicture.asset(AssetUtils.walkthroughIcon),
                         const SizedBox.shrink()
                       ],
@@ -109,28 +114,47 @@ final isRenew = flowData != null ? flowData["isRenew"] ?? false : false;
                     SizedBox(
                       height: ch(20),
                     ),
-
-                    if(context.read<SelectRoleController>().selectedRole=="Athlete")...[
-                      
-                    paymentSummaryCard("Piano","Base","Importo" ,"€79.00"),
-                    ]else if(context.read<SelectRoleController>().selectedRole=="Coach")...[
-                      if(isRenew)...[
-                        paymentSummaryCard("Rinnovo", "Rinnovo della licenza", "Annuale", "€249.00")
-                      ]else paymentSummaryCard("Certificazione", "Quota di certificazione", "Una tantum", "€599.00")
+                    if (context.read<SelectRoleController>().selectedRole ==
+                        "Athlete") ...[
+                      paymentSummaryCard("Piano", "Base", "Importo", "€79.00"),
+                    ] else if (context
+                            .read<SelectRoleController>()
+                            .selectedRole ==
+                        "Coach") ...[
+                      if (isRenew) ...[
+                        paymentSummaryCard("Rinnovo", "Rinnovo della licenza",
+                            "Annuale", "€249.00")
+                      ] else
+                        paymentSummaryCard("Certificazione",
+                            "Quota di certificazione", "Una tantum", "€599.00")
                     ],
-
-                   const Spacer(),
-                   AppButton(onPressed: (){
-                   Navigator.pushNamedAndRemoveUntil(
+                    const Spacer(),
+                    AppButton(
+                      onPressed: () {
+                        if (model.selectedRole == "stripe") {
+                          log("stripe");
+                        } else if (model.selectedRole == "apple") {
+                          log("apple");
+                        } else if (model.selectedRole == "paypal") {
+                          log("paypal");
+                        } else if (model.selectedRole == "google") {
+                          log("google");
+                        }
+                        Navigator.pushNamedAndRemoveUntil(
                             context, RoutePaths.successView, (route) => false);
-                   },text: "Paga ora",),
-                   SizedBox(height: ch(10),)
+                      },
+                      text: "Paga ora",
+                    ),
+                    SizedBox(
+                      height: ch(10),
+                    )
                   ]))),
     );
   }
 }
 
-Widget paymentSummaryCard(String pkg,String pkgFees, String type, String price) {
+Widget paymentSummaryCard(
+    String pkg, String pkgFees, String type, String price) {
   return Container(
       padding: EdgeInsets.all(cw(16)),
       height: ch(133),
@@ -180,7 +204,9 @@ Widget paymentSummaryCard(String pkg,String pkgFees, String type, String price) 
         SizedBox(
           height: ch(10),
         ),
-        DottedDivider(color: AppColor.white.withOpacity(0.1),),
+        DottedDivider(
+          color: AppColor.white.withOpacity(0.1),
+        ),
         SizedBox(
           height: ch(15),
         ),

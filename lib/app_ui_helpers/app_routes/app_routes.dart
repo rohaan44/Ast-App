@@ -37,6 +37,9 @@ import 'package:ast_official/feature/coach_dashboard/plans/trainning_plan/traini
 import 'package:ast_official/feature/coach_dashboard/plans_royalties/athlete_subscriptions/athlete_subscriptions_view.dart';
 import 'package:ast_official/feature/coach_dashboard/plans_royalties/payments_royalties_view.dart';
 import 'package:ast_official/feature/coach_dashboard/plans_royalties/transaction_history/transaction_history_view.dart';
+import 'package:ast_official/feature/on_boarding/auth/forget_password/forgot_password_1/forget_password_view.dart';
+import 'package:ast_official/feature/on_boarding/auth/sign_in/sign_in_view.dart';
+import 'package:ast_official/feature/on_boarding/auth/sign_up/sign_up_view.dart';
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_view.dart';
 import 'package:ast_official/feature/on_boarding/otp_view/otp_view.dart';
 import 'package:ast_official/feature/on_boarding/payment_flow/choose_your_plan/choose_your_plan_view.dart';
@@ -47,7 +50,6 @@ import 'package:ast_official/feature/on_boarding/select_objective/select_objecti
 import 'package:ast_official/feature/on_boarding/select_role/select_role_view.dart';
 import 'package:ast_official/feature/on_boarding/select_gender/select_gender_view.dart';
 import 'package:ast_official/feature/on_boarding/select_weight/select_weight_view.dart';
-import 'package:ast_official/feature/on_boarding/sign_in/sign_in_view.dart';
 import 'package:ast_official/feature/on_boarding/walk_through/walk_through_view.dart';
 import 'package:ast_official/feature/splash_screen/splash_screen.dart';
 import 'package:ast_official/feature/on_boarding/welcome_screen/welcome_view.dart';
@@ -105,10 +107,28 @@ class AppRouter {
             return child;
           },
         );
+      case RoutePaths.signUp:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const SignUpView();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
       case RoutePaths.signIn:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const SignInView();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+      case RoutePaths.forgetPassword:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const ForgetPasswordView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;

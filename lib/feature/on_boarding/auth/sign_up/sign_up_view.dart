@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
-import 'package:ast_official/feature/on_boarding/sign_in/sign_in_controller.dart';
+import 'package:ast_official/feature/on_boarding/auth/sign_up/sign_up_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
 import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
@@ -20,12 +20,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class SignInView extends StatelessWidget {
-  const SignInView({super.key});
+class SignUpView extends StatelessWidget {
+  const SignUpView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<SignInController>();
+    final provider = context.watch<SignUpController>();
 
     return Scaffold(
       body: AppDismissKeyboard(

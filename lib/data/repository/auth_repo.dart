@@ -8,10 +8,11 @@ class AuthRepository {
   Future<AuthResponseModel> register(
       {required String email,
       required String password,
+      required String name,
       required String role}) async {
     var response = await _dioHelper.post(
         url: "${NetworkProperties.baseUrl}/v1/auth/register",
-        requestBody: {"role": role, "email": email, "password": password});
+        requestBody: {"role": role, "email": email, "password": password, "name": name});
     return AuthResponseModel.fromJson(response);
   }
 
