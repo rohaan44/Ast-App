@@ -1,10 +1,16 @@
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/domain/repository/auth_repo_service.dart';
+import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
 import 'package:flutter/material.dart';
 
 class ForgetPasswordController with ChangeNotifier {
   final TextEditingController emailController = TextEditingController();
 
-//   final AuthRepoService authRepoService;
-//   ForgetPasswordController({required this.authRepoService});
+  final AuthRepoService authRepoService;
+  ForgetPasswordController({required this.authRepoService}) {
+    emailController.addListener(onTextChanged);
+  }
+  //required this.authRepoService}
 //   bool _isLoading = false;
 //   String? _errorMessage;
 
@@ -130,13 +136,7 @@ class ForgetPasswordController with ChangeNotifier {
 // //   }
 // // }
 
-  bool _isObsecure = true;
 
-  bool get isObsecure => _isObsecure;
-  set isObsecure(bool value) {
-    _isObsecure = value;
-    notifyListeners();
-  }
 
   bool _isCheck = false;
 
@@ -155,6 +155,26 @@ class ForgetPasswordController with ChangeNotifier {
 
   void onTextChanged() {
     notifyListeners();
+  }
+
+  Future<void> sendOtp(context, String email) async {
+    final response = await authRepoService.sendOtp(email: email);
+    if (response == true) {
+      showApiSnackBar(
+        context,
+        title: "Success",
+        message: "OTP sent successfully",
+        isSuccess: true,
+      );
+      Navigator.pushNamedAndRemoveUntil(context, RoutePaths.otpView, (route)=>false);
+        } else {
+      showApiSnackBar(
+        context,
+        title: "Error",
+        message: "Failed to resend OTP",
+        isSuccess: false,
+      );
+    }
   }
 
   @override

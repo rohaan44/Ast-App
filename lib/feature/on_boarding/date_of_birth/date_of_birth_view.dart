@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';

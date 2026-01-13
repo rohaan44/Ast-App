@@ -64,13 +64,13 @@ class SignInView extends StatelessWidget {
               primaryTextField(
                 hintText: "Indirizzo E-mail",
                 prefixIcon: SvgPicture.asset(AssetUtils.emailIcon),
-                // suffixIcon: provider.isEmailValid
-                //     ? SvgPicture.asset(
-                //         AssetUtils.isValidate,
-                //         width: cw(13.3),
-                //         height: ch(13.3),
-                //       )
-                //     : null,
+                suffixIcon: provider.isEmailValid
+                    ? SvgPicture.asset(
+                        AssetUtils.isValidate,
+                        width: cw(13.3),
+                        height: ch(13.3),
+                      )
+                    : null,
                 controller: provider.emailController,
                 // onChanged: (_) => provider.onTextChanged(),
                 fillColor: AppColor.c161616,
@@ -151,37 +151,21 @@ class SignInView extends StatelessWidget {
               ),
               SizedBox(height: ch(24)),
               AppButton(
-                // isLoading: provider.isLoading,
+                isLoading: provider.isLoading,
                 isButtonEnable: provider.isButtonEnabled,
                 borderRadius: cw(50),
-                onPressed: () async {
+             onPressed: () async {
                   // final flowProvider =
                   //     context.read<FlowDataProvider>();
                   // final data = flowProvider
                   //     .getFlowData(customerOnboarding);
                   // log(data.toString());
 
-                  // if (data != null && data.containsKey("value")) {
-                  //   final success = await provider.register(
-                  //       data["value"], context);
-                  //   if (success) {
-                  //     // ignore: use_build_context_synchronously
-                  //     showApiSnackBar(context,
-                  //         title: "Success",
-                  //         message: "OTP sent successfully",
-                  //         isSuccess: true);
-                  //     Navigator.pushNamed(
-                  //         context, RoutePaths.otpView);
-                  //   }
-                  // } else {
-                  //   showApiSnackBar(context,
-                  //       title: "Error",
-                  //       message:
-                  //           "Flow data missing for registration",
-                  //       isSuccess: false);
-                  // }
-                },
-                text: "Accedi",
+//                  if (data != null && data.containsKey("value")) {
+                    final success = await provider.login(context,provider.emailController.text, provider.passwordController.text);
+                   
+  //}              }},
+                           },           text: "Accedi",
               ),
               SizedBox(height: ch(50)),
               Row(

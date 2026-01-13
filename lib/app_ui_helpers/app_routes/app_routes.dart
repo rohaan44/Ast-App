@@ -37,7 +37,7 @@ import 'package:ast_official/feature/coach_dashboard/plans/trainning_plan/traini
 import 'package:ast_official/feature/coach_dashboard/plans_royalties/athlete_subscriptions/athlete_subscriptions_view.dart';
 import 'package:ast_official/feature/coach_dashboard/plans_royalties/payments_royalties_view.dart';
 import 'package:ast_official/feature/coach_dashboard/plans_royalties/transaction_history/transaction_history_view.dart';
-import 'package:ast_official/feature/on_boarding/auth/forget_password/forget_password_view.dart';
+import 'package:ast_official/feature/on_boarding/auth/forget_password/forgot_password_1/forget_password_view.dart';
 import 'package:ast_official/feature/on_boarding/auth/sign_in/sign_in_view.dart';
 import 'package:ast_official/feature/on_boarding/auth/sign_up/sign_up_view.dart';
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_view.dart';

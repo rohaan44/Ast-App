@@ -39,7 +39,7 @@ import 'package:ast_official/feature/coach_dashboard/plans/trainning_plan/traini
 import 'package:ast_official/feature/coach_dashboard/plans_royalties/athlete_subscriptions/athlete_subscriptions_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/plans_royalties/payments_royalties_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/plans_royalties/transaction_history/transaction_history_controller.dart';
-import 'package:ast_official/feature/on_boarding/auth/forget_password/forget_password_controller.dart';
+import 'package:ast_official/feature/on_boarding/auth/forget_password/forgot_password_1/forget_password_controller.dart';
 import 'package:ast_official/feature/on_boarding/auth/sign_in/sign_in_controller.dart';
 import 'package:ast_official/feature/on_boarding/auth/sign_up/sign_up_controller.dart';
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_controller.dart';
@@ -115,21 +115,23 @@ List<SingleChildWidget> providersList = [
           SignUpController(authRepoService: context.read<AuthRepoService>())),
   ChangeNotifierProvider(create: (context) => HomeScreenController()),
   ChangeNotifierProvider(
-      create: (context) => SignInController(
-          // authRepoService: context.read<AuthRepoService>()
-          )),
+      create: (context) =>
+          SignInController(authRepoService: context.read<AuthRepoService>())),
   ChangeNotifierProvider(
       create: (context) => ForgetPasswordController(
-          // authRepoService: context.read<AuthRepoService>()
-          )),
+          authRepoService: context.read<AuthRepoService>())),
   // ChangeNotifierProvider(
   //     create: (context) => ChangePasswordController(
   //         // authRepoService: context.read<AuthRepoService>()
   //         )),
   ChangeNotifierProvider(create: (context) => HomeScreenController()),
   ChangeNotifierProvider(create: (context) => WhatIsYourDietTypeController()),
-  ChangeNotifierProvider(create: (context) => WalletController(onboardingRepoService: context.read<OnboardingRepoService>())),
-  ChangeNotifierProvider(create: (context) => ChooseYourPlanController(onboardingRepoService: context.read<OnboardingRepoService>())),
+  ChangeNotifierProvider(
+      create: (context) => WalletController(
+          onboardingRepoService: context.read<OnboardingRepoService>())),
+  ChangeNotifierProvider(
+      create: (context) => ChooseYourPlanController(
+          onboardingRepoService: context.read<OnboardingRepoService>())),
   ChangeNotifierProvider(create: (context) => WelcomeController()),
   ChangeNotifierProvider(create: (context) => SuccessController()),
   ChangeNotifierProvider(

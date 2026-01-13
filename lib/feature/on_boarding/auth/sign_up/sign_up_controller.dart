@@ -4,7 +4,6 @@ import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SignUpController with ChangeNotifier {
   final TextEditingController nameController = TextEditingController();
@@ -19,7 +18,7 @@ class SignUpController with ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
-  Future<bool> register(String role, BuildContext context) async {
+  Future<bool> register(String role, context) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
