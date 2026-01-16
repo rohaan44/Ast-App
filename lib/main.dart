@@ -2,6 +2,7 @@
 
 import 'package:ast_official/app_ui_helpers/app_routes/app_routes.dart';
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/feature/on_boarding/auth/forget_password/reset_password/reset_password_view.dart';
 import 'package:ast_official/feature/on_boarding/auth/forget_password/forgot_password_1/forget_password_view.dart';
 import 'package:ast_official/generated/l10n.dart';
 import 'package:ast_official/services/notification_service/app_notification_service.dart';
@@ -91,8 +92,8 @@ class _MyAppState extends State<MyApp> {
         title: 'AST®️ Official App',
         theme: AppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
-        home: ForgetPasswordView(),
-        // initialRoute: RoutePaths.splashScreen,
+        // home: ResetPasswordView(),
+        initialRoute: RoutePaths.splashScreen,
         onGenerateRoute: AppRouter.generateRoute,
       );
     });

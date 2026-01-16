@@ -10,67 +10,149 @@ class DioHelper {
     receiveDataWhenStatusError: true,
   );
 
+  // ===================== GET =====================
   Future<dynamic> get({
     required String url,
     bool isAuthRequired = false,
     Map<String, dynamic>? headers,
+    Map<String, dynamic>? queryParameters,
   }) async {
+    final token =
+        isAuthRequired ? await AuthStorage.getToken() : null;
+
     final option = baseOptions.copyWith(
-      headers: headers ?? {},
+      validateStatus: (status) {
+        return status != null && status < 500;
+      },
+      headers: {
+        "Content-Type": "application/json",
+        if (isAuthRequired && token != null)
+          "Authorization": "Bearer $token",
+        if (headers != null) ...headers,
+      },
     );
 
-    final res = await dio.get(url, options: option);
-    return res.data;
+    try {
+      final res = await dio.get(
+        url,
+        options: option,
+        queryParameters: queryParameters,
+      );
+      return res.data;
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
   }
 
+  // ===================== POST =====================
   Future<dynamic> post({
     required String url,
     Object? requestBody,
     bool isAuthRequired = false,
     Map<String, dynamic>? headers,
   }) async {
+    final token =
+        isAuthRequired ? await AuthStorage.getToken() : null;
+
     final option = baseOptions.copyWith(
       validateStatus: (status) {
         return status != null && status < 500;
       },
-      headers: isAuthRequired
-          ? {
-              "Authorization": "Bearer ${await AuthStorage.getToken()}",
-              "Content-Type": "application/json",
-            }
-          : {
-              "Content-Type": "application/json",
-            },
+      headers: {
+        "Content-Type": "application/json",
+        if (isAuthRequired && token != null)
+          "Authorization": "Bearer $token",
+        if (headers != null) ...headers,
+      },
     );
 
-    final res = await dio.post(
-      url,
-      data: requestBody,
-      options: option,
-    );
-
-    return res.data;
+    try {
+      final res = await dio.post(
+        url,
+        data: requestBody,
+        options: option,
+      );
+      return res.data;
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
   }
 
+  // ===================== PUT =====================
   Future<dynamic> put({
     required String url,
     Object? requestBody,
     Map<String, dynamic>? headers,
   }) async {
-    final option = baseOptions.copyWith(headers: headers);
+    final option = baseOptions.copyWith(
+      validateStatus: (status) {
+        return status != null && status < 500;
+      },
+      headers: {
+        "Content-Type": "application/json",
+        if (headers != null) ...headers,
+      },
+    );
 
-    final res = await dio.put(url, data: requestBody, options: option);
-    return res.data;
+    try {
+      final res = await dio.put(
+        url,
+        data: requestBody,
+        options: option,
+      );
+      return res.data;
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
   }
 
+  // ===================== DELETE =====================
   Future<dynamic> delete({
     required String url,
     Object? requestBody,
     Map<String, dynamic>? headers,
   }) async {
-    final option = baseOptions.copyWith(headers: headers);
+    final option = baseOptions.copyWith(
+      validateStatus: (status) {
+        return status != null && status < 500;
+      },
+      headers: {
+        "Content-Type": "application/json",
+        if (headers != null) ...headers,
+      },
+    );
 
-    final res = await dio.delete(url, data: requestBody, options: option);
-    return res.data;
+    try {
+      final res = await dio.delete(
+        url,
+        data: requestBody,
+        options: option,
+      );
+      return res.data;
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+  // ============ CENTRAL ERROR HANDLER ============
+  String _handleDioError(DioException e) {
+    switch (e.type) {
+      case DioExceptionType.connectionTimeout:
+        return "Connection timeout. Check your internet.";
+
+      case DioExceptionType.receiveTimeout:
+        return "Server is taking too long to respond.";
+
+      case DioExceptionType.badResponse:
+        final status = e.response?.statusCode;
+        final message = e.response?.data?['message'] ?? "Server error";
+        return "Error $status: $message";
+
+      case DioExceptionType.cancel:
+        return "Request was cancelled.";
+
+      default:
+        return "Something went wrong. Try again.";
+    }
   }
 }

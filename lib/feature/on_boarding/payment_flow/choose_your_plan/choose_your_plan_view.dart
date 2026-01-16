@@ -19,15 +19,16 @@ class ChooseYourPlanView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   final flowData = context.read<FlowDataProvider>().getFlowData(certificationRenew);
-  final isRenew = flowData != null ? flowData["isRenew"] ?? false : false;
-  final planController = context.watch<ChooseYourPlanController>();
-  
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    if (planController.plans.isEmpty && !planController.isLoading) {
-      planController.getPlans(context);
-    }
-  });
+    final flowData =
+        context.read<FlowDataProvider>().getFlowData(certificationRenew);
+    final isRenew = flowData != null ? flowData["isRenew"] ?? false : false;
+    final planController = context.watch<ChooseYourPlanController>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!planController.isPlanLoaded && !planController.isLoading) {
+        planController.getPlans(context);
+      }
+    });
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -41,9 +42,9 @@ class ChooseYourPlanView extends StatelessWidget {
                   SvgPicture.asset(AssetUtils.walkthroughIcon),
                   GestureDetector(
                     onTap: () {
-                      
-                      if (isRenew!=null&& isRenew==true) {
-                        Navigator.pushNamedAndRemoveUntil(context, RoutePaths.coachMainScreenView, (route) => false);
+                      if (isRenew != null && isRenew == true) {
+                        Navigator.pushNamedAndRemoveUntil(context,
+                            RoutePaths.coachMainScreenView, (route) => false);
                       }
                     },
                     child: SvgPicture.asset(AssetUtils.appCrossIcon),
@@ -53,50 +54,47 @@ class ChooseYourPlanView extends StatelessWidget {
               SizedBox(
                 height: ch(30),
               ),
- if (context.read<SelectRoleController>().selectedRole ==
-                "Coach") ...[
- AppText(
-                txt: "Piano di Certificazione",
-                fontSize: AppFontSize.f24,
-                fontWeight: FontWeight.w500,
-                color: AppColor.cFFFFFF,
-                height: 1,
-              ),
-                ]else...[
-                    AppText(
-                txt: "Scegli il tuo piano",
-                fontSize: AppFontSize.f24,
-                fontWeight: FontWeight.w500,
-                color: AppColor.cFFFFFF,
-                height: 1,
-              ),
-                ],
-
-            
+              if (context.read<SelectRoleController>().selectedRole ==
+                  "Coach") ...[
+                AppText(
+                  txt: "Piano di Certificazione",
+                  fontSize: AppFontSize.f24,
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.cFFFFFF,
+                  height: 1,
+                ),
+              ] else ...[
+                AppText(
+                  txt: "Scegli il tuo piano",
+                  fontSize: AppFontSize.f24,
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.cFFFFFF,
+                  height: 1,
+                ),
+              ],
               SizedBox(
                 height: ch(8),
               ),
-
-               if (context.read<SelectRoleController>().selectedRole ==
-                "Coach") ...[
-              AppText(
-                txt: "Allenatori che utilizzano l'app per l'allenamento Smart.",
-                fontSize: AppFontSize.f16,
-                color: AppColor.white.withOpacity(0.5),
-                textAlign: TextAlign.center,
-                fontWeight: FontWeight.w400,
-              ),
-            ] else ...[
-              AppText(
-                txt:
-                    "Atleti che utilizzano l’app per allenamento e nutrizione.",
-                fontSize: AppFontSize.f16,
-                color: AppColor.white.withOpacity(0.5),
-                textAlign: TextAlign.center,
-                fontWeight: FontWeight.w400,
-              ),
-            ],
-              
+              if (context.read<SelectRoleController>().selectedRole ==
+                  "Coach") ...[
+                AppText(
+                  txt:
+                      "Allenatori che utilizzano l'app per l'allenamento Smart.",
+                  fontSize: AppFontSize.f16,
+                  color: AppColor.white.withOpacity(0.5),
+                  textAlign: TextAlign.center,
+                  fontWeight: FontWeight.w400,
+                ),
+              ] else ...[
+                AppText(
+                  txt:
+                      "Atleti che utilizzano l’app per allenamento e nutrizione.",
+                  fontSize: AppFontSize.f16,
+                  color: AppColor.white.withOpacity(0.5),
+                  textAlign: TextAlign.center,
+                  fontWeight: FontWeight.w400,
+                ),
+              ],
               SizedBox(
                 height: ch(40),
               ),
@@ -120,24 +118,30 @@ class ChooseYourPlanView extends StatelessWidget {
               SizedBox(
                 height: ch(50),
               ),
-
               if (context.read<SelectRoleController>().selectedRole ==
-                "Coach") ...[
-                  plainCard("Quota di Certificazione ", "€599/mese", "(Una tantum)",(isRenew!=null&& isRenew==true)?false:true),
-                 SizedBox(
-                height: ch(10),
-              ),
-                   plainCard("Rinnovo della Licenza", "€249/mese", "Annuale",(isRenew!=null&& isRenew==true)?true:false),
-                 
-
-                ]else
-              plainCard("Piano Base", "€79/mese", "Mese",true),
-
+                  "Coach") ...[
+                plainCard(
+                    "Quota di Certificazione ",
+                    "€599/mese",
+                    "(Una tantum)",
+                    (isRenew != null && isRenew == true) ? false : true),
+                SizedBox(
+                  height: ch(10),
+                ),
+                plainCard("Rinnovo della Licenza", "€249/mese", "Annuale",
+                    (isRenew != null && isRenew == true) ? true : false),
+              ] else
+                plainCard("Piano Base", "€79/mese", "Mese", true),
               const Spacer(),
-              AppButton(onPressed: (){
-                Navigator.pushNamed(context, RoutePaths.walletView);
-              },text: "Scegli il piano",),
-              SizedBox(height: ch(10),)
+              AppButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutePaths.walletView);
+                },
+                text: "Scegli il piano",
+              ),
+              SizedBox(
+                height: ch(10),
+              )
             ],
           ),
         ),
@@ -163,14 +167,18 @@ Widget isCheckItems(String text) {
   );
 }
 
-Widget plainCard(String title, String priceText, String subtitle, bool isEnable) {
+Widget plainCard(
+    String title, String priceText, String subtitle, bool isEnable) {
   return Container(
-    
     padding: const EdgeInsets.all(20.0),
     decoration: BoxDecoration(
-      color:isEnable? AppColor.white.withOpacity(0.1): AppColor.c252525.withOpacity(0.5),
+      color: isEnable
+          ? AppColor.white.withOpacity(0.1)
+          : AppColor.c252525.withOpacity(0.5),
       borderRadius: BorderRadius.circular(cw(16.0)),
-      border: Border.all(color:isEnable? AppColor.c454545:AppColor.transparent , width: 2.0),
+      border: Border.all(
+          color: isEnable ? AppColor.c454545 : AppColor.transparent,
+          width: 2.0),
     ),
     child: Row(
       children: [
@@ -183,26 +191,25 @@ Widget plainCard(String title, String priceText, String subtitle, bool isEnable)
                 txt: "$title - $priceText",
                 fontSize: AppFontSize.f18,
                 fontWeight: FontWeight.w600,
-                color:isEnable? AppColor.white: AppColor.c454545,
+                color: isEnable ? AppColor.white : AppColor.c454545,
               ),
-               SizedBox(height: ch(4)),
+              SizedBox(height: ch(4)),
               AppText(
                 txt: subtitle,
                 fontSize: AppFontSize.f15,
                 fontWeight: FontWeight.normal,
-                color: isEnable? AppColor.white: AppColor.c454545,
+                color: isEnable ? AppColor.white : AppColor.c454545,
               ),
             ],
           ),
         ),
 
         Radio<bool>(
-          activeColor:isEnable? AppColor.white: AppColor.c454545,
-          value: isEnable, groupValue: isEnable, 
-          onChanged: (value){})
+            activeColor: isEnable ? AppColor.white : AppColor.c454545,
+            value: isEnable,
+            groupValue: isEnable,
+            onChanged: (value) {})
       ],
     ),
   );
 }
-
-

@@ -35,6 +35,10 @@ class SignUpView extends StatelessWidget {
               context: context,
               activeSegments: 1,
               totalSegments: 6,
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, RoutePaths.selectRole, (route) => false);
+              },
             ),
             Padding(
               padding: EdgeInsets.only(top: ch(114)),
@@ -146,7 +150,10 @@ class SignUpView extends StatelessWidget {
                                   final success = await provider.register(
                                       data["value"], context);
                                   if (success) {
-                                    // ignore: use_build_context_synchronously
+                                    context.read<FlowDataProvider>().addOrUpdateFlow(
+                                      flowTag: customerSignIn,
+                                      data: {"email": provider.emailController.text, "from": "sign_up", "role": data["value"]},
+                                    );
                                     showApiSnackBar(context,
                                         title: "Success",
                                         message: "OTP sent successfully",

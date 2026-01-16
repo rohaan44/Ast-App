@@ -34,7 +34,8 @@ class ForgetPasswordView extends StatelessWidget {
                 // Left logo
                 GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => Navigator.pushNamedAndRemoveUntil(
+                      context, RoutePaths.signIn, (route) => false),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0), // small tap area
                     child: SvgPicture.asset(
@@ -130,11 +131,6 @@ class ForgetPasswordView extends StatelessWidget {
                                 // isLoading: model.isLoading,
                                 onPressed: () {
                                   // if (role == "Tutor") {
-                                  //   Navigator.pushNamedAndRemoveUntil(
-                                  //     context,
-                                  //     RoutePaths.tutorMainScreen,
-                                  //     (route) => false,
-                                  //   );
                                   // } else {
                                   //   final data = context
                                   //       .read<FlowDataProvider>()

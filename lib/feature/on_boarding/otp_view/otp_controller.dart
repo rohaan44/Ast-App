@@ -1,8 +1,11 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/domain/repository/auth_repo_service.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/index.dart';
+import 'package:provider/provider.dart';
 
 class OtpController with ChangeNotifier {
   final AuthRepoService authRepoService;
@@ -71,7 +74,7 @@ class OtpController with ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-Future verifyOtp(context, String email, String code) async {
+  Future verifyOtp(BuildContext context, String email, String code) async {
     _isLoading = true;
     notifyListeners();
     try {
@@ -87,16 +90,47 @@ Future verifyOtp(context, String email, String code) async {
           message: message,
           isSuccess: success,
         );
-         Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    RoutePaths.dateOfBirth,
-                                    (route) => false,
-                                  );
+        final data =
+            context.read<FlowDataProvider>().getFlowData(customerSignIn);
+        if (data!.containsKey("from") && data["from"] == "sign_up") {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            RoutePaths.dateOfBirth,
+            (route) => false,
+          );
+        } else if (data.containsKey("from") && data["from"] == "sign_in") {
+          if (data.containsKey("role") && data["role"] == "athlete") {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              RoutePaths.dashboardView,
+              (route) => false,
+            );
+          } else if (data.containsKey("role") && data["role"] == "coach") {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              RoutePaths.coachMainScreenView,
+              (route) => false,
+            );
+          } else if (data.containsKey("role") && data["role"] == "tutor") {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              RoutePaths.tutorMainScreen,
+              (route) => false,
+            );
+          }
+        } else if (data.containsKey("from") &&
+            data["from"] == "forgotPassword") {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            RoutePaths.resetPasswordScreen,
+            (route) => false,
+          );
+        }
       } else {
         showApiSnackBar(
           context,
           title: "Error",
-          message: "${response['message']}",
+          message: "${response['error']}",
           isSuccess: false,
         );
       }

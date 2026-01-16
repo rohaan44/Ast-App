@@ -1,6 +1,7 @@
+import 'dart:developer';
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+
 import 'package:ast_official/domain/repository/auth_repo_service.dart';
-import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
-import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -82,11 +83,7 @@ class SignUpController with ChangeNotifier {
       final otpResponse = await authRepoService.sendOtp(email: email);
 
       if (otpResponse == true) {
-        context.read<FlowDataProvider>().addOrUpdateFlow(
-          flowTag: customerSignIn,
-          data: {"email": email},
-        );
-
+        Navigator.pushNamed(context, RoutePaths.otpView);
         _isLoading = false;
         notifyListeners();
         return true;
@@ -108,6 +105,7 @@ class SignUpController with ChangeNotifier {
       );
       return false;
     } catch (e) {
+      log(e.toString());
       _isLoading = false;
 
       if (e is DioException && e.response?.data is Map) {

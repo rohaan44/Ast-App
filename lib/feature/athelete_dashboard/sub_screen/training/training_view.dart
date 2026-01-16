@@ -5,6 +5,7 @@ import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
+import 'package:ast_official/utils/gradients/app_gradients.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -14,244 +15,258 @@ class TrainingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.read<TrainingViewController>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!controller.isPlanLoaded && !controller.isLoading) {
+        controller.getAllExercises(context);
+      }
+    });
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(ch(86)), child: _appBar()),
-      body: Consumer<TrainingViewController>(
-        builder: (context, model, child) {
-          return CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                // pinned: true,
-                expandedHeight: ch(214),
-                automaticallyImplyLeading: false,
-                backgroundColor: AppColor.transparent,
-                flexibleSpace: FlexibleSpaceBar(
-                  // collapseMode: CollapseMode.parallax,
-                  // title: const Text(
-                  //   "MyTube",
-                  //   style: TextStyle(
-                  //     fontWeight: FontWeight.bold,
-                  //     letterSpacing: 1,
-                  //   ),
-                  // ),
-                  background: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: cw(20),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            SvgPicture.asset(AssetUtils.redStar),
-                            SizedBox(
-                              width: cw(20),
-                            ),
-                            AppText(
-                              txt: "Suggerimento dell’AI",
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: ch(20),
-                        ),
-                        Container(
-                            height: ch(144),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                  image: AssetImage(AssetUtils.trainingCard)),
-                              borderRadius: BorderRadius.circular(cw(24)),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: cw(12), vertical: ch(12)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: cw(6), vertical: ch(5)),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(cw(50)),
-                                            border: Border.all(
-                                                color: AppColor.cFF8B5C,
-                                                width: cw(0.5)),
-                                            color: AppColor.cFE6D38),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SvgPicture.asset(
-                                              AssetUtils.icon1,
-                                              height: ch(14),
-                                              width: cw(14),
-                                              fit: BoxFit.contain,
-                                            ),
-                                            SizedBox(
-                                              width: cw(5),
-                                            ),
-                                            AppText(
-                                              txt: "01 ora",
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: cw(10),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: cw(6), vertical: ch(5)),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(cw(50)),
-                                            border: Border.all(
-                                                color: AppColor.cFF8B5C,
-                                                width: cw(0.5)),
-                                            color: AppColor.cFE6D38),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SvgPicture.asset(
-                                              AssetUtils.whiteFireIcon,
-                                              height: ch(14),
-                                              width: cw(14),
-                                              fit: BoxFit.contain,
-                                            ),
-                                            SizedBox(
-                                              width: cw(5),
-                                            ),
-                                            AppText(
-                                              txt: "130 kcal",
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10,
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  AppText(
-                                    txt: "Allenamento di corsa",
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                  ),
-                                  SizedBox(
-                                    height: ch(12),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: cw(12),
-                                            vertical: ch(8)),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(cw(50)),
-                                            border: Border.all(
-                                                color: AppColor.cFF8B5C,
-                                                width: cw(1)),
-                                            color: AppColor.cFE6D38),
-                                        child: Center(
-                                          child: AppText(
-                                            txt: "Principiante",
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
+      body: RefreshIndicator(
+        color: AppColor.black,
+        backgroundColor: AppColor.red,
+        onRefresh: () => controller.getAllExercises(context),
+        child: Consumer<TrainingViewController>(
+          builder: (context, model, child) {
+            return CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  // pinned: true,
+                  expandedHeight: ch(214),
+                  automaticallyImplyLeading: false,
+                  backgroundColor: AppColor.transparent,
+                  flexibleSpace: FlexibleSpaceBar(
+                    // collapseMode: CollapseMode.parallax,
+                    // title: const Text(
+                    //   "MyTube",
+                    //   style: TextStyle(
+                    //     fontWeight: FontWeight.bold,
+                    //     letterSpacing: 1,
+                    //   ),
+                    // ),
+                    background: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: cw(20),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(AssetUtils.redStar),
+                              SizedBox(
+                                width: cw(20),
+                              ),
+                              AppText(
+                                txt: "Suggerimento dell’AI",
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: ch(20),
+                          ),
+                          Container(
+                              height: ch(144),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                image: const DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(AssetUtils.trainingCard)),
+                                borderRadius: BorderRadius.circular(cw(24)),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: cw(18), right: cw(12), top: ch(12)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: cw(6),
+                                              vertical: ch(5)),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(cw(50)),
+                                              border: Border.all(
+                                                  color: AppColor.cFF8B5C,
+                                                  width: cw(0.5)),
+                                              color: AppColor.cFE6D38),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset(
+                                                AssetUtils.icon1,
+                                                height: ch(14),
+                                                width: cw(14),
+                                                fit: BoxFit.contain,
+                                              ),
+                                              SizedBox(
+                                                width: cw(5),
+                                              ),
+                                              AppText(
+                                                txt: "01 ora",
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 10,
+                                              )
+                                            ],
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: cw(12),
-                                      ),
-                                      AppText(
-                                        txt: "3 serie di esercizi",
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
-                                      ),
-                                      const Spacer(),
-                                      SvgPicture.asset(AssetUtils.playIcon),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )),
-                      ],
+                                        SizedBox(
+                                          width: cw(10),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: cw(6),
+                                              vertical: ch(5)),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(cw(50)),
+                                              border: Border.all(
+                                                  color: AppColor.cFF8B5C,
+                                                  width: cw(0.5)),
+                                              color: AppColor.cFE6D38),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset(
+                                                AssetUtils.whiteFireIcon,
+                                                height: ch(14),
+                                                width: cw(14),
+                                                fit: BoxFit.contain,
+                                              ),
+                                              SizedBox(
+                                                width: cw(5),
+                                              ),
+                                              AppText(
+                                                txt: "130 kcal",
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 10,
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    AppText(
+                                      txt: "Allenamento di corsa",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                    ),
+                                    SizedBox(
+                                      height: ch(12),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: cw(12),
+                                              vertical: ch(8)),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(cw(50)),
+                                              border: Border.all(
+                                                  color: AppColor.cFF8B5C,
+                                                  width: cw(1)),
+                                              color: AppColor.cFE6D38),
+                                          child: Center(
+                                            child: AppText(
+                                              txt: "Principiante",
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: cw(12),
+                                        ),
+                                        AppText(
+                                          txt: "3 serie di esercizi",
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                        ),
+                                        const Spacer(),
+                                        SvgPicture.asset(AssetUtils.playIcon),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              // 🔹 Sticky horizontal categories (like YouTube chips)
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: CategoryHeaderDelegate(model),
-              ),
+                // 🔹 Sticky horizontal categories (like YouTube chips)
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: CategoryHeaderDelegate(model),
+                ),
 
-              // 🔹 Main scrollable content
-              SliverToBoxAdapter(
-                child: cardGridView(model: model),
-              ),
+                // 🔹 Main scrollable content
+                SliverToBoxAdapter(
+                  child: cardGridView(model: model),
+                ),
 
-              // SliverList(
-              //   delegate: SliverChildBuilderDelegate(
-              //     (context, index) => Container(
-              //       margin: const EdgeInsets.symmetric(
-              //         horizontal: 16,
-              //         vertical: 8,
-              //       ),
-              //       height: 100,
-              //       decoration: BoxDecoration(
-              //         color: Colors.red,
-              //         borderRadius: BorderRadius.circular(12),
-              //         boxShadow: [
-              //           BoxShadow(
-              //             color: Colors.black.withOpacity(0.05),
-              //             blurRadius: 6,
-              //             offset: const Offset(0, 3),
-              //           ),
-              //         ],
-              //       ),
-              //       child: Row(
-              //         children: [
-              //           Container(
-              //             width: 120,
-              //             height: double.infinity,
-              //             decoration: BoxDecoration(
-              //               color: Colors.grey.shade300,
-              //               borderRadius: const BorderRadius.horizontal(
-              //                 left: Radius.circular(12),
-              //               ),
-              //             ),
-              //           ),
-              //           const SizedBox(width: 12),
-              //           Expanded(
-              //             child: Text(
-              //               "Video item #${index + 1}",
-              //               style: const TextStyle(
-              //                 fontSize: 16,
-              //                 fontWeight: FontWeight.w500,
-              //               ),
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //     childCount: 15,
-              //   ),
-              // ),
-            ],
-          );
-        },
+                // SliverList(
+                //   delegate: SliverChildBuilderDelegate(
+                //     (context, index) => Container(
+                //       margin: const EdgeInsets.symmetric(
+                //         horizontal: 16,
+                //         vertical: 8,
+                //       ),
+                //       height: 100,
+                //       decoration: BoxDecoration(
+                //         color: Colors.red,
+                //         borderRadius: BorderRadius.circular(12),
+                //         boxShadow: [
+                //           BoxShadow(
+                //             color: Colors.black.withOpacity(0.05),
+                //             blurRadius: 6,
+                //             offset: const Offset(0, 3),
+                //           ),
+                //         ],
+                //       ),
+                //       child: Row(
+                //         children: [
+                //           Container(
+                //             width: 120,
+                //             height: double.infinity,
+                //             decoration: BoxDecoration(
+                //               color: Colors.grey.shade300,
+                //               borderRadius: const BorderRadius.horizontal(
+                //                 left: Radius.circular(12),
+                //               ),
+                //             ),
+                //           ),
+                //           const SizedBox(width: 12),
+                //           Expanded(
+                //             child: Text(
+                //               "Video item #${index + 1}",
+                //               style: const TextStyle(
+                //                 fontSize: 16,
+                //                 fontWeight: FontWeight.w500,
+                //               ),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //     childCount: 15,
+                //   ),
+                // ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -468,7 +483,6 @@ Widget cardGridView({
           final img = model.workoutPlans[index]["img"];
           final date = model.workoutPlans[index]["date"];
           final difficultyLevel = model.workoutPlans[index]["difficultyLevel"];
-
           return InkWell(
             onTap: () {
               goTo(

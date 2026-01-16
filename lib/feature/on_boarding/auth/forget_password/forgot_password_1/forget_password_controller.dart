@@ -1,5 +1,7 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/domain/repository/auth_repo_service.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
 import 'package:flutter/material.dart';
 
@@ -136,8 +138,6 @@ class ForgetPasswordController with ChangeNotifier {
 // //   }
 // // }
 
-
-
   bool _isCheck = false;
 
   bool get isCheck => _isCheck;
@@ -166,8 +166,13 @@ class ForgetPasswordController with ChangeNotifier {
         message: "OTP sent successfully",
         isSuccess: true,
       );
-      Navigator.pushNamedAndRemoveUntil(context, RoutePaths.otpView, (route)=>false);
-        } else {
+      Navigator.pushNamed(context, RoutePaths.otpView);
+      context.read<FlowDataProvider>().addOrUpdateFlow(customerSignIn,
+        data: {"email": email,
+        "from": "forgotPassword"
+        },
+      );
+    } else {
       showApiSnackBar(
         context,
         title: "Error",

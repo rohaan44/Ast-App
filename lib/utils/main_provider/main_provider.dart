@@ -1,5 +1,7 @@
+import 'package:ast_official/data/repository/app_repo.dart';
 import 'package:ast_official/data/repository/auth_repo.dart';
 import 'package:ast_official/data/repository/onboarding_repo.dart';
+import 'package:ast_official/domain/repository/app_repo_service.dart';
 import 'package:ast_official/domain/repository/auth_repo_service.dart';
 import 'package:ast_official/domain/repository/onboarding_repo_service.dart';
 import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart';
@@ -27,8 +29,7 @@ import 'package:ast_official/feature/coach_dashboard/check_in/check_in_reviews/c
 import 'package:ast_official/feature/coach_dashboard/check_in/edit_ai_suggestion/edit_ai_suggestion_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_Message/coach_chat_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach_edit_profile/coach_edit_profile_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/forgot_password/reset_password/reset_password_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/forgot_password/reset_password_email/reset_password_email_controller.dart';
+import 'package:ast_official/feature/on_boarding/auth/forget_password/reset_password/reset_password_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/integration/integration_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/language/language_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_controller.dart';
@@ -84,8 +85,16 @@ List<SingleChildWidget> providersList = [
   Provider<AuthRepository>(
     create: (context) => AuthRepository(),
   ),
+   Provider<AppRepo>(
+    create: (context) => AppRepo(),
+  ),
   Provider<OnboardingRepo>(
     create: (context) => OnboardingRepo(),
+  ),
+  Provider<AppRepoService>(
+    create: (context) => AppRepoService(
+     appRepo: context.read<AppRepo>(),
+    ),
   ),
   Provider<AuthRepoService>(
     create: (context) => AuthRepoService(
@@ -145,7 +154,7 @@ List<SingleChildWidget> providersList = [
   ChangeNotifierProvider(create: (context) => YourPersonalizedPlanController()),
   ChangeNotifierProvider(create: (context) => WhatIsYourActivityController()),
   ChangeNotifierProvider(create: (context) => DashboardHomeScreenController()),
-  ChangeNotifierProvider(create: (context) => TrainingViewController()),
+  ChangeNotifierProvider(create: (context) => TrainingViewController(appRepoService: context.read<AppRepoService>())),
   ChangeNotifierProvider(create: (context) => TrainingDetailController()),
   ChangeNotifierProvider(create: (context) => TrainingCompleteController()),
   ChangeNotifierProvider(create: (context) => AtheletCoachesController()),
@@ -199,9 +208,6 @@ List<SingleChildWidget> providersList = [
     create: (_) => LanguageSelectorController(),
   ),
 
-  ChangeNotifierProvider(
-    create: (_) => ResetPasswordEmailController(),
-  ),
   ChangeNotifierProvider(
     create: (_) => ResetPasswordController(),
   ),

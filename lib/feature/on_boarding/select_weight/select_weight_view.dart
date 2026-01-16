@@ -1,5 +1,7 @@
 import 'package:ast_official/feature/on_boarding/select_weight/select_weight_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/appbar/appbar.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
@@ -159,7 +161,12 @@ class SelectWeightView extends StatelessWidget {
                       isLoading: model.isLoading,
                       buttonColor: AppColor.white,
                       onPressed: () {
-                        model.sendBodyMetrics(context);
+                        final data = context
+                            .read<FlowDataProvider>()
+                            .getFlowData(customerOnboarding);
+                        debugPrint(data.toString());
+                        model.sendBodyMetrics(context, data!["height"]["value"],
+                            data["height"]["unit"]);
                       },
                       text: "Avanti",
                       fontSize: AppFontSize.f16,
