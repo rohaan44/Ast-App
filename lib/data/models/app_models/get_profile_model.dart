@@ -1,19 +1,24 @@
 class GetMyProfile {
   bool? success;
+  String? error;
   Data? data;
 
   GetMyProfile({this.success, this.data});
 
   GetMyProfile.fromJson(Map<String, dynamic> json) {
     success = json['success'];
+    error = json['error'];
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'success': success,
-      if (data != null) 'data': data!.toJson(),
-    };
+   final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['error'] = error;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
   }
 }
 

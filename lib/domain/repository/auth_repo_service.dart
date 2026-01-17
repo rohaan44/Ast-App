@@ -69,17 +69,12 @@ class AuthRepoService {
       required String code}) async {
     final response = await authRepository.verifyOtp(email: email,
         code: code);
-    if (response is Map) {
       if (response['success'] == true) {
         return response;
       } else {
         return response;
       }
-    }
-    return response;
   }
-
-
    Future<bool> refreshToken() async {
   final refreshToken = await AuthStorage.getRefreshToken();
 

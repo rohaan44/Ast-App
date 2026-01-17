@@ -7,6 +7,7 @@ import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
 import 'package:ast_official/utils/gradients/app_gradients.dart';
+import 'package:ast_official/utils/shimmer.dart';
 import 'package:ast_official/utils/simple_weight_chart.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -20,150 +21,159 @@ class DashboardHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<DashboardHomeScreenController>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!model.isProfileFetched && !model.isLoading) {
+        model.getProfileData(context);
+      }
+    });
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(ch(86)), child: _appBar()),
       body: SafeArea(
-        child: SingleChildScrollView(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: ch(16),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: cw(20)),
-              child: Row(
-                children: [
-                  SvgPicture.asset(AssetUtils.cloudIcon, width: cw(20)),
-                  SizedBox(
-                    width: cw(7),
-                  ),
-                  AppText(
-                    txt: "•",
-                    color: AppColor.cFFFFFF,
-                    fontSize: AppFontSize.f15,
-                    height: 1.5,
-                  ),
-                  SizedBox(
-                    width: cw(7),
-                  ),
-                  AppText(
-                    txt: " 90°C pioggia leggera oggi.",
-                    fontWeight: FontWeight.w200,
-                    color: AppColor.cFFFFFF,
-                    fontSize: AppFontSize.f16,
-                    height: 1.5,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: ch(21),
-            ),
-            carouselSliderCard(),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: cw(20)),
+        child: GlobalSkeleton(
+          isLoading: model.isLoading,
+          child: SingleChildScrollView(
               child: Column(
-                children: [
-                  SizedBox(
-                    height: ch(12),
-                  ),
-                  walkingBox(),
-                  SizedBox(
-                    height: ch(24),
-                  ),
-                  circularGraph(),
-                  SizedBox(
-                    height: ch(24),
-                  ),
-                  nextMeal(),
-                  SizedBox(
-                    height: ch(24),
-                  ),
-                  Consumer<DashboardHomeScreenController>(
-                      builder: (context, model, child) {
-                    return SlideAbleButtonView(
-                        buttonText: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: ch(16),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: cw(20)),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(AssetUtils.cloudIcon, width: cw(20)),
+                    SizedBox(
+                      width: cw(7),
+                    ),
+                    AppText(
+                      txt: "•",
+                      color: AppColor.cFFFFFF,
+                      fontSize: AppFontSize.f15,
+                      height: 1.5,
+                    ),
+                    SizedBox(
+                      width: cw(7),
+                    ),
+                    AppText(
+                      txt: " 90°C pioggia leggera oggi.",
+                      fontWeight: FontWeight.w200,
+                      color: AppColor.cFFFFFF,
+                      fontSize: AppFontSize.f16,
+                      height: 1.5,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: ch(21),
+              ),
+              carouselSliderCard(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: cw(20)),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: ch(12),
+                    ),
+                    walkingBox(),
+                    SizedBox(
+                      height: ch(24),
+                    ),
+                    circularGraph(),
+                    SizedBox(
+                      height: ch(24),
+                    ),
+                    nextMeal(),
+                    SizedBox(
+                      height: ch(24),
+                    ),
+                    Consumer<DashboardHomeScreenController>(
+                        builder: (context, model, child) {
+                      return SlideAbleButtonView(
+                          buttonText: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: cw(30),
+                              ),
+                              AppText(
+                                txt: 'Scorri per vedere le alternative',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              SizedBox(
+                                width: cw(4),
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: ch(12),
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: ch(12),
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: ch(12),
+                              ),
+                            ],
+                          ),
+                          buttonWidget:
+                              SvgPicture.asset(AssetUtils.handForwardIcon),
+                          borderColor: AppColor.c1E1E1E,
+                          activeColor: AppColor.transparent,
+                          isFinished: model.processing,
+                          onWaitingProcess: () {
+                            model.handleSlideComplete(context);
+                          },
+                          onFinish: () async {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Slide !")),
+                            );
+                          });
+                    }),
+                    SizedBox(
+                      height: ch(24),
+                    ),
+                    Container(
+                      height: ch(49),
+                      decoration: BoxDecoration(
+                          color: AppColor.c1E1E1E,
+                          borderRadius: BorderRadius.circular(cw(16))),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: cw(16)),
+                        child: Row(
                           children: [
+                            SvgPicture.asset(AssetUtils.uploadImg),
                             SizedBox(
-                              width: cw(30),
+                              width: cw(8),
                             ),
                             AppText(
-                              txt: 'Scorri per vedere le alternative',
-                              fontSize: 14,
+                              txt:
+                                  'Non dimenticare di caricare le tue foto oggi!',
+                              fontSize: 13,
                               fontWeight: FontWeight.w400,
-                            ),
-                            SizedBox(
-                              width: cw(4),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: ch(12),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: ch(12),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: ch(12),
                             ),
                           ],
                         ),
-                        buttonWidget:
-                            SvgPicture.asset(AssetUtils.handForwardIcon),
-                        borderColor: AppColor.c1E1E1E,
-                        activeColor: AppColor.transparent,
-                        isFinished: model.processing,
-                        onWaitingProcess: () {
-                          model.handleSlideComplete(context);
-                        },
-                        onFinish: () async {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Slide !")),
-                          );
-                        });
-                  }),
-                  SizedBox(
-                    height: ch(24),
-                  ),
-                  Container(
-                    height: ch(49),
-                    decoration: BoxDecoration(
-                        color: AppColor.c1E1E1E,
-                        borderRadius: BorderRadius.circular(cw(16))),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: cw(16)),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(AssetUtils.uploadImg),
-                          SizedBox(
-                            width: cw(8),
-                          ),
-                          AppText(
-                            txt:
-                                'Non dimenticare di caricare le tue foto oggi!',
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: ch(20),
-                  ),
-                  const SimpleWeightChart(),
-                  SizedBox(
-                    height: ch(120),
-                  ),
-                ],
+                    SizedBox(
+                      height: ch(20),
+                    ),
+                    const SimpleWeightChart(),
+                    SizedBox(
+                      height: ch(120),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        )),
+            ],
+          )),
+        ),
       ),
     );
   }

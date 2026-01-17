@@ -1,4 +1,5 @@
 import 'package:ast_official/domain/repository/app_repo_service.dart';
+import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +96,51 @@ class DashboardHomeScreenController with ChangeNotifier {
     processing = false;
     notifyListeners();
   }
-  
 
-  
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  Map profileData = {};
+
+  bool _isProfileFetched = false;
+  bool get isProfileFetched => _isProfileFetched;
+  Future<void> getProfileData(BuildContext context) async {
+    if (_isProfileFetched) return;
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await appRepoService.getMyProfile();
+
+      if (response.success == true) {
+        profileData = response.data?.profile?.toJson() ?? {};
+        _isProfileFetched = true;
+        debugPrint("profileData\n: $profileData");
+      } else {
+        if (context.mounted) {
+          showApiSnackBar(
+            context,
+            title: "Error",
+            message: response.error ?? "Something went wrong",
+            isSuccess: false,
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        showApiSnackBar(
+          context,
+          title: "Error",
+          message: "An unexpected error occurred: $e",
+          isSuccess: false,
+        );
+      }
+      debugPrint("Error fetching profile: $e");
+    } finally {
+      _isProfileFetched = true;
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
 }

@@ -29,7 +29,7 @@ class OnboardingRepo {
       required String weightUnit}) async {
     var response = await _dioHelper.post(
         isAuthRequired: true,
-        url: "${NetworkProperties.baseUrl}/v1/users/onboarding/body-metrics",
+        url: "${NetworkProperties.baseUrl}users/onboarding/body-metrics",
         requestBody: {
           "height": {"value": heightValue, "unit": heightUnit},
           "weight": {"value": weightValue, "unit": weightUnit}
@@ -42,7 +42,7 @@ class OnboardingRepo {
       required String experienceLevel}) async {
     var response = await _dioHelper.post(
         isAuthRequired: true,
-        url: "${NetworkProperties.baseUrl}/v1/users/onboarding/fitness-goals",
+        url: "${NetworkProperties.baseUrl}users/onboarding/fitness-goals",
         requestBody: {
           "fitnessGoal": fitnessGoal,
           "experienceLevel": experienceLevel
@@ -53,7 +53,7 @@ class OnboardingRepo {
     Future<GetAllPlansModel> getPlans() async {
     var response = await _dioHelper.get(
         isAuthRequired: true,
-        url: "${NetworkProperties.baseUrl}/v1/plans?type=subscription");
+        url: "${NetworkProperties.baseUrl}plans?type=subscription");
     return GetAllPlansModel.fromJson(response);
   }
 
@@ -63,7 +63,7 @@ class OnboardingRepo {
       {required String planId}) async {
     var response = await _dioHelper.post(
         isAuthRequired: true,
-        url: "${NetworkProperties.baseUrl}/v1/payments/create-intent",
+        url: "${NetworkProperties.baseUrl}payments/create-intent",
         requestBody: {
          "planId": planId
         });

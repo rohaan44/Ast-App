@@ -9,13 +9,14 @@ class AppRepo {
   Future<GetMyProfile> getMyProfile() async {
     var response = await _dioHelper.get(
         isAuthRequired: true,
-        url: "${NetworkProperties.baseUrl}/users/profile");
+        url: "${NetworkProperties.baseUrl}/users/profile"
+        );
     return GetMyProfile.fromJson(response);
   }
   Future<GetExercisesResponseModel> getAllExercises({int page = 1, int limit = 20}) async {
     var response = await _dioHelper.get(
       isAuthRequired: true,
-      url: "${NetworkProperties.baseUrl}/exercises",
+      url: "${NetworkProperties.baseUrl}exercises",
       queryParameters: {
         "page": page,
         "limit": limit,
