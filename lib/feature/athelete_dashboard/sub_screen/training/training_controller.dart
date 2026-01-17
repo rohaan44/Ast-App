@@ -27,21 +27,41 @@ class TrainingViewController with ChangeNotifier {
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+   bool _hasMore = true;
+  bool get hasMore => _hasMore;
 
-  bool _isPlanLoaded = false;
-  bool get isPlanLoaded => _isPlanLoaded;
+  int _currentPage = 1;
+  final int _limit = 20;
 
-  Future getAllExercises(context) async {
-    if (_isPlanLoaded) return;
+  Future getAllExercises(BuildContext context, {bool loadMore = false}) async {
+    if (_isLoading) return;
+
+    if (!loadMore) {
+      _currentPage = 1;
+      workoutPlans.clear();
+      _hasMore = true;
+    }
+
     try {
       _isLoading = true;
       notifyListeners();
-      final response = await appRepoService.getAllExercises();
+
+      final response = await appRepoService.getAllExercises(
+        page: _currentPage,
+        limit: _limit,
+      );
+
       if (response.success == true) {
-        if (response.data?.exercises != null) {
-          workoutPlans = response.data!.exercises!;
+        List newExercises =
+            response.data!.exercises!;
+
+        if (newExercises.isEmpty) {
+          _hasMore = false;
+        } else {
+          workoutPlans.addAll(newExercises);
+          _currentPage++;
         }
-        _isPlanLoaded = true;
+
         notifyListeners();
       } else {
         showApiSnackBar(
@@ -55,7 +75,7 @@ class TrainingViewController with ChangeNotifier {
       showApiSnackBar(
         context,
         title: "Error",
-        message: e.toString(),
+        message: "Something went wrong",
         isSuccess: false,
       );
     } finally {
@@ -63,4 +83,5 @@ class TrainingViewController with ChangeNotifier {
       notifyListeners();
     }
   }
+
 }

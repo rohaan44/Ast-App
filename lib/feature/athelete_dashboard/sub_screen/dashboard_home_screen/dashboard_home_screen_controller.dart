@@ -1,8 +1,11 @@
+import 'package:ast_official/domain/repository/app_repo_service.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class DashboardHomeScreenController with ChangeNotifier {
+  final AppRepoService appRepoService;
+  DashboardHomeScreenController({required this.appRepoService});
   CarouselSliderController carouselController = CarouselSliderController();
 
   int carouselValue = 0;
@@ -92,4 +95,7 @@ class DashboardHomeScreenController with ChangeNotifier {
     processing = false;
     notifyListeners();
   }
+  
+
+  
 }

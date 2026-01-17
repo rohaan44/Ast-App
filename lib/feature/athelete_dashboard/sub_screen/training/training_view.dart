@@ -5,7 +5,7 @@ import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
-import 'package:ast_official/utils/gradients/app_gradients.dart';
+// import 'package:ast_official/utils/gradients/app_gradients.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +16,18 @@ class TrainingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.read<TrainingViewController>();
+    final ScrollController scrollController = ScrollController();
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+              scrollController.position.maxScrollExtent - 200 &&
+          controller.hasMore &&
+          !controller.isLoading) {
+        controller.getAllExercises(context, loadMore: true);
+      }
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!controller.isPlanLoaded && !controller.isLoading) {
+      if (controller.workoutPlans.isEmpty && !controller.isLoading) {
         controller.getAllExercises(context);
       }
     });
@@ -31,6 +41,7 @@ class TrainingView extends StatelessWidget {
         child: Consumer<TrainingViewController>(
           builder: (context, model, child) {
             return CustomScrollView(
+              controller: scrollController,
               slivers: [
                 SliverAppBar(
                   // pinned: true,
