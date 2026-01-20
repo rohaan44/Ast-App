@@ -6,6 +6,12 @@ import 'package:ast_official/domain/repository/auth_repo_service.dart';
 import 'package:ast_official/domain/repository/onboarding_repo_service.dart';
 import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_chat/athelet_chat_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_Info/athlete_info_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_edit_profile/athlete_edit_profile_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_integration/athlete_integration_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_language/athlete_language_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_profile_setting_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_renew_certificate/athlete_renew_certificate_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/dashboard_home_screen/dashboard_home_screen_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/check_in_controller.dart';
@@ -85,7 +91,7 @@ List<SingleChildWidget> providersList = [
   Provider<AuthRepository>(
     create: (context) => AuthRepository(),
   ),
-   Provider<AppRepo>(
+  Provider<AppRepo>(
     create: (context) => AppRepo(),
   ),
   Provider<OnboardingRepo>(
@@ -93,7 +99,7 @@ List<SingleChildWidget> providersList = [
   ),
   Provider<AppRepoService>(
     create: (context) => AppRepoService(
-     appRepo: context.read<AppRepo>(),
+      appRepo: context.read<AppRepo>(),
     ),
   ),
   Provider<AuthRepoService>(
@@ -153,8 +159,12 @@ List<SingleChildWidget> providersList = [
   ChangeNotifierProvider(create: (context) => DinnerTimeController()),
   ChangeNotifierProvider(create: (context) => YourPersonalizedPlanController()),
   ChangeNotifierProvider(create: (context) => WhatIsYourActivityController()),
-  ChangeNotifierProvider(create: (context) => DashboardHomeScreenController(appRepoService: context.read<AppRepoService>())),
-  ChangeNotifierProvider(create: (context) => TrainingViewController(appRepoService: context.read<AppRepoService>())),
+  ChangeNotifierProvider(
+      create: (context) => DashboardHomeScreenController(
+          appRepoService: context.read<AppRepoService>())),
+  ChangeNotifierProvider(
+      create: (context) => TrainingViewController(
+          appRepoService: context.read<AppRepoService>())),
   ChangeNotifierProvider(create: (context) => TrainingDetailController()),
   ChangeNotifierProvider(create: (context) => TrainingCompleteController()),
   ChangeNotifierProvider(create: (context) => AtheletCoachesController()),
@@ -164,7 +174,17 @@ List<SingleChildWidget> providersList = [
   ChangeNotifierProvider(create: (context) => StatusFeedbackController()),
   ChangeNotifierProvider(create: (context) => ReviewYourCheckInController()),
   ChangeNotifierProvider(create: (context) => AtheletChatController()),
-
+  ChangeNotifierProvider(
+      create: (context) => AthleteEditProfileController(
+          appRepoService: context.read<AppRepoService>())),
+  ChangeNotifierProvider(create: (context) => AthleteInfoController()),
+  ChangeNotifierProvider(create: (context) => AthleteIntegrationController()),
+  ChangeNotifierProvider(create: (context) => AthleteLanguageController()),
+  ChangeNotifierProvider(
+      create: (context) => AthleteRenewCertificateController()),
+  ChangeNotifierProvider(
+      create: (context) => AthleteProfileSettingController(
+          authRepoService: context.read<AuthRepoService>())),
   ////////Coaches Dashboard//////
 
   ChangeNotifierProvider(

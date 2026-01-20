@@ -17,8 +17,7 @@ class DioHelper {
     Map<String, dynamic>? headers,
     Map<String, dynamic>? queryParameters,
   }) async {
-    final token =
-        isAuthRequired ? await AuthStorage.getToken() : null;
+    final token = isAuthRequired ? await AuthStorage.getToken() : null;
 
     final option = baseOptions.copyWith(
       validateStatus: (status) {
@@ -26,8 +25,7 @@ class DioHelper {
       },
       headers: {
         "Content-Type": "application/json",
-        if (isAuthRequired && token != null)
-          "Authorization": "Bearer $token",
+        if (isAuthRequired && token != null) "Authorization": "Bearer $token",
         if (headers != null) ...headers,
       },
     );
@@ -48,11 +46,12 @@ class DioHelper {
   Future<dynamic> post({
     required String url,
     Object? requestBody,
+    bool isMultipart = false,
+    FormData? formData,
     bool isAuthRequired = false,
     Map<String, dynamic>? headers,
   }) async {
-    final token =
-        isAuthRequired ? await AuthStorage.getToken() : null;
+    final token = isAuthRequired ? await AuthStorage.getToken() : null;
 
     final option = baseOptions.copyWith(
       validateStatus: (status) {
@@ -60,8 +59,7 @@ class DioHelper {
       },
       headers: {
         "Content-Type": "application/json",
-        if (isAuthRequired && token != null)
-          "Authorization": "Bearer $token",
+        if (isAuthRequired && token != null) "Authorization": "Bearer $token",
         if (headers != null) ...headers,
       },
     );
@@ -69,7 +67,7 @@ class DioHelper {
     try {
       final res = await dio.post(
         url,
-        data: requestBody,
+        data: isMultipart ? formData : requestBody,
         options: option,
       );
       return res.data;
@@ -82,14 +80,17 @@ class DioHelper {
   Future<dynamic> put({
     required String url,
     Object? requestBody,
+    bool isAuthRequired = false,
     Map<String, dynamic>? headers,
   }) async {
+    final token = isAuthRequired ? await AuthStorage.getToken() : null;
     final option = baseOptions.copyWith(
       validateStatus: (status) {
         return status != null && status < 500;
       },
       headers: {
         "Content-Type": "application/json",
+        if (isAuthRequired && token != null) "Authorization": "Bearer $token",
         if (headers != null) ...headers,
       },
     );

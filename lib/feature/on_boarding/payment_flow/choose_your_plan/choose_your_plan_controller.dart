@@ -34,6 +34,7 @@ class ChooseYourPlanController with ChangeNotifier {
         );
       }
     } catch (e) {
+      debugPrint(e.toString());
       showApiSnackBar(
         context,
         title: "Error",
@@ -41,6 +42,7 @@ class ChooseYourPlanController with ChangeNotifier {
         isSuccess: false,
       );
     } finally {
+      _isPlanLoaded = true;
       _isLoading = false;
       notifyListeners();
     }

@@ -1,0 +1,104 @@
+import 'dart:developer';
+import 'dart:io';
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/core/network/auth_service/auth_service.dart';
+import 'package:ast_official/domain/repository/auth_repo_service.dart';
+import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
+import 'package:flutter/material.dart';
+
+class AthleteProfileSettingController with ChangeNotifier {
+  final AuthRepoService authRepoService;
+  AthleteProfileSettingController({required this.authRepoService});
+  File? _profileImage;
+
+  File? get profileImage => _profileImage;
+  bool _isNotification = true;
+
+  bool get isNotification => _isNotification;
+
+  set isNotification(bool value) {
+    _isNotification = value;
+    notifyListeners();
+  }
+
+  /// Pick image using file_picker
+  // Future<void> pickProfileImage() async {
+  //   try {
+  //     final result = await FilePicker.platform.pickFiles(
+  //       type: FileType.image,
+  //       allowMultiple: false,
+  //     );
+
+  //     if (result != null && result.files.single.path != null) {
+  //       _profileImage = File(result.files.single.path!);
+  //       notifyListeners();
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Error picking image: $e");
+  //   }
+  // }
+
+  /// Delete current image
+  void deleteProfileImage() {
+    _profileImage = null;
+    notifyListeners();
+  }
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  Future<bool> logout(BuildContext context) async {
+    _isLoading = true;
+    notifyListeners();
+    debugPrint("Logout started");
+
+    try {
+      final response = await authRepoService.logout();
+      debugPrint("Logout response: $response");
+
+      if (response == true ||
+          (response is Map && response['success'] == true)) {
+        debugPrint("Clearing auth storage...");
+        await AuthStorage.clearAll();
+        debugPrint("Auth storage cleared.");
+
+        if (context.mounted) {
+          debugPrint("Navigating to SignIn...");
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            RoutePaths.signIn,
+            (route) => false,
+          );
+        } else {
+          debugPrint("Context not mounted, cannot navigate.");
+        }
+        return true;
+      }
+
+      // API returned error case
+      if (context.mounted && response is Map) {
+        showApiSnackBar(
+          context,
+          title: "Error",
+          message: response['message'] ?? "Logout failed",
+          isSuccess: false,
+        );
+      }
+
+      return false;
+    } catch (e) {
+      print("Logout error: $e");
+      if (context.mounted) {
+        showApiSnackBar(
+          context,
+          title: "Error",
+          message: e.toString(),
+          isSuccess: false,
+        );
+      }
+      return false;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+}

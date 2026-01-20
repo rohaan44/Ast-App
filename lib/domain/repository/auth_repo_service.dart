@@ -107,4 +107,16 @@ class AuthRepoService {
   }
 }
 
+  Future<dynamic> logout() async {
+    final response = await authRepository.logout();
+    if (response is Map) {
+      if (response['success'] == true) {
+        return true;
+      } else {
+        return response;
+      }
+    }
+    return false;
+  }
+
 }

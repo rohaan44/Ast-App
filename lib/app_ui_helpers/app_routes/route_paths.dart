@@ -26,16 +26,12 @@ class RoutePaths {
 
   static const String dashboardView = '/dashboardView';
   static const String homeScreenView = '/homeScreenView';
-
   static const String personalizeYourExperienceView =
       '/personalizeYourExperienceView';
-
   static const String whatIsYourActivityView = '/whatIsYourActivityView';
   static const String whatIsYourDietTypeView = '/whatIsYourDietTypeView';
-
   static const String breakFastTimeView = '/breakFastTimeView';
   static const String dinnerTimeView = '/dinnerTimeView';
-
   static const String dashboardHomeScreen = '/dashboardHomeScreen';
   static const String yourPersonalizedPlanView = '/yourPersonalizedPlanView';
   static const String trainingDetailViw = '/trainingDetailViw';
@@ -44,7 +40,12 @@ class RoutePaths {
   static const String bodyMeasurementView = '/bodyMeasurementView';
   static const String reviewYourCheckInView = '/reviewYourCheckInView';
   static const String statusFeedbackView = '/statusFeedbackView';
-
+  static const String athleteLanguageSelectedScreen = '/athleteLanguageSelectedScreen';
+static const String athleteInfoScreen = '/athleteInfoScreen';
+static const String athleteIntegrationScreen = '/athleteIntegrationScreen';
+static const String athleteRenewCertificateScreen = '/athleteRenewCertificateScreen';
+static const String athleteProfileSetting = '/athleteProfileSetting';
+static const String athleteEditProfile = '/athleteEditProfile';
   /////////////////Coaches Dashboard//////////////////////
   static const String coachMainScreenView = '/coachMainScreenView';
   static const String coachHomeScreenView = '/coachHomeScreenView';

@@ -7,12 +7,16 @@ class GetMyProfile {
 
   GetMyProfile.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    error = json['error'];
+    if (json['error'] is Map) {
+      error = json['error'].toString();
+    } else {
+      error = json['error'];
+    }
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-   final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['success'] = success;
     data['error'] = error;
     if (this.data != null) {
@@ -56,6 +60,7 @@ class Profile {
   String? bio;
   String? fullName;
   String? id;
+  String? email;
 
   Profile({
     this.height,
@@ -63,6 +68,7 @@ class Profile {
     this.onboardingSteps,
     this.sId,
     this.user,
+    this.email,
     this.avatar,
     this.fitnessGoals,
     this.onboardingCompleted,
@@ -77,16 +83,23 @@ class Profile {
   });
 
   Profile.fromJson(Map<String, dynamic> json) {
-    height =
-        json['height'] != null ? Height.fromJson(json['height']) : null;
-    weight =
-        json['weight'] != null ? Weight.fromJson(json['weight']) : null;
+    height = json['height'] != null ? Height.fromJson(json['height']) : null;
+    weight = json['weight'] != null ? Weight.fromJson(json['weight']) : null;
     onboardingSteps = json['onboardingSteps'] != null
         ? OnboardingSteps.fromJson(json['onboardingSteps'])
         : null;
 
     sId = json['_id'];
-    user = json['user'];
+
+    if (json['user'] is Map) {
+      user = json['user']['_id']?.toString() ??
+          json['user']['id']?.toString() ??
+          json['user'].toString();
+      email = json['user']['email'];
+    } else {
+      user = json['user'];
+    }
+
     avatar = json['avatar']; // can be null safely
     fitnessGoals = json['fitnessGoals'] != null
         ? List<String>.from(json['fitnessGoals'])
@@ -107,10 +120,10 @@ class Profile {
     return {
       if (height != null) 'height': height!.toJson(),
       if (weight != null) 'weight': weight!.toJson(),
-      if (onboardingSteps != null)
-        'onboardingSteps': onboardingSteps!.toJson(),
+      if (onboardingSteps != null) 'onboardingSteps': onboardingSteps!.toJson(),
       '_id': sId,
       'user': user,
+      'email': email,
       'avatar': avatar,
       'fitnessGoals': fitnessGoals,
       'onboardingCompleted': onboardingCompleted,

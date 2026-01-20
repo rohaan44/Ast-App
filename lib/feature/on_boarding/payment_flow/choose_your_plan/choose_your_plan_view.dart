@@ -10,6 +10,7 @@ import 'package:ast_official/utils/app_divider.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
+import 'package:ast_official/utils/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -29,120 +30,128 @@ class ChooseYourPlanView extends StatelessWidget {
         planController.getPlans(context);
       }
     });
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: cw(20), vertical: ch(30)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return RefreshIndicator(
+      onRefresh: () => planController.getPlans(context),
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: cw(20), vertical: ch(30)),
+            child: GlobalSkeleton(
+              isLoading: planController.isLoading,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SvgPicture.asset(AssetUtils.walkthroughIcon),
-                  GestureDetector(
-                    onTap: () {
-                      if (isRenew != null && isRenew == true) {
-                        Navigator.pushNamedAndRemoveUntil(context,
-                            RoutePaths.coachMainScreenView, (route) => false);
-                      }
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SvgPicture.asset(AssetUtils.walkthroughIcon),
+                      GestureDetector(
+                        onTap: () {
+                          if (isRenew != null && isRenew == true) {
+                            Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                RoutePaths.coachMainScreenView,
+                                (route) => false);
+                          }
+                        },
+                        child: SvgPicture.asset(AssetUtils.appCrossIcon),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: ch(30),
+                  ),
+                  if (context.read<SelectRoleController>().selectedRole ==
+                      "Coach") ...[
+                    AppText(
+                      txt: "Piano di Certificazione",
+                      fontSize: AppFontSize.f24,
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.cFFFFFF,
+                      height: 1,
+                    ),
+                  ] else ...[
+                    AppText(
+                      txt: "Scegli il tuo piano",
+                      fontSize: AppFontSize.f24,
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.cFFFFFF,
+                      height: 1,
+                    ),
+                  ],
+                  SizedBox(
+                    height: ch(8),
+                  ),
+                  if (context.read<SelectRoleController>().selectedRole ==
+                      "Coach") ...[
+                    AppText(
+                      txt:
+                          "Allenatori che utilizzano l'app per l'allenamento Smart.",
+                      fontSize: AppFontSize.f16,
+                      color: AppColor.white.withOpacity(0.5),
+                      textAlign: TextAlign.center,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ] else ...[
+                    AppText(
+                      txt:
+                          "Atleti che utilizzano l’app per allenamento e nutrizione.",
+                      fontSize: AppFontSize.f16,
+                      color: AppColor.white.withOpacity(0.5),
+                      textAlign: TextAlign.center,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ],
+                  SizedBox(
+                    height: ch(40),
+                  ),
+                  isCheckItems("Accesso ai piani di allenamento e nutrizione"),
+                  SizedBox(
+                    height: ch(15),
+                  ),
+                  isCheckItems("Check-in intelligente settimanale"),
+                  SizedBox(
+                    height: ch(15),
+                  ),
+                  isCheckItems("Integrazione con Apple Health/Google Fit"),
+                  SizedBox(
+                    height: ch(15),
+                  ),
+                  isCheckItems("Chat limitata con l’allenatore (solo testo)"),
+                  SizedBox(
+                    height: ch(40),
+                  ),
+                  appDivider(),
+                  SizedBox(
+                    height: ch(50),
+                  ),
+                  if (context.read<SelectRoleController>().selectedRole ==
+                      "Coach") ...[
+                    plainCard(
+                        "Quota di Certificazione ",
+                        "€599/mese",
+                        "(Una tantum)",
+                        (isRenew != null && isRenew == true) ? false : true),
+                    SizedBox(
+                      height: ch(10),
+                    ),
+                    plainCard("Rinnovo della Licenza", "€249/mese", "Annuale",
+                        (isRenew != null && isRenew == true) ? true : false),
+                  ] else
+                    plainCard("Piano Base", "€79/mese", "Mese", true),
+                  const Spacer(),
+                  AppButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, RoutePaths.walletView);
                     },
-                    child: SvgPicture.asset(AssetUtils.appCrossIcon),
+                    text: "Scegli il piano",
+                  ),
+                  SizedBox(
+                    height: ch(10),
                   )
                 ],
               ),
-              SizedBox(
-                height: ch(30),
-              ),
-              if (context.read<SelectRoleController>().selectedRole ==
-                  "Coach") ...[
-                AppText(
-                  txt: "Piano di Certificazione",
-                  fontSize: AppFontSize.f24,
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.cFFFFFF,
-                  height: 1,
-                ),
-              ] else ...[
-                AppText(
-                  txt: "Scegli il tuo piano",
-                  fontSize: AppFontSize.f24,
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.cFFFFFF,
-                  height: 1,
-                ),
-              ],
-              SizedBox(
-                height: ch(8),
-              ),
-              if (context.read<SelectRoleController>().selectedRole ==
-                  "Coach") ...[
-                AppText(
-                  txt:
-                      "Allenatori che utilizzano l'app per l'allenamento Smart.",
-                  fontSize: AppFontSize.f16,
-                  color: AppColor.white.withOpacity(0.5),
-                  textAlign: TextAlign.center,
-                  fontWeight: FontWeight.w400,
-                ),
-              ] else ...[
-                AppText(
-                  txt:
-                      "Atleti che utilizzano l’app per allenamento e nutrizione.",
-                  fontSize: AppFontSize.f16,
-                  color: AppColor.white.withOpacity(0.5),
-                  textAlign: TextAlign.center,
-                  fontWeight: FontWeight.w400,
-                ),
-              ],
-              SizedBox(
-                height: ch(40),
-              ),
-              isCheckItems("Accesso ai piani di allenamento e nutrizione"),
-              SizedBox(
-                height: ch(15),
-              ),
-              isCheckItems("Check-in intelligente settimanale"),
-              SizedBox(
-                height: ch(15),
-              ),
-              isCheckItems("Integrazione con Apple Health/Google Fit"),
-              SizedBox(
-                height: ch(15),
-              ),
-              isCheckItems("Chat limitata con l’allenatore (solo testo)"),
-              SizedBox(
-                height: ch(40),
-              ),
-              appDivider(),
-              SizedBox(
-                height: ch(50),
-              ),
-              if (context.read<SelectRoleController>().selectedRole ==
-                  "Coach") ...[
-                plainCard(
-                    "Quota di Certificazione ",
-                    "€599/mese",
-                    "(Una tantum)",
-                    (isRenew != null && isRenew == true) ? false : true),
-                SizedBox(
-                  height: ch(10),
-                ),
-                plainCard("Rinnovo della Licenza", "€249/mese", "Annuale",
-                    (isRenew != null && isRenew == true) ? true : false),
-              ] else
-                plainCard("Piano Base", "€79/mese", "Mese", true),
-              const Spacer(),
-              AppButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, RoutePaths.walletView);
-                },
-                text: "Scegli il piano",
-              ),
-              SizedBox(
-                height: ch(10),
-              )
-            ],
+            ),
           ),
         ),
       ),

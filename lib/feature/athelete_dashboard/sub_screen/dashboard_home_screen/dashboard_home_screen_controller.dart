@@ -104,8 +104,9 @@ class DashboardHomeScreenController with ChangeNotifier {
 
   bool _isProfileFetched = false;
   bool get isProfileFetched => _isProfileFetched;
-  Future<void> getProfileData(BuildContext context) async {
-    if (_isProfileFetched) return;
+  Future<void> getProfileData(BuildContext context,
+      {bool forceRefresh = false}) async {
+    if (_isProfileFetched && !forceRefresh) return;
 
     _isLoading = true;
     notifyListeners();
@@ -138,7 +139,9 @@ class DashboardHomeScreenController with ChangeNotifier {
       }
       debugPrint("Error fetching profile: $e");
     } finally {
-      _isProfileFetched = true;
+      if (!forceRefresh) {
+        _isProfileFetched = true;
+      }
       _isLoading = false;
       notifyListeners();
     }
