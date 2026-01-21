@@ -1,7 +1,5 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/domain/repository/onboarding_repo_service.dart';
-import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
-import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -38,17 +36,17 @@ class SelectWeightController with ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  Future sendBodyMetrics(context) async {
+  Future sendBodyMetrics(
+      BuildContext context, String heightValue, String heightUnit) async {
     _isLoading = true;
-    final data =
-        context.read<FlowDataProvider>().getFlowData(customerOnboarding);
+
     notifyListeners();
     try {
       final response = await onboardingRepoService.sendBodyMetrics(
-          heightValue: data?["value"],
-          heightUnit: data?["unit "],
+          heightValue: heightValue,
+          heightUnit: heightUnit,
           weightValue: currentList[selectedIndex].toString(),
-          weightUnit: isKg ? "kg" : "lb");
+          weightUnit: isKg ? "kg" : "lbs");
       if (response['success'] == true) {
         final bool success = response['success'] == true;
         final String message = response['message'] ?? 'Something went wrong';
@@ -59,7 +57,7 @@ class SelectWeightController with ChangeNotifier {
           isSuccess: success,
         );
         Navigator.pushNamedAndRemoveUntil(
-            context, RoutePaths.personHeight, (route) => false);
+            context, RoutePaths.selectObjective, (route) => false);
       } else {
         showApiSnackBar(
           context,

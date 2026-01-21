@@ -115,41 +115,44 @@ class ApiSnackBar extends StatelessWidget {
   });
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Container(
-      height: ch(64),
-      padding: EdgeInsets.symmetric(horizontal: cw(16)),
+      padding: EdgeInsets.symmetric(horizontal: cw(16), vertical: ch(10)),
       decoration: BoxDecoration(
         color: const Color(0xFF1C1C1C),
         borderRadius: BorderRadius.circular(cw(20)),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _StatusIcon(isSuccess: isSuccess),
           SizedBox(width: cw(14)),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppText(
-                txt: title,
-                fontSize: AppFontSize.f19,
-                fontWeight: FontWeight.w600,
-                color: AppColor.white,
-                height: 1.2,
-              ),
-              SizedBox(height: ch(2)),
-              SizedBox(
-                width: cw(200),
-                child: AppText(
+          Expanded(
+            // <<< IMPORTANT FIX
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppText(
+                  txt: title,
+                  fontSize: AppFontSize.f20,
+                  fontWeight: FontWeight.w600,
+                  color: AppColor.white,
+                  height: 1.2,
+                ),
+                SizedBox(height: ch(4)),
+                AppText(
                   txt: message,
-                  fontSize: AppFontSize.f13 + 4,
+                  fontSize: AppFontSize.f13 + 6,
                   color: AppColor.white,
                   fontWeight: FontWeight.w400,
                   height: 1.2,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

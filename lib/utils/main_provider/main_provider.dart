@@ -1,11 +1,20 @@
+import 'package:ast_official/data/repository/app_repo.dart';
 import 'package:ast_official/data/repository/auth_repo.dart';
 import 'package:ast_official/data/repository/onboarding_repo.dart';
+import 'package:ast_official/domain/repository/app_repo_service.dart';
 import 'package:ast_official/domain/repository/auth_repo_service.dart';
 import 'package:ast_official/domain/repository/onboarding_repo_service.dart';
 import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_chat/athelet_chat_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_Info/athlete_info_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_edit_profile/athlete_edit_profile_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_integration/athlete_integration_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_language/athlete_language_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_profile_setting_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_renew_certificate/athlete_renew_certificate_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/dashboard_home_screen/dashboard_home_screen_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/coach_profile/coach_profile_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/check_in_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/body_measurement/body_measurement_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/checkin_diet/checkin_diet_controller.dart';
@@ -27,8 +36,7 @@ import 'package:ast_official/feature/coach_dashboard/check_in/check_in_reviews/c
 import 'package:ast_official/feature/coach_dashboard/check_in/edit_ai_suggestion/edit_ai_suggestion_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_Message/coach_chat_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach_edit_profile/coach_edit_profile_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/forgot_password/reset_password/reset_password_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/forgot_password/reset_password_email/reset_password_email_controller.dart';
+import 'package:ast_official/feature/on_boarding/auth/forget_password/reset_password/reset_password_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/integration/integration_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/language/language_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_controller.dart';
@@ -83,173 +91,292 @@ import '../../feature/coach_dashboard/coach_profile_setting/coach_profile_settin
 List<SingleChildWidget> providersList = [
   Provider<AuthRepository>(
     create: (context) => AuthRepository(),
+    //lazy: true,
+  ),
+  Provider<AppRepo>(
+    create: (context) => AppRepo(),
+    // lazy: true,
   ),
   Provider<OnboardingRepo>(
     create: (context) => OnboardingRepo(),
+    // lazy: true,
+  ),
+  Provider<AppRepoService>(
+    create: (context) => AppRepoService(
+      appRepo: context.read<AppRepo>(),
+    ),
+    //  lazy: true,
   ),
   Provider<AuthRepoService>(
     create: (context) => AuthRepoService(
       authRepository: context.read<AuthRepository>(),
     ),
+    //lazy: true,
   ),
   Provider<OnboardingRepoService>(
-      create: (context) => OnboardingRepoService(
-          onboardingRepository: context.read<OnboardingRepo>())),
-  ChangeNotifierProvider(create: (context) => SelectRoleController()),
+    create: (context) => OnboardingRepoService(
+        onboardingRepository: context.read<OnboardingRepo>()),
+    //lazy: true
+  ),
+  ChangeNotifierProvider(
+      create: (context) => SelectRoleController(), lazy: true),
   ChangeNotifierProvider(
       create: (context) => SelectGenderController(
-          onboardingRepoService: context.read<OnboardingRepoService>())),
-  ChangeNotifierProvider(create: (context) => PersonHeightController()),
+          onboardingRepoService: context.read<OnboardingRepoService>()),
+      lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => PersonHeightController(), lazy: true),
   ChangeNotifierProvider(
       create: (context) => SelectWeightController(
-          onboardingRepoService: context.read<OnboardingRepoService>())),
+          onboardingRepoService: context.read<OnboardingRepoService>()),
+      lazy: true),
   ChangeNotifierProvider(
-      create: (context) =>
-          OtpController(authRepoService: context.read<AuthRepoService>())),
+    create: (context) =>
+        OtpController(authRepoService: context.read<AuthRepoService>()),
+    //lazy: true
+  ),
   ChangeNotifierProvider(
       create: (context) => DateOfBirthController(
-          onboardingRepoService: context.read<OnboardingRepoService>())),
-  ChangeNotifierProvider(create: (context) => DashboardController()),
+          onboardingRepoService: context.read<OnboardingRepoService>()),
+      lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => DashboardController(), lazy: true),
   ChangeNotifierProvider(
       create: (context) =>
-          SignUpController(authRepoService: context.read<AuthRepoService>())),
-  ChangeNotifierProvider(create: (context) => HomeScreenController()),
+          SignUpController(authRepoService: context.read<AuthRepoService>()),
+      lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => HomeScreenController(), lazy: true),
   ChangeNotifierProvider(
       create: (context) =>
-          SignInController(authRepoService: context.read<AuthRepoService>())),
+          SignInController(authRepoService: context.read<AuthRepoService>()),
+      lazy: true),
   ChangeNotifierProvider(
       create: (context) => ForgetPasswordController(
-          authRepoService: context.read<AuthRepoService>())),
+          authRepoService: context.read<AuthRepoService>()),
+      lazy: true),
   // ChangeNotifierProvider(
   //     create: (context) => ChangePasswordController(
   //         // authRepoService: context.read<AuthRepoService>()
   //         )),
-  ChangeNotifierProvider(create: (context) => HomeScreenController()),
-  ChangeNotifierProvider(create: (context) => WhatIsYourDietTypeController()),
+  ChangeNotifierProvider(
+      create: (context) => HomeScreenController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => WhatIsYourDietTypeController(), lazy: true),
   ChangeNotifierProvider(
       create: (context) => WalletController(
-          onboardingRepoService: context.read<OnboardingRepoService>())),
+          onboardingRepoService: context.read<OnboardingRepoService>()),
+      lazy: true),
   ChangeNotifierProvider(
       create: (context) => ChooseYourPlanController(
-          onboardingRepoService: context.read<OnboardingRepoService>())),
-  ChangeNotifierProvider(create: (context) => WelcomeController()),
-  ChangeNotifierProvider(create: (context) => SuccessController()),
+          onboardingRepoService: context.read<OnboardingRepoService>()),
+      lazy: true),
+  ChangeNotifierProvider(create: (context) => WelcomeController(), lazy: true),
+  ChangeNotifierProvider(create: (context) => SuccessController(), lazy: true),
   ChangeNotifierProvider(
       create: (context) => SelectObjectiveController(
-          onboardingRepoService: context.read<OnboardingRepoService>())),
+          onboardingRepoService: context.read<OnboardingRepoService>()),
+      lazy: true),
   ChangeNotifierProvider(
-      create: (context) => PersonalizYourExperienceController()),
-  ChangeNotifierProvider(create: (context) => HomeScreenController()),
-  ChangeNotifierProvider(create: (context) => BreakFastTimeController()),
-  ChangeNotifierProvider(create: (context) => DinnerTimeController()),
-  ChangeNotifierProvider(create: (context) => YourPersonalizedPlanController()),
-  ChangeNotifierProvider(create: (context) => WhatIsYourActivityController()),
-  ChangeNotifierProvider(create: (context) => DashboardHomeScreenController()),
-  ChangeNotifierProvider(create: (context) => TrainingViewController()),
-  ChangeNotifierProvider(create: (context) => TrainingDetailController()),
-  ChangeNotifierProvider(create: (context) => TrainingCompleteController()),
-  ChangeNotifierProvider(create: (context) => AtheletCoachesController()),
-  ChangeNotifierProvider(create: (context) => CheckInController()),
-  ChangeNotifierProvider(create: (context) => CheckInDietController()),
-  ChangeNotifierProvider(create: (context) => BodyMeasurementController()),
-  ChangeNotifierProvider(create: (context) => StatusFeedbackController()),
-  ChangeNotifierProvider(create: (context) => ReviewYourCheckInController()),
-  ChangeNotifierProvider(create: (context) => AtheletChatController()),
-
+      create: (context) => PersonalizYourExperienceController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => HomeScreenController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => BreakFastTimeController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => DinnerTimeController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => YourPersonalizedPlanController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => WhatIsYourActivityController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => DashboardHomeScreenController(
+          appRepoService: context.read<AppRepoService>()),
+      lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => TrainingViewController(
+          appRepoService: context.read<AppRepoService>()),
+      lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => TrainingDetailController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => TrainingCompleteController(), lazy: true),
+  ChangeNotifierProvider(
+    create: (context) => AtheletCoachesController(
+        appRepoService: context.read<AppRepoService>()),
+    // lazy: true
+  ),
+  ChangeNotifierProvider(
+      create: (context) => CoachProfileController(), lazy: true),
+  ChangeNotifierProvider(
+    create: (context) => CheckInController(),
+    // lazy: true
+  ),
+  ChangeNotifierProvider(
+      create: (context) => CheckInDietController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => BodyMeasurementController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => StatusFeedbackController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => ReviewYourCheckInController(), lazy: true),
+  ChangeNotifierProvider(
+    create: (context) => AtheletChatController(),
+    //lazy: true
+  ),
+  ChangeNotifierProvider(
+      create: (context) => AthleteEditProfileController(
+          appRepoService: context.read<AppRepoService>()),
+      lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => AthleteInfoController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => AthleteIntegrationController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => AthleteLanguageController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => AthleteRenewCertificateController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => AthleteProfileSettingController(
+          authRepoService: context.read<AuthRepoService>()),
+      lazy: true),
   ////////Coaches Dashboard//////
 
   ChangeNotifierProvider(
     create: (context) => CoachBottomBar(),
+    //lazy: true,
   ),
-  ChangeNotifierProvider(create: (context) => CoachHomeScreenController()),
-  ChangeNotifierProvider(create: (context) => AthleteManagementController()),
-  ChangeNotifierProvider(create: (context) => AthleteProfileController()),
-  ChangeNotifierProvider(create: (_) => PlansManagementController()),
-  ChangeNotifierProvider(create: (_) => FlowDataProvider()),
-  ChangeNotifierProvider(create: (_) => PlanPreviewController()),
-  ChangeNotifierProvider(create: (_) => TrainingPlanController()),
-  ChangeNotifierProvider(create: (_) => NutritionPlanController()),
+  ChangeNotifierProvider(
+    create: (context) => CoachHomeScreenController(),
+    //lazy: true,
+  ),
+  ChangeNotifierProvider(
+    create: (context) => AthleteManagementController(),
+    //lazy: true,
+  ),
+  ChangeNotifierProvider(
+    create: (context) => AthleteProfileController(),
+    lazy: true,
+  ),
+  ChangeNotifierProvider(
+      create: (_) => PlansManagementController(), lazy: true),
+  ChangeNotifierProvider(
+    create: (_) => FlowDataProvider(),
+  ),
+  ChangeNotifierProvider(create: (_) => PlanPreviewController(), lazy: true),
+  ChangeNotifierProvider(create: (_) => TrainingPlanController(), lazy: true),
+  ChangeNotifierProvider(create: (_) => NutritionPlanController(), lazy: true),
 
   ChangeNotifierProvider(
     create: (_) => PaymentsRoyaltiesController(),
+    lazy: true,
   ),
 
   ChangeNotifierProvider(
     create: (_) => AthleteSubscriptionsController(),
+    lazy: true,
   ),
   ChangeNotifierProvider(
     create: (_) => TransactionsHistoryController(),
+    lazy: true,
   ),
 
   ChangeNotifierProvider(
     create: (_) => CoachChatController(),
+    // lazy: true,
   ),
   ChangeNotifierProvider(
     create: (_) => CoachProfileSettingController(),
+    lazy: true,
   ),
 
   ChangeNotifierProvider(
     create: (_) => CoachEditProfileController(),
+    lazy: true,
   ),
 
   ChangeNotifierProvider(
     create: (_) => IntegrationController(),
+    lazy: true,
   ),
   ChangeNotifierProvider(
     create: (_) => LanguageSelectorController(),
+    lazy: true,
   ),
 
   ChangeNotifierProvider(
-    create: (_) => ResetPasswordEmailController(),
-  ),
-  ChangeNotifierProvider(
-    create: (_) => ResetPasswordController(),
+    create: (context) => ResetPasswordController(
+        authRepoService: context.read<AuthRepoService>()),
+    lazy: true,
   ),
 
   ChangeNotifierProvider(
     create: (_) => CheckInReviewsController(),
+    // lazy: true,
   ),
   ChangeNotifierProvider(
     create: (_) => EditAiSuggestionController(),
+    lazy: true,
   ),
 
   ////////Tutor Dashboard//////
-  ChangeNotifierProvider(create: (context) => TutorHomeScreenController()),
+  ChangeNotifierProvider(
+    create: (context) => TutorHomeScreenController(),
+    //lazy: true
+  ),
 
-  ChangeNotifierProvider(create: (context) => TutorCourseSectionController()),
-  ChangeNotifierProvider(create: (context) => TutorCourseSectionS1Controller()),
-  ChangeNotifierProvider(create: (context) => TutorCourseSectionS2Controller()),
+  ChangeNotifierProvider(
+    create: (context) => TutorCourseSectionController(),
+    // lazy: true
+  ),
+  ChangeNotifierProvider(
+      create: (context) => TutorCourseSectionS1Controller(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => TutorCourseSectionS2Controller(), lazy: true),
   ChangeNotifierProvider(
     create: (context) => TutorBottomBar(),
+    lazy: true,
   ),
-  ChangeNotifierProvider(create: (context) => TutorCourseSectionS3Controller()),
-  ChangeNotifierProvider(create: (context) => TutorCourseSectionS4Controller()),
   ChangeNotifierProvider(
-      create: (context) => TutorProfileSettingsSectionController()),
+      create: (context) => TutorCourseSectionS3Controller(), lazy: true),
   ChangeNotifierProvider(
-      create: (context) => TutorProfileSettingsSectionS1Controller()),
+      create: (context) => TutorCourseSectionS4Controller(), lazy: true),
+  ChangeNotifierProvider(
+    create: (context) => TutorProfileSettingsSectionController(),
+    //lazy: true
+  ),
+  ChangeNotifierProvider(
+      create: (context) => TutorProfileSettingsSectionS1Controller(),
+      lazy: true),
 
   ChangeNotifierProvider(
-      create: (context) => TutorProfileSettingsSectionS2Controller()),
+      create: (context) => TutorProfileSettingsSectionS2Controller(),
+      lazy: true),
   ChangeNotifierProvider(
-      create: (context) => TutorProfileSettingsSectionS3Controller()),
+      create: (context) => TutorProfileSettingsSectionS3Controller(),
+      lazy: true),
   ChangeNotifierProvider(
-      create: (context) => TutorProfileSettingsSectionS4Controller()),
+      create: (context) => TutorProfileSettingsSectionS4Controller(),
+      lazy: true),
 
   ChangeNotifierProvider(
-      create: (context) => TutorCertificateSectionController()),
+    create: (context) => TutorCertificateSectionController(),
+    //lazy: true
+  ),
   ChangeNotifierProvider(
-      create: (context) => TutorCertificateSectionS1Controller()),
+      create: (context) => TutorCertificateSectionS1Controller(), lazy: true),
   ChangeNotifierProvider(
-      create: (context) => TutorCertificateSectionS2Controller()),
+      create: (context) => TutorCertificateSectionS2Controller(), lazy: true),
   ChangeNotifierProvider(
-      create: (context) => TutorCertificateSectionS3Controller()),
+      create: (context) => TutorCertificateSectionS3Controller(), lazy: true),
   ChangeNotifierProvider(
-      create: (context) => TutorCertificateSectionS4Controller()),
+      create: (context) => TutorCertificateSectionS4Controller(), lazy: true),
   ChangeNotifierProvider(
-      create: (context) => TutorSubmissionSectionController()),
+    create: (context) => TutorSubmissionSectionController(),
+    //lazy: true
+  ),
   ChangeNotifierProvider(
-      create: (context) => TutorSubmissionSectionS1Controller()),
+      create: (context) => TutorSubmissionSectionS1Controller(), lazy: true),
   ChangeNotifierProvider(
-      create: (context) => TutorSubmissionSectionS2Controller()),
+      create: (context) => TutorSubmissionSectionS2Controller(), lazy: true),
 ];

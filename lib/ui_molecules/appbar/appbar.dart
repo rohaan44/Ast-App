@@ -120,7 +120,8 @@ Widget customSlider(int totalSegments, int activeSegments, Color color) {
 Widget onboaridngAppBar(
     {required BuildContext context,
     required int activeSegments,
-    required int totalSegments}) {
+    required int totalSegments,
+    VoidCallback? onTap}) {
   return Container(
       padding: EdgeInsets.all(cw(20)),
       height: ch(150),
@@ -144,7 +145,7 @@ Widget onboaridngAppBar(
           SizedBox(width: cw(57)),
 
           GestureDetector(
-            onTap: () {
+            onTap: onTap ?? () {
               Navigator.pushNamedAndRemoveUntil(
                   context, RoutePaths.selectRole, (route) => false);
             },

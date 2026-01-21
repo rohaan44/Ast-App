@@ -116,7 +116,6 @@ class PersonHeightView extends StatelessWidget {
                                         heightProvider.toggleUnit();
                                       },
                                       children: [
-                                        
                                         Center(
                                           child: AppText(
                                             txt: "cm",
@@ -159,14 +158,16 @@ class PersonHeightView extends StatelessWidget {
                   AppButton(
                       buttonColor: AppColor.white,
                       onPressed: () {
-                       context.read<FlowDataProvider>().addOrUpdateFlow(
-                        flowTag: customerOnboarding, data: {
-                          "height": {
-                            "value": model.currentList[model.selectedIndex],
-                            "unit": model.isCm?"cm":"feet"
-                          }
-                        });
-                        Navigator.pushNamedAndRemoveUntil(context, RoutePaths.selectWeight, (route) => false);
+                        context.read<FlowDataProvider>().addOrUpdateFlow(
+                            flowTag: customerOnboarding,
+                            data: {
+                              "height": {
+                                "value": model.currentList[model.selectedIndex],
+                                "unit": model.isCm ? "cm" : "ft"
+                              }
+                            });
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, RoutePaths.selectWeight, (route) => false);
                       },
                       text: "Avanti",
                       fontSize: AppFontSize.f16,

@@ -1,9 +1,6 @@
-import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
-import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/forgot_password/reset_password/reset_password_controller.dart';
+import 'package:ast_official/feature/on_boarding/auth/forget_password/reset_password/reset_password_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
-import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
-import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
 import 'package:ast_official/ui_molecules/primary_textfield/primary_text_field.dart';
@@ -20,6 +17,7 @@ class ResetPasswordView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = context.read<ResetPasswordController>();
     return Scaffold(
         body: AppDismissKeyboard(
       child: Stack(children: [
@@ -104,10 +102,24 @@ class ResetPasswordView extends StatelessWidget {
                             Consumer<ResetPasswordController>(
                                 builder: (context, model, child) {
                               return primaryTextField(
-                                  prefixIcon:
-                                      SvgPicture.asset(AssetUtils.lockIcon),
-                                  keyboardType: TextInputType.emailAddress,
-                                  obscureText: true,
+                                  maxLength: 10,
+                                  obscureText: model.isObsecurePassword,
+                                  prefixIcon: SvgPicture.asset(
+                                    AssetUtils.lockIcon,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      model.isObsecurePassword
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: AppColor.cFFFFFF,
+                                    ),
+                                    onPressed: () {
+                                      model.isObsecurePassword =
+                                          !model.isObsecurePassword;
+                                    },
+                                  ),
+                                  inputFormatters: [],
                                   border: InputBorder.none,
                                   hintText: "Nuova parola d'ordine",
                                   // prefixIcon: const Icon(CupertinoIcons.lock),
@@ -120,27 +132,71 @@ class ResetPasswordView extends StatelessWidget {
                             Consumer<ResetPasswordController>(
                                 builder: (context, model, child) {
                               return primaryTextField(
-                                  prefixIcon:
-                                      SvgPicture.asset(AssetUtils.lockIcon),
-                                  keyboardType: TextInputType.emailAddress,
-                                  obscureText: true,
+                                  maxLength: 10,
+                                  hintText: "Conferma parola d'ordine",
+                                  obscureText: model.isObsecureConfirmPassword,
                                   border: InputBorder.none,
-                                  hintText: "Conferma password",
-                                  // prefixIcon: const Icon(CupertinoIcons.lock),
-                                  // suffixIcon: Icon(Icons.remove_red_eye),
+                                  prefixIcon: SvgPicture.asset(
+                                    AssetUtils.lockIcon,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      model.isObsecureConfirmPassword
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: AppColor.cFFFFFF,
+                                    ),
+                                    onPressed: () {
+                                      model.isObsecureConfirmPassword =
+                                          !model.isObsecureConfirmPassword;
+                                    },
+                                  ),
+                                  inputFormatters: [],
                                   controller: model.confirmPassController);
+                            }),
+                            Consumer<ResetPasswordController>(
+                                builder: (context, model, child) {
+                              return !model.isPasswordValid &&
+                                      model.passController.text.isNotEmpty
+                                  ? AppText(
+                                      txt:
+                                          "La password deve contenere almeno 8 caratteri, lettere, almeno un numero e almeno un carattere speciale.",
+                                      fontSize: AppFontSize.f16,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.red,
+                                      height: 1.5,
+                                    )
+                                  : const SizedBox.shrink();
+                            }),
+                            Consumer<ResetPasswordController>(
+                                builder: (context, model, child) {
+                              return !model.isConfirmPasswordValid &&
+                                      model
+                                          .confirmPassController.text.isNotEmpty
+                                  ? AppText(
+                                      txt: "Password non corrispondente",
+                                      fontSize: AppFontSize.f16,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.red,
+                                      height: 1.5,
+                                    )
+                                  : const SizedBox.shrink();
                             }),
                             SizedBox(
                               height: ch(25),
                             ),
-                            AppButton(
-                              onPressed: () {
-                                context.read<FlowDataProvider>().clearFlow(resetPassword);
-                                Navigator.pushNamedAndRemoveUntil(context, RoutePaths.coachMainScreenView , (route) => false);
-                               
-                              },
-                              text: "Reimposta password",
-                            ),
+                            Consumer<ResetPasswordController>(
+                                builder: (context, model, child) {
+                              return AppButton(
+                                isLoading: model.isLoading,
+                                isButtonEnable: model.isConfirmPasswordValid &&
+                                    model.isPasswordValid,
+                                onPressed: () {
+                                  model.changePassword(context);
+                                },
+                                text: "Reimposta password",
+                              );
+                            }),
                             SizedBox(
                               height: ch(25),
                             ),

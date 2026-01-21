@@ -1,4 +1,5 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/review_your_checkin/review_your_checkin_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
@@ -9,9 +10,7 @@ import 'package:ast_official/ui_molecules/primary_textfield/primary_text_field.d
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
@@ -91,120 +90,6 @@ class ReviewYourCheckInView extends StatelessWidget {
                     SizedBox(
                       height: ch(24),
                     ),
-                    // ListView.separated(
-                    //     shrinkWrap: true,
-                    //     primary: false,
-                    //     itemBuilder: (context, index) {
-                    //       return Column(
-                    //         crossAxisAlignment: CrossAxisAlignment.start,
-                    //         children: [
-                    //           AppText(
-                    //             txt: index == 0
-                    //                 ? "Peso"
-                    //                 : index == 1
-                    //                     ? "Vita"
-                    //                     : "Braccia",
-                    //             fontSize: 15,
-                    //             fontWeight: FontWeight.w400,
-                    //             color: AppColor.cFFFFFF,
-                    //             height: 1,
-                    //             textAlign: TextAlign.center,
-                    //           ),
-                    //           SizedBox(
-                    //             height: ch(12),
-                    //           ),
-                    //           Row(
-                    //             mainAxisAlignment: MainAxisAlignment.center,
-                    //             children: [
-                    //               Expanded(
-                    //                 child: Column(
-                    //                   crossAxisAlignment:
-                    //                       CrossAxisAlignment.start,
-                    //                   children: [
-                    //                     AppText(
-                    //                       txt: "La settimana scorsa",
-                    //                       fontSize: 15,
-                    //                       fontWeight: FontWeight.w400,
-                    //                       color:
-                    //                           AppColor.cFFFFFF.withOpacity(0.5),
-                    //                       height: 1,
-                    //                       textAlign: TextAlign.center,
-                    //                     ),
-                    //                     SizedBox(
-                    //                       height: ch(14),
-                    //                     ),
-                    //                     primaryTextField(
-                    //                         border: InputBorder.none,
-                    //                         hintText: "enter...")
-                    //                   ],
-                    //                 ),
-                    //               ),
-                    //               SizedBox(
-                    //                 width: cw(16),
-                    //               ),
-                    //               Column(
-                    //                 mainAxisAlignment: MainAxisAlignment.center,
-                    //                 children: [
-                    //                   SizedBox(
-                    //                     height: ch(24),
-                    //                   ),
-                    //                   SvgPicture.asset(
-                    //                     AssetUtils.arrowForward,
-                    //                     height: ch(25),
-                    //                     width: cw(25),
-                    //                     fit: BoxFit.contain,
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //               SizedBox(
-                    //                 width: cw(16),
-                    //               ),
-                    //               Expanded(
-                    //                 child: Column(
-                    //                   crossAxisAlignment:
-                    //                       CrossAxisAlignment.start,
-                    //                   children: [
-                    //                     AppText(
-                    //                       txt: "Questa settimana",
-                    //                       fontSize: 15,
-                    //                       fontWeight: FontWeight.w400,
-                    //                       color:
-                    //                           AppColor.cFFFFFF.withOpacity(0.5),
-                    //                       height: 1,
-                    //                       textAlign: TextAlign.center,
-                    //                     ),
-                    //                     SizedBox(
-                    //                       height: ch(14),
-                    //                     ),
-                    //                     primaryTextField(
-                    //                         border: InputBorder.none,
-                    //                         hintText: "enter...")
-                    //                   ],
-                    //                 ),
-                    //               )
-                    //             ],
-                    //           )
-                    //         ],
-                    //       );
-                    //     },
-                    //     separatorBuilder: (context, index) {
-                    //       return SizedBox(
-                    //         height: ch(20),
-                    //       );
-                    //     },
-                    //     itemCount: 3),
-                    // AppText(
-                    //           txt: index == 0
-                    //               ? "Peso"
-                    //               : index == 1
-                    //                   ? "Vita"
-                    //                   : "Braccia",
-                    //           fontSize: 15,
-                    //           fontWeight: FontWeight.w400,
-                    //           color: AppColor.cFFFFFF,
-                    //           height: 1,
-                    //           textAlign: TextAlign.center,
-                    //         ),
                     Consumer<ReviewYourCheckInController>(
                       builder: (context, model, child) {
                         return Column(
@@ -452,7 +337,6 @@ class ReviewYourCheckInView extends StatelessWidget {
                         );
                       },
                     ),
-
                     SizedBox(
                       height: ch(134),
                     ),
@@ -462,10 +346,19 @@ class ReviewYourCheckInView extends StatelessWidget {
                             isButtonEnable: model.isNext,
                             buttonColor: AppColor.cFFFFFF,
                             onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                RoutePaths.dashboardView,
-                              );
+                              final dashboardController =
+                                  context.read<DashboardController>();
+                              dashboardController.setSelectedIndex(0);
+                              if (dashboardController
+                                  .pageController.hasClients) {
+                                dashboardController.pageController
+                                    .jumpToPage(0);
+                              }
+                              Navigator.popUntil(
+                                  context,
+                                  (route) =>
+                                      route.settings.name ==
+                                      RoutePaths.dashboardView);
                             },
                             text: "Invia il check-in",
                             fontSize: 16,

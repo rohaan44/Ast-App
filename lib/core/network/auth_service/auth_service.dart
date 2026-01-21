@@ -19,6 +19,15 @@ class AuthStorage {
     await _storage.write(key: _tokenKey, value: token);
   }
 
+  static Future<void> saveRole(String role) async {
+    await _storage.write(key: "role", value: role);
+  }
+
+   static Future<String?> getRole() async {
+    return await _storage.read(key: "role");
+  }
+
+
   // GET TOKEN
   static Future<String?> getToken() async {
     return await _storage.read(key: _tokenKey);

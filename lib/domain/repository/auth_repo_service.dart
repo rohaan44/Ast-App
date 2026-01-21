@@ -69,17 +69,12 @@ class AuthRepoService {
       required String code}) async {
     final response = await authRepository.verifyOtp(email: email,
         code: code);
-    if (response is Map) {
       if (response['success'] == true) {
         return response;
       } else {
         return response;
       }
-    }
-    return response;
   }
-
-
    Future<bool> refreshToken() async {
   final refreshToken = await AuthStorage.getRefreshToken();
 
@@ -111,5 +106,28 @@ class AuthRepoService {
     return false;
   }
 }
+ Future<dynamic> logout() async {
+    final response = await authRepository.logout();
+    if (response is Map) {
+      if (response['success'] == true) {
+        return true;
+      } else {
+        return response;
+      }
+    }
+    return false;
+  }
+
+  Future<dynamic> changePassword({required String currentPassword,required String newPassword}) async {
+    final response = await authRepository.changePassword(currentPassword: currentPassword,newPassword: newPassword);
+    if (response is Map) {
+      if (response['success'] == true) {
+        return response;
+      } else {
+        return response;
+      }
+    }
+    return false;
+  }
 
 }

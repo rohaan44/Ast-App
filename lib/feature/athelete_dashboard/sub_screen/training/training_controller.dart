@@ -1,9 +1,12 @@
-import 'package:ast_official/utils/asset_utils.dart';
+import 'package:ast_official/domain/repository/app_repo_service.dart';
+import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
 import 'package:flutter/material.dart';
 
 class TrainingViewController with ChangeNotifier {
-  int selectedCategoryIndex = 0;
+  final AppRepoService appRepoService;
+  TrainingViewController({required this.appRepoService});
 
+  int selectedCategoryIndex = 0;
   void setSelectedCategory(int index) {
     selectedCategoryIndex = index;
     notifyListeners();
@@ -20,48 +23,65 @@ class TrainingViewController with ChangeNotifier {
     "Sports",
   ];
 
-  final List workoutPlans = [
-    {
-      "title": "Mountain Climbers",
-      "subTitle": "Attivazione del core +\ncardio",
-      "difficultyLevel": "Principiante",
-      "img": AssetUtils.card1,
-      "date": "4 settimane"
-    },
-    {
-      "title": "Stacchi",
-      "subTitle": "Convenzionale, Rumeno,\nSumo",
-      "difficultyLevel": "Intermedio",
-      "img": AssetUtils.card2,
-      "date": "5 settimane"
-    },
-    {
-      "title": "Rematori",
-      "subTitle": "Bilanciere, Manubrio,\nCavo",
-      "difficultyLevel": "Intermedio",
-      "img": AssetUtils.card3,
-      "date": "4 settimane"
-    },
-    {
-      "title": "Panca Piana",
-      "subTitle": "Piana, Inclinata, Manubri",
-      "difficultyLevel": "Principiante",
-      "img": AssetUtils.card4,
-      "date": "2 settimane"
-    },
-    {
-      "title": "Stacchi",
-      "subTitle": "Convenzionale, Rumeno,\nSumo",
-      "difficultyLevel": "Intermedio",
-      "img": AssetUtils.card2,
-      "date": "4 settimane"
-    },
-    {
-      "title": "Rematori",
-      "subTitle": "Bilanciere, Manubrio,\nCavo",
-      "difficultyLevel": "Intermedio",
-      "img": AssetUtils.card3,
-      "date": "2 settimane"
-    },
-  ];
+  List workoutPlans = [];
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+   bool _hasMore = true;
+  bool get hasMore => _hasMore;
+
+  int _currentPage = 1;
+  final int _limit = 20;
+
+  Future getAllExercises(BuildContext context, {bool loadMore = false}) async {
+    if (_isLoading) return;
+
+    if (!loadMore) {
+      _currentPage = 1;
+      workoutPlans.clear();
+      _hasMore = true;
+    }
+
+    try {
+      _isLoading = true;
+      notifyListeners();
+
+      final response = await appRepoService.getAllExercises(
+        page: _currentPage,
+        limit: _limit,
+      );
+
+      if (response.success == true) {
+        List newExercises =
+            response.data!.exercises!;
+
+        if (newExercises.isEmpty) {
+          _hasMore = false;
+        } else {
+          workoutPlans.addAll(newExercises);
+          _currentPage++;
+        }
+
+        notifyListeners();
+      } else {
+        showApiSnackBar(
+          context,
+          title: "Error",
+          message: "Server Error",
+          isSuccess: false,
+        );
+      }
+    } catch (e) {
+      showApiSnackBar(
+        context,
+        title: "Error",
+        message: "Something went wrong",
+        isSuccess: false,
+      );
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
 }

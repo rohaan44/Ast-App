@@ -9,17 +9,21 @@ class ChooseYourPlanController with ChangeNotifier {
 
   List plans = [];
 
-
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  
-  
+
+  bool _isPlanLoaded = false;
+  bool get isPlanLoaded => _isPlanLoaded;
+
   Future<void> getPlans(context) async {
+    if (_isPlanLoaded) return;
     try {
       _isLoading = true;
+      notifyListeners();
       final response = await onboardingRepoService.getPlans();
       if (response.success == true) {
         plans = response.data!.plans!;
+        _isPlanLoaded = true;
         notifyListeners();
       } else {
         showApiSnackBar(
@@ -30,16 +34,17 @@ class ChooseYourPlanController with ChangeNotifier {
         );
       }
     } catch (e) {
+      debugPrint(e.toString());
       showApiSnackBar(
         context,
         title: "Error",
         message: e.toString(),
         isSuccess: false,
       );
-    }finally{
-    _isLoading = false;
-    notifyListeners();
+    } finally {
+      _isPlanLoaded = true;
+      _isLoading = false;
+      notifyListeners();
     }
   }
-
 }

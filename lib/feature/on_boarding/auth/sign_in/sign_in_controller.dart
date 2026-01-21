@@ -4,6 +4,7 @@ import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
 import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignInController with ChangeNotifier {
   final TextEditingController emailController = TextEditingController();
@@ -44,35 +45,39 @@ class SignInController with ChangeNotifier {
   }
 
   bool get isButtonEnabled => isEmailValid && isPasswordValid;
+  String _role = "";
+  String get role => _role;
+  set role(String value) {
+    _role = value;
+  }
 
   void onTextChanged() {
     notifyListeners();
   }
 
-  Future login(context, String email, String password) async {
+  Future<bool> login(
+      BuildContext context, String email, String password) async {
     _isLoading = true;
     notifyListeners();
     try {
       final response =
           await authRepoService.login(email: email, password: password);
-
       if (response.success == true) {
+        role = response.data!.user!.role ?? "";
         final otpResponse = await authRepoService.sendOtp(email: email);
-        if (otpResponse.success == true) {
+        if (otpResponse == true) {
           showApiSnackBar(
             context,
             title: "Success",
             message: "Login successfully",
             isSuccess: true,
           );
-          context.read<FlowDataProvider>().addOrUpdateFlow(customerSignIn, {
-            "email": email,
-          });
           Navigator.pushNamedAndRemoveUntil(
             context,
             RoutePaths.otpView,
             (route) => false,
           );
+          return true;
         }
       } else {
         showApiSnackBar(
@@ -82,8 +87,10 @@ class SignInController with ChangeNotifier {
           isSuccess: false,
         );
       }
+      return false;
     } catch (e) {
       _isLoading = false;
+      debugPrint(e.toString());
       notifyListeners();
       showApiSnackBar(
         context,
@@ -91,6 +98,7 @@ class SignInController with ChangeNotifier {
         message: e.toString(),
         isSuccess: false,
       );
+      return false;
     } finally {
       _isLoading = false;
       notifyListeners();

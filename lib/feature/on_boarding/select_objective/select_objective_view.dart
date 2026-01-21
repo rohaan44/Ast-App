@@ -1,3 +1,4 @@
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
@@ -100,14 +101,16 @@ class SelectObjectiveView extends StatelessWidget {
                             SizedBox(height: ch(15)),
                             Wrap(
                               spacing: cw(10), // Horizontal space between chips
-                              runSpacing: ch(10), // Vertical space between lines
+                              runSpacing:
+                                  ch(10), // Vertical space between lines
                               children: controller.fitnessGoals.map((goal) {
                                 final isSelected =
                                     controller.selectedGoals.contains(goal);
                                 return _buildChip(
                                   label: goal,
                                   isSelected: isSelected,
-                                  onTap: () => controller.toggleFitnessGoal(goal),
+                                  onTap: () =>
+                                      controller.toggleFitnessGoal(goal),
                                 );
                               }).toList(),
                             ),
@@ -124,23 +127,25 @@ class SelectObjectiveView extends StatelessWidget {
                             Wrap(
                               spacing: cw(10),
                               runSpacing: ch(10),
-                              children: controller.experienceLevels.map((level) {
+                              children:
+                                  controller.experienceLevels.map((level) {
                                 final isSelected =
                                     controller.selectedExperience == level;
                                 return _buildChip(
                                   label: level,
                                   isSelected: isSelected,
-                                  onTap: () => controller.selectExperience(level),
+                                  onTap: () =>
+                                      controller.selectExperience(level),
                                 );
                               }).toList(),
                             ),
-                            SizedBox(height: ch(100)), // Space for bottom button
+                            SizedBox(
+                                height: ch(100)), // Space for bottom button
                           ],
                         ),
                       ),
                     ),
                   ),
-                 
                 ],
               ),
             ),
@@ -149,24 +154,29 @@ class SelectObjectiveView extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: cw(20)),
-                child: Column(children: [
-                   const Spacer(),
-                     AppButton(
+                child: Column(
+                  children: [
+                    const Spacer(),
+                    AppButton(
                       isLoading: controller.isLoading,
-                                borderRadius: cw(50),
-                                onPressed: () {
-                                controller.sendFitnessGoal(context);
-                                },
-                                buttonColor: AppColor.cFFFFFF,
-                                text: "Avanti",
-                                fontWeight: FontWeight.w600,
-                                textColor: AppColor.black,
-                              ),
-                              SizedBox(height: ch(40),)
-                ],),
+                      borderRadius: cw(50),
+                      onPressed: () {
+                        //  controller.sendFitnessGoal(context);
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, RoutePaths.welcomeView, (route) => false);
+                      },
+                      buttonColor: AppColor.cFFFFFF,
+                      text: "Avanti",
+                      fontWeight: FontWeight.w600,
+                      textColor: AppColor.black,
+                    ),
+                    SizedBox(
+                      height: ch(40),
+                    )
+                  ],
+                ),
               ),
             )
-            
           ],
         ),
       );
@@ -196,11 +206,10 @@ class SelectObjectiveView extends StatelessWidget {
           ),
         ),
         child: AppText(
-          txt: label,
-          color: AppColor.cFFFFFF, // Text color
-          fontSize: 13.sp,
-          fontWeight: FontWeight.w500
-        ),
+            txt: label,
+            color: AppColor.cFFFFFF, // Text color
+            fontSize: 13.sp,
+            fontWeight: FontWeight.w500),
       ),
     );
   }
