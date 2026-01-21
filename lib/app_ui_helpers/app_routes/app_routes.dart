@@ -1,5 +1,6 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/coach_profile/coach_profile_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_Info/athlete_info_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_edit_profile/athlete_edit_profile_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_integration/athlete_integration_view.dart';
@@ -238,6 +239,7 @@ class AppRouter {
         final firstPage = settings.arguments as Widget?; // optional argument
 
         return PageRouteBuilder(
+          settings: settings,
           pageBuilder: (context, animation, secondaryAnimation) {
             return DashboardView(
               firstPage: firstPage,
@@ -322,7 +324,7 @@ class AppRouter {
           },
         );
 
-        case RoutePaths.athleteLanguageSelectedScreen:
+      case RoutePaths.athleteLanguageSelectedScreen:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const AthleteLanguageView();
@@ -331,7 +333,7 @@ class AppRouter {
             return child;
           },
         );
-           case RoutePaths.athleteInfoScreen:
+      case RoutePaths.athleteInfoScreen:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const AthleteInfoView();
@@ -340,7 +342,7 @@ class AppRouter {
             return child;
           },
         );
-            case RoutePaths.athleteIntegrationScreen:
+      case RoutePaths.athleteIntegrationScreen:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const AthleteIntegrationView();
@@ -349,7 +351,7 @@ class AppRouter {
             return child;
           },
         );
-        case RoutePaths.athleteRenewCertificateScreen:
+      case RoutePaths.athleteRenewCertificateScreen:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const AthletehRenewCertificationView();
@@ -358,7 +360,7 @@ class AppRouter {
             return child;
           },
         );
-          case RoutePaths.athleteProfileSetting:
+      case RoutePaths.athleteProfileSetting:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const AthleteProfileSettingView();
@@ -367,7 +369,7 @@ class AppRouter {
             return child;
           },
         );
-          case RoutePaths.athleteEditProfile:
+      case RoutePaths.athleteEditProfile:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const AthleteEditProfileView();
@@ -846,6 +848,15 @@ class AppRouter {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const AtheletCoachesView();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+      case RoutePaths.coachProfileView:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const CoachProfileView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;

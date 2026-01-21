@@ -106,12 +106,23 @@ class AuthRepoService {
     return false;
   }
 }
-
-  Future<dynamic> logout() async {
+ Future<dynamic> logout() async {
     final response = await authRepository.logout();
     if (response is Map) {
       if (response['success'] == true) {
         return true;
+      } else {
+        return response;
+      }
+    }
+    return false;
+  }
+
+  Future<dynamic> changePassword({required String currentPassword,required String newPassword}) async {
+    final response = await authRepository.changePassword(currentPassword: currentPassword,newPassword: newPassword);
+    if (response is Map) {
+      if (response['success'] == true) {
+        return response;
       } else {
         return response;
       }

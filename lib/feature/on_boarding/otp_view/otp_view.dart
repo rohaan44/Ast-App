@@ -108,41 +108,43 @@ class OtpView extends StatelessWidget {
                             SizedBox(
                               height: ch(25),
                             ),
-                            Consumer<OtpController>(
-                                builder: (context, model, child) {
-                              return primaryTextField(
-                                  keyboardType: TextInputType.number,
-                                  obscureText: true,
-                                  border: InputBorder.none,
-                                  hintText: "Inserisci il codice qui",
-                                  controller: model.otpTextController);
-                            }),
+                            primaryTextField(
+                                keyboardType: TextInputType.number,
+                                obscureText: false,
+                                maxLength: 6,
+                                border: InputBorder.none,
+                                hintText: "Inserisci il codice qui",
+                                controller: model.otpTextController),
                             SizedBox(
                               height: ch(25),
                             ),
-                            AppButton(
-                              isLoading: model.isLoading,
-                              onPressed: () {
-                                if (role == "Tutor") {
-                                  Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    RoutePaths.tutorMainScreen,
-                                    (route) => false,
-                                  );
-                                } else {
-                                  final data = context
-                                      .read<FlowDataProvider>()
-                                      .getFlowData(customerSignIn);
-                                  final email = data?["email"] ?? "";
-                                  model.verifyOtp(
-                                    context,
-                                    email,
-                                    model.otpTextController.text,
-                                  );
-                                }
-                              },
-                              text: "Verifica",
-                            ),
+                            Consumer<OtpController>(
+                                builder: (context, model, child) {
+                              return AppButton(
+                                isButtonEnable: model.isButtonEnable,
+                                isLoading: model.isLoading,
+                                onPressed: () {
+                                  if (role == "Tutor") {
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      RoutePaths.tutorMainScreen,
+                                      (route) => false,
+                                    );
+                                  } else {
+                                    final data = context
+                                        .read<FlowDataProvider>()
+                                        .getFlowData(customerSignIn);
+                                    final email = data?["email"] ?? "";
+                                    model.verifyOtp(
+                                      context,
+                                      email,
+                                      model.otpTextController.text,
+                                    );
+                                  }
+                                },
+                                text: "Verifica",
+                              );
+                            }),
                             SizedBox(
                               height: ch(25),
                             ),

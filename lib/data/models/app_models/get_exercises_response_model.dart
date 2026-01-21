@@ -1,5 +1,6 @@
 class GetExercisesResponseModel {
   bool? success;
+  String? error;
   ExercisesData? data;
 
   GetExercisesResponseModel({this.success, this.data});
@@ -12,6 +13,7 @@ class GetExercisesResponseModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['success'] = success;
+    data['error'] = error;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }

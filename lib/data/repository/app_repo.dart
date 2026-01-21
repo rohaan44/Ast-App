@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:ast_official/core/network/network_properties/network_properties.dart';
 import 'package:ast_official/core/network/network_services/dio_helper.dart';
+import 'package:ast_official/data/models/app_models/get_daily_nutrition_model.dart';
 import 'package:ast_official/data/models/app_models/get_exercises_response_model.dart';
 import 'package:ast_official/data/models/app_models/get_profile_model.dart';
 import 'package:dio/dio.dart';
@@ -12,6 +13,20 @@ class AppRepo {
     var response = await _dioHelper.get(
         isAuthRequired: true, url: "${NetworkProperties.baseUrl}users/profile");
     return GetMyProfile.fromJson(response);
+  }
+
+  Future<GetDailyNutrition> getDailyNutrition() async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        url: "${NetworkProperties.baseUrl}meals/nutrition/daily-progress");
+    return GetDailyNutrition.fromJson(response);
+  }
+
+  Future<Map<String, dynamic>> getMyAssignedMeals() async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        url: "${NetworkProperties.baseUrl}meals/my-assigned");
+    return response;
   }
 
   Future<GetExercisesResponseModel> getAllExercises(
@@ -40,24 +55,31 @@ class AppRepo {
     return response as Map<String, dynamic>;
   }
 
-
-    Future<GetMyProfile> updateProfile(
+  Future<GetMyProfile> updateProfile(
       {required String name,
       required String email,
       required String phone,
       required String bio,
       required List<String> fitnessGoals}) async {
     var response = await _dioHelper.put(
-      isAuthRequired: true,
-      url: "${NetworkProperties.baseUrl}users/profile",
-     requestBody: {
-       "name": name,
-       "email": email,
-       "phone": phone,
-       "bio": bio,
-       "fitnessGoals": fitnessGoals,
-     } 
-    );
+        isAuthRequired: true,
+        url: "${NetworkProperties.baseUrl}users/profile",
+        requestBody: {
+          "name": name,
+          "email": email,
+          "phone": phone,
+          "bio": bio,
+          "fitnessGoals": fitnessGoals,
+        });
     return GetMyProfile.fromJson(response);
+  }
+
+  Future<Map<String, dynamic>> getCoaches(
+      {int page = 1, int limit = 20}) async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        queryParameters: {"role": "coach", "page": page, "limit": limit},
+        url: "${NetworkProperties.baseUrl}users/search");
+    return response;
   }
 }

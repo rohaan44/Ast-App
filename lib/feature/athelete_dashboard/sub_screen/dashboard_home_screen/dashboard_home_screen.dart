@@ -3,6 +3,7 @@ import 'package:ast_official/feature/athelete_dashboard/sub_screen/dashboard_hom
 import 'package:ast_official/feature/on_boarding/walk_through/walk_through_view.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
+import 'package:ast_official/ui_molecules/global_refresh_indicator/global_refresh_indicator.dart';
 import 'package:ast_official/ui_molecules/slide_able_button/slideable_button.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
@@ -17,8 +18,16 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class DashboardHomeScreen extends StatelessWidget {
+class DashboardHomeScreen extends StatefulWidget {
   const DashboardHomeScreen({super.key});
+
+  @override
+  State<DashboardHomeScreen> createState() => _DashboardHomeScreenState();
+}
+
+class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
+  final CarouselSliderController _carouselController =
+      CarouselSliderController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +37,7 @@ class DashboardHomeScreen extends StatelessWidget {
         model.getProfileData(context);
       }
     });
+
     return GlobalSkeleton(
       isLoading: model.isLoading,
       child: Scaffold(
@@ -36,9 +46,7 @@ class DashboardHomeScreen extends StatelessWidget {
             child: _appBar(
                 title: model.profileData['fullName'] ?? "Anonymous",
                 context: context)),
-        body: RefreshIndicator(
-          color: AppColor.black,
-          backgroundColor: AppColor.red,
+        body: GlobalRefreshIndicator(
           onRefresh: () => model.getProfileData(context, forceRefresh: true),
           child: SafeArea(
             child: SingleChildScrollView(
@@ -79,7 +87,7 @@ class DashboardHomeScreen extends StatelessWidget {
                     SizedBox(
                       height: ch(21),
                     ),
-                    carouselSliderCard(),
+                    carouselSliderCard(_carouselController),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: cw(20)),
                       child: Column(
@@ -264,13 +272,13 @@ Widget _appBar({String title = "Anonymous", required BuildContext context}) {
   );
 }
 
-Widget carouselSliderCard() {
+Widget carouselSliderCard(CarouselSliderController controller) {
   return Consumer<DashboardHomeScreenController>(
     builder: (context, model, child) {
       return Column(
         children: [
           CarouselSlider(
-            carouselController: model.carouselController,
+            carouselController: controller,
             items: model.cardData.asMap().entries.map((entry) {
               final index = entry.key;
               final data = entry.value;
@@ -714,27 +722,20 @@ Widget circularGraph() {
 
           return Wrap(
             alignment: WrapAlignment.center,
-            spacing: cw(12), // space between horizontal cards
-            runSpacing: 16, // space between rows
+            spacing: cw(12),
+            runSpacing: 16,
             children: List.generate(title.length, (index) {
               final isSelected = model.selectedIndex == index;
-
               return GestureDetector(
                 onTap: () {
                   // model.setSelectIndex(index)
                 },
                 child: Container(
-                  width: cw(160), // 2 per row
+                  width: cw(160),
                   height: ch(72),
                   decoration: BoxDecoration(
                     color: isSelected ? AppColor.primary : AppColor.c171717,
                     borderRadius: BorderRadius.circular(20),
-                    // border: Border.all(
-                    //   color: isSelectedas
-                    //       ? AppColor.primary
-                    //       : AppColor.c252525,
-                    //   width: 1.2,
-                    // ),
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: cw(14)),
@@ -748,15 +749,31 @@ Widget circularGraph() {
                             child: CircularPercentIndicator(
                               radius: 25.0,
                               lineWidth: cw(5),
-                              percent: index == 0
-                                  ? 0.5
-                                  : index == 1
-                                      ? 0.3
-                                      : index == 2
-                                          ? 0.6
-                                          : 0.7,
-                              animation: true,
+                              percent: () {
+                                double val = 0.0;
+                                if (model.dailyNutritionData.isNotEmpty) {
+                                  String key = "";
+                                  if (index == 0) {
+                                    key = "calories";
+                                  } else if (index == 1) {
+                                    key = "protein";
+                                  } else if (index == 2) {
+                                    key = "carbs";
+                                  } else if (index == 3) {
+                                    key = "fats";
+                                  }
 
+                                  if (key.isNotEmpty &&
+                                      model.dailyNutritionData[key] != null) {
+                                    val = ((model.dailyNutritionData[key]
+                                                ["percentage"] ??
+                                            0) /
+                                        100.0);
+                                  }
+                                }
+                                return val.clamp(0.0, 1.0);
+                              }(),
+                              animation: true,
                               progressColor: index == 0
                                   ? AppColor.primary
                                   : index == 1
@@ -766,8 +783,6 @@ Widget circularGraph() {
                                           : AppColor.red,
                               animationDuration: 1000,
                               circularStrokeCap: CircularStrokeCap.round,
-                              // linearGradient: const LinearGradient(
-                              //     colors: [AppColor.primary, AppColor.cB8A1FF]),
                               backgroundColor: AppColor.c1E1E1E,
                             ),
                           ),
@@ -789,7 +804,29 @@ Widget circularGraph() {
                             RichText(
                               text: TextSpan(children: [
                                 TextSpan(
-                                    text: calories[index],
+                                    text: () {
+                                      if (model.dailyNutritionData.isEmpty) {
+                                        return "0";
+                                      }
+                                      String key = "";
+                                      if (index == 0) {
+                                        key = "calories";
+                                      } else if (index == 1) {
+                                        key = "protein";
+                                      } else if (index == 2) {
+                                        key = "carbs";
+                                      } else if (index == 3) {
+                                        key = "fats";
+                                      }
+                                      if (key.isNotEmpty &&
+                                          model.dailyNutritionData[key] !=
+                                              null) {
+                                        return model.dailyNutritionData[key]
+                                                ["goal"]
+                                            .toString();
+                                      }
+                                      return "0";
+                                    }(),
                                     style: TextStyle(
                                       fontSize: AppFontSize.f20,
                                       fontWeight: FontWeight.w700,

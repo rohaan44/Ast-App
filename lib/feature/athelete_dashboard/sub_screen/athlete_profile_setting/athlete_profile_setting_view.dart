@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_profile_setting_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
@@ -32,8 +33,17 @@ class AthleteProfileSettingView extends StatelessWidget {
                   children: [
                     centerTextBackIconAppbar(
                         onTap: () {
-                          Navigator.pushNamedAndRemoveUntil(context,
-                              RoutePaths.dashboardHomeScreen, (route) => false);
+                          final dashboardController =
+                              context.read<DashboardController>();
+                          dashboardController.setSelectedIndex(0);
+                          if (dashboardController.pageController.hasClients) {
+                            dashboardController.pageController.jumpToPage(0);
+                          }
+                          Navigator.popUntil(
+                              context,
+                              (route) =>
+                                  route.settings.name ==
+                                  RoutePaths.dashboardView);
                         },
                         context: context,
                         text: "Profilo e impostazioni"),

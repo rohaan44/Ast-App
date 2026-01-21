@@ -3,6 +3,7 @@ import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/sub_
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/training_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
+import 'package:ast_official/ui_molecules/global_refresh_indicator/global_refresh_indicator.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/shimmer.dart';
@@ -35,9 +36,7 @@ class TrainingView extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(ch(86)), child: _appBar()),
-      body: RefreshIndicator(
-        color: AppColor.black,
-        backgroundColor: AppColor.red,
+      body: GlobalRefreshIndicator(
         onRefresh: () => controller.getAllExercises(context),
         child: GlobalSkeleton(
           isLoading: controller.isLoading,
@@ -88,14 +87,16 @@ class TrainingView extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   image: const DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: AssetImage(AssetUtils.trainingCard)),
+                                      image:
+                                          AssetImage(AssetUtils.trainingCard)),
                                   borderRadius: BorderRadius.circular(cw(24)),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.only(
                                       left: cw(18), right: cw(12), top: ch(12)),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
@@ -105,7 +106,8 @@ class TrainingView extends StatelessWidget {
                                                 vertical: ch(5)),
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(cw(50)),
+                                                    BorderRadius.circular(
+                                                        cw(50)),
                                                 border: Border.all(
                                                     color: AppColor.cFF8B5C,
                                                     width: cw(0.5)),
@@ -140,7 +142,8 @@ class TrainingView extends StatelessWidget {
                                                 vertical: ch(5)),
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(cw(50)),
+                                                    BorderRadius.circular(
+                                                        cw(50)),
                                                 border: Border.all(
                                                     color: AppColor.cFF8B5C,
                                                     width: cw(0.5)),
@@ -185,7 +188,8 @@ class TrainingView extends StatelessWidget {
                                                 vertical: ch(8)),
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(cw(50)),
+                                                    BorderRadius.circular(
+                                                        cw(50)),
                                                 border: Border.all(
                                                     color: AppColor.cFF8B5C,
                                                     width: cw(1)),
@@ -218,18 +222,18 @@ class TrainingView extends StatelessWidget {
                       ),
                     ),
                   ),
-          
+
                   // 🔹 Sticky horizontal categories (like YouTube chips)
                   SliverPersistentHeader(
                     pinned: true,
                     delegate: CategoryHeaderDelegate(model),
                   ),
-          
+
                   // 🔹 Main scrollable content
                   SliverToBoxAdapter(
                     child: cardGridView(model: model),
                   ),
-          
+
                   // SliverList(
                   //   delegate: SliverChildBuilderDelegate(
                   //     (context, index) => Container(

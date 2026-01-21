@@ -1,6 +1,38 @@
+import 'package:ast_official/domain/repository/app_repo_service.dart';
+import 'package:ast_official/helpers/api_helper/api_helper.dart';
 import 'package:flutter/material.dart';
 
 class AtheletCoachesController extends ChangeNotifier {
+  final AppRepoService appRepoService;
+  AtheletCoachesController({required this.appRepoService}) {
+    scrollController.addListener(_onScroll);
+  }
+
+  final ScrollController scrollController = ScrollController();
+  BuildContext? _context;
+
+  void setContext(BuildContext context) {
+    _context = context;
+  }
+
+  void _onScroll() {
+    if (scrollController.hasClients &&
+        scrollController.position.pixels >=
+            scrollController.position.maxScrollExtent - 200 &&
+        hasMore &&
+        !isLoading) {
+      if (_context != null) {
+        getCoaches(context: _context!, loadMore: true);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
   int selectedCategoryIndex = 0;
   String _searchQuery = "";
 
@@ -118,5 +150,54 @@ class AtheletCoachesController extends ChangeNotifier {
 
       return matchesSearch && matchesCategory;
     }).toList();
+  }
+
+// 1. Change this to a List (to store the accumulated users)
+  List<dynamic> _coachesList = [];
+  List<dynamic> get coachesList => _coachesList;
+
+  // Keep the other variables
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  bool _hasMore = true;
+  bool get hasMore => _hasMore;
+  int _currentPage = 1;
+  final int _limit = 20;
+
+  Future<void> getCoaches(
+      {required BuildContext context, bool loadMore = false}) async {
+    if (_isLoading) return;
+    if (loadMore && !_hasMore) return;
+
+    _isLoading = true;
+    notifyListeners();
+
+    if (loadMore) {
+      _currentPage++;
+    } else {
+      _currentPage = 1;
+      _hasMore = true;
+    }
+
+    await runApiCall(
+      apiCall: () =>
+          appRepoService.getCoaches(page: _currentPage, limit: _limit),
+      context: context,
+      onSuccess: (response) async {
+        List<dynamic> newUsers = response['data']['users'];
+        Map<String, dynamic> pagination = response['data']['pagination'];
+        int totalPages = pagination['pages'];
+
+        if (loadMore) {
+          _coachesList.addAll(newUsers);
+        } else {
+          _coachesList = newUsers;
+        }
+        _hasMore = _currentPage < totalPages;
+      },
+    );
+
+    _isLoading = false;
+    notifyListeners();
   }
 }

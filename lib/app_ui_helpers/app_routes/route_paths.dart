@@ -40,12 +40,14 @@ class RoutePaths {
   static const String bodyMeasurementView = '/bodyMeasurementView';
   static const String reviewYourCheckInView = '/reviewYourCheckInView';
   static const String statusFeedbackView = '/statusFeedbackView';
-  static const String athleteLanguageSelectedScreen = '/athleteLanguageSelectedScreen';
-static const String athleteInfoScreen = '/athleteInfoScreen';
-static const String athleteIntegrationScreen = '/athleteIntegrationScreen';
-static const String athleteRenewCertificateScreen = '/athleteRenewCertificateScreen';
-static const String athleteProfileSetting = '/athleteProfileSetting';
-static const String athleteEditProfile = '/athleteEditProfile';
+  static const String athleteLanguageSelectedScreen =
+      '/athleteLanguageSelectedScreen';
+  static const String athleteInfoScreen = '/athleteInfoScreen';
+  static const String athleteIntegrationScreen = '/athleteIntegrationScreen';
+  static const String athleteRenewCertificateScreen =
+      '/athleteRenewCertificateScreen';
+  static const String athleteProfileSetting = '/athleteProfileSetting';
+  static const String athleteEditProfile = '/athleteEditProfile';
   /////////////////Coaches Dashboard//////////////////////
   static const String coachMainScreenView = '/coachMainScreenView';
   static const String coachHomeScreenView = '/coachHomeScreenView';
@@ -113,4 +115,5 @@ static const String athleteEditProfile = '/athleteEditProfile';
   static const String tutorCertificateSectionS4View =
       '/tutorCertificateSectionS4View';
   static const String atheletCoachesView = '/atheletCoachesView';
+  static const String coachProfileView = '/coachProfileView';
 }

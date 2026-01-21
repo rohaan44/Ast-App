@@ -144,7 +144,7 @@ class ApiSnackBar extends StatelessWidget {
                 SizedBox(height: ch(4)),
                 AppText(
                   txt: message,
-                  fontSize: AppFontSize.f13 + 4,
+                  fontSize: AppFontSize.f13 + 6,
                   color: AppColor.white,
                   fontWeight: FontWeight.w400,
                   height: 1.2,

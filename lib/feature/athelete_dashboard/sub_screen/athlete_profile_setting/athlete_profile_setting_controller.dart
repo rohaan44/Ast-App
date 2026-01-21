@@ -1,9 +1,8 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/core/network/auth_service/auth_service.dart';
 import 'package:ast_official/domain/repository/auth_repo_service.dart';
-import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
+import 'package:ast_official/helpers/api_helper/api_helper.dart';
 import 'package:flutter/material.dart';
 
 class AthleteProfileSettingController with ChangeNotifier {
@@ -49,56 +48,30 @@ class AthleteProfileSettingController with ChangeNotifier {
   Future<bool> logout(BuildContext context) async {
     _isLoading = true;
     notifyListeners();
-    debugPrint("Logout started");
 
-    try {
-      final response = await authRepoService.logout();
-      debugPrint("Logout response: $response");
-
-      if (response == true ||
-          (response is Map && response['success'] == true)) {
-        debugPrint("Clearing auth storage...");
+    final success = await runApiCall(
+      context: context,
+      apiCall: () => authRepoService.logout(),
+      onSuccess: (response) async {
         await AuthStorage.clearAll();
-        debugPrint("Auth storage cleared.");
-
         if (context.mounted) {
-          debugPrint("Navigating to SignIn...");
           Navigator.pushNamedAndRemoveUntil(
             context,
             RoutePaths.signIn,
             (route) => false,
           );
-        } else {
-          debugPrint("Context not mounted, cannot navigate.");
         }
-        return true;
-      }
+      },
+      errorMessage: "Logout failed",
+    );
+    _isLoading = false;
+    notifyListeners();
+    return success;
+  }
 
-      // API returned error case
-      if (context.mounted && response is Map) {
-        showApiSnackBar(
-          context,
-          title: "Error",
-          message: response['message'] ?? "Logout failed",
-          isSuccess: false,
-        );
-      }
-
-      return false;
-    } catch (e) {
-      print("Logout error: $e");
-      if (context.mounted) {
-        showApiSnackBar(
-          context,
-          title: "Error",
-          message: e.toString(),
-          isSuccess: false,
-        );
-      }
-      return false;
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
+  @override
+  void dispose() {
+    _profileImage = null;
+    super.dispose();
   }
 }

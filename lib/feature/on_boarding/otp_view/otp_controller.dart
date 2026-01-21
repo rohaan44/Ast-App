@@ -17,6 +17,9 @@ class OtpController with ChangeNotifier {
 
   OtpController({required this.authRepoService}) {
     _initTimer(seconds: 30);
+    otpTextController.addListener(() {
+      notifyListeners();
+    });
   }
 
   void _initTimer({required int seconds}) {
@@ -148,6 +151,8 @@ class OtpController with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  bool get isButtonEnable => otpTextController.text.length == 6;
 
   @override
   void dispose() {
