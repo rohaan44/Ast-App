@@ -1,7 +1,9 @@
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/dashboard_home_screen/dashboard_home_screen_controller.dart';
 import 'package:ast_official/feature/on_boarding/walk_through/walk_through_view.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
+import 'package:ast_official/ui_molecules/global_refresh_indicator/global_refresh_indicator.dart';
 import 'package:ast_official/ui_molecules/slide_able_button/slideable_button.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
@@ -16,8 +18,16 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class DashboardHomeScreen extends StatelessWidget {
+class DashboardHomeScreen extends StatefulWidget {
   const DashboardHomeScreen({super.key});
+
+  @override
+  State<DashboardHomeScreen> createState() => _DashboardHomeScreenState();
+}
+
+class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
+  final CarouselSliderController _carouselController =
+      CarouselSliderController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,159 +37,167 @@ class DashboardHomeScreen extends StatelessWidget {
         model.getProfileData(context);
       }
     });
-    return Scaffold(
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(ch(86)), child: _appBar()),
-      body: SafeArea(
-        child: GlobalSkeleton(
-          isLoading: model.isLoading,
-          child: SingleChildScrollView(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: ch(16),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: cw(20)),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(AssetUtils.cloudIcon, width: cw(20)),
-                    SizedBox(
-                      width: cw(7),
-                    ),
-                    AppText(
-                      txt: "•",
-                      color: AppColor.cFFFFFF,
-                      fontSize: AppFontSize.f15,
-                      height: 1.5,
-                    ),
-                    SizedBox(
-                      width: cw(7),
-                    ),
-                    AppText(
-                      txt: " 90°C pioggia leggera oggi.",
-                      fontWeight: FontWeight.w200,
-                      color: AppColor.cFFFFFF,
-                      fontSize: AppFontSize.f16,
-                      height: 1.5,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: ch(21),
-              ),
-              carouselSliderCard(),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: cw(20)),
+
+    return GlobalSkeleton(
+      isLoading: model.isLoading,
+      child: Scaffold(
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(ch(86)),
+            child: _appBar(
+                title: model.profileData['fullName'] ?? "Anonymous",
+                context: context)),
+        body: GlobalRefreshIndicator(
+          onRefresh: () => model.getProfileData(context, forceRefresh: true),
+          child: SafeArea(
+            child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: ch(12),
+                      height: ch(16),
                     ),
-                    walkingBox(),
-                    SizedBox(
-                      height: ch(24),
-                    ),
-                    circularGraph(),
-                    SizedBox(
-                      height: ch(24),
-                    ),
-                    nextMeal(),
-                    SizedBox(
-                      height: ch(24),
-                    ),
-                    Consumer<DashboardHomeScreenController>(
-                        builder: (context, model, child) {
-                      return SlideAbleButtonView(
-                          buttonText: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: cw(30),
-                              ),
-                              AppText(
-                                txt: 'Scorri per vedere le alternative',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              SizedBox(
-                                width: cw(4),
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                size: ch(12),
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                size: ch(12),
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                size: ch(12),
-                              ),
-                            ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: cw(20)),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(AssetUtils.cloudIcon, width: cw(20)),
+                          SizedBox(
+                            width: cw(7),
                           ),
-                          buttonWidget:
-                              SvgPicture.asset(AssetUtils.handForwardIcon),
-                          borderColor: AppColor.c1E1E1E,
-                          activeColor: AppColor.transparent,
-                          isFinished: model.processing,
-                          onWaitingProcess: () {
-                            model.handleSlideComplete(context);
-                          },
-                          onFinish: () async {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Slide !")),
-                            );
-                          });
-                    }),
-                    SizedBox(
-                      height: ch(24),
-                    ),
-                    Container(
-                      height: ch(49),
-                      decoration: BoxDecoration(
-                          color: AppColor.c1E1E1E,
-                          borderRadius: BorderRadius.circular(cw(16))),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: cw(16)),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(AssetUtils.uploadImg),
-                            SizedBox(
-                              width: cw(8),
-                            ),
-                            AppText(
-                              txt:
-                                  'Non dimenticare di caricare le tue foto oggi!',
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ],
-                        ),
+                          AppText(
+                            txt: "•",
+                            color: AppColor.cFFFFFF,
+                            fontSize: AppFontSize.f15,
+                            height: 1.5,
+                          ),
+                          SizedBox(
+                            width: cw(7),
+                          ),
+                          AppText(
+                            txt: " 90°C pioggia leggera oggi.",
+                            fontWeight: FontWeight.w200,
+                            color: AppColor.cFFFFFF,
+                            fontSize: AppFontSize.f16,
+                            height: 1.5,
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(
-                      height: ch(20),
+                      height: ch(21),
                     ),
-                    const SimpleWeightChart(),
-                    SizedBox(
-                      height: ch(120),
+                    carouselSliderCard(_carouselController),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: cw(20)),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: ch(12),
+                          ),
+                          walkingBox(),
+                          SizedBox(
+                            height: ch(24),
+                          ),
+                          circularGraph(),
+                          SizedBox(
+                            height: ch(24),
+                          ),
+                          nextMeal(),
+                          SizedBox(
+                            height: ch(24),
+                          ),
+                          Consumer<DashboardHomeScreenController>(
+                              builder: (context, model, child) {
+                            return SlideAbleButtonView(
+                                buttonText: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: cw(30),
+                                    ),
+                                    AppText(
+                                      txt: 'Scorri per vedere le alternative',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    SizedBox(
+                                      width: cw(4),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_outlined,
+                                      size: ch(12),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_outlined,
+                                      size: ch(12),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_outlined,
+                                      size: ch(12),
+                                    ),
+                                  ],
+                                ),
+                                buttonWidget: SvgPicture.asset(
+                                    AssetUtils.handForwardIcon),
+                                borderColor: AppColor.c1E1E1E,
+                                activeColor: AppColor.transparent,
+                                isFinished: model.processing,
+                                onWaitingProcess: () {
+                                  model.handleSlideComplete(context);
+                                },
+                                onFinish: () async {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text("Slide !")),
+                                  );
+                                });
+                          }),
+                          SizedBox(
+                            height: ch(24),
+                          ),
+                          Container(
+                            height: ch(49),
+                            decoration: BoxDecoration(
+                                color: AppColor.c1E1E1E,
+                                borderRadius: BorderRadius.circular(cw(16))),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: cw(16)),
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(AssetUtils.uploadImg),
+                                  SizedBox(
+                                    width: cw(8),
+                                  ),
+                                  AppText(
+                                    txt:
+                                        'Non dimenticare di caricare le tue foto oggi!',
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: ch(20),
+                          ),
+                          const SimpleWeightChart(),
+                          SizedBox(
+                            height: ch(120),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
-                ),
-              ),
-            ],
-          )),
+                )),
+          ),
         ),
       ),
     );
   }
 }
 
-Widget _appBar() {
+Widget _appBar({String title = "Anonymous", required BuildContext context}) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: cw(20)),
     child: Column(
@@ -189,21 +207,26 @@ Widget _appBar() {
         ),
         Row(
           children: [
-            Container(
-              height: ch(50),
-              width: cw(50),
-              padding: EdgeInsets.all(cw(2)),
-              decoration: BoxDecoration(
-                  border: Border.all(color: AppColor.c252525),
-                  shape: BoxShape.circle,
-                  color: AppColor.transparent),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, RoutePaths.athleteProfileSetting);
+              },
               child: Container(
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: AppColor.c252525),
-                child: const Center(
-                  child: Icon(
-                    Icons.person_2_rounded,
-                    color: AppColor.white,
+                height: ch(50),
+                width: cw(50),
+                padding: EdgeInsets.all(cw(2)),
+                decoration: BoxDecoration(
+                    border: Border.all(color: AppColor.c252525),
+                    shape: BoxShape.circle,
+                    color: AppColor.transparent),
+                child: Container(
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle, color: AppColor.c252525),
+                  child: const Center(
+                    child: Icon(
+                      Icons.person_2_rounded,
+                      color: AppColor.white,
+                    ),
                   ),
                 ),
               ),
@@ -218,13 +241,13 @@ Widget _appBar() {
                   txt: "Benvenuta",
                   fontWeight: FontWeight.w200,
                   color: AppColor.cFFFFFF.withOpacity(0.7),
-                  fontSize: 12,
+                  fontSize: AppFontSize.f19,
                   height: 1.5,
                 ),
                 AppText(
-                  txt: "Kelvin Dane",
+                  txt: title,
                   color: AppColor.cFFFFFF.withOpacity(0.7),
-                  fontSize: 18,
+                  fontSize: AppFontSize.f20,
                   height: 1.5,
                 ),
               ],
@@ -249,13 +272,13 @@ Widget _appBar() {
   );
 }
 
-Widget carouselSliderCard() {
+Widget carouselSliderCard(CarouselSliderController controller) {
   return Consumer<DashboardHomeScreenController>(
     builder: (context, model, child) {
       return Column(
         children: [
           CarouselSlider(
-            carouselController: model.carouselController,
+            carouselController: controller,
             items: model.cardData.asMap().entries.map((entry) {
               final index = entry.key;
               final data = entry.value;
@@ -699,27 +722,20 @@ Widget circularGraph() {
 
           return Wrap(
             alignment: WrapAlignment.center,
-            spacing: cw(12), // space between horizontal cards
-            runSpacing: 16, // space between rows
+            spacing: cw(12),
+            runSpacing: 16,
             children: List.generate(title.length, (index) {
               final isSelected = model.selectedIndex == index;
-
               return GestureDetector(
                 onTap: () {
                   // model.setSelectIndex(index)
                 },
                 child: Container(
-                  width: cw(160), // 2 per row
+                  width: cw(160),
                   height: ch(72),
                   decoration: BoxDecoration(
                     color: isSelected ? AppColor.primary : AppColor.c171717,
                     borderRadius: BorderRadius.circular(20),
-                    // border: Border.all(
-                    //   color: isSelectedas
-                    //       ? AppColor.primary
-                    //       : AppColor.c252525,
-                    //   width: 1.2,
-                    // ),
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: cw(14)),
@@ -733,15 +749,31 @@ Widget circularGraph() {
                             child: CircularPercentIndicator(
                               radius: 25.0,
                               lineWidth: cw(5),
-                              percent: index == 0
-                                  ? 0.5
-                                  : index == 1
-                                      ? 0.3
-                                      : index == 2
-                                          ? 0.6
-                                          : 0.7,
-                              animation: true,
+                              percent: () {
+                                double val = 0.0;
+                                if (model.dailyNutritionData.isNotEmpty) {
+                                  String key = "";
+                                  if (index == 0) {
+                                    key = "calories";
+                                  } else if (index == 1) {
+                                    key = "protein";
+                                  } else if (index == 2) {
+                                    key = "carbs";
+                                  } else if (index == 3) {
+                                    key = "fats";
+                                  }
 
+                                  if (key.isNotEmpty &&
+                                      model.dailyNutritionData[key] != null) {
+                                    val = ((model.dailyNutritionData[key]
+                                                ["percentage"] ??
+                                            0) /
+                                        100.0);
+                                  }
+                                }
+                                return val.clamp(0.0, 1.0);
+                              }(),
+                              animation: true,
                               progressColor: index == 0
                                   ? AppColor.primary
                                   : index == 1
@@ -751,8 +783,6 @@ Widget circularGraph() {
                                           : AppColor.red,
                               animationDuration: 1000,
                               circularStrokeCap: CircularStrokeCap.round,
-                              // linearGradient: const LinearGradient(
-                              //     colors: [AppColor.primary, AppColor.cB8A1FF]),
                               backgroundColor: AppColor.c1E1E1E,
                             ),
                           ),
@@ -774,7 +804,29 @@ Widget circularGraph() {
                             RichText(
                               text: TextSpan(children: [
                                 TextSpan(
-                                    text: calories[index],
+                                    text: () {
+                                      if (model.dailyNutritionData.isEmpty) {
+                                        return "0";
+                                      }
+                                      String key = "";
+                                      if (index == 0) {
+                                        key = "calories";
+                                      } else if (index == 1) {
+                                        key = "protein";
+                                      } else if (index == 2) {
+                                        key = "carbs";
+                                      } else if (index == 3) {
+                                        key = "fats";
+                                      }
+                                      if (key.isNotEmpty &&
+                                          model.dailyNutritionData[key] !=
+                                              null) {
+                                        return model.dailyNutritionData[key]
+                                                ["goal"]
+                                            .toString();
+                                      }
+                                      return "0";
+                                    }(),
                                     style: TextStyle(
                                       fontSize: AppFontSize.f20,
                                       fontWeight: FontWeight.w700,

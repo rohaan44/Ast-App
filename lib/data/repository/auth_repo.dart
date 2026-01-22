@@ -12,7 +12,12 @@ class AuthRepository {
       required String role}) async {
     var response = await _dioHelper.post(
         url: "${NetworkProperties.baseUrl}auth/register",
-        requestBody: {"role": role, "email": email, "password": password, "name": name});
+        requestBody: {
+          "role": role,
+          "email": email,
+          "password": password,
+          "name": name
+        });
     return AuthResponseModel.fromJson(response);
   }
 
@@ -45,6 +50,20 @@ class AuthRepository {
         isAuthRequired: true,
         url: "${NetworkProperties.baseUrl}auth/verify-otp",
         requestBody: {"email": email, "code": code});
+    return response;
+  }
+ Future<dynamic> changePassword({required String currentPassword,required String newPassword}) async {
+    final response = await _dioHelper.post(
+        isAuthRequired: true,
+        url: "${NetworkProperties.baseUrl}users/change-password",
+        requestBody: {"currentPassword": currentPassword,"newPassword": newPassword});
+    return response;
+  }
+  Future<dynamic> logout() async {
+    final response = await _dioHelper.post(
+        isAuthRequired: true,
+        url: "${NetworkProperties.baseUrl}auth/logout",
+        requestBody: {});
     return response;
   }
 }

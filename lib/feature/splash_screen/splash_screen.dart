@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/core/network/auth_service/auth_service.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/gradients/app_gradients.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,27 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushNamedAndRemoveUntil(context, RoutePaths.walkthrough, (route) => false);
+    Timer(const Duration(seconds: 3), () async {
+      String? role = await AuthStorage.getRole();
+      String? token = await AuthStorage.getRefreshToken();
+      if (role != null && token != null) {
+        if (role == "athlete") {
+          Navigator.pushNamedAndRemoveUntil(
+              context, RoutePaths.dashboardView, (route) => false);
+        } else if (role == "coach") {
+          Navigator.pushNamedAndRemoveUntil(
+              context, RoutePaths.coachMainScreenView, (route) => false);
+        } else if (role == "tutor") {
+          Navigator.pushNamedAndRemoveUntil(
+              context, RoutePaths.tutorMainScreen, (route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              context, RoutePaths.signIn, (route) => false);
+        }
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+            context, RoutePaths.walkthrough, (route) => false);
+      }
     });
     super.initState();
   }

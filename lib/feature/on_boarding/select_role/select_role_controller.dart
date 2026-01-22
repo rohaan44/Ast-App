@@ -1,4 +1,5 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/core/network/auth_service/auth_service.dart';
 import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
 import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/utils/asset_utils.dart';
@@ -46,11 +47,13 @@ class SelectRoleController extends ChangeNotifier {
   void onContinuePressed(BuildContext context) {
     if (_currentIndex != null) {
       String roleValue = "athlete"; // Default to Athlete for index 0
-
+      AuthStorage.saveRole(roleValue);
       if (_currentIndex == 1) {
         roleValue = "coach";
+        AuthStorage.saveRole(roleValue);
       } else if (_currentIndex == 2) {
         roleValue = "tutor";
+        AuthStorage.saveRole(roleValue);
       }
 
       context.read<FlowDataProvider>().addOrUpdateFlow(

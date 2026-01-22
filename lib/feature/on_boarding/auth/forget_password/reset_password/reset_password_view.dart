@@ -17,6 +17,7 @@ class ResetPasswordView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = context.read<ResetPasswordController>();
     return Scaffold(
         body: AppDismissKeyboard(
       child: Stack(children: [
@@ -159,7 +160,7 @@ class ResetPasswordView extends StatelessWidget {
                                       model.passController.text.isNotEmpty
                                   ? AppText(
                                       txt:
-                                          "La password deve contenere almeno 8 caratteri, una\nlettera, un numero e un carattere speciale.",
+                                          "La password deve contenere almeno 8 caratteri, lettere, almeno un numero e almeno un carattere speciale.",
                                       fontSize: AppFontSize.f16,
                                       fontWeight: FontWeight.w400,
                                       color: AppColor.red,
@@ -187,16 +188,11 @@ class ResetPasswordView extends StatelessWidget {
                             Consumer<ResetPasswordController>(
                                 builder: (context, model, child) {
                               return AppButton(
+                                isLoading: model.isLoading,
                                 isButtonEnable: model.isConfirmPasswordValid &&
                                     model.isPasswordValid,
                                 onPressed: () {
-                                  // context
-                                  //     .read<FlowDataProvider>()
-                                  //     .clearFlow(resetPassword);
-                                  // Navigator.pushNamedAndRemoveUntil(
-                                  //     context,
-                                  //     RoutePaths.coachMainScreenView,
-                                  //     (route) => false);
+                                  model.changePassword(context);
                                 },
                                 text: "Reimposta password",
                               );

@@ -9,7 +9,7 @@ class OnboardingRepo {
       {required String dateOfBirth}) async {
     var response = await _dioHelper.post(
         isAuthRequired: true,
-        url: "${NetworkProperties.baseUrl}/v1/users/onboarding/dob",
+        url: "${NetworkProperties.baseUrl}users/onboarding/dob",
         requestBody: {"dateOfBirth": dateOfBirth});
     return response;
   }
@@ -17,7 +17,7 @@ class OnboardingRepo {
   Future<Map<String, dynamic>> sendGender({required String gender}) async {
     var response = await _dioHelper.post(
         isAuthRequired: true,
-        url: "${NetworkProperties.baseUrl}/v1/users/onboarding/gender",
+        url: "${NetworkProperties.baseUrl}users/onboarding/gender",
         requestBody: {"gender": gender});
     return response;
   }
@@ -50,23 +50,19 @@ class OnboardingRepo {
     return response;
   }
 
-    Future<GetAllPlansModel> getPlans() async {
+  Future<GetAllPlansModel> getPlans() async {
     var response = await _dioHelper.get(
         isAuthRequired: true,
         url: "${NetworkProperties.baseUrl}plans?type=subscription");
     return GetAllPlansModel.fromJson(response);
   }
 
-
-
-    Future<Map<String, dynamic>> sendPaymentStripe(
+  Future<Map<String, dynamic>> sendPaymentStripe(
       {required String planId}) async {
     var response = await _dioHelper.post(
         isAuthRequired: true,
         url: "${NetworkProperties.baseUrl}payments/create-intent",
-        requestBody: {
-         "planId": planId
-        });
+        requestBody: {"planId": planId});
     return response;
   }
 }

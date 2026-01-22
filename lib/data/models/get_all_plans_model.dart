@@ -20,15 +20,15 @@ class GetAllPlansModel {
 }
 
 class Data {
-  List<Null>? plans;
+  List<Plan>? plans;
 
   Data({this.plans});
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['plans'] != null) {
-      plans = [];
+      plans = <Plan>[];
       json['plans'].forEach((v) {
-        plans!.add(v);
+        plans!.add(Plan.fromJson(v));
       });
     }
   }
@@ -36,8 +36,73 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.plans != null) {
-      data['plans'] = this.plans!.map((v) => v).toList();
+      data['plans'] = this.plans!.map((v) => v.toJson()).toList();
     }
+    return data;
+  }
+}
+
+class Plan {
+  String? sId;
+  String? name;
+  String? description;
+  int? price;
+  String? currency;
+  String? interval;
+  bool? isActive;
+  String? stripePriceId;
+  String? type;
+  List<String>? features;
+  String? createdAt;
+  String? updatedAt;
+  int? iV;
+
+  Plan(
+      {this.sId,
+      this.name,
+      this.description,
+      this.price,
+      this.currency,
+      this.interval,
+      this.isActive,
+      this.stripePriceId,
+      this.type,
+      this.features,
+      this.createdAt,
+      this.updatedAt,
+      this.iV});
+
+  Plan.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    name = json['name'];
+    description = json['description'];
+    price = json['price'];
+    currency = json['currency'];
+    interval = json['interval'];
+    isActive = json['isActive'];
+    stripePriceId = json['stripePriceId'];
+    type = json['type'];
+    features = json['features'].cast<String>();
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    iV = json['__v'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['name'] = name;
+    data['description'] = description;
+    data['price'] = price;
+    data['currency'] = currency;
+    data['interval'] = interval;
+    data['isActive'] = isActive;
+    data['stripePriceId'] = stripePriceId;
+    data['type'] = type;
+    data['features'] = features;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = iV;
     return data;
   }
 }

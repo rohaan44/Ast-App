@@ -1,13 +1,12 @@
 import 'package:ast_official/domain/repository/app_repo_service.dart';
 import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
 import 'package:ast_official/utils/asset_utils.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:flutter/material.dart';
 
 class DashboardHomeScreenController with ChangeNotifier {
   final AppRepoService appRepoService;
   DashboardHomeScreenController({required this.appRepoService});
-  CarouselSliderController carouselController = CarouselSliderController();
 
   int carouselValue = 0;
 
@@ -100,29 +99,49 @@ class DashboardHomeScreenController with ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  Map profileData = {};
+  Map<String, dynamic> profileData = {};
+  Map<String, dynamic> dailyNutritionData = {};
 
   bool _isProfileFetched = false;
   bool get isProfileFetched => _isProfileFetched;
-  Future<void> getProfileData(BuildContext context) async {
-    if (_isProfileFetched) return;
+
+  Future<void> getProfileData(
+    BuildContext context, {
+    bool forceRefresh = false,
+  }) async {
+    if (_isProfileFetched && !forceRefresh) return;
 
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await appRepoService.getMyProfile();
+      final profileResponse = await appRepoService.getMyProfile();
 
-      if (response.success == true) {
-        profileData = response.data?.profile?.toJson() ?? {};
+      if (profileResponse.success == true) {
+        profileData = profileResponse.data?.profile?.toJson() ?? {};
+        getMyAssignedMealsData(context);
         _isProfileFetched = true;
-        debugPrint("profileData\n: $profileData");
       } else {
         if (context.mounted) {
           showApiSnackBar(
             context,
             title: "Error",
-            message: response.error ?? "Something went wrong",
+            message: profileResponse.error ?? "Failed to load profile",
+            isSuccess: false,
+          );
+        }
+        return;
+      }
+      final nutritionResponse = await appRepoService.getDailyNutrition();
+
+      if (nutritionResponse.success == true) {
+        dailyNutritionData = nutritionResponse.data?.toJson() ?? {};
+      } else {
+        if (context.mounted) {
+          showApiSnackBar(
+            context,
+            title: "Error",
+            message: nutritionResponse.error ?? "Failed to load nutrition data",
             isSuccess: false,
           );
         }
@@ -132,13 +151,51 @@ class DashboardHomeScreenController with ChangeNotifier {
         showApiSnackBar(
           context,
           title: "Error",
-          message: "An unexpected error occurred: $e",
+          message: e.toString(),
           isSuccess: false,
         );
       }
-      debugPrint("Error fetching profile: $e");
     } finally {
-      _isProfileFetched = true;
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> getMyAssignedMealsData(
+    BuildContext context, {
+    bool forceRefresh = false,
+  }) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final profileResponse = await appRepoService.getMyAssignedMeals();
+
+      if (profileResponse["success"] == true) {
+        if (profileResponse["data"] != null &&
+            profileResponse["data"] is List) {
+          nextMealList = profileResponse["data"];
+        }
+      } else {
+        if (context.mounted) {
+          showApiSnackBar(
+            context,
+            title: "Error",
+            message: profileResponse["error"] ?? "Failed to load profile",
+            isSuccess: false,
+          );
+        }
+        return;
+      }
+    } catch (e) {
+      if (context.mounted) {
+        showApiSnackBar(
+          context,
+          title: "Error",
+          message: e.toString(),
+          isSuccess: false,
+        );
+      }
+    } finally {
       _isLoading = false;
       notifyListeners();
     }

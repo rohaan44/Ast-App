@@ -29,6 +29,8 @@ class ReviewYourCheckInController extends ChangeNotifier {
       armLastWeek.text.isNotEmpty &&
       armThisWeek.text.isNotEmpty;
 
+
+
   @override
   void dispose() {
     weightLastWeek.dispose();

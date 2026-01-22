@@ -113,7 +113,7 @@ class AthleteManagementController with ChangeNotifier {
       _isLoading = true;
       notifyListeners();
 
-      final response = await appRepoService.getRollAthelet(
+      final response = await appRepoService.getRoleAthlete(
         page: _currentPage,
         limit: _limit,
       );

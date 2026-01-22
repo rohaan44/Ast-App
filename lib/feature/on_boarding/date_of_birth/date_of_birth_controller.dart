@@ -105,6 +105,7 @@ class DateOfBirthController extends ChangeNotifier {
     } catch (e) {
       _isLoading = false;
       notifyListeners();
+      debugPrint(e.toString());
       showApiSnackBar(
         context,
         title: "Error",

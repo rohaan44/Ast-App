@@ -93,7 +93,7 @@ class _MyAppState extends State<MyApp> {
         theme: AppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
         // home: ResetPasswordView(),
-        initialRoute: RoutePaths.coachMainScreenView,
+        initialRoute: RoutePaths.splashScreen,
         onGenerateRoute: AppRouter.generateRoute,
       );
     });
