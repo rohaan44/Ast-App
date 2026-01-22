@@ -1,6 +1,7 @@
 import 'package:ast_official/data/models/app_models/get_daily_nutrition_model.dart';
 import 'package:ast_official/data/models/app_models/get_exercises_response_model.dart';
 import 'package:ast_official/data/models/app_models/get_profile_model.dart';
+import 'package:ast_official/data/models/app_models/get_role_athelete.dart';
 import 'package:ast_official/data/repository/app_repo.dart';
 
 class AppRepoService {
@@ -20,6 +21,7 @@ class AppRepoService {
       {int page = 1, int limit = 20}) async {
     return appRepo.getAllExercises(page: page, limit: limit);
   }
+
   Future<Map<String, dynamic>> getMyAssignedMeals() async {
     return appRepo.getMyAssignedMeals();
   }
@@ -43,7 +45,13 @@ class AppRepoService {
         phone: phone);
   }
 
-  Future<Map<String, dynamic>> getCoaches({int page = 1, int limit = 20}) async {
+  Future<Map<String, dynamic>> getCoaches(
+      {int page = 1, int limit = 20}) async {
     return appRepo.getCoaches(page: page, limit: limit);
+  }
+
+  Future<GetRollAthleteResponseModel> getRoleAthlete(
+      {int page = 1, int limit = 20}) async {
+    return appRepo.getRoleAthlete(page: page, limit: limit);
   }
 }

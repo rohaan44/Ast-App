@@ -31,22 +31,23 @@ Widget coachBottomBar() {
               return InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {
-
-                   if (model.selectedIndex == index) return;
-  model.pageController.animateToPage(
-    index,
-    duration: const Duration(milliseconds: 300),
-    curve: Curves.easeInOut,
-  );
-  Future.delayed(const Duration(milliseconds: 50), () {
-    model.setSelectedIndex(index);
-  });           },
+                  if (model.selectedIndex == index) return;
+                  model.pageController.animateToPage(
+                    index,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                  Future.delayed(const Duration(milliseconds: 50), () {
+                    model.setSelectedIndex(index);
+                  });
+                },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
                   height: 55,
                   width: 55,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1,color: AppColor.white.withOpacity(0.05)),
+                    border: Border.all(
+                        width: 1, color: AppColor.white.withOpacity(0.05)),
                     shape: BoxShape.circle,
                     color: isSelected
                         ? AppColor.red

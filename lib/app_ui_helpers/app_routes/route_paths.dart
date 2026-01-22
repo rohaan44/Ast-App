@@ -1,7 +1,7 @@
 class RoutePaths {
   static const String walkthrough = '/walkthrough';
   static const String splashScreen = '/splashScreen';
-
+  static const String athleteManagementView = "/athleteManagementView";
   static const String selectRole = '/selectRole';
 
   static const String signIn = '/signIn';

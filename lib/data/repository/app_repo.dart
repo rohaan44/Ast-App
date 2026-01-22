@@ -4,11 +4,13 @@ import 'package:ast_official/core/network/network_services/dio_helper.dart';
 import 'package:ast_official/data/models/app_models/get_daily_nutrition_model.dart';
 import 'package:ast_official/data/models/app_models/get_exercises_response_model.dart';
 import 'package:ast_official/data/models/app_models/get_profile_model.dart';
+import 'package:ast_official/data/models/app_models/get_role_athelete.dart';
 import 'package:dio/dio.dart';
 
 class AppRepo {
   static final DioHelper _dioHelper = DioHelper();
 
+  final String user = "users/search?role=";
   Future<GetMyProfile> getMyProfile() async {
     var response = await _dioHelper.get(
         isAuthRequired: true, url: "${NetworkProperties.baseUrl}users/profile");
@@ -88,5 +90,15 @@ class AppRepo {
       isAuthRequired: true, 
       url: "${NetworkProperties.baseUrl}users/checkin");
     return response;
+  }
+
+  Future<GetRollAthleteResponseModel> getRoleAthlete(
+      {int page = 1, int limit = 20}) async {
+    var response = await _dioHelper.get(
+      isAuthRequired: true,
+      url: "${NetworkProperties.baseUrl}${user}coach",
+      queryParameters: {"page": page, "limit": limit, "total": 0, "pages": 0},
+    );
+    return GetRollAthleteResponseModel.fromJson(response);
   }
 }
