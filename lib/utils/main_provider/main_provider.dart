@@ -251,7 +251,8 @@ List<SingleChildWidget> providersList = [
     //lazy: true,
   ),
   ChangeNotifierProvider(
-    create: (context) => AthleteManagementController(),
+    create: (context) => AthleteManagementController(
+        appRepoService: context.read<AppRepoService>()),
     //lazy: true,
   ),
   ChangeNotifierProvider(
