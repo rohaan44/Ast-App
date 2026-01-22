@@ -82,4 +82,11 @@ class AppRepo {
         url: "${NetworkProperties.baseUrl}users/search");
     return response;
   }
+
+  Future<Map<String, dynamic>> createCheckin() async {
+    var response = await _dioHelper.post(
+      isAuthRequired: true, 
+      url: "${NetworkProperties.baseUrl}users/checkin");
+    return response;
+  }
 }

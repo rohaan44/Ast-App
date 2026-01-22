@@ -1,9 +1,5 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:ast_official/app_ui_helpers/app_routes/app_routes.dart';
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
-import 'package:ast_official/feature/on_boarding/auth/forget_password/reset_password/reset_password_view.dart';
-import 'package:ast_official/feature/on_boarding/auth/forget_password/forgot_password_1/forget_password_view.dart';
 import 'package:ast_official/generated/l10n.dart';
 import 'package:ast_official/services/notification_service/app_notification_service.dart';
 import 'package:ast_official/utils/colors_utils.dart';
@@ -16,12 +12,10 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
 import 'package:ast_official/services/connectivity_service.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // ✅ MUST BE FIRST
-
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -93,7 +87,7 @@ class _MyAppState extends State<MyApp> {
         theme: AppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
         // home: ResetPasswordView(),
-        initialRoute: RoutePaths.coachProfileView,
+        initialRoute: RoutePaths.splashScreen,
         onGenerateRoute: AppRouter.generateRoute,
       );
     });

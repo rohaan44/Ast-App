@@ -48,7 +48,6 @@ class AthleteProfileSettingController with ChangeNotifier {
   Future<bool> logout(BuildContext context) async {
     _isLoading = true;
     notifyListeners();
-
     final success = await runApiCall(
       context: context,
       apiCall: () => authRepoService.logout(),

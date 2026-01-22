@@ -18,40 +18,39 @@ class BodyMeasurementView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: cw(20)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: ch(50),
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Left logo
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: SvgPicture.asset(
-                    AssetUtils.backArrow,
+        body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: cw(20)),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              SizedBox(
+                height: ch(50),
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Left logo
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: SvgPicture.asset(
+                      AssetUtils.backArrow,
+                    ),
                   ),
-                ),
-                const Spacer(),
+                  const Spacer(),
 
-                SizedBox(
-                    width: cw(158),
-                    child: customSlider(4, 2, AppColor.cFFFFFF)),
-                const Spacer()
-              ],
-            ),
-            SizedBox(
-              height: ch(40),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
+                  SizedBox(
+                      width: cw(158),
+                      child: customSlider(4, 2, AppColor.cFFFFFF)),
+                  const Spacer()
+                ],
+              ),
+              SizedBox(
+                height: ch(40),
+              ),
+              Expanded(
+                  child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -170,98 +169,176 @@ class BodyMeasurementView extends StatelessWidget {
                     SizedBox(
                       height: ch(12),
                     ),
-                    ListView.separated(
-                        shrinkWrap: true,
-                        primary: false,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: ch(16), horizontal: cw(17)),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(cw(14)),
-                                border: Border.all(
-                                    color: AppColor.c454545, width: cw(0.5))),
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: ch(50),
-                                  width: cw(50),
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(cw(15)),
-                                      color:
-                                          AppColor.cFFFFFF.withOpacity(0.05)),
-                                  child: Center(
-                                    child: AppText(
-                                      txt: "Foto",
-                                      height: 1.2,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColor.c454545,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: cw(10),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AppText(
-                                      txt: "AST-2025-00923",
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                      height: 1.2,
-                                    ),
-                                    AppText(
-                                      txt: "Foto.jpg",
-                                      height: 1.2,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      color: AppColor.cFFFFFF.withOpacity(0.7),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                          vertical: ch(16), horizontal: cw(17)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(cw(14)),
+                          border: Border.all(
+                              color: AppColor.c454545, width: cw(0.5))),
+                      child: Consumer<BodyMeasurementController>(
+                        builder: (context, model, _) {
+                          return Column(
+                            children: [
+                              uploadPicture(
+                                title: "Carica la tua foto frontale",
+                                onTap: () {
+                                  model.pickImage();
+                                },
+                              ),
+                              ListView.separated(
+                                  shrinkWrap: true,
+                                  primary: false,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: ch(16), horizontal: cw(17)),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(cw(14)),
+                                          border: Border.all(
+                                              color: AppColor.c454545,
+                                              width: cw(0.5))),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            height: ch(50),
+                                            width: cw(50),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        cw(15)),
+                                                color: AppColor.cFFFFFF
+                                                    .withOpacity(0.05)),
+                                            child: Center(
+                                              child: AppText(
+                                                txt: "Foto",
+                                                height: 1.2,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
+                                                color: AppColor.c454545,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: cw(10),
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                AppText(
+                                                  txt: "AST-2025-00923",
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 16,
+                                                  height: 1.2,
+                                                ),
+                                                AppText(
+                                                  txt: model
+                                                      .selectedImages[index]
+                                                      .path
+                                                      .split('/')
+                                                      .last,
+                                                  height: 1.2,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 12,
+                                                  color: AppColor.cFFFFFF
+                                                      .withOpacity(0.7),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              model.removeImage(index);
+                                            },
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: Colors.red,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      height: ch(12),
+                                    );
+                                  },
+                                  itemCount: model.selectedImages.length),
+                              SizedBox(
+                                height: ch(75),
+                              ),
+                              AppButton(
+                                  isButtonEnable: model.isNextEnabled,
+                                  buttonColor: AppColor.primary,
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      RoutePaths.statusFeedbackView,
+                                    );
+                                  },
+                                  text: "Avanti",
+                                  fontSize: 16,
+                                  textColor: AppColor.cFFFFFF,
+                                  fontWeight: FontWeight.w600),
+                              SizedBox(
+                                height: ch(40),
+                              ),
+                            ],
                           );
                         },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(
-                            height: ch(12),
-                          );
-                        },
-                        itemCount: 3),
-                    SizedBox(
-                      height: ch(75),
-                    ),
-                    Consumer<BodyMeasurementController>(
-                      builder: (context, model, child) {
-                        return AppButton(
-                            isButtonEnable: model.isNextEnabled,
-                            buttonColor: AppColor.primary,
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                RoutePaths.statusFeedbackView,
-                              );
-                            },
-                            text: "Avanti",
-                            fontSize: 16,
-                            textColor: AppColor.cFFFFFF,
-                            fontWeight: FontWeight.w600);
-                      },
-                    ),
-                    SizedBox(
-                      height: ch(40),
+                      ),
                     ),
                   ],
                 ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+              ))
+            ])));
   }
+}
+
+Widget uploadPicture({required String title, required VoidCallback onTap}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: ch(16), horizontal: cw(17)),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(cw(14)),
+          border: Border.all(color: AppColor.c454545, width: cw(0.5))),
+      child: Column(
+        children: [
+          Container(
+            height: ch(50),
+            width: double.infinity,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(cw(14)),
+                color: AppColor.cFFFFFF.withOpacity(0.02)),
+            child: Center(
+              child: AppText(
+                txt: "+",
+                height: 1.2,
+                fontWeight: FontWeight.w500,
+                fontSize: AppFontSize.f24,
+                color: AppColor.c454545,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: ch(15),
+          ),
+          AppText(
+            color: AppColor.cFFFFFF.withOpacity(0.7),
+            txt: title,
+            fontWeight: FontWeight.w400,
+            fontSize: AppFontSize.f18,
+            height: 1.2,
+          ),
+        ],
+      ),
+    ),
+  );
 }
