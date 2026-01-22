@@ -85,7 +85,7 @@ List<SingleChildWidget> providersList = [
   Provider<AuthRepository>(
     create: (context) => AuthRepository(),
   ),
-   Provider<AppRepo>(
+  Provider<AppRepo>(
     create: (context) => AppRepo(),
   ),
   Provider<OnboardingRepo>(
@@ -93,7 +93,7 @@ List<SingleChildWidget> providersList = [
   ),
   Provider<AppRepoService>(
     create: (context) => AppRepoService(
-     appRepo: context.read<AppRepo>(),
+      appRepo: context.read<AppRepo>(),
     ),
   ),
   Provider<AuthRepoService>(
@@ -153,8 +153,12 @@ List<SingleChildWidget> providersList = [
   ChangeNotifierProvider(create: (context) => DinnerTimeController()),
   ChangeNotifierProvider(create: (context) => YourPersonalizedPlanController()),
   ChangeNotifierProvider(create: (context) => WhatIsYourActivityController()),
-  ChangeNotifierProvider(create: (context) => DashboardHomeScreenController(appRepoService: context.read<AppRepoService>())),
-  ChangeNotifierProvider(create: (context) => TrainingViewController(appRepoService: context.read<AppRepoService>())),
+  ChangeNotifierProvider(
+      create: (context) => DashboardHomeScreenController(
+          appRepoService: context.read<AppRepoService>())),
+  ChangeNotifierProvider(
+      create: (context) => TrainingViewController(
+          appRepoService: context.read<AppRepoService>())),
   ChangeNotifierProvider(create: (context) => TrainingDetailController()),
   ChangeNotifierProvider(create: (context) => TrainingCompleteController()),
   ChangeNotifierProvider(create: (context) => AtheletCoachesController()),
@@ -171,7 +175,9 @@ List<SingleChildWidget> providersList = [
     create: (context) => CoachBottomBar(),
   ),
   ChangeNotifierProvider(create: (context) => CoachHomeScreenController()),
-  ChangeNotifierProvider(create: (context) => AthleteManagementController()),
+  ChangeNotifierProvider(
+      create: (context) => AthleteManagementController(
+          appRepoService: context.read<AppRepoService>())),
   ChangeNotifierProvider(create: (context) => AthleteProfileController()),
   ChangeNotifierProvider(create: (_) => PlansManagementController()),
   ChangeNotifierProvider(create: (_) => FlowDataProvider()),

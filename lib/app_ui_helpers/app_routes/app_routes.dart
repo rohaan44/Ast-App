@@ -15,6 +15,7 @@ import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/s
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/your_personalized_plan/your_personalized_plan_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/sub_screen/training_complete/training_complete.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/sub_screen/training_detail/training_detail_view.dart';
+import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_management_view.dart';
 import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_profile/athelete_profile_view.dart';
 import 'package:ast_official/feature/coach_dashboard/check_in/edit_ai_suggestion/edit_ai_suggestion_view.dart';
 import 'package:ast_official/feature/coach_dashboard/check_in/seleted_check_in/selected_check_in_view.dart';
@@ -446,6 +447,15 @@ class AppRouter {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return const CoachProfileSettingView();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+      case RoutePaths.athleteManagementView:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const AthleteManagementView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
