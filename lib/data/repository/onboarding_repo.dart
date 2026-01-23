@@ -1,3 +1,4 @@
+import 'package:ast_official/core/network/auth_service/auth_service.dart';
 import 'package:ast_official/core/network/network_properties/network_properties.dart';
 import 'package:ast_official/core/network/network_services/dio_helper.dart';
 import 'package:ast_official/data/models/get_all_plans_model.dart';
@@ -7,6 +8,10 @@ class OnboardingRepo {
 
   Future<Map<String, dynamic>> sendDateOfBirth(
       {required String dateOfBirth}) async {
+    // Debug: Check token status before making request
+    print("\n🔍 About to send DOB - checking token status first...");
+    await AuthStorage.debugTokenStatus();
+
     var response = await _dioHelper.post(
         isAuthRequired: true,
         url: "${NetworkProperties.baseUrl}users/onboarding/dob",

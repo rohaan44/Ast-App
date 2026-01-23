@@ -1,7 +1,9 @@
+import 'package:ast_official/data/models/app_models/get_checkins_model.dart';
 import 'package:ast_official/data/models/app_models/get_daily_nutrition_model.dart';
 import 'package:ast_official/data/models/app_models/get_exercises_response_model.dart';
 import 'package:ast_official/data/models/app_models/get_profile_model.dart';
 import 'package:ast_official/data/models/app_models/get_role_athelete.dart';
+import 'package:ast_official/data/models/base_model/base_model.dart';
 import 'package:ast_official/data/repository/app_repo.dart';
 
 class AppRepoService {
@@ -53,5 +55,15 @@ class AppRepoService {
   Future<GetRollAthleteResponseModel> getRoleAthlete(
       {int page = 1, int limit = 20}) async {
     return appRepo.getRoleAthlete(page: page, limit: limit);
+  }
+
+  Future<Map<String, dynamic>> createCheckIn(
+      {required Map<String, dynamic> requestBody}) async {
+    return appRepo.sendCheckIn(requestBody: requestBody);
+  }
+
+  Future<ApiResponse<CheckInsResponseData>> getCheckins(
+      {int page = 1, int limit = 20}) async {
+    return appRepo.getCheckins(page: page, limit: limit);
   }
 }

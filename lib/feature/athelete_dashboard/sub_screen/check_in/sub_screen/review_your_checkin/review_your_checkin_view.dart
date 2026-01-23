@@ -1,8 +1,8 @@
-import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
-import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/review_your_checkin/review_your_checkin_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/appbar/appbar.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
@@ -20,9 +20,9 @@ class ReviewYourCheckInView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: cw(20)),
-        child: AppDismissKeyboard(
+      body: AppDismissKeyboard(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: cw(20)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -96,7 +96,11 @@ class ReviewYourCheckInView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            AppText(txt: 'Peso'),
+                            AppText(
+                              txt: 'Peso',
+                              fontSize: AppFontSize.f18,
+                              fontWeight: FontWeight.w600,
+                            ),
                             SizedBox(
                               height: ch(12),
                             ),
@@ -122,6 +126,7 @@ class ReviewYourCheckInView extends StatelessWidget {
                                       ),
                                       primaryTextField(
                                           controller: model.weightLastWeek,
+                                          keyboardType: TextInputType.number,
                                           border: InputBorder.none,
                                           hintText: "enter...")
                                     ],
@@ -166,6 +171,7 @@ class ReviewYourCheckInView extends StatelessWidget {
                                       ),
                                       primaryTextField(
                                           controller: model.weightThisWeek,
+                                          keyboardType: TextInputType.number,
                                           border: InputBorder.none,
                                           hintText: "enter...")
                                     ],
@@ -176,7 +182,11 @@ class ReviewYourCheckInView extends StatelessWidget {
                             SizedBox(
                               height: ch(20),
                             ),
-                            AppText(txt: 'Vita'),
+                            AppText(
+                              txt: 'Vita',
+                              fontSize: AppFontSize.f18,
+                              fontWeight: FontWeight.w600,
+                            ),
                             SizedBox(
                               height: ch(12),
                             ),
@@ -202,6 +212,7 @@ class ReviewYourCheckInView extends StatelessWidget {
                                       ),
                                       primaryTextField(
                                           controller: model.lifeLastWeek,
+                                          keyboardType: TextInputType.number,
                                           border: InputBorder.none,
                                           hintText: "enter...")
                                     ],
@@ -246,6 +257,7 @@ class ReviewYourCheckInView extends StatelessWidget {
                                       ),
                                       primaryTextField(
                                           controller: model.lifeThisWeek,
+                                          keyboardType: TextInputType.number,
                                           border: InputBorder.none,
                                           hintText: "enter...")
                                     ],
@@ -256,7 +268,11 @@ class ReviewYourCheckInView extends StatelessWidget {
                             SizedBox(
                               height: ch(20),
                             ),
-                            AppText(txt: 'Braccia'),
+                            AppText(
+                              txt: 'Braccia',
+                              fontSize: AppFontSize.f18,
+                              fontWeight: FontWeight.w600,
+                            ),
                             SizedBox(
                               height: ch(12),
                             ),
@@ -282,6 +298,7 @@ class ReviewYourCheckInView extends StatelessWidget {
                                       ),
                                       primaryTextField(
                                           controller: model.armLastWeek,
+                                          keyboardType: TextInputType.number,
                                           border: InputBorder.none,
                                           hintText: "enter...")
                                     ],
@@ -326,6 +343,7 @@ class ReviewYourCheckInView extends StatelessWidget {
                                       ),
                                       primaryTextField(
                                           controller: model.armThisWeek,
+                                          keyboardType: TextInputType.number,
                                           border: InputBorder.none,
                                           hintText: "enter...")
                                     ],
@@ -338,7 +356,7 @@ class ReviewYourCheckInView extends StatelessWidget {
                       },
                     ),
                     SizedBox(
-                      height: ch(134),
+                      height: ch(60),
                     ),
                     Consumer<ReviewYourCheckInController>(
                       builder: (context, model, child) {
@@ -346,22 +364,33 @@ class ReviewYourCheckInView extends StatelessWidget {
                             isButtonEnable: model.isNext,
                             buttonColor: AppColor.cFFFFFF,
                             onPressed: () {
-                              final dashboardController =
-                                  context.read<DashboardController>();
-                              dashboardController.setSelectedIndex(0);
-                              if (dashboardController
-                                  .pageController.hasClients) {
-                                dashboardController.pageController
-                                    .jumpToPage(0);
-                              }
-                              Navigator.popUntil(
-                                  context,
-                                  (route) =>
-                                      route.settings.name ==
-                                      RoutePaths.dashboardView);
+                            context
+                                  .read<FlowDataProvider>()
+                                  .addOrUpdateFlow(flowTag: checkInDiet, data: {
+                                "progress": {
+                                  "weight": {
+                                    "lastWeek": model.weightLastWeek.text,
+                                    "thisWeek": model.weightThisWeek.text
+                                  },
+                                  "waist": {
+                                    "lastWeek": model.lifeLastWeek.text,
+                                    "thisWeek": model.lifeThisWeek.text
+                                  },
+                                  "arm": {
+                                    "lastWeek": model.armLastWeek.text,
+                                    "thisWeek": model.armThisWeek.text
+                                  }
+                                },
+                                "date":DateTime.now().toIso8601String()
+                              });
+                              
+                              final flowData = context
+                                  .read<FlowDataProvider>()
+                                  .getFlowData(checkInDiet);
+                              model.createCheckIn(requestBody: flowData??{}, context: context);
                             },
                             text: "Invia il check-in",
-                            fontSize: 16,
+                            fontSize: AppFontSize.f18,
                             textColor: AppColor.c252525,
                             fontWeight: FontWeight.w600);
                       },

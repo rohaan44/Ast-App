@@ -56,7 +56,7 @@ class AthleteProfileSettingController with ChangeNotifier {
         if (context.mounted) {
           Navigator.pushNamedAndRemoveUntil(
             context,
-            RoutePaths.signIn,
+            RoutePaths.selectRole,
             (route) => false,
           );
         }

@@ -29,6 +29,7 @@ Widget primaryTextField({
   double? borderRadius,
   double? textFieldHeight,
   double? containerPadding,
+  int? maxLines,
 }) {
   final fieldHeight = textFieldHeight ?? ch(52);
   final isTall = fieldHeight > ch(60); // 👈 agar height zyada hai to top align
@@ -60,6 +61,7 @@ Widget primaryTextField({
           textInputAction: textInputAction,
           keyboardType: keyboardType,
           maxLength: maxLength,
+          maxLines: obscureText ? 1 : maxLines,
           inputFormatters: inputFormatters ??
               InputFormatterHelper.allowCharactersNumbersAndSpace,
           style: textStyle ??
