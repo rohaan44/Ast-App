@@ -145,10 +145,11 @@ Widget onboaridngAppBar(
           SizedBox(width: cw(57)),
 
           GestureDetector(
-            onTap: onTap ?? () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, RoutePaths.selectRole, (route) => false);
-            },
+            onTap: onTap ??
+                () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, RoutePaths.selectRole, (route) => false);
+                },
             child: SvgPicture.asset(
               AssetUtils.appCrossIcon,
             ),
@@ -208,13 +209,18 @@ Widget textProfileSettingAppbar({
   required String text,
   double? fontSize,
   bool textIsItalic = false,
+  bool isNotificationIcon = false,
+  bool isAtheletIcon = false,
+  bool isNotificationScreen = false,
+  bool isAtheletScreen = false,
   Function? onTap,
+  Function? notificationOntap,
+  Function? atheletScreenOntap,
 }) {
   return Column(
     children: [
       SizedBox(height: ch(20)),
       Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AppText(
             txt: text,
@@ -223,6 +229,73 @@ Widget textProfileSettingAppbar({
             color: AppColor.white,
             fontWeight: FontWeight.w600,
           ),
+          const Spacer(),
+          if (isAtheletIcon) ...[
+            GestureDetector(
+              onTap: () => onTap ?? () {},
+              child: Container(
+                height: ch(40),
+                width: cw(40),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      color: isAtheletScreen
+                          ? AppColor.primary
+                          : AppColor.c252525),
+                ),
+                padding: const EdgeInsets.all(4),
+                alignment: Alignment.center,
+                child: Container(
+                  height: ch(35),
+                  width: cw(35),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColor.c252525,
+                  ),
+                  child: Center(
+                    child: SvgPicture.asset(
+                      AssetUtils.coachBottombar2,
+                      height: 24,
+                      width: 24,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: cw(14),
+            ),
+          ],
+          if (isNotificationIcon) ...[
+            GestureDetector(
+              onTap: () => notificationOntap ?? () {},
+              child: Container(
+                height: ch(40),
+                width: cw(40),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      color: isNotificationScreen
+                          ? AppColor.primary
+                          : AppColor.c252525),
+                ),
+                padding: const EdgeInsets.all(2),
+                alignment: Alignment.center,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColor.c252525,
+                  ),
+                  child:
+                      const Center(child: Icon(Icons.notifications_outlined)),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: cw(14),
+            ),
+          ],
           GestureDetector(
             onTap: () =>
                 onTap ??

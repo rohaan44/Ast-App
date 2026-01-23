@@ -82,4 +82,69 @@ class AppRepo {
         url: "${NetworkProperties.baseUrl}users/search");
     return response;
   }
+//   Coach Flow ...
+
+// training plan ...
+  Future createExcercise(
+      {required String name,
+      required String category,
+      required String muscleGroup,
+      required String description,
+      required String videoUrl}) async {
+    var response = await _dioHelper.post(
+        isAuthRequired: true,
+        url: "${NetworkProperties.baseUrl}exercise",
+        requestBody: {
+          "name": name,
+          "category": category,
+          "muscleGroup": muscleGroup,
+          "description": description,
+          "videoUrl": videoUrl,
+        });
+    return response;
+  }
+
+// athelet management
+
+  Future<Map<String, dynamic>> getAllMyAtheletes(
+      {int page = 1, int limit = 20}) async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        queryParameters: {"role": "coach", "page": page, "limit": limit},
+        url: "${NetworkProperties.baseUrl}relationships/my-athletes");
+    return response;
+  }
+
+  Future<Map<String, dynamic>> getAtheletPendingRequest(
+      {int page = 1, int limit = 20}) async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        queryParameters: {"role": "coach", "page": page, "limit": limit},
+        url: "${NetworkProperties.baseUrl}/relationships/pending");
+    return response;
+  }
+
+  Future acceptReqAthelet({
+    required String status,
+  }) async {
+    var response = await _dioHelper.post(
+        isAuthRequired: true,
+        url: "${NetworkProperties.baseUrl}relationships/accept",
+        requestBody: {
+          "name": status,
+        });
+    return response;
+  }
+
+  Future rejectReqAthelet({
+    required String status,
+  }) async {
+    var response = await _dioHelper.post(
+        isAuthRequired: true,
+        url: "${NetworkProperties.baseUrl}relationships/reject",
+        requestBody: {
+          "name": status,
+        });
+    return response;
+  }
 }

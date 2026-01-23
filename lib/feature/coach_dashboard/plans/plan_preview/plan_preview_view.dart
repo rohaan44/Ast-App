@@ -16,142 +16,150 @@ class PlanPreviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final plan = context.watch<PlanPreviewController>().planData;
+    final plan = context.watch<PlanPreviewController>().planData;
     return Scaffold(
       body: SafeArea(
         child: Padding(
-           padding: EdgeInsets.symmetric(horizontal: cw(20)),
+          padding: EdgeInsets.symmetric(horizontal: cw(20)),
           child: Column(
             children: [
-              SizedBox(height:ch(20) ,),
-             Row(
+              SizedBox(
+                height: ch(20),
+              ),
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-          highlightColor: AppColor.transparent,
-          focusColor: AppColor.transparent,
-          splashColor: AppColor.transparent,
-          icon: SvgPicture.asset(AssetUtils.backArrow),
-          onPressed: () => Navigator.pop(context),
-        ),
-                 AppText(txt: "Anteprima Del Piano", fontSize: AppFontSize.f19,),
+                    highlightColor: AppColor.transparent,
+                    focusColor: AppColor.transparent,
+                    splashColor: AppColor.transparent,
+                    icon: SvgPicture.asset(AssetUtils.backArrow),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  AppText(
+                    txt: "Anteprima Del Piano",
+                    fontSize: AppFontSize.f19,
+                  ),
                   const SizedBox.shrink()
                 ],
               ),
-              SizedBox(height:ch(40) ,),
+              SizedBox(
+                height: ch(40),
+              ),
               Expanded(
                 child: SingleChildScrollView(
-                   physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // 🔹 Gradient Border Card
-                        activityCard(
-                          isGradient: true,
-                          padding: EdgeInsets.all(cw(20)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AppText(
-                                txt: plan["title"],
-                                fontSize: AppFontSize.f19,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.white,
-                              ),
-                              SizedBox(height: ch(8)),
-                              _infoRow("Tipologia:", plan["type"]),
-                              _infoRow("Durata:", plan["duration"]),
-                              _infoRow("Creato da:", plan["createdBy"]),
-                            ],
-                          ),
-                        ),
-                
-                        SizedBox(height: ch(25)),
-                        AppText(
-                          txt: "Programma di formazione",
-                        fontSize: AppFontSize.f14 + 8,
-                          color: AppColor.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        SizedBox(height: ch(15)),
-                
-                        // 🔹 Dynamic days list
-                        ...List.generate(
-                          plan["days"].length,
-                          (index) {
-                            final day = plan["days"][index];
-                            return Container(
-                              width: double.infinity,
-                              margin: EdgeInsets.only(bottom: ch(15)),
-                              padding: EdgeInsets.all(cw(20)),
-                              decoration: BoxDecoration(
-                                color: AppColor.c1E1E1E,
-                                borderRadius: BorderRadius.circular(cw(16)),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  AppText(
-                                    txt: day["title"],
-                                    fontSize: AppFontSize.f18,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColor.white,
-                                  ),
-                                  SizedBox(height: ch(10)),
-                                  ...List.generate(
-                                    day["exercises"].length,
-                                    (i) => Padding(
-                                      padding: EdgeInsets.only(bottom: ch(5)),
-                                      child: AppText(
-                                        txt: "• ${day["exercises"][i]}",
-                                        color: AppColor.white.withOpacity(0.7),
-                                        fontSize: AppFontSize.f15,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                
-                        SizedBox(height: ch(30)),
-                
-                        // 🔹 Bottom Buttons
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // 🔹 Gradient Border Card
+                      activityCard(
+                        isGradient: true,
+                        padding: EdgeInsets.all(cw(20)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                              child: AppButton(
-                                text: "Usa questo piano",
-                                buttonColor: AppColor.red,
-                                textColor: AppColor.white,
-                                fontWeight: FontWeight.w600,
-                                onPressed: () {},
-                              ),
+                            AppText(
+                              txt: plan["title"],
+                              fontSize: AppFontSize.f19,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.white,
                             ),
-                            SizedBox(width: cw(12)),
-                            Expanded(
-                              child: AppButton(
-                                text: "Modificare",
-                                buttonColor: AppColor.transparent,
-                                borderColor: AppColor.cC6C6C6,
-                                isBorder: true,
-                                textColor: AppColor.white,
-                                fontWeight: FontWeight.w600,
-                                onPressed: () {
-                                   Navigator.pushNamed(context, RoutePaths.trainingPlanScreen);
-                                },
-                              ),
-                            ),
+                            SizedBox(height: ch(8)),
+                            _infoRow("Tipologia:", plan["type"]),
+                            _infoRow("Durata:", plan["duration"]),
+                            _infoRow("Creato da:", plan["createdBy"]),
                           ],
                         ),
-                
-                        SizedBox(height: ch(50)),
-                      ],
-                    ),
+                      ),
+
+                      SizedBox(height: ch(25)),
+                      AppText(
+                        txt: "Programma di formazione",
+                        fontSize: AppFontSize.f14 + 8,
+                        color: AppColor.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      SizedBox(height: ch(15)),
+
+                      // 🔹 Dynamic days list
+                      ...List.generate(
+                        plan["days"].length,
+                        (index) {
+                          final day = plan["days"][index];
+                          return Container(
+                            width: double.infinity,
+                            margin: EdgeInsets.only(bottom: ch(15)),
+                            padding: EdgeInsets.all(cw(20)),
+                            decoration: BoxDecoration(
+                              color: AppColor.c1E1E1E,
+                              borderRadius: BorderRadius.circular(cw(16)),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AppText(
+                                  txt: day["title"],
+                                  fontSize: AppFontSize.f18,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.white,
+                                ),
+                                SizedBox(height: ch(10)),
+                                ...List.generate(
+                                  day["exercises"].length,
+                                  (i) => Padding(
+                                    padding: EdgeInsets.only(bottom: ch(5)),
+                                    child: AppText(
+                                      txt: "• ${day["exercises"][i]}",
+                                      color: AppColor.white.withOpacity(0.7),
+                                      fontSize: AppFontSize.f15,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+
+                      SizedBox(height: ch(30)),
+
+                      // 🔹 Bottom Buttons
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: AppButton(
+                              text: "Usa questo piano",
+                              buttonColor: AppColor.red,
+                              textColor: AppColor.white,
+                              fontWeight: FontWeight.w600,
+                              onPressed: () {},
+                            ),
+                          ),
+                          SizedBox(width: cw(12)),
+                          Expanded(
+                            child: AppButton(
+                              text: "Modificare",
+                              buttonColor: AppColor.transparent,
+                              borderColor: AppColor.cC6C6C6,
+                              isBorder: true,
+                              textColor: AppColor.white,
+                              fontWeight: FontWeight.w600,
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, RoutePaths.trainingPlanScreen);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: ch(50)),
+                    ],
                   ),
+                ),
               ),
             ],
           ),

@@ -20,6 +20,7 @@ class AppRepoService {
       {int page = 1, int limit = 20}) async {
     return appRepo.getAllExercises(page: page, limit: limit);
   }
+
   Future<Map<String, dynamic>> getMyAssignedMeals() async {
     return appRepo.getMyAssignedMeals();
   }
@@ -43,7 +44,78 @@ class AppRepoService {
         phone: phone);
   }
 
-  Future<Map<String, dynamic>> getCoaches({int page = 1, int limit = 20}) async {
+  Future<Map<String, dynamic>> getCoaches(
+      {int page = 1, int limit = 20}) async {
     return appRepo.getCoaches(page: page, limit: limit);
+  }
+
+  // coach flow
+
+  // athelet managemen
+
+  Future<Map<String, dynamic>> getAllMyAtheletes(
+      {int page = 1, int limit = 20}) async {
+    return appRepo.getAllMyAtheletes(page: page, limit: limit);
+  }
+
+  Future<Map<String, dynamic>> getAtheletPendingRequest(
+      {int page = 1, int limit = 20}) async {
+    return appRepo.getAtheletPendingRequest(page: page, limit: limit);
+  }
+
+  Future<dynamic> acceptReqAthelet({
+    required String status,
+  }) async {
+    final response = await appRepo.acceptReqAthelet(
+      status: status,
+    );
+    if (response is Map) {
+      if (response['success'] == true) {
+        return true;
+      } else {
+        return response;
+      }
+    }
+    return false;
+  }
+
+  Future<dynamic> rejectReqAthelet({
+    required String status,
+  }) async {
+    final response = await appRepo.rejectReqAthelet(
+      status: status,
+    );
+    if (response is Map) {
+      if (response['success'] == true) {
+        return true;
+      } else {
+        return response;
+      }
+    }
+    return false;
+  }
+
+// training plan
+  Future<dynamic> createExcercise({
+    required String name,
+    required String category,
+    required String muscleGroup,
+    required String description,
+    required String videoUrl,
+  }) async {
+    final response = await appRepo.createExcercise(
+        name: name,
+        category: category,
+        muscleGroup: muscleGroup,
+        description: description,
+        videoUrl: videoUrl);
+    if (response is Map) {
+      if (response['success'] == true) {
+        return true;
+      } else {
+        return response;
+      }
+    }
+    return false;
   }
 }

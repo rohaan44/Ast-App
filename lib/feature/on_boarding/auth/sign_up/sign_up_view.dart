@@ -135,41 +135,53 @@ class SignUpView extends StatelessWidget {
                               ),
                             ],
                             SizedBox(height: ch(24)),
-                            AppButton(
-                              isLoading: provider.isLoading,
-                              isButtonEnable: provider.isButtonEnabled,
-                              borderRadius: cw(50),
-                              onPressed: () async {
-                                final flowProvider =
-                                    context.read<FlowDataProvider>();
-                                final data = flowProvider
-                                    .getFlowData(customerOnboarding);
-                                log(data.toString());
+                            Consumer<SignUpController>(
+                              builder: (context, model, child) {
+                                return AppButton(
+                                  isLoading: model.isLoading,
+                                  isButtonEnable: model.isButtonEnabled,
+                                  borderRadius: cw(50),
+                                  onPressed: () async {
+                                    final flowProvider =
+                                        context.read<FlowDataProvider>();
+                                    final data = flowProvider
+                                        .getFlowData(customerOnboarding);
+                                    log(data.toString());
 
-                                if (data != null && data.containsKey("value")) {
-                                  final success = await provider.register(
-                                      data["value"], context);
-                                  if (success) {
-                                    context.read<FlowDataProvider>().addOrUpdateFlow(
-                                      flowTag: customerSignIn,
-                                      data: {"email": provider.emailController.text, "from": "sign_up", "role": data["value"]},
-                                    );
-                                    showApiSnackBar(context,
-                                        title: "Success",
-                                        message: "OTP sent successfully",
-                                        isSuccess: true);
-                                    Navigator.pushNamed(
-                                        context, RoutePaths.otpView);
-                                  }
-                                } else {
-                                  showApiSnackBar(context,
-                                      title: "Error",
-                                      message:
-                                          "Flow data missing for registration",
-                                      isSuccess: false);
-                                }
+                                    if (data != null &&
+                                        data.containsKey("value")) {
+                                      final success = await provider.register(
+                                          data["value"], context);
+                                      if (success) {
+                                        context
+                                            .read<FlowDataProvider>()
+                                            .addOrUpdateFlow(
+                                          flowTag: customerSignIn,
+                                          data: {
+                                            "email":
+                                                provider.emailController.text,
+                                            "from": "sign_up",
+                                            "role": data["value"]
+                                          },
+                                        );
+                                        showApiSnackBar(context,
+                                            title: "Success",
+                                            message: "OTP sent successfully",
+                                            isSuccess: true);
+                                        Navigator.pushNamed(
+                                            context, RoutePaths.otpView);
+                                      }
+                                    } else {
+                                      showApiSnackBar(context,
+                                          title: "Error",
+                                          message:
+                                              "Flow data missing for registration",
+                                          isSuccess: false);
+                                    }
+                                  },
+                                  text: "Continua",
+                                );
                               },
-                              text: "Continua",
                             ),
                             SizedBox(height: ch(50)),
                             Row(

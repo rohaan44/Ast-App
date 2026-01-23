@@ -2,8 +2,6 @@
 
 import 'package:ast_official/app_ui_helpers/app_routes/app_routes.dart';
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
-import 'package:ast_official/feature/on_boarding/auth/forget_password/reset_password/reset_password_view.dart';
-import 'package:ast_official/feature/on_boarding/auth/forget_password/forgot_password_1/forget_password_view.dart';
 import 'package:ast_official/generated/l10n.dart';
 import 'package:ast_official/services/notification_service/app_notification_service.dart';
 import 'package:ast_official/utils/colors_utils.dart';
@@ -93,7 +91,7 @@ class _MyAppState extends State<MyApp> {
         theme: AppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
         // home: ResetPasswordView(),
-        initialRoute: RoutePaths.coachProfileView,
+        initialRoute: RoutePaths.splashScreen,
         onGenerateRoute: AppRouter.generateRoute,
       );
     });
