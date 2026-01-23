@@ -290,7 +290,8 @@ List<SingleChildWidget> providersList = [
     // lazy: true,
   ),
   ChangeNotifierProvider(
-    create: (_) => CoachProfileSettingController(),
+    create: (context) => CoachProfileSettingController(
+        authRepoService: context.read<AuthRepoService>()),
     lazy: true,
   ),
 
