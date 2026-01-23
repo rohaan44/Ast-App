@@ -209,7 +209,7 @@ List<SingleChildWidget> providersList = [
   ChangeNotifierProvider(
       create: (context) => CoachProfileController(), lazy: true),
   ChangeNotifierProvider(
-    create: (context) => CheckInController(),
+    create: (context) => CheckInController(appRepoService: context.read<AppRepoService>()),
     // lazy: true
   ),
   ChangeNotifierProvider(
@@ -219,7 +219,9 @@ List<SingleChildWidget> providersList = [
   ChangeNotifierProvider(
       create: (context) => StatusFeedbackController(), lazy: true),
   ChangeNotifierProvider(
-      create: (context) => ReviewYourCheckInController(), lazy: true),
+      create: (context) => ReviewYourCheckInController(
+          appRepoService: context.read<AppRepoService>()),
+      lazy: true),
   ChangeNotifierProvider(
     create: (context) => AtheletChatController(),
     //lazy: true

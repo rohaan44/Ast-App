@@ -92,7 +92,7 @@ Widget _bottomNavBar() {
       height: 72,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColor.c252525.withOpacity(0.25),
+        color: AppColor.c252525.withOpacity(0.4),
         boxShadow: [
           BoxShadow(
               offset: Offset(30, 16), color: AppColor.c000000.withOpacity(0.15))

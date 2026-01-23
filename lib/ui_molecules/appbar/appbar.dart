@@ -214,8 +214,11 @@ Widget textProfileSettingAppbar({
   bool isNotificationScreen = false,
   bool isAtheletScreen = false,
   Function? onTap,
-  Function? notificationOntap,
-  Function? atheletScreenOntap,
+  bool isNotificationBool = false,
+  String? numberOfNotification,
+  VoidCallback? notificationOnTap,
+  bool isAtheletBool = false,
+  VoidCallback? atheletScreenOnTap,
 }) {
   return Column(
     children: [
@@ -230,70 +233,105 @@ Widget textProfileSettingAppbar({
             fontWeight: FontWeight.w600,
           ),
           const Spacer(),
-          if (isAtheletIcon) ...[
+          if (isAtheletScreen) ...[
             GestureDetector(
-              onTap: () => onTap ?? () {},
+              onTap: atheletScreenOnTap ?? () {},
               child: Container(
-                height: ch(40),
-                width: cw(40),
+                height: ch(39),
+                width: cw(39),
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                      color: isAtheletScreen
-                          ? AppColor.primary
-                          : AppColor.c252525),
-                ),
-                padding: const EdgeInsets.all(4),
-                alignment: Alignment.center,
-                child: Container(
-                  height: ch(35),
-                  width: cw(35),
-                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppColor.c252525,
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      AssetUtils.coachBottombar2,
-                      height: 24,
-                      width: 24,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+                    border: Border.all(
+                        color:
+                            isAtheletBool ? AppColor.red : AppColor.c252525)),
+                child: Center(
+                  child: Container(
+                      height: ch(34),
+                      width: cw(34),
+                      decoration: BoxDecoration(
+                        color: isAtheletBool
+                            ? AppColor.red.withValues(alpha: 0.1)
+                            : AppColor.c252525,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: SvgPicture.asset(
+                          AssetUtils.coachBottombar2,
+                          height: ch(20),
+                          width: cw(20),
+                          fit: BoxFit.contain,
+                        ),
+                      )),
                 ),
               ),
             ),
             SizedBox(
-              width: cw(14),
+              width: cw(20),
             ),
           ],
           if (isNotificationIcon) ...[
             GestureDetector(
-              onTap: () => notificationOntap ?? () {},
-              child: Container(
-                height: ch(40),
-                width: cw(40),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                      color: isNotificationScreen
-                          ? AppColor.primary
-                          : AppColor.c252525),
-                ),
-                padding: const EdgeInsets.all(2),
-                alignment: Alignment.center,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColor.c252525,
+              onTap: notificationOnTap ?? () {},
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    height: ch(39),
+                    width: cw(39),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                            color: isNotificationBool
+                                ? AppColor.red
+                                : AppColor.c252525)),
+                    child: Center(
+                      child: Container(
+                        height: ch(34),
+                        width: cw(34),
+                        decoration: BoxDecoration(
+                          color: isNotificationBool
+                              ? AppColor.red.withValues(alpha: 0.1)
+                              : AppColor.c252525,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.notifications,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                    ),
                   ),
-                  child:
-                      const Center(child: Icon(Icons.notifications_outlined)),
-                ),
+                  Positioned(
+                    right: -4,
+                    top: -4,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                          gradient: AppGradients.redGradient),
+                      // constraints: const BoxConstraints(
+                      //   minWidth: 16,
+                      //   minHeight: 16,
+                      // ),
+                      child: Center(
+                        child: Text(
+                          numberOfNotification ?? '14',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(
-              width: cw(14),
+              width: cw(20),
             ),
           ],
           GestureDetector(

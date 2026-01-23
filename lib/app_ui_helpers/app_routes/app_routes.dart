@@ -515,6 +515,15 @@ class AppRouter {
             return child;
           },
         );
+      case RoutePaths.athleteManagementView:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const AthleteManagementView();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
 
       case RoutePaths.coachEditProfileView:
         return PageRouteBuilder(
