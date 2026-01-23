@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/personalize_your_experience/personalize_your_experience_Controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/checkin_diet/checkin_diet_controller.dart';
 
 import 'package:ast_official/helpers/app_layout_helper.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/appbar/appbar.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
@@ -18,6 +22,7 @@ class CheckInDietView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<CheckInDietController>();
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: cw(20)),
@@ -75,7 +80,7 @@ class CheckInDietView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Consumer<PersonalizYourExperienceController>(
+                      Consumer<CheckInDietController>(
                         builder: (context, heightProvider, _) {
                           return ClipRect(
                             child: SizedBox(
@@ -104,8 +109,8 @@ class CheckInDietView extends StatelessWidget {
                           );
                         },
                       ),
-                      const SizedBox(width: 8),
-                      Consumer<PersonalizYourExperienceController>(
+                      SizedBox(width: cw(8)),
+                      Consumer<CheckInDietController>(
                         builder: (context, heightProvider, _) {
                           return ClipRect(
                             child: SizedBox(
@@ -161,13 +166,21 @@ class CheckInDietView extends StatelessWidget {
             AppButton(
                 buttonColor: AppColor.primary,
                 onPressed: () {
+                  final flowData = context
+                      .read<FlowDataProvider>()
+                      .addOrUpdateFlow(flowTag: checkInDiet, data: {
+                    "weight": {
+                      "value": model.getSelectedValue(),
+                      "unit": model.getSelectedUnit()
+                    }
+                  });
                   Navigator.pushNamed(
                     context,
                     RoutePaths.bodyMeasurementView,
                   );
                 },
                 text: "Avanti",
-                fontSize: 16,
+                // fontSize: 16,
                 textColor: AppColor.cFFFFFF,
                 fontWeight: FontWeight.w600),
             SizedBox(

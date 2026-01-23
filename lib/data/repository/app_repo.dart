@@ -2,13 +2,17 @@ import 'dart:convert';
 import 'package:ast_official/core/network/network_properties/network_properties.dart';
 import 'package:ast_official/core/network/network_services/dio_helper.dart';
 import 'package:ast_official/data/models/app_models/get_daily_nutrition_model.dart';
+import 'package:ast_official/data/models/app_models/get_checkins_model.dart';
 import 'package:ast_official/data/models/app_models/get_exercises_response_model.dart';
 import 'package:ast_official/data/models/app_models/get_profile_model.dart';
+import 'package:ast_official/data/models/app_models/get_role_athelete.dart';
+import 'package:ast_official/data/models/base_model/base_model.dart';
 import 'package:dio/dio.dart';
 
 class AppRepo {
   static final DioHelper _dioHelper = DioHelper();
 
+  final String user = "users/search?role=";
   Future<GetMyProfile> getMyProfile() async {
     var response = await _dioHelper.get(
         isAuthRequired: true, url: "${NetworkProperties.baseUrl}users/profile");
@@ -120,7 +124,7 @@ class AppRepo {
     var response = await _dioHelper.get(
         isAuthRequired: true,
         queryParameters: {"role": "coach", "page": page, "limit": limit},
-        url: "${NetworkProperties.baseUrl}/relationships/pending");
+        url: "${NetworkProperties.baseUrl}relationships/pending");
     return response;
   }
 
@@ -146,5 +150,52 @@ class AppRepo {
           "name": status,
         });
     return response;
+  }
+
+  Future<Map<String, dynamic>> sendCheckIn(
+      {required Map<String, dynamic> requestBody}) async {
+    var response = await _dioHelper.post(
+      isAuthRequired: true,
+      url: "${NetworkProperties.baseUrl}checkins",
+      formData: FormData.fromMap(requestBody),
+    );
+    return response;
+  }
+
+  Future<Map<String, dynamic>> createCheckin() async {
+    var response = await _dioHelper.post(
+        isAuthRequired: true, url: "${NetworkProperties.baseUrl}users/checkin");
+    return response;
+  }
+
+  Future<GetRollAthleteResponseModel> getRoleAthlete(
+      {int page = 1, int limit = 20}) async {
+    var response = await _dioHelper.get(
+      isAuthRequired: true,
+      url: "${NetworkProperties.baseUrl}${user}coach",
+      queryParameters: {"page": page, "limit": limit, "total": 0, "pages": 0},
+    );
+    return GetRollAthleteResponseModel.fromJson(response);
+  }
+
+  Future<ApiResponse<CheckInsResponseData>> getCheckins(
+      {int page = 1, int limit = 20}) async {
+    try {
+      final res = await _dioHelper.get(
+        isAuthRequired: true,
+        url: "${NetworkProperties.baseUrl}checkins",
+        queryParameters: {"page": page, "limit": limit, "total": 0, "pages": 0},
+      );
+      // ignore: avoid_print
+      print("Raw Checkins Data: $res");
+      return ApiResponse<CheckInsResponseData>.fromJson(
+        res,
+        (data) => CheckInsResponseData.fromJson(data),
+      );
+    } catch (e) {
+      return ApiResponse<CheckInsResponseData>.failure(
+        e.toString(),
+      );
+    }
   }
 }

@@ -45,13 +45,13 @@ class AthleteManagementView extends StatelessWidget {
                   text: "Atlete",
                   isNotificationIcon: true,
                   isNotificationScreen: model.isNotificationScreen,
-                  notificationOntap: () {
+                  notificationOnTap: () {
                     model.isAtheletScreen = false;
                     model.isNotificationScreen = true;
                   },
                   isAtheletIcon: true,
                   isAtheletScreen: model.isAtheletScreen,
-                  atheletScreenOntap: () {
+                  atheletScreenOnTap: () {
                     model.isAtheletScreen = true;
                     model.isNotificationScreen = false;
                   }),

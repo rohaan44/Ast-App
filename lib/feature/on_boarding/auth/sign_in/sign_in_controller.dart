@@ -54,14 +54,31 @@ class SignInController with ChangeNotifier {
 
   Future<bool> login(
       BuildContext context, String email, String password) async {
+    print("\n🚀 ========== LOGIN FLOW START ==========");
+    print("📧 Email: $email");
+
     _isLoading = true;
     notifyListeners();
     try {
+      print("📞 Calling authRepoService.login()...");
       final response =
           await authRepoService.login(email: email, password: password);
+
+      print("📦 Response received - success: ${response.success}");
+      print("📦 Response has data: ${response.data != null}");
+
       if (response.success == true) {
-        role = response.data!.user!.role ?? "";
+        print("✅ Login successful!");
+
+        if (response.data?.user?.role != null) {
+          role = response.data!.user!.role ?? "";
+          print("👤 User role: $role");
+        }
+
+        print("📨 Sending OTP to: $email");
         final otpResponse = await authRepoService.sendOtp(email: email);
+        print("📨 OTP sent: $otpResponse");
+
         if (otpResponse == true) {
           showApiSnackBar(
             context,
@@ -69,14 +86,17 @@ class SignInController with ChangeNotifier {
             message: "Login successfully",
             isSuccess: true,
           );
+          print("🔄 Navigating to OTP view...");
           Navigator.pushNamedAndRemoveUntil(
             context,
             RoutePaths.otpView,
             (route) => false,
           );
+          print("🏁 ========== LOGIN FLOW END (SUCCESS) ==========\n");
           return true;
         }
       } else {
+        print("❌ Login failed - Error: ${response.error}");
         showApiSnackBar(
           context,
           title: "Error",
@@ -84,9 +104,11 @@ class SignInController with ChangeNotifier {
           isSuccess: false,
         );
       }
+      print("🏁 ========== LOGIN FLOW END (FAILED) ==========\n");
       return false;
     } catch (e) {
       _isLoading = false;
+      print("💥 EXCEPTION in login: $e");
       debugPrint(e.toString());
       notifyListeners();
       showApiSnackBar(
@@ -95,6 +117,7 @@ class SignInController with ChangeNotifier {
         message: e.toString(),
         isSuccess: false,
       );
+      print("🏁 ========== LOGIN FLOW END (EXCEPTION) ==========\n");
       return false;
     } finally {
       _isLoading = false;

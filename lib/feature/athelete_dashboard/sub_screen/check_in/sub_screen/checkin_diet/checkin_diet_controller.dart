@@ -7,10 +7,9 @@ class CheckInDietController with ChangeNotifier {
   bool get isKg => _isKg;
   int get selectedIndex => _selectedIndex;
 
-  List<String> get kgList =>
-      List.generate(66, (index) => (0 + index).toString());
+  List<String> get kgList => List.generate(201, (index) => (index).toString());
   List<String> get libbreList =>
-      List.generate(136, (index) => (0 + index).toString());
+      List.generate(501, (index) => (index).toString());
 
   List<String> get currentList => _isKg ? kgList : libbreList;
 
@@ -18,6 +17,14 @@ class CheckInDietController with ChangeNotifier {
     _isKg = !_isKg;
     _selectedIndex = 0;
     notifyListeners();
+  }
+
+  String getSelectedValue() {
+    return _isKg ? kgList[_selectedIndex] : libbreList[_selectedIndex];
+  }
+
+  String getSelectedUnit() {
+    return _isKg ? "kg" : "lbs";
   }
 
   void setSelectedIndex(int index) {

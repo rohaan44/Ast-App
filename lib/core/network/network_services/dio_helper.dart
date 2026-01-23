@@ -51,7 +51,19 @@ class DioHelper {
     bool isAuthRequired = false,
     Map<String, dynamic>? headers,
   }) async {
+    print("\n🔍 POST Request Debug:");
+    print("📍 URL: $url");
+    print("🔐 Auth Required: $isAuthRequired");
+
     final token = isAuthRequired ? await AuthStorage.getToken() : null;
+
+    if (isAuthRequired) {
+      if (token != null) {
+        print("✅ Token retrieved: ${token.substring(0, 20)}...");
+      } else {
+        print("❌ NO TOKEN FOUND in storage!");
+      }
+    }
 
     final option = baseOptions.copyWith(
       validateStatus: (status) {
@@ -64,14 +76,18 @@ class DioHelper {
       },
     );
 
+    print("📤 Headers being sent: ${option.headers}");
+
     try {
       final res = await dio.post(
         url,
         data: isMultipart ? formData : requestBody,
         options: option,
       );
+      print("✅ Response Status: ${res.statusCode}");
       return res.data;
     } on DioException catch (e) {
+      print("❌ DioException: ${e.response?.statusCode} - ${e.message}");
       throw _handleDioError(e);
     }
   }

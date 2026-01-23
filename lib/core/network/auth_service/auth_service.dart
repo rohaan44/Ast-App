@@ -16,17 +16,26 @@ class AuthStorage {
 
   // SAVE TOKEN
   static Future<void> saveToken(String token) async {
+    print(
+        "🔐 Saving token: ${token.substring(0, 20)}..."); // Show first 20 chars for security
     await _storage.write(key: _tokenKey, value: token);
+
+    // Verify it was saved
+    final savedToken = await _storage.read(key: _tokenKey);
+    if (savedToken != null) {
+      print("✅ Token saved successfully");
+    } else {
+      print("❌ Token save FAILED");
+    }
   }
 
   static Future<void> saveRole(String role) async {
     await _storage.write(key: "role", value: role);
   }
 
-   static Future<String?> getRole() async {
+  static Future<String?> getRole() async {
     return await _storage.read(key: "role");
   }
-
 
   // GET TOKEN
   static Future<String?> getToken() async {
@@ -62,5 +71,20 @@ class AuthStorage {
   // CLEAR ALL AUTH DATA
   static Future<void> clearAll() async {
     await _storage.deleteAll();
+  }
+
+  // DEBUG: Check if token exists
+  static Future<void> debugTokenStatus() async {
+    final token = await getToken();
+    final refreshToken = await getRefreshToken();
+    final userId = await getUserId();
+
+    print("\n🔍 ========== TOKEN STATUS DEBUG ==========");
+    print(
+        "Access Token: ${token != null ? '✅ EXISTS (${token.substring(0, 20)}...)' : '❌ NOT FOUND'}");
+    print(
+        "Refresh Token: ${refreshToken != null ? '✅ EXISTS' : '❌ NOT FOUND'}");
+    print("User ID: ${userId ?? '❌ NOT FOUND'}");
+    print("==========================================\n");
   }
 }

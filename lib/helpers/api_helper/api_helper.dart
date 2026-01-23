@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 Future<bool> runApiCall({
   required Future<dynamic> Function() apiCall,
   required BuildContext context,
-  required Future<void> Function(dynamic response)? onSuccess, // pass response here
+  required Future<void> Function(dynamic response)?
+      onSuccess, // pass response here
   String errorMessage = "Something went wrong",
 }) async {
   try {
@@ -41,8 +42,7 @@ Future<bool> runApiCall({
   }
 }
 
-
-Future runApiCallWithModel<T extends BaseApiResponse>({
+Future<bool> runApiCallWithModel<T extends BaseApiResponse>({
   required Future<T> Function() apiCall,
   required BuildContext context,
   Future<void> Function(T response)? onSuccess,
@@ -59,6 +59,7 @@ Future runApiCallWithModel<T extends BaseApiResponse>({
     }
 
     if (context.mounted) {
+      debugPrint("Error on if block: ${response.error}");
       showApiSnackBar(
         context,
         title: "Error",
@@ -70,6 +71,7 @@ Future runApiCallWithModel<T extends BaseApiResponse>({
     return false;
   } catch (e) {
     if (context.mounted) {
+      debugPrint("Error on catch block: ${e.toString()}");
       showApiSnackBar(
         context,
         title: "Error",
