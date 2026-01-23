@@ -33,12 +33,12 @@ class TrainingPlanView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-          highlightColor: AppColor.transparent,
-          focusColor: AppColor.transparent,
-          splashColor: AppColor.transparent,
-          icon: SvgPicture.asset(AssetUtils.backArrow),
-          onPressed: () => Navigator.pop(context),
-        ),
+                      highlightColor: AppColor.transparent,
+                      focusColor: AppColor.transparent,
+                      splashColor: AppColor.transparent,
+                      icon: SvgPicture.asset(AssetUtils.backArrow),
+                      onPressed: () => Navigator.pop(context),
+                    ),
                     AppText(
                       txt: "Piano Di Allenamento",
                       fontSize: AppFontSize.f19,
@@ -57,7 +57,7 @@ class TrainingPlanView extends StatelessWidget {
                     children: [
                       activityCard(
                           isGradient: true, child: trainingPlanTabs(context)),
-      
+
                       SizedBox(
                         height: ch(20),
                       ),
@@ -68,52 +68,87 @@ class TrainingPlanView extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                       SizedBox(height: ch(15)),
-                     
-      Consumer<TrainingPlanController>(
-        builder: (context, controller, _) {
-      return Column(
-        children: List.generate(
-          controller.weekPlans.length,
-          (index) => Padding(
-            padding: EdgeInsets.only(bottom: ch(20)),
-            child: weekPlanCard(controller.weekPlans[index], index, context),
-          ),
-        ),
-      );
-        },
-      ),
-                      // 🔹 Bottom Buttons
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: AppButton(
-                              text: "Salva piano",
-                              buttonColor: AppColor.red,
-                              textColor: AppColor.white,
-                              fontWeight: FontWeight.w600,
-                              onPressed: () {
-                                Navigator.pushNamed(context, RoutePaths.planPreviewScreen);
-                              },
-                            ),
-                          ),
-                          SizedBox(width: cw(12)),
-                          Expanded(
-                            child: AppButton(
-                              text: "Piano di anteprima",
-                              buttonColor: AppColor.transparent,
-                              borderColor: AppColor.cC6C6C6,
-                              isBorder: true,
-                              textColor: AppColor.white,
-                              fontWeight: FontWeight.w600,
-                              onPressed: () {
-                                 Navigator.pushNamed(context, RoutePaths.planPreviewScreen);
-                              },
-                            ),
-                          ),
-                        ],
+                      _createExcercise(
+                        context: context,
                       ),
-      
+                      SizedBox(
+                        height: ch(24),
+                      ),
+                      // Consumer<TrainingPlanController>(
+                      //   builder: (context, model, _) {
+                      //     return
+
+                      //  Column(
+
+                      //   children: List.generate(
+                      //     controller.weekPlans.length,
+                      //     (index) => Padding(
+                      //       padding: EdgeInsets.only(bottom: ch(20)),
+                      //       child:
+                      //       weekPlanCard(controller.weekPlans[index],
+                      //           index, context
+
+                      //           ),
+                      //     ),
+                      //   ),
+                      // );
+                      // },
+                      // ),
+                      // 🔹 Bottom Buttons
+
+                      Consumer<TrainingPlanController>(
+                        builder: (context, model, child) {
+                          bool isNext =
+                              model.categoryController.text.isNotEmpty &&
+                                  model.nameController.text.isNotEmpty &&
+                                  model.muscleController.text.isNotEmpty &&
+                                  // model.selectedVideo != null &&
+                                  model.descriptionController.text.isNotEmpty;
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: AppButton(
+                                  isButtonEnable: isNext,
+                                  text: "Salva piano",
+                                  buttonColor: AppColor.red,
+                                  textColor: AppColor.white,
+                                  fontWeight: FontWeight.w600,
+                                  onPressed: () {
+                                    if (isNext) {
+                                      model.createExcercise(
+                                          context,
+                                          model.nameController.text,
+                                          model.categoryController.text,
+                                          model.muscleController.text,
+                                          model.descriptionController.text,
+                                          "https://example.com/video.mp4");
+                                    }
+                                    // Navigator.pushNamed(
+                                    //     context, RoutePaths.planPreviewScreen);
+                                  },
+                                ),
+                              ),
+                              SizedBox(width: cw(12)),
+                              Expanded(
+                                child: AppButton(
+                                  text: "Piano di anteprima",
+                                  buttonColor: AppColor.transparent,
+                                  borderColor: AppColor.cC6C6C6,
+                                  isBorder: true,
+                                  textColor: AppColor.white,
+                                  fontWeight: FontWeight.w600,
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, RoutePaths.planPreviewScreen);
+                                  },
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+
                       SizedBox(height: ch(50)),
                     ],
                   ),
@@ -127,90 +162,181 @@ class TrainingPlanView extends StatelessWidget {
   }
 }
 
-Widget weekPlanCard(Map<String, dynamic> weekData, int weekIndex, BuildContext context) {
-  final controller = context.read<TrainingPlanController>();
-
+Widget _createExcercise({
+  required BuildContext context,
+}) {
   return Container(
     padding: EdgeInsets.all(cw(16)),
     decoration: BoxDecoration(
-      border: Border.all(color: AppColor.cC6C6C6.withOpacity(0.7),width: 1.5),
+      border: Border.all(color: AppColor.cC6C6C6.withOpacity(0.7), width: 1.5),
       borderRadius: BorderRadius.circular(cw(12)),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 🔹 Week Title
         AppText(
-          txt: "Settimana ${weekIndex + 1}",
+          txt: "Settimana 1",
           fontSize: AppFontSize.f18,
           fontWeight: FontWeight.w600,
           color: AppColor.white,
         ),
         SizedBox(height: ch(10)),
-
-        // 🔹 Days Loop
-        ...List.generate(weekData["days"].length, (dayIndex) {
-          final day = weekData["days"][dayIndex];
-
-          return Container(
-            
-    padding: EdgeInsets.symmetric(vertical: ch(15)),
-            margin: EdgeInsets.only(bottom: ch(20)),
-            decoration: BoxDecoration(
-              border: Border.all(color:AppColor.white.withOpacity(0.5),),
-              borderRadius: BorderRadius.circular(cw(8)),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: ch(15)),
+          margin: EdgeInsets.only(bottom: ch(20)),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: AppColor.white.withOpacity(0.5),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Day Title Editable
-               _editableRow(
-  label: day["title"],
-  uniqueKey: "week${weekIndex}_day${dayIndex}_title",
-  context: context,
-  onChanged: (val) => controller.updateDayTitle(weekIndex, dayIndex, val),
-),
-
-...List.generate(day["exercises"].length, (i) {
-  final ex = day["exercises"][i];
-  return _editableRow(
-    label: ex,
-    uniqueKey: "week${weekIndex}_day${dayIndex}_ex$i",
-    context: context,
-    onChanged: (val) => controller.updateExercise(weekIndex, dayIndex, i, val),
-  );
-}),
-              ],
-            ),
-          );
-        }),
-
-        // 🔹 Add New Exercise Button
-
-        AppButton(
-          textColor: AppColor.white,
-          text: "+ Aggiungi esercizio",
-          isBorder: true,
-          buttonColor: AppColor.transparent,
-          borderColor: AppColor.white.withOpacity(0.7),
-          borderWidth: 1.5,
-          onPressed: (){
-          controller.addExercise(weekIndex);
-        }),
+            borderRadius: BorderRadius.circular(cw(8)),
+          ),
+          child: Column(
+            children: [
+              Consumer<TrainingPlanController>(builder: (context, model, _) {
+                return Column(
+                  children: [
+                    _editableRow(
+                        controller: model.nameController,
+                        focusNode: model.nameControllerFocusNode,
+                        onChanged: (val) {},
+                        context: context),
+                    _editableRow(
+                        controller: model.categoryController,
+                        focusNode: model.categoryControllerFocusNode,
+                        onChanged: (val) {},
+                        context: context),
+                    _editableRow(
+                        controller: model.muscleController,
+                        focusNode: model.muscleControllerFocusNode,
+                        onChanged: (val) {},
+                        context: context),
+                    _editableRow(
+                        controller: model.descriptionController,
+                        focusNode: model.descriptionControllerFocusNode,
+                        onChanged: (val) {},
+                        context: context),
+                    // UploadVideoWidget(
+                    //   title: "Upload Video",
+                    //   videoFile: model.selectedVideo,
+                    //   onTap: () {
+                    //     model.pickVideo();
+                    //   },
+                    // ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: cw(8), vertical: ch(5)),
+                      child: Row(
+                        children: [
+                          AppText(
+                            txt: "Video",
+                            color: AppColor.white,
+                            fontSize: AppFontSize.f15,
+                          ),
+                          const Spacer(),
+                          Icon(Icons.upload,
+                              color: AppColor.white.withOpacity(0.7), size: 18),
+                          Icon(Icons.edit,
+                              color: AppColor.white.withOpacity(0.7), size: 18)
+                        ],
+                      ),
+                    )
+                  ],
+                );
+              }),
+            ],
+          ),
+        )
       ],
     ),
   );
 }
 
+// Widget weekPlanCard(
+//     Map<String, dynamic> weekData, int weekIndex, BuildContext context) {
+//   final controller = context.read<TrainingPlanController>();
+
+//   return Container(
+//     padding: EdgeInsets.all(cw(16)),
+//     decoration: BoxDecoration(
+//       border: Border.all(color: AppColor.cC6C6C6.withOpacity(0.7), width: 1.5),
+//       borderRadius: BorderRadius.circular(cw(12)),
+//     ),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         // 🔹 Week Title
+//         AppText(
+//           txt: "Settimana ${weekIndex + 1}",
+//           fontSize: AppFontSize.f18,
+//           fontWeight: FontWeight.w600,
+//           color: AppColor.white,
+//         ),
+//         SizedBox(height: ch(10)),
+
+//         // 🔹 Days Loop
+//         ...List.generate(weekData["days"].length, (dayIndex) {
+//           final day = weekData["days"][dayIndex];
+
+//           return Container(
+//             padding: EdgeInsets.symmetric(vertical: ch(15)),
+//             margin: EdgeInsets.only(bottom: ch(20)),
+//             decoration: BoxDecoration(
+//               border: Border.all(
+//                 color: AppColor.white.withOpacity(0.5),
+//               ),
+//               borderRadius: BorderRadius.circular(cw(8)),
+//             ),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 // Day Title Editable
+//                 _editableRow(
+//                   label: day["title"],
+//                   uniqueKey: "week${weekIndex}_day${dayIndex}_title",
+//                   context: context,
+//                   onChanged: (val) =>
+//                       controller.updateDayTitle(weekIndex, dayIndex, val),
+//                 ),
+
+//                 ...List.generate(day["exercises"].length, (i) {
+//                   final ex = day["exercises"][i];
+//                   return _editableRow(
+//                     label: ex,
+//                     uniqueKey: "week${weekIndex}_day${dayIndex}_ex$i",
+//                     context: context,
+//                     onChanged: (val) =>
+//                         controller.updateExercise(weekIndex, dayIndex, i, val),
+//                   );
+//                 }),
+//               ],
+//             ),
+//           );
+//         }),
+
+//         // 🔹 Add New Exercise Button
+
+//         AppButton(
+//             textColor: AppColor.white,
+//             text: "+ Aggiungi esercizio",
+//             isBorder: true,
+//             buttonColor: AppColor.transparent,
+//             borderColor: AppColor.white.withOpacity(0.7),
+//             borderWidth: 1.5,
+//             onPressed: () {
+//               controller.addExercise(weekIndex);
+//             }),
+//       ],
+//     ),
+//   );
+// }
 
 Widget _editableRow({
-  required String label,
-  required String uniqueKey,
+  required TextEditingController controller,
+  required FocusNode focusNode,
   required Function(String) onChanged,
   required BuildContext context,
 }) {
-  final controller = context.read<TrainingPlanController>();
-  final textController = controller.getController(uniqueKey, label);
+  // final controller = context.read<TrainingPlanController>();
 
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: cw(8), vertical: ch(5)),
@@ -218,35 +344,92 @@ Widget _editableRow({
       children: [
         Expanded(
           child: TextField(
-            controller: textController,
+            controller: controller,
+            focusNode: focusNode,
             style: TextStyle(
               color: AppColor.white,
               fontSize: AppFontSize.f15,
             ),
-            decoration:  InputDecoration(
-    //            border: UnderlineInputBorder(
-    //   borderSide: BorderSide(color: Colors.grey),
-    // ),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: AppColor.white.withOpacity(0.5),width: 0.5), // color when not focused
-    ),
-    focusedBorder:const  UnderlineInputBorder(
-      borderSide: BorderSide(color: AppColor.white, width: 1.0), // color when focused
-    ),
-          
+            decoration: InputDecoration(
+              //            border: UnderlineInputBorder(
+              //   borderSide: BorderSide(color: Colors.grey),
+              // ),
+
+              suffix: InkWell(
+                onTap: () {
+                  focusNode.requestFocus();
+                  // FocusScope.of(context).requestFocus(focusNode);
+                },
+                child: Icon(Icons.edit,
+                    color: AppColor.white.withOpacity(0.7), size: 18),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: AppColor.white.withOpacity(0.5),
+                    width: 0.5), // color when not focused
+              ),
+              focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: AppColor.white, width: 1.0), // color when focused
+              ),
             ),
-            
             onChanged: (val) {
-              controller.updateText(uniqueKey, val);
-              onChanged(val);
+              // controller.updateText(uniqueKey, val);
+              // onChanged(val);
             },
           ),
         ),
-        Icon(Icons.edit, color: AppColor.white.withOpacity(0.7), size: 18),
+        // Icon(Icons.edit, color: AppColor.white.withOpacity(0.7), size: 18),
       ],
     ),
   );
 }
+
+// Widget _editableRow({
+//   required String label,
+//   required String uniqueKey,
+//   required Function(String) onChanged,
+//   required BuildContext context,
+// }) {
+//   final controller = context.read<TrainingPlanController>();
+//   final textController = controller.getController(uniqueKey, label);
+
+//   return Padding(
+//     padding: EdgeInsets.symmetric(horizontal: cw(8), vertical: ch(5)),
+//     child: Row(
+//       children: [
+//         Expanded(
+//           child: TextField(
+//             controller: textController,
+//             style: TextStyle(
+//               color: AppColor.white,
+//               fontSize: AppFontSize.f15,
+//             ),
+//             decoration: InputDecoration(
+//               //            border: UnderlineInputBorder(
+//               //   borderSide: BorderSide(color: Colors.grey),
+//               // ),
+//               enabledBorder: UnderlineInputBorder(
+//                 borderSide: BorderSide(
+//                     color: AppColor.white.withOpacity(0.5),
+//                     width: 0.5), // color when not focused
+//               ),
+//               focusedBorder: const UnderlineInputBorder(
+//                 borderSide: BorderSide(
+//                     color: AppColor.white, width: 1.0), // color when focused
+//               ),
+//             ),
+//             onChanged: (val) {
+//               controller.updateText(uniqueKey, val);
+//               onChanged(val);
+//             },
+//           ),
+//         ),
+//         Icon(Icons.edit, color: AppColor.white.withOpacity(0.7), size: 18),
+//       ],
+//     ),
+//   );
+// }
 
 Widget activityCard({
   required Widget child,

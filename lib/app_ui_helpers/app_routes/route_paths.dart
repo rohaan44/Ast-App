@@ -51,7 +51,8 @@ class RoutePaths {
   /////////////////Coaches Dashboard//////////////////////
   static const String coachMainScreenView = '/coachMainScreenView';
   static const String coachHomeScreenView = '/coachHomeScreenView';
-
+  static const String trainingPlanView = '/trainingPlanView';
+  static const String atheletManagementView = '/atheletManagementView';
   static const String coachProfileSettingScreen = '/coachProfileSettingScreen';
   static const String plansManagementScreen = '/plansManagementScreen';
   static const String planPreviewScreen = '/planPreviewScreen';

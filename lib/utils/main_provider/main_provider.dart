@@ -251,7 +251,8 @@ List<SingleChildWidget> providersList = [
     //lazy: true,
   ),
   ChangeNotifierProvider(
-    create: (context) => AthleteManagementController(),
+    create: (context) => AthleteManagementController(
+        appRepoService: context.read<AppRepoService>()),
     //lazy: true,
   ),
   ChangeNotifierProvider(
@@ -264,7 +265,10 @@ List<SingleChildWidget> providersList = [
     create: (_) => FlowDataProvider(),
   ),
   ChangeNotifierProvider(create: (_) => PlanPreviewController(), lazy: true),
-  ChangeNotifierProvider(create: (_) => TrainingPlanController(), lazy: true),
+  ChangeNotifierProvider(
+      create: (context) => TrainingPlanController(
+          appRepoService: context.read<AppRepoService>()),
+      lazy: true),
   ChangeNotifierProvider(create: (_) => NutritionPlanController(), lazy: true),
 
   ChangeNotifierProvider(
