@@ -1,9 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthStorage {
   static const _tokenKey = "auth_token";
   static const _refreshTokenKey = "refresh_token";
   static const _userIdKey = "user_id";
+  static const _roleKey = "role";
+  static String? _accessToken;
+  static String? _refreshToken;
+  static String? _userId;
+  static String? _role;
 
   static const FlutterSecureStorage _storage = FlutterSecureStorage(
     aOptions: AndroidOptions(
@@ -13,28 +19,35 @@ class AuthStorage {
       accessibility: KeychainAccessibility.first_unlock,
     ),
   );
+  static Future<void> init() async {
+    _accessToken = await _storage.read(key: _tokenKey);
+    _refreshToken = await _storage.read(key: _refreshTokenKey);
+    _userId = await _storage.read(key: _userIdKey);
+    _role = await _storage.read(key: _roleKey);
+    debugPrint("🚀 AuthStorage Initialized: Tokens Loaded in Memory");
+  }
 
   // SAVE TOKEN
   static Future<void> saveToken(String token) async {
-    print(
+    debugPrint(
         "🔐 Saving token: ${token.substring(0, 20)}..."); // Show first 20 chars for security
     await _storage.write(key: _tokenKey, value: token);
 
     // Verify it was saved
     final savedToken = await _storage.read(key: _tokenKey);
     if (savedToken != null) {
-      print("✅ Token saved successfully");
+      debugPrint("✅ Token saved successfully");
     } else {
-      print("❌ Token save FAILED");
+      debugPrint("❌ Token save FAILED");
     }
   }
 
   static Future<void> saveRole(String role) async {
-    await _storage.write(key: "role", value: role);
+    await _storage.write(key: _roleKey, value: role);
   }
 
   static Future<String?> getRole() async {
-    return await _storage.read(key: "role");
+    return await _storage.read(key: _roleKey);
   }
 
   // GET TOKEN
@@ -79,12 +92,12 @@ class AuthStorage {
     final refreshToken = await getRefreshToken();
     final userId = await getUserId();
 
-    print("\n🔍 ========== TOKEN STATUS DEBUG ==========");
-    print(
+    debugPrint("\n🔍 ========== TOKEN STATUS DEBUG ==========");
+    debugPrint(
         "Access Token: ${token != null ? '✅ EXISTS (${token.substring(0, 20)}...)' : '❌ NOT FOUND'}");
-    print(
+    debugPrint(
         "Refresh Token: ${refreshToken != null ? '✅ EXISTS' : '❌ NOT FOUND'}");
-    print("User ID: ${userId ?? '❌ NOT FOUND'}");
-    print("==========================================\n");
+    debugPrint("User ID: ${userId ?? '❌ NOT FOUND'}");
+    debugPrint("==========================================\n");
   }
 }
