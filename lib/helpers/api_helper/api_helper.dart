@@ -42,6 +42,48 @@ Future<bool> runApiCall({
   }
 }
 
+Future<bool> runApiCallWithError({
+  required Future<dynamic> Function() apiCall,
+  required BuildContext context,
+  required Future<void> Function(dynamic response)? onSuccess,
+  String errorMessage = "Something went wrong",
+}) async {
+  try {
+    final response = await apiCall();
+
+    if (response == true || (response is Map && response['success'] == true)) {
+      if (onSuccess != null) {
+        await onSuccess(response);
+      }
+      return true;
+    }
+
+    // ❌ API returned failure
+    debugPrint("❌ API failed: ${response['error'] ?? errorMessage}");
+    if (context.mounted && response is Map) {
+      showApiSnackBar(
+        context,
+        title: "Error",
+        message: response['error'] ?? errorMessage,
+        isSuccess: false,
+      );
+    }
+
+    return false;
+  } catch (e) {
+    debugPrint("❌ API exception: $e"); // <-- add this
+    if (context.mounted) {
+      showApiSnackBar(
+        context,
+        title: "Error",
+        message: e.toString(),
+        isSuccess: false,
+      );
+    }
+    return false;
+  }
+}
+
 Future<bool> runApiCallWithModel<T extends BaseApiResponse>({
   required Future<T> Function() apiCall,
   required BuildContext context,

@@ -26,9 +26,9 @@ class AthleteManagementView extends StatelessWidget {
         controller.getAllMyAtheletes(context: context);
       }
 
-      Future.delayed(const Duration(minutes: 1), () {
-        controller.getAtheletPendingRequest(context: context);
-      });
+      // Future.delayed(const Duration(minutes: 1), () {
+      //   controller.getAtheletPendingRequest(context: context);
+      // });
     });
     final model =
         Provider.of<AthleteManagementController>(context, listen: false);

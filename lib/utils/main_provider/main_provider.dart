@@ -209,7 +209,8 @@ List<SingleChildWidget> providersList = [
   ChangeNotifierProvider(
       create: (context) => CoachProfileController(), lazy: true),
   ChangeNotifierProvider(
-    create: (context) => CheckInController(appRepoService: context.read<AppRepoService>()),
+    create: (context) =>
+        CheckInController(appRepoService: context.read<AppRepoService>()),
     // lazy: true
   ),
   ChangeNotifierProvider(
@@ -249,7 +250,8 @@ List<SingleChildWidget> providersList = [
     //lazy: true,
   ),
   ChangeNotifierProvider(
-    create: (context) => CoachHomeScreenController(),
+    create: (context) => CoachHomeScreenController(
+        appRepoService: context.read<AppRepoService>()),
     //lazy: true,
   ),
   ChangeNotifierProvider(
