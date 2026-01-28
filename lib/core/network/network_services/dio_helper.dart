@@ -18,7 +18,19 @@ class DioHelper {
     Map<String, dynamic>? headers,
     Map<String, dynamic>? queryParameters,
   }) async {
+    debugPrint("\n🔍 GET Request Debug:");
+    debugPrint("📍 URL: $url");
+    debugPrint("🔐 Auth Required: $isAuthRequired");
+
     final token = isAuthRequired ? await AuthStorage.getToken() : null;
+
+    if (isAuthRequired) {
+      if (token != null) {
+        debugPrint("✅ Token retrieved: ${token.substring(0, 20)}...");
+      } else {
+        debugPrint("❌ NO TOKEN FOUND in storage!");
+      }
+    }
 
     final option = baseOptions.copyWith(
       validateStatus: (status) {
@@ -100,7 +112,19 @@ class DioHelper {
     bool isAuthRequired = false,
     Map<String, dynamic>? headers,
   }) async {
+    debugPrint("\n🔍 PUT Request Debug:");
+    debugPrint("📍 URL: $url");
+    debugPrint("🔐 Auth Required: $isAuthRequired");
+
     final token = isAuthRequired ? await AuthStorage.getToken() : null;
+
+    if (isAuthRequired) {
+      if (token != null) {
+        debugPrint("✅ Token retrieved: ${token.substring(0, 20)}...");
+      } else {
+        debugPrint("❌ NO TOKEN FOUND in storage!");
+      }
+    }
     final option = baseOptions.copyWith(
       validateStatus: (status) {
         return status != null && status < 500;

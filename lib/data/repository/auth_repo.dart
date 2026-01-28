@@ -29,11 +29,11 @@ class AuthRepository {
     return AuthResponseModel.fromJson(response);
   }
 
-  Future refreshToken({required String refreshToken}) async {
+  Future<AuthResponseModel> refreshToken({required String refreshToken}) async {
     var response = await _dioHelper.post(
         url: "${NetworkProperties.baseUrl}auth/refresh-token",
         requestBody: {"refreshToken": refreshToken});
-    return response;
+    return AuthResponseModel.fromJson(response);
   }
 
   Future sendOtp({required String email}) async {
@@ -52,13 +52,19 @@ class AuthRepository {
         requestBody: {"email": email, "code": code});
     return response;
   }
- Future<dynamic> changePassword({required String currentPassword,required String newPassword}) async {
+
+  Future<dynamic> changePassword(
+      {required String currentPassword, required String newPassword}) async {
     final response = await _dioHelper.post(
         isAuthRequired: true,
         url: "${NetworkProperties.baseUrl}users/change-password",
-        requestBody: {"currentPassword": currentPassword,"newPassword": newPassword});
+        requestBody: {
+          "currentPassword": currentPassword,
+          "newPassword": newPassword
+        });
     return response;
   }
+
   Future<dynamic> logout() async {
     final response = await _dioHelper.post(
         isAuthRequired: true,
