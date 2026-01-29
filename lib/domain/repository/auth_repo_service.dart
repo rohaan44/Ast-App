@@ -17,14 +17,19 @@ class AuthRepoService {
 
     if (response.success == true && response.data != null) {
       if (response.data!.accessToken != null) {
+        print("ACCESS TOKEN => ${response.data?.accessToken}");
         await AuthStorage.saveToken(response.data!.accessToken!);
       }
       if (response.data!.user?.id != null) {
+        print("ACCESS TOKEN2 => ${response.data?.user?.id}");
         await AuthStorage.saveUserId(response.data!.user!.id!);
       }
       if (response.data!.refreshToken != null) {
+        print("ACCESS TOKEN3 => ${response.data?.refreshToken}");
         await AuthStorage.saveRefreshToken(response.data!.refreshToken!);
       }
+      // Save role
+      await AuthStorage.saveRole(role);
       return response;
     }
 
@@ -62,6 +67,11 @@ class AuthRepoService {
         print("⚠️ No refresh token in response");
       }
 
+      if (response.data!.user?.role != null) {
+        print("💾 Saving role: ${response.data!.user!.role}");
+        await AuthStorage.saveRole(response.data!.user!.role!);
+      }
+
       return response;
     }
 
@@ -84,11 +94,36 @@ class AuthRepoService {
   Future<Map<String, dynamic>> verifyOtp(
       {required String email, required String code}) async {
     final response = await authRepository.verifyOtp(email: email, code: code);
-    if (response['success'] == true) {
-      return response;
-    } else {
-      return response;
+
+    if (response['success'] == true && response['data'] != null) {
+      final data = response['data'];
+
+      // Save token if present
+      if (data['accessToken'] != null) {
+        print("💾 Saving access token from verify-otp...");
+        await AuthStorage.saveToken(data['accessToken']);
+      }
+
+      // Save refresh token if present
+      if (data['refreshToken'] != null) {
+        print("💾 Saving refresh token from verify-otp...");
+        await AuthStorage.saveRefreshToken(data['refreshToken']);
+      }
+
+      // Save user ID if present
+      if (data['user'] != null && data['user']['id'] != null) {
+        print("💾 Saving user ID from verify-otp...");
+        await AuthStorage.saveUserId(data['user']['id']);
+      }
+
+      // Save role if present
+      if (data['user'] != null && data['user']['role'] != null) {
+        print("💾 Saving role from verify-otp: ${data['user']['role']}");
+        await AuthStorage.saveRole(data['user']['role']);
+      }
     }
+
+    return response;
   }
 
   Future<bool> refreshToken() async {
@@ -118,7 +153,8 @@ class AuthRepoService {
       }
 
       return false;
-    } catch (_) {
+    } catch (e) {
+      print("❌ Error during refreshToken: $e");
       return false;
     }
   }

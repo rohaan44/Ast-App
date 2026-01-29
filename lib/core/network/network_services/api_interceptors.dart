@@ -60,13 +60,16 @@ class AppInterceptors extends Interceptor {
 
         // Prevent infinite loop if refresh token endpoint itself returns 401
         if (err.requestOptions.path.contains('refresh-token')) {
+          log("⚠️ Refresh token failed with 401, clearing storage...");
           await AuthStorage.clearAll();
           return handler.next(err);
         }
 
+        log("🔄 Attempting to refresh token...");
         final isRefreshed = await authService.refreshToken();
 
         if (isRefreshed) {
+          log("✅ Token refreshed successfully");
           final newAccessToken = await AuthStorage.getToken();
           if (newAccessToken != null) {
             final options = err.requestOptions;
@@ -76,6 +79,7 @@ class AppInterceptors extends Interceptor {
             return handler.resolve(retryResponse);
           }
         } else {
+          log("❌ Refresh failed, clearing storage...");
           await AuthStorage.clearAll();
         }
       } catch (e) {

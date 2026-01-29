@@ -1,6 +1,7 @@
 import 'package:ast_official/core/network/auth_service/auth_service.dart';
 import 'package:ast_official/core/network/network_services/api_interceptors.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 class DioHelper {
   final Dio dio = getDio();
@@ -17,7 +18,19 @@ class DioHelper {
     Map<String, dynamic>? headers,
     Map<String, dynamic>? queryParameters,
   }) async {
+    debugPrint("\n🔍 GET Request Debug:");
+    debugPrint("📍 URL: $url");
+    debugPrint("🔐 Auth Required: $isAuthRequired");
+
     final token = isAuthRequired ? await AuthStorage.getToken() : null;
+
+    if (isAuthRequired) {
+      if (token != null) {
+        debugPrint("✅ Token retrieved: ${token.substring(0, 20)}...");
+      } else {
+        debugPrint("❌ NO TOKEN FOUND in storage!");
+      }
+    }
 
     final option = baseOptions.copyWith(
       validateStatus: (status) {
@@ -51,17 +64,17 @@ class DioHelper {
     bool isAuthRequired = false,
     Map<String, dynamic>? headers,
   }) async {
-    print("\n🔍 POST Request Debug:");
-    print("📍 URL: $url");
-    print("🔐 Auth Required: $isAuthRequired");
+    debugPrint("\n🔍 POST Request Debug:");
+    debugPrint("📍 URL: $url");
+    debugPrint("🔐 Auth Required: $isAuthRequired");
 
     final token = isAuthRequired ? await AuthStorage.getToken() : null;
 
     if (isAuthRequired) {
       if (token != null) {
-        print("✅ Token retrieved: ${token.substring(0, 20)}...");
+        debugPrint("✅ Token retrieved: ${token.substring(0, 20)}...");
       } else {
-        print("❌ NO TOKEN FOUND in storage!");
+        debugPrint("❌ NO TOKEN FOUND in storage!");
       }
     }
 
@@ -76,7 +89,7 @@ class DioHelper {
       },
     );
 
-    print("📤 Headers being sent: ${option.headers}");
+    debugPrint("📤 Headers being sent: ${option.headers}");
 
     try {
       final res = await dio.post(
@@ -84,10 +97,10 @@ class DioHelper {
         data: isMultipart ? formData : requestBody,
         options: option,
       );
-      print("✅ Response Status: ${res.statusCode}");
+      debugPrint("✅ Response Status: ${res.statusCode}");
       return res.data;
     } on DioException catch (e) {
-      print("❌ DioException: ${e.response?.statusCode} - ${e.message}");
+      debugPrint("❌ DioException: ${e.response?.statusCode} - ${e.message}");
       throw _handleDioError(e);
     }
   }
@@ -99,7 +112,19 @@ class DioHelper {
     bool isAuthRequired = false,
     Map<String, dynamic>? headers,
   }) async {
+    debugPrint("\n🔍 PUT Request Debug:");
+    debugPrint("📍 URL: $url");
+    debugPrint("🔐 Auth Required: $isAuthRequired");
+
     final token = isAuthRequired ? await AuthStorage.getToken() : null;
+
+    if (isAuthRequired) {
+      if (token != null) {
+        debugPrint("✅ Token retrieved: ${token.substring(0, 20)}...");
+      } else {
+        debugPrint("❌ NO TOKEN FOUND in storage!");
+      }
+    }
     final option = baseOptions.copyWith(
       validateStatus: (status) {
         return status != null && status < 500;

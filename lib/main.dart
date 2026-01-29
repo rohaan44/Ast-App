@@ -1,5 +1,6 @@
 import 'package:ast_official/app_ui_helpers/app_routes/app_routes.dart';
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/core/network/auth_service/auth_service.dart';
 import 'package:ast_official/generated/l10n.dart';
 import 'package:ast_official/services/notification_service/app_notification_service.dart';
 import 'package:ast_official/utils/colors_utils.dart';
@@ -19,7 +20,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+await AuthStorage.init();
   AppNotificationService notificationService = AppNotificationService();
 
   runApp(
