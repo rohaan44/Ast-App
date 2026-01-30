@@ -11,11 +11,14 @@ import 'package:ast_official/utils/font_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+
 class AtheletChatView extends StatelessWidget {
   const AtheletChatView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // model.delegate = S.of(context);
+
     final model = context.watch<AtheletChatController>();
     return Scaffold(
       body: SafeArea(
@@ -27,7 +30,7 @@ class AtheletChatView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppText(
-                  txt: "Chats",
+                  txt: model.delegate.chats,
                   fontSize: AppFontSize.f24,
                   isItalic: true,
                   color: AppColor.white,

@@ -49,6 +49,46 @@ class S {
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
+
+  /// `Chats`
+  String get chats {
+    return Intl.message(
+      'Chats',
+      name: 'chats',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Registrazione`
+  String get registrazione {
+    return Intl.message(
+      'Registrazione',
+      name: 'registrazione',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Salta`
+  String get salta {
+    return Intl.message(
+      'Salta',
+      name: 'salta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Avanti`
+  String get avanti {
+    return Intl.message(
+      'Avanti',
+      name: 'avanti',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
