@@ -34,6 +34,7 @@ import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete
 import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_profile/athlete_profile_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/check_in/check_in_reviews/check_in_reviews_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/check_in/edit_ai_suggestion/edit_ai_suggestion_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/coach_Message/selected_chat/selected_chat_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_Message/coach_chat_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach_edit_profile/coach_edit_profile_controller.dart';
 import 'package:ast_official/feature/on_boarding/auth/forget_password/reset_password/reset_password_controller.dart';
@@ -209,7 +210,8 @@ List<SingleChildWidget> providersList = [
   ChangeNotifierProvider(
       create: (context) => CoachProfileController(), lazy: true),
   ChangeNotifierProvider(
-    create: (context) => CheckInController(appRepoService: context.read<AppRepoService>()),
+    create: (context) =>
+        CheckInController(appRepoService: context.read<AppRepoService>()),
     // lazy: true
   ),
   ChangeNotifierProvider(
@@ -317,6 +319,9 @@ List<SingleChildWidget> providersList = [
     lazy: true,
   ),
 
+  ChangeNotifierProvider(
+    create: (_) => SelectedChatController(),
+  ),
   ChangeNotifierProvider(
     create: (_) => CheckInReviewsController(),
     // lazy: true,
