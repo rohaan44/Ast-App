@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
@@ -11,7 +13,6 @@ import 'package:ast_official/utils/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 
 class AtheletCoachesView extends StatelessWidget {
   const AtheletCoachesView({super.key});
@@ -26,56 +27,73 @@ class AtheletCoachesView extends StatelessWidget {
         controller.getCoaches(context: context);
       }
     });
-    return GlobalRefreshIndicator(
-      onRefresh: () async {
-        await controller.getCoaches(context: context);
-      },
-      child: AppDismissKeyboard(
-        child: SafeArea(
-          child: Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(ch(60)),
-              child: _appBar(context: context),
-            ),
-            body: Consumer<AtheletCoachesController>(
-              builder: (context, model, child) {
-                return Column(
-                  children: [
-                    SizedBox(height: ch(12)),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: cw(20)),
-                      child: primaryTextField(
-                        textFieldHeight: ch(46),
-                        prefixIcon: SvgPicture.asset(AssetUtils.searchIcon),
-                        hintText: "Cerca",
-                        borderRadius: cw(50),
-                        border: InputBorder.none,
-                        onChanged: (value) {
-                          model.setSearchQuery(value);
-                        },
-                      ),
+    return AppDismissKeyboard(
+      child: SafeArea(
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(ch(60)),
+            child: _appBar(context: context),
+          ),
+          body: Consumer<AtheletCoachesController>(
+            builder: (context, model, child) {
+              return Column(
+                children: [
+                  SizedBox(height: ch(12)),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: cw(20)),
+                    child: primaryTextField(
+                      textFieldHeight: ch(46),
+                      prefixIcon: SvgPicture.asset(AssetUtils.searchIcon),
+                      hintText: "Cerca",
+                      borderRadius: cw(50),
+                      border: InputBorder.none,
+                      onChanged: (value) {
+                        model.setSearchQuery(value);
+                      },
                     ),
-                    SizedBox(height: ch(20)),
-                    categorySelector(model),
-                    SizedBox(height: ch(12)),
-                    Expanded(
+                  ),
+                  SizedBox(height: ch(20)),
+                  categorySelector(model),
+                  SizedBox(height: ch(12)),
+                  Expanded(
+                    child: GlobalRefreshIndicator(
+                      onRefresh: () async {
+                        await model.getCoaches(context: context);
+                      },
                       child: GlobalSkeleton(
                         isLoading: model.isLoading,
                         child: ListView.separated(
                           controller: model.scrollController,
                           padding: EdgeInsets.symmetric(horizontal: cw(20)),
-                          physics: const BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
                           itemCount: model.filteredCoaches.length,
                           separatorBuilder: (_, __) => SizedBox(height: ch(12)),
                           itemBuilder: (context, index) {
                             final coach = model.filteredCoaches[index];
-                            final img = coach["img"]!;
-                            final title = coach["title"]!;
-                            final subTitle = coach["subTitle"]!;
+                            final img = coach["avatar"] ?? "";
+                            String title = coach["fullName"] ?? "Anonymous";
+                            final String subTitle = coach["bio"] ?? "";
+
+                            // Safely handle nested user object if it exists (API) or fallback to root (Dummy)
+                            final String? coachId = coach["_id"]?.toString() ??
+                                coach["id"]?.toString();
+                            final Map<String, dynamic>? user =
+                                coach['user'] is Map ? coach['user'] : null;
+                            final String? userId = user != null
+                                ? user['_id']?.toString()
+                                : coachId;
+
+                            if (title.isEmpty || title == "Anonymous") {
+                              if (userId != null && userId.length >= 8) {
+                                title = "Anonymous ${userId.substring(0, 8)}";
+                              }
+                            }
                             return InkWell(
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, RoutePaths.coachProfileView);
+                                log(coach["_id"].toString());
+                                // Navigator.pushNamed(
+                                //     context, RoutePaths.coachProfileView);
                               },
                               child: Row(
                                 children: [
@@ -117,10 +135,10 @@ class AtheletCoachesView extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

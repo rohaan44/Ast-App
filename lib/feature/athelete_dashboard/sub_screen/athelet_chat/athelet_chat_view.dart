@@ -65,8 +65,15 @@ class AtheletChatView extends StatelessWidget {
                 final chat = model.chats[index];
                 return InkWell(
                   onTap: () {
-                    context.read<FlowDataProvider>().addOrUpdateFlow(
-                        flowTag: customerOnboarding, data: model.chats[index]);
+                    final selectedConv = model.conversations[index];
+                    context
+                        .read<FlowDataProvider>()
+                        .addOrUpdateFlow(flowTag: customerOnboarding, data: {
+                      "id": selectedConv.id,
+                      "name": chat["name"],
+                      "image": chat["image"],
+                      "isOnline": chat["isOnline"]
+                    });
 
                     Navigator.pushNamed(context, RoutePaths.selectedChatScreen);
                   },
