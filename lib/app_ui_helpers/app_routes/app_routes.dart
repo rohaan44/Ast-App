@@ -601,7 +601,9 @@ class AppRouter {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
-              create: (context) => CoachHomeScreenController(),
+              create: (context) => CoachHomeScreenController(
+                appRepoService: context.read<AppRepoService>(),
+              ),
               child: const CoachHomeScreenView(),
             );
           },
