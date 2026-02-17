@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/generated/l10n.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
@@ -76,6 +77,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                       });
                     },
                     itemBuilder: (context, index) => onBaordContentct(
+                          context: context,
                           title: onboardingData[index]["title"]!,
                           subtitle: onboardingData[index]["subtitle"]!,
                           image: onboardingData[index]["image"]!,
@@ -107,7 +109,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                   borderRadius: cw(24.91),
                   child: currentPage == 0
                       ? AppText(
-                          txt: "Salta",
+                          txt: S.of(context).salta,
                           color: AppColor.white,
                           fontWeight: FontWeight.w700,
                           fontSize: AppFontSize.f16 - 2,
@@ -168,7 +170,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                               borderRadius: BorderRadius.circular(cw(24.91))),
                           child: Center(
                             child: AppText(
-                              txt: "Avanti",
+                              txt: S.of(context).avanti,
                               color: AppColor.cFFFFFF,
                               fontWeight: FontWeight.w700,
                               fontSize: AppFontSize.f16 - 2,
@@ -240,6 +242,7 @@ AnimatedContainer buildDot(int currentPage, int index) {
 }
 
 Widget onBaordContentct({
+  required BuildContext context,
   required String title,
   required String subtitle,
   required String image,
@@ -270,7 +273,7 @@ Widget onBaordContentct({
               Center(
                 child: AppText(
                   fontSize: AppFontSize.f15,
-                  txt: "Registrazione",
+                  txt: S.of(context).registrazione,
                   fontWeight: FontWeight.w800,
                 ),
               )

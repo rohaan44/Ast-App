@@ -113,7 +113,7 @@ class AssetUtils {
   static const String appCrossIcon = "${svg}app_cross_icon.svg";
   static const String closeIcon = "${svg}close_icon.svg";
   static const String breadIcon = "${svg}bread_icon.svg";
-   
+
   static const String pinAppleIcon = "${svg}pinApple.svg";
   static const String fireIcon = "${svg}fire_icon.svg";
   static const String arrowUp = "${svg}arrow_up.svg";
@@ -163,6 +163,8 @@ class AssetUtils {
   static const String profileUpload = "${svg}profileUpload.svg";
   static const String cameraIcon = "${svg}cameraIcon.svg";
   static const String walkIcon = "${svg}walk_icon.svg";
+  static const String notePad = "${svg}notePad.svg";
+  static const String certificate = "${svg}certificate.svg";
   static const String successIcon = "${svg}success_Icon.svg";
   static const String errorIcon = "${svg}error-Icon.svg";
 }

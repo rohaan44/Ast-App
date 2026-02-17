@@ -17,6 +17,8 @@ class AtheletChatView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // model.delegate = S.of(context);
+
     final model = context.watch<AtheletChatController>();
     return Scaffold(
       body: SafeArea(
@@ -28,7 +30,7 @@ class AtheletChatView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppText(
-                  txt: "Chats",
+                  txt: model.delegate.chats,
                   fontSize: AppFontSize.f24,
                   isItalic: true,
                   color: AppColor.white,

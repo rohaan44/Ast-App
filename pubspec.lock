@@ -1021,6 +1021,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
+<<<<<<< HEAD
   shelf:
     dependency: transitive
     description:
@@ -1053,6 +1054,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+=======
+>>>>>>> 74aeeb0f841154481f0981af272a64f93d71b581
   shimmer:
     dependency: "direct main"
     description:

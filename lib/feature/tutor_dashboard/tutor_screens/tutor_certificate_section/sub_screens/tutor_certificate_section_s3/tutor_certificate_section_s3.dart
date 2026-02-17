@@ -267,7 +267,7 @@ class TutorCertificateSectionS3View extends StatelessWidget {
                   AppButton(
                     onPressed: () {
                       Navigator.pushNamed(
-                          context, RoutePaths.tutorCertificateSectionView);
+                          context, RoutePaths.tutorCertificateSectionS4View);
                     },
                     text: "Rinnova tutto",
                     color: AppColor.white,
