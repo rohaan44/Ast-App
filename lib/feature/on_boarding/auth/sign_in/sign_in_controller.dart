@@ -54,49 +54,51 @@ class SignInController with ChangeNotifier {
 
   Future<bool> login(
       BuildContext context, String email, String password) async {
-    print("\n🚀 ========== LOGIN FLOW START ==========");
-    print("📧 Email: $email");
+    debugPrint("\n🚀 ========== LOGIN FLOW START ==========");
+    debugPrint("📧 Email: $email");
 
     _isLoading = true;
     notifyListeners();
     try {
-      print("📞 Calling authRepoService.login()...");
+      debugPrint("📞 Calling authRepoService.login()...");
       final response =
           await authRepoService.login(email: email, password: password);
 
-      print("📦 Response received - success: ${response.success}");
-      print("📦 Response has data: ${response.data != null}");
+      debugPrint("📦 Response received - success: ${response.success}");
+      debugPrint("📦 Response has data: ${response.data != null}");
 
       if (response.success == true) {
-        print("✅ Login successful!");
+        debugPrint("✅ Login successful!");
 
         if (response.data?.user?.role != null) {
           role = response.data!.user!.role ?? "";
-          print("👤 User role: $role");
+          debugPrint("👤 User role: $role");
         }
 
-        print("📨 Sending OTP to: $email");
+        debugPrint("📨 Sending OTP to: $email");
         final otpResponse = await authRepoService.sendOtp(email: email);
-        print("📨 OTP sent: $otpResponse");
+        debugPrint("📨 OTP sent: $otpResponse");
 
         if (otpResponse == true) {
+          if (!context.mounted) return false;
           showApiSnackBar(
             context,
             title: "Success",
             message: "Login successfully",
             isSuccess: true,
           );
-          print("🔄 Navigating to OTP view...");
+          debugPrint("🔄 Navigating to OTP view...");
           Navigator.pushNamedAndRemoveUntil(
             context,
             RoutePaths.otpView,
             (route) => false,
           );
-          print("🏁 ========== LOGIN FLOW END (SUCCESS) ==========\n");
+          debugPrint("🏁 ========== LOGIN FLOW END (SUCCESS) ==========\n");
           return true;
         }
       } else {
-        print("❌ Login failed - Error: ${response.error}");
+        debugPrint("❌ Login failed - Error: ${response.error}");
+        if (!context.mounted) return false;
         showApiSnackBar(
           context,
           title: "Error",
@@ -104,20 +106,22 @@ class SignInController with ChangeNotifier {
           isSuccess: false,
         );
       }
-      print("🏁 ========== LOGIN FLOW END (FAILED) ==========\n");
+      debugPrint("🏁 ========== LOGIN FLOW END (FAILED) ==========\n");
       return false;
     } catch (e) {
       _isLoading = false;
-      print("💥 EXCEPTION in login: $e");
+      debugPrint("💥 EXCEPTION in login: $e");
       debugPrint(e.toString());
       notifyListeners();
-      showApiSnackBar(
-        context,
-        title: "Error",
-        message: e.toString(),
-        isSuccess: false,
-      );
-      print("🏁 ========== LOGIN FLOW END (EXCEPTION) ==========\n");
+      if (context.mounted) {
+        showApiSnackBar(
+          context,
+          title: "Error",
+          message: e.toString(),
+          isSuccess: false,
+        );
+      }
+      debugPrint("🏁 ========== LOGIN FLOW END (EXCEPTION) ==========\n");
       return false;
     } finally {
       _isLoading = false;

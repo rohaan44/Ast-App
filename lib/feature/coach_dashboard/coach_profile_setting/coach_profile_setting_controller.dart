@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class CoachProfileSettingController with ChangeNotifier {
   final AuthRepoService authRepoService;
 
-  CoachProfileSettingController({required this.authRepoService}) {}
+  CoachProfileSettingController({required this.authRepoService});
   File? _profileImage;
 
   File? get profileImage => _profileImage;

@@ -67,7 +67,7 @@ class TutorProfileSettingsSectionS1View extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(color: Colors.redAccent, width: 3),
-                          image: DecorationImage(
+                          image: const DecorationImage(
                             image: AssetImage(AssetUtils.person),
                             fit: BoxFit.cover,
                           ),

@@ -10,7 +10,7 @@ class BodyMeasurementController extends ChangeNotifier {
   TextEditingController armController = TextEditingController();
   TextEditingController thighsController = TextEditingController();
 
-  List<File> _selectedImages = [];
+  final List<File> _selectedImages = [];
   List<File> get selectedImages => _selectedImages;
 
   BodyMeasurementController() {

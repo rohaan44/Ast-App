@@ -124,7 +124,7 @@ Widget _bottomNavBar() {
         color: AppColor.c252525.withOpacity(0.4),
         boxShadow: [
           BoxShadow(
-              offset: Offset(30, 16), color: AppColor.c000000.withOpacity(0.15))
+              offset: const Offset(30, 16), color: AppColor.c000000.withOpacity(0.15))
         ],
         borderRadius: BorderRadius.circular(50),
       ),

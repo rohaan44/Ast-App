@@ -9,6 +9,7 @@ import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/s
 import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_profile/athlete_profile_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/check_in/check_in_reviews/check_in_reviews_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_Message/coach_chat_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_controller.dart';
 import 'package:ast_official/feature/on_boarding/auth/forget_password/reset_password/reset_password_controller.dart';
 import 'package:ast_official/feature/tutor_dashboard/home_screen/tutor_home_screen_controller.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_certificate_section/tutor_certificate_section_controller.dart';
@@ -18,6 +19,9 @@ import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_submiss
 import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/bottombar/coach_bottombar/coach_bottombar_controller.dart';
 import 'package:ast_official/ui_molecules/bottombar/tutor_bottombar/tutor_bottombar_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_chat/athelet_chat_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_management_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/plans/plans_management/plans_management_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -68,6 +72,23 @@ List<SingleChildWidget> providersList = [
 
   ChangeNotifierProvider(
     create: (_) => CoachChatController(),
+  ),
+  ChangeNotifierProvider(
+    lazy: true,
+    create: (context) => CoachHomeScreenController(
+      appRepoService: context.read<AppRepoService>(),
+    ),
+  ),
+  ChangeNotifierProvider(
+    create: (_) => AtheletChatController(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => AthleteManagementController(
+      appRepoService: context.read<AppRepoService>(),
+    ),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => PlansManagementController(),
   ),
 
   ChangeNotifierProvider(

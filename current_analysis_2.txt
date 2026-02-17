@@ -1,0 +1,75 @@
+﻿Analyzing ast_official...                                       
+
+   info - Don't invoke 'print' in production code - lib\data\repository\onboarding_repo.dart:12:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:20:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:24:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:28:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:41:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:45:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:49:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:52:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:55:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:59:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:64:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:67:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:71:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:78:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:103:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:109:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:115:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:121:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:157:7 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\feature\athelete_dashboard\sub_screen\dashboard_home_screen\dashboard_home_screen_controller.dart:121:32 - use_build_context_synchronously
+   info - The file name 'personalize_your_experience_Controller.dart' isn't a lower_case_with_underscores identifier - lib\feature\athelete_dashboard\sub_screen\home_screen\sub_screen\personalize_your_experience\personalize_your_experience_Controller.dart:1:1 - file_names
+   info - Don't invoke 'print' in production code - lib\feature\athelete_dashboard\sub_screen\home_screen\sub_screen\what_is_your_activity\what_is_your_activity_view.dart:105:25 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\feature\athelete_dashboard\sub_screen\training\training_controller.dart:68:11 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\athelete_dashboard\sub_screen\training\training_controller.dart:76:9 - use_build_context_synchronously
+   info - An uninitialized field should have an explicit type annotation - lib\feature\coach_dashboard\athelete_management\athlete_profile\athelete_profile_view.dart:18:9 - prefer_typing_uninitialized_variables
+   info - Empty catch block - lib\feature\coach_dashboard\home_screen\coach_home_screen_controller.dart:179:17 - empty_catches
+   info - Empty catch block - lib\feature\coach_dashboard\home_screen\coach_home_screen_controller.dart:189:17 - empty_catches
+   info - Empty catch block - lib\feature\coach_dashboard\home_screen\coach_home_screen_controller.dart:199:17 - empty_catches
+   info - Unnecessary use of getter and setter to wrap a field - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:46:14 - unnecessary_getters_setters
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:57:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:58:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:63:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:67:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:68:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:71:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:75:11 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:78:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:80:9 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:84:13 - use_build_context_synchronously
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:89:11 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:91:13 - use_build_context_synchronously
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:95:11 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:99:9 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:101:11 - use_build_context_synchronously
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:107:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:111:7 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:115:9 - use_build_context_synchronously
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:120:7 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_up\sign_up_view.dart:156:41 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_up\sign_up_view.dart:167:57 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_up\sign_up_view.dart:172:45 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:61:9 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:69:9 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:91:11 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:97:13 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:100:13 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:107:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:113:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:119:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:127:13 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:134:11 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:144:9 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\select_weight\select_weight_controller.dart:54:11 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\select_weight\select_weight_controller.dart:60:13 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\select_weight\select_weight_controller.dart:63:11 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\select_weight\select_weight_controller.dart:73:9 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\splash_screen\splash_screen.dart:27:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\splash_screen\splash_screen.dart:30:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\splash_screen\splash_screen.dart:33:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\splash_screen\splash_screen.dart:36:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\splash_screen\splash_screen.dart:40:13 - use_build_context_synchronously
+   info - Invalid use of a private type in a public API - lib\ui_molecules\slide_able_button\slideable_widget.dart:36:3 - library_private_types_in_public_api
+

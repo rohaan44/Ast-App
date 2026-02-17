@@ -1,6 +1,6 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/domain/repository/app_repo_service.dart';
-import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart';
+
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/coach_profile/coach_profile_controller.dart';
@@ -105,21 +105,19 @@ import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profi
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/home_screen_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/breakfast_time/breakfast_time_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/dinner_time/dinner_time_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/personalize_your_experience/personalize_your_experience_Controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/personalize_your_experience/personalize_your_experience_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/what_is_your_activity/what_is_your_activity_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/what_is_your_diet_type/what_is_your_diet_type_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/sub_screen/training_detail/training_detail_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_management_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/check_in/edit_ai_suggestion/edit_ai_suggestion_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_Message/selected_chat/selected_chat_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach_edit_profile/coach_edit_profile_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach_profile_setting_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/integration/integration_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_management_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/language/language_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/plans/nutrition_plan/nutrition_plan_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/integration/integration_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/plans/plan_preview/plan_preview_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/plans/plans_management/plans_management_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/plans/trainning_plan/training_plan_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/plans_royalties/athlete_subscriptions/athlete_subscriptions_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/plans_royalties/payments_royalties_controller.dart';
@@ -600,12 +598,7 @@ class AppRouter {
       case RoutePaths.coachHomeScreenView:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => CoachHomeScreenController(
-                appRepoService: context.read<AppRepoService>(),
-              ),
-              child: const CoachHomeScreenView(),
-            );
+            return const CoachHomeScreenView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -652,10 +645,7 @@ class AppRouter {
       case RoutePaths.plansManagementScreen:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => PlansManagementController(),
-              child: const PlansManagementView(),
-            );
+            return const PlansManagementView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -742,11 +732,7 @@ class AppRouter {
       case RoutePaths.athleteManagementView:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => AthleteManagementController(
-                  appRepoService: context.read<AppRepoService>()),
-              child: const AthleteManagementView(),
-            );
+            return const AthleteManagementView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;

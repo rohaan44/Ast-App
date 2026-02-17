@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ast_official/data/models/app_models/get_checkins_model.dart';
 import 'package:ast_official/data/models/base_model/base_model.dart';
 import 'package:ast_official/domain/repository/app_repo_service.dart';
