@@ -1192,7 +1192,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => CoachProfileController(
-                context.read<AppRepoService>()),
+                  appRepoService: context.read<AppRepoService>()),
               child: const CoachProfileView(),
             );
           },
