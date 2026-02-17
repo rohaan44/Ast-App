@@ -113,7 +113,7 @@ class AssetUtils {
   static const String appCrossIcon = "${svg}app_cross_icon.svg";
   static const String closeIcon = "${svg}close_icon.svg";
   static const String breadIcon = "${svg}bread_icon.svg";
-   
+
   static const String pinAppleIcon = "${svg}pinApple.svg";
   static const String fireIcon = "${svg}fire_icon.svg";
   static const String arrowUp = "${svg}arrow_up.svg";
