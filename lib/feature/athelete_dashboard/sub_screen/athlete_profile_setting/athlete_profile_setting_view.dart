@@ -33,17 +33,18 @@ class AthleteProfileSettingView extends StatelessWidget {
                   children: [
                     centerTextBackIconAppbar(
                         onTap: () {
-                          final dashboardController =
-                              context.read<DashboardController>();
-                          dashboardController.setSelectedIndex(0);
-                          if (dashboardController.pageController.hasClients) {
-                            dashboardController.pageController.jumpToPage(0);
+                          try {
+                            final dashboardController =
+                                Provider.of<DashboardController>(context,
+                                    listen: false);
+                            dashboardController.setSelectedIndex(0);
+                            if (dashboardController.pageController.hasClients) {
+                              dashboardController.pageController.jumpToPage(0);
+                            }
+                          } catch (e) {
+                            debugPrint("DashboardController error: $e");
                           }
-                          Navigator.popUntil(
-                              context,
-                              (route) =>
-                                  route.settings.name ==
-                                  RoutePaths.dashboardView);
+                          Navigator.pop(context);
                         },
                         context: context,
                         text: "Profilo e impostazioni"),
@@ -53,9 +54,6 @@ class AthleteProfileSettingView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // SizedBox(height: ch(20)),
-
-                            /// Profile Image Section
                             Stack(
                               alignment: Alignment.bottomRight,
                               children: [

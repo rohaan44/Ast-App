@@ -1,8 +1,14 @@
+import 'package:ast_official/domain/repository/app_repo_service.dart';
 import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_chat/athelet_chat_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_chat/athelet_chat_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/check_in_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/check_in_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/dashboard_home_screen/dashboard_home_screen.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/dashboard_home_screen/dashboard_home_screen_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/training_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/training_view.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/utils/colors_utils.dart';
@@ -39,11 +45,34 @@ class _DashboardViewState extends State<DashboardView> {
   void initState() {
     super.initState();
     screenList = [
-      widget.firstPage ?? const DashboardHomeScreen(),
-      const TrainingView(),
-      const AtheletCoachesView(),
-      const CheckIn(),
-      const AtheletChatView(),
+      ChangeNotifierProvider(
+        create: (context) => DashboardHomeScreenController(
+          appRepoService: context.read<AppRepoService>(),
+        ),
+        child: widget.firstPage ?? const DashboardHomeScreen(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => TrainingViewController(
+          appRepoService: context.read<AppRepoService>(),
+        ),
+        child: const TrainingView(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => AtheletCoachesController(
+          appRepoService: context.read<AppRepoService>(),
+        ),
+        child: const AtheletCoachesView(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => CheckInController(
+          appRepoService: context.read<AppRepoService>(),
+        ),
+        child: const CheckIn(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => AtheletChatController(),
+        child: const AtheletChatView(),
+      ),
     ];
   }
 
@@ -67,7 +96,7 @@ class _DashboardViewState extends State<DashboardView> {
             Positioned(
               left: 0,
               right: 0,
-              bottom: 20,
+              bottom: ch(10),
               child: _bottomNavBar(),
             ),
           ],

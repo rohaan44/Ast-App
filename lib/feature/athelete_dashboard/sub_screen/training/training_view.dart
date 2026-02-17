@@ -17,7 +17,7 @@ class TrainingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.read<TrainingViewController>();
+    final controller = context.watch<TrainingViewController>();
     final ScrollController scrollController = ScrollController();
 
     scrollController.addListener(() {

@@ -17,6 +17,10 @@ class AppRepoService {
     return appRepo.getMyProfile();
   }
 
+  Future<Map<String, dynamic>> getCoachProfileById({required String id}) async {
+    return appRepo.getCoachProfileById(id: id);
+  }
+
   Future<Map<String, dynamic>> updateProfilePicture({
     required String imagePath,
   }) async {
@@ -65,6 +69,10 @@ class AppRepoService {
     int limit = 20,
   }) async {
     return appRepo.getCoaches(page: page, limit: limit);
+  }
+
+  Future<Map<String, dynamic>> sendCoachRequest({required String coachId}) async {
+    return appRepo.sendCoachRequest(coachId: coachId);
   }
 
   // ================= ATHLETE =================

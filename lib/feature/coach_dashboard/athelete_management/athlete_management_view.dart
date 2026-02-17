@@ -18,20 +18,17 @@ class AthleteManagementView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller =
-        Provider.of<AthleteManagementController>(context, listen: false);
-    controller.setContext(context);
+    final model = context.watch<AthleteManagementController>();
+    model.setContext(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (controller.coachesList.isEmpty && !controller.isLoading) {
-        controller.getAllMyAtheletes(context: context);
+      if (model.coachesList.isEmpty && !model.isLoading) {
+        model.getAllMyAtheletes(context: context);
       }
 
       Future.delayed(const Duration(minutes: 1), () {
-        controller.getAtheletPendingRequest(context: context);
+        model.getAtheletPendingRequest(context: context);
       });
     });
-    final model =
-        Provider.of<AthleteManagementController>(context, listen: false);
     return Scaffold(
       body: SafeArea(
           child: GlobalSkeleton(
