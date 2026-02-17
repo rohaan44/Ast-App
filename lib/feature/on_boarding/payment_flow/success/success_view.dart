@@ -1,8 +1,8 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/home_screen_view.dart';
 import 'package:ast_official/feature/on_boarding/payment_flow/success/success_controller.dart';
-import 'package:ast_official/feature/on_boarding/payment_flow/wallet/wallet_controller.dart';
-import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
+// import 'package:ast_official/feature/on_boarding/payment_flow/wallet/wallet_controller.dart';
+// import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
 import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
@@ -37,8 +37,10 @@ class SuccessView extends StatelessWidget {
                   Text("🎉", style: TextStyle(fontSize: AppFontSize.f40)),
                   const SizedBox(height: 16),
 
-                  if (context.read<SelectRoleController>().selectedRole ==
-                      "Athlete") ...[
+                  if (context
+                          .read<FlowDataProvider>()
+                          .getFlowData(customerOnboarding)!["value"] ==
+                      "athlete") ...[
                     AppText(
                       txt: "Abbonamento attivato con successo",
                       fontSize: AppFontSize.f24,
@@ -68,8 +70,10 @@ class SuccessView extends StatelessWidget {
 
                   SizedBox(height: ch(10)),
 
-                  if (context.read<SelectRoleController>().selectedRole ==
-                      "Athlete") ...[
+                  if (context
+                          .read<FlowDataProvider>()
+                          .getFlowData(customerOnboarding)!["value"] ==
+                      "athlete") ...[
                     AppText(
                       txt:
                           "Ora hai accesso ai tuoi piani personalizzati, ai check-in settimanali e alla chat con il coach.",
@@ -100,8 +104,10 @@ class SuccessView extends StatelessWidget {
                       "ID PAGAMENTO",
                       provider.paymentId,
                       "Importo pagato",
-                      context.read<SelectRoleController>().selectedRole ==
-                              "Athlete"
+                      context
+                                  .read<FlowDataProvider>()
+                                  .getFlowData(customerOnboarding)!["value"] ==
+                              "athlete"
                           ? "€79.00"
                           : isRenew
                               ? "€249.00"
@@ -135,26 +141,24 @@ class SuccessView extends StatelessWidget {
                           fontSize: AppFontSize.f15,
                           color: AppColor.white.withOpacity(0.5),
                         ),
-                        if (context.read<WalletController>().selectedMethod ==
+                        if (context.read<FlowDataProvider>().getFlowData(
+                                customerOnboarding)!["selectMethod"] ==
                             "apple") ...[
                           SvgPicture.asset(
                             AssetUtils.appleIcon,
                             height: ch(30),
                           )
-                        ] else if (context
-                                .read<WalletController>()
-                                .selectedMethod ==
+                        ] else if (context.read<FlowDataProvider>().getFlowData(
+                                customerOnboarding)!["selectMethod"] ==
                             "stripe") ...[
                           SvgPicture.asset(AssetUtils.stripeIcon)
-                        ] else if (context
-                                .read<WalletController>()
-                                .selectedMethod ==
+                        ] else if (context.read<FlowDataProvider>().getFlowData(
+                                customerOnboarding)!["selectMethod"] ==
                             "paypal") ...[
                           SvgPicture.asset(AssetUtils.paypalIcon,
                               height: ch(30))
-                        ] else if (context
-                                .read<WalletController>()
-                                .selectedMethod ==
+                        ] else if (context.read<FlowDataProvider>().getFlowData(
+                                customerOnboarding)!["selectMethod"] ==
                             "google") ...[
                           SvgPicture.asset(AssetUtils.googleIcon,
                               height: ch(30))
@@ -200,7 +204,7 @@ class SuccessView extends StatelessWidget {
                                 ? athleteFlowData["value"] ?? ""
                                 : "";
 
-                            if (role == "Coach") {
+                            if (role == "coach") {
                               Navigator.pushNamedAndRemoveUntil(
                                 context,
                                 RoutePaths.coachMainScreenView,

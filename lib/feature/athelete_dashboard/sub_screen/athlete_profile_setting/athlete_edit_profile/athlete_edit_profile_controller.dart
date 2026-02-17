@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ast_official/domain/repository/app_repo_service.dart';
 import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
@@ -98,6 +97,22 @@ class AthleteEditProfileController with ChangeNotifier {
     notifyListeners();
   }
 
+  void addFitnessGoal(String goal) {
+    if (!_fitnessGoals.contains(goal)) {
+      _fitnessGoals.add(goal);
+      notifyListeners();
+    }
+  }
+
+  void toggleFitnessGoal(String goal) {
+    if (_fitnessGoals.contains(goal)) {
+      _fitnessGoals.remove(goal);
+    } else {
+      _fitnessGoals.add(goal);
+    }
+    notifyListeners();
+  }
+
   String bio = "";
   String fullName = "";
 
@@ -142,7 +157,7 @@ class AthleteEditProfileController with ChangeNotifier {
         );
       }
       debugPrint("Error fetching profile: $e");
-      _isProfileFetched = false; 
+      _isProfileFetched = false;
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -169,11 +184,7 @@ class AthleteEditProfileController with ChangeNotifier {
             isSuccess: true,
           );
 
-          Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    RoutePaths.coachProfileSettingScreen,
-                                    (route) => false,
-                                  );
+          Navigator.pop(context); // Go back to profile settings after update
         }
         _isProfileFetched = true;
       } else {

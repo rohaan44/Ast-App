@@ -59,86 +59,88 @@ class AtheletCoachesController extends ChangeNotifier {
 
   final List<Map<String, String>> atheletCoaches = [
     {
-      "img":
+      "avatar":
           "https://static.vecteezy.com/system/resources/thumbnails/046/836/977/small/african-male-fitness-trainer-in-gym-fitness-and-wellness-african-american-coach-healthy-lifestyle-photo.jpg",
-      "title": "Dianne Russell",
-      "subTitle": "Forza • Cardio • Equilibrio"
+      "fullName": "Dianne Russell",
+      "bio": "Forza • Cardio • Equilibrio"
     },
     {
-      "img":
+      "avatar":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShWl94Jfz89ZJmM0Y3uj0sB2hScWJsAWIrTw&s",
-      "title": "Robert Fox",
-      "subTitle": "Flessibilità • Anaerobico"
+      "fullName": "Robert Fox",
+      "bio": "Flessibilità • Anaerobico"
     },
     {
-      "img":
+      "avatar":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4ue5qKdBf9PNwfN3UUwUTDzjmZVjnwGtruA&s",
-      "title": "Jane Cooper",
-      "subTitle": "Equilibrio • Forza",
+      "fullName": "Jane Cooper",
+      "bio": "Equilibrio • Forza",
     },
     {
-      "img":
+      "avatar":
           "https://static.vecteezy.com/system/resources/thumbnails/046/836/977/small/african-male-fitness-trainer-in-gym-fitness-and-wellness-african-american-coach-healthy-lifestyle-photo.jpg",
-      "title": "Darleen Bratt",
-      "subTitle": "Forza • Cardio • Equilibrio"
+      "fullName": "Darleen Bratt",
+      "bio": "Forza • Cardio • Equilibrio"
     },
     {
-      "img":
+      "avatar":
           "https://static.vecteezy.com/system/resources/thumbnails/046/836/977/small/african-male-fitness-trainer-in-gym-fitness-and-wellness-african-american-coach-healthy-lifestyle-photo.jpg",
-      "title": "Dianne Russell",
-      "subTitle": "Forza • Cardio • Equilibrio"
+      "fullName": "Dianne Russell",
+      "bio": "Forza • Cardio • Equilibrio"
     },
     {
-      "img":
+      "avatar":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShWl94Jfz89ZJmM0Y3uj0sB2hScWJsAWIrTw&s",
-      "title": "Robert Fox",
-      "subTitle": "Flessibilità • Anaerobico"
+      "fullName": "Robert Fox",
+      "bio": "Flessibilità • Anaerobico"
     },
     {
-      "img":
+      "avatar":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4ue5qKdBf9PNwfN3UUwUTDzjmZVjnwGtruA&s",
-      "title": "Jane Cooper",
-      "subTitle": "Equilibrio • Forza",
+      "fullName": "Jane Cooper",
+      "bio": "Equilibrio • Forza",
     },
     {
-      "img":
+      "avatar":
           "https://static.vecteezy.com/system/resources/thumbnails/046/836/977/small/african-male-fitness-trainer-in-gym-fitness-and-wellness-african-american-coach-healthy-lifestyle-photo.jpg",
-      "title": "Darleen Bratt",
-      "subTitle": "Forza • Cardio • Equilibrio"
+      "fullName": "Darleen Bratt",
+      "bio": "Forza • Cardio • Equilibrio"
     },
     {
-      "img":
+      "avatar":
           "https://static.vecteezy.com/system/resources/thumbnails/046/836/977/small/african-male-fitness-trainer-in-gym-fitness-and-wellness-african-american-coach-healthy-lifestyle-photo.jpg",
-      "title": "Dianne Russell",
-      "subTitle": "Forza • Cardio • Equilibrio"
+      "fullName": "Dianne Russell",
+      "bio": "Forza • Cardio • Equilibrio"
     },
     {
-      "img":
+      "avatar":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShWl94Jfz89ZJmM0Y3uj0sB2hScWJsAWIrTw&s",
-      "title": "Robert Fox",
-      "subTitle": "Flessibilità • Anaerobico"
+      "fullName": "Robert Fox",
+      "bio": "Flessibilità • Anaerobico"
     },
     {
-      "img":
+      "avatar":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4ue5qKdBf9PNwfN3UUwUTDzjmZVjnwGtruA&s",
-      "title": "Jane Cooper",
-      "subTitle": "Equilibrio • Forza",
+      "fullName": "Jane Cooper",
+      "bio": "Equilibrio • Forza",
     },
     {
-      "img":
+      "avatar":
           "https://static.vecteezy.com/system/resources/thumbnails/046/836/977/small/african-male-fitness-trainer-in-gym-fitness-and-wellness-african-american-coach-healthy-lifestyle-photo.jpg",
-      "title": "Darleen Bratt",
-      "subTitle": "Forza • Cardio • Equilibrio"
+      "fullName": "Darleen Bratt",
+      "bio": "Forza • Cardio • Equilibrio"
     },
   ];
 
-  List<Map<String, String>> get filteredCoaches {
-    return atheletCoaches.where((coach) {
-      final title = coach["title"]!.toLowerCase();
-      final subTitle = coach["subTitle"]!.toLowerCase();
+  List<dynamic> get filteredCoaches {
+    List<dynamic> source =
+        _coachesList.isNotEmpty ? _coachesList : atheletCoaches;
+    return source.where((coach) {
+      final name = (coach["fullName"] ?? "").toString().toLowerCase();
+      final bio = (coach["bio"] ?? "").toString().toLowerCase();
 
       final matchesSearch =
-          title.contains(_searchQuery) || subTitle.contains(_searchQuery);
+          name.contains(_searchQuery) || bio.contains(_searchQuery);
 
       if (selectedCategoryIndex == 0) {
         return matchesSearch; // Tutti
@@ -146,7 +148,7 @@ class AtheletCoachesController extends ChangeNotifier {
 
       final selectedCategory = categories[selectedCategoryIndex].toLowerCase();
 
-      final matchesCategory = subTitle.contains(selectedCategory);
+      final matchesCategory = bio.contains(selectedCategory);
 
       return matchesSearch && matchesCategory;
     }).toList();

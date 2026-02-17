@@ -1,0 +1,166 @@
+﻿Analyzing ast_official...                                       
+
+warning - Unused import: 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart' - lib\app_ui_helpers\app_routes\app_routes.dart:3:8 - unused_import
+   info - Unnecessary 'new' keyword - lib\data\models\get_all_plans_model.dart:9:35 - unnecessary_new
+   info - Unnecessary 'new' keyword - lib\data\models\get_all_plans_model.dart:13:39 - unnecessary_new
+   info - Unnecessary constructor invocation - lib\data\models\get_all_plans_model.dart:13:39 - prefer_collection_literals
+   info - Unnecessary 'this.' qualifier - lib\data\models\get_all_plans_model.dart:14:23 - unnecessary_this
+   info - Unnecessary constructor invocation - lib\data\models\get_all_plans_model.dart:37:39 - prefer_collection_literals
+   info - Unnecessary 'this.' qualifier - lib\data\models\get_all_plans_model.dart:38:9 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\get_all_plans_model.dart:39:23 - unnecessary_this
+   info - Unnecessary 'new' keyword - lib\data\models\get_all_users.dart:60:11 - unnecessary_new
+   info - Unnecessary 'new' keyword - lib\data\models\get_all_users.dart:69:39 - unnecessary_new
+   info - Unnecessary constructor invocation - lib\data\models\get_all_users.dart:69:39 - prefer_collection_literals
+   info - Unnecessary 'this.' qualifier - lib\data\models\get_all_users.dart:70:9 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\get_all_users.dart:71:29 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\get_all_users.dart:73:20 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\get_all_users.dart:74:22 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\get_all_users.dart:75:22 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\get_all_users.dart:76:23 - unnecessary_this
+   info - Unnecessary 'new' keyword - lib\data\models\get_all_users.dart:93:39 - unnecessary_new
+   info - Unnecessary constructor invocation - lib\data\models\get_all_users.dart:93:39 - prefer_collection_literals
+   info - Unnecessary 'this.' qualifier - lib\data\models\get_all_users.dart:94:19 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\get_all_users.dart:95:20 - unnecessary_this
+   info - Unnecessary 'new' keyword - lib\data\models\get_all_users.dart:112:39 - unnecessary_new
+   info - Unnecessary constructor invocation - lib\data\models\get_all_users.dart:112:39 - prefer_collection_literals
+   info - Unnecessary 'this.' qualifier - lib\data\models\get_all_users.dart:113:25 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\get_all_users.dart:114:24 - unnecessary_this
+   info - Unnecessary 'new' keyword - lib\data\models\response_model.dart:60:11 - unnecessary_new
+   info - Unnecessary 'new' keyword - lib\data\models\response_model.dart:69:39 - unnecessary_new
+   info - Unnecessary constructor invocation - lib\data\models\response_model.dart:69:39 - prefer_collection_literals
+   info - Unnecessary 'this.' qualifier - lib\data\models\response_model.dart:70:9 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\response_model.dart:71:29 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\response_model.dart:73:20 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\response_model.dart:74:22 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\response_model.dart:75:22 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\response_model.dart:76:23 - unnecessary_this
+   info - Unnecessary 'new' keyword - lib\data\models\response_model.dart:93:39 - unnecessary_new
+   info - Unnecessary constructor invocation - lib\data\models\response_model.dart:93:39 - prefer_collection_literals
+   info - Unnecessary 'this.' qualifier - lib\data\models\response_model.dart:94:19 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\response_model.dart:95:20 - unnecessary_this
+   info - Unnecessary 'new' keyword - lib\data\models\response_model.dart:112:39 - unnecessary_new
+   info - Unnecessary constructor invocation - lib\data\models\response_model.dart:112:39 - prefer_collection_literals
+   info - Unnecessary 'this.' qualifier - lib\data\models\response_model.dart:113:25 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\data\models\response_model.dart:114:24 - unnecessary_this
+   info - Don't invoke 'print' in production code - lib\data\repository\onboarding_repo.dart:12:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:20:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:24:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:28:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:41:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:45:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:49:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:52:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:55:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:59:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:64:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:67:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:71:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:78:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:103:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:109:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:115:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:121:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\domain\repository\auth_repo_service.dart:157:7 - avoid_print
+   info - Use 'const' with the constructor to improve performance - lib\feature\athelete_dashboard\dashboard\dashboard_view.dart:127:23 - prefer_const_constructors
+warning - The receiver can't be null, so the null-aware operator '?.' is unnecessary - lib\feature\athelete_dashboard\sub_screen\athelet_chat\athelet_chat_controller.dart:50:18 - invalid_null_aware_operator
+warning - The '!' will have no effect because the receiver can't be null - lib\feature\athelete_dashboard\sub_screen\athelet_chat\athelet_chat_controller.dart:51:43 - unnecessary_non_null_assertion
+warning - The value of the field '_lastFetchedId' isn't used - lib\feature\athelete_dashboard\sub_screen\athelet_coaches\coach_profile\coach_profile_controller.dart:10:11 - unused_field
+   info - Use 'const' with the constructor to improve performance - lib\feature\athelete_dashboard\sub_screen\athelet_coaches\coach_profile\coach_profile_view.dart:144:19 - prefer_const_constructors
+   info - Unnecessary use of 'toList' in a spread - lib\feature\athelete_dashboard\sub_screen\athelet_coaches\coach_profile\coach_profile_view.dart:198:18 - unnecessary_to_list_in_spreads
+   info - Unnecessary use of 'toList' in a spread - lib\feature\athelete_dashboard\sub_screen\athelet_coaches\coach_profile\coach_profile_view.dart:336:14 - unnecessary_to_list_in_spreads
+warning - Unnecessary cast - lib\feature\athelete_dashboard\sub_screen\athlete_profile_setting\athlete_edit_profile\athlete_edit_profile_view.dart:63:53 - unnecessary_cast
+warning - The member 'notifyListeners' can only be used within 'package:flutter/src/foundation/change_notifier.dart' or a test - lib\feature\athelete_dashboard\sub_screen\athlete_profile_setting\athlete_edit_profile\athlete_edit_profile_view.dart:235:49 - invalid_use_of_visible_for_testing_member
+warning - The member 'notifyListeners' can only be used within instance members of subclasses of 'ChangeNotifier' - lib\feature\athelete_dashboard\sub_screen\athlete_profile_setting\athlete_edit_profile\athlete_edit_profile_view.dart:235:49 - invalid_use_of_protected_member
+warning - Unused import: 'dart:developer' - lib\feature\athelete_dashboard\sub_screen\check_in\check_in_controller.dart:1:8 - unused_import
+   info - The private field _selectedImages could be 'final' - lib\feature\athelete_dashboard\sub_screen\check_in\sub_screen\body_measurement\body_measurement_controller.dart:13:14 - prefer_final_fields
+warning - Unused import: 'dart:developer' - lib\feature\athelete_dashboard\sub_screen\check_in\sub_screen\checkin_diet\checkin_diet_view.dart:1:8 - unused_import
+   info - Don't use 'BuildContext's across async gaps - lib\feature\athelete_dashboard\sub_screen\dashboard_home_screen\dashboard_home_screen_controller.dart:121:32 - use_build_context_synchronously
+   info - The file name 'personalize_your_experience_Controller.dart' isn't a lower_case_with_underscores identifier - lib\feature\athelete_dashboard\sub_screen\home_screen\sub_screen\personalize_your_experience\personalize_your_experience_Controller.dart:1:1 - file_names
+   info - Don't invoke 'print' in production code - lib\feature\athelete_dashboard\sub_screen\home_screen\sub_screen\what_is_your_activity\what_is_your_activity_view.dart:105:25 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\feature\athelete_dashboard\sub_screen\training\training_controller.dart:68:11 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\athelete_dashboard\sub_screen\training\training_controller.dart:76:9 - use_build_context_synchronously
+   info - An uninitialized field should have an explicit type annotation - lib\feature\coach_dashboard\athelete_management\athlete_profile\athelete_profile_view.dart:18:9 - prefer_typing_uninitialized_variables
+   info - Use 'const' with the constructor to improve performance - lib\feature\coach_dashboard\check_in\seleted_check_in\selected_check_in_view.dart:283:101 - prefer_const_constructors
+warning - Unused import: 'dart:io' - lib\feature\coach_dashboard\coach_Message\selected_chat\selected_chat_controller.dart:2:8 - unused_import
+warning - Unnecessary cast - lib\feature\coach_dashboard\coach_profile_setting\coach_edit_profile\coach_edit_profile_view.dart:50:47 - unnecessary_cast
+   info - Empty constructor bodies should be written using a ';' rather than '{}' - lib\feature\coach_dashboard\coach_profile_setting\coach_profile_setting_controller.dart:11:66 - empty_constructor_bodies
+   info - The import of 'package:flutter/widgets.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\feature\coach_dashboard\coach_profile_setting\coach_renew_certificate\coach_renew_certificate_view.dart:12:8 - unnecessary_import
+   info - Empty catch block - lib\feature\coach_dashboard\home_screen\coach_home_screen_controller.dart:179:17 - empty_catches
+   info - Empty catch block - lib\feature\coach_dashboard\home_screen\coach_home_screen_controller.dart:189:17 - empty_catches
+   info - Empty catch block - lib\feature\coach_dashboard\home_screen\coach_home_screen_controller.dart:199:17 - empty_catches
+   info - Unnecessary use of getter and setter to wrap a field - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:46:14 - unnecessary_getters_setters
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:57:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:58:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:63:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:67:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:68:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:71:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:75:11 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:78:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:80:9 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:84:13 - use_build_context_synchronously
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:89:11 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:91:13 - use_build_context_synchronously
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:95:11 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:99:9 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:101:11 - use_build_context_synchronously
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:107:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:111:7 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:115:9 - use_build_context_synchronously
+   info - Don't invoke 'print' in production code - lib\feature\on_boarding\auth\sign_in\sign_in_controller.dart:120:7 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_up\sign_up_view.dart:156:41 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_up\sign_up_view.dart:167:57 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\auth\sign_up\sign_up_view.dart:172:45 - use_build_context_synchronously
+   info - The import of 'package:flutter/foundation.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\feature\on_boarding\date_of_birth\date_of_birth_controller.dart:4:8 - unnecessary_import
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:61:9 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:69:9 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:91:11 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:97:13 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:100:13 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:107:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:113:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:119:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:127:13 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:134:11 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\otp_view\otp_controller.dart:144:9 - use_build_context_synchronously
+   info - The import of 'package:flutter/foundation.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\feature\on_boarding\select_objective\select_objective_controller.dart:4:8 - unnecessary_import
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\select_weight\select_weight_controller.dart:54:11 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\select_weight\select_weight_controller.dart:60:13 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\select_weight\select_weight_controller.dart:63:11 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\on_boarding\select_weight\select_weight_controller.dart:73:9 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\splash_screen\splash_screen.dart:27:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\splash_screen\splash_screen.dart:30:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\splash_screen\splash_screen.dart:33:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\splash_screen\splash_screen.dart:36:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\feature\splash_screen\splash_screen.dart:40:13 - use_build_context_synchronously
+   info - The import of 'package:flutter/widgets.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\feature\tutor_dashboard\tutor_screens\tutor_certificate_section\sub_screens\tutor_certificate_section_s3\tutor_certificate_section_s3.dart:11:8 - unnecessary_import
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s2\tutor_course_section_s2.dart:78:38 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s2\tutor_course_section_s2.dart:81:44 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s2\tutor_course_section_s2.dart:94:38 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s2\tutor_course_section_s2.dart:97:44 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s2\tutor_course_section_s2.dart:131:38 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s2\tutor_course_section_s2.dart:134:44 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s2\tutor_course_section_s2.dart:147:38 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s2\tutor_course_section_s2.dart:150:44 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s2\tutor_course_section_s2.dart:212:38 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s2\tutor_course_section_s2.dart:215:44 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s3\tutor_course_section_s3.dart:77:38 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s3\tutor_course_section_s3.dart:80:44 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s3\tutor_course_section_s3.dart:93:38 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s3\tutor_course_section_s3.dart:96:44 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s5\tutor_course_section_s5.dart:69:38 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s5\tutor_course_section_s5.dart:72:44 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s5\tutor_course_section_s5.dart:83:38 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_course_section\sub_screens\tutor_course_section_s5\tutor_course_section_s5.dart:86:44 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_profile_settings_section\sub_screens\tutor_profile_settings_section_s1\tutor_profile_settings_section_s1.dart:70:34 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\feature\tutor_dashboard\tutor_screens\tutor_profile_settings_section\sub_screens\tutor_profile_settings_section_s1\tutor_profile_settings_section_s1.dart:71:36 - prefer_const_constructors
+   info - The import of 'package:flutter/cupertino.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\ui_molecules\appbar\appbar.dart:8:8 - unnecessary_import
+   info - The import of 'package:flutter/widgets.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\ui_molecules\appbar\appbar.dart:10:8 - unnecessary_import
+   info - Invalid use of a private type in a public API - lib\ui_molecules\slide_able_button\slideable_widget.dart:36:3 - library_private_types_in_public_api
+   info - Use 'const' with the constructor to improve performance - lib\ui_molecules\slide_able_button\slideable_widget.dart:102:29 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui_molecules\slide_able_button\slideable_widget.dart:107:29 - prefer_const_constructors
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\ui_molecules\slide_able_button\slideable_widget.dart:113:16 - sized_box_for_whitespace
+   info - Use the generic function type syntax in 'typedef's - lib\ui_molecules\slide_able_button\slideable_widget.dart:127:9 - prefer_generic_function_type_aliases
+   info - The import of 'package:flutter/services.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\utils\colors_utils.dart:2:8 - unnecessary_import
+   info - Parameter 'key' could be a super parameter - lib\utils\dotted_line_divider.dart:10:9 - use_super_parameters
+

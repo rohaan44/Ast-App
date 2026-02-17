@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class AppColor {
   AppColor._();
@@ -164,4 +163,6 @@ class AppColor {
   static const cE04900 = Color(0xffE04900);
   static const cB3B3B3 = Color(0xffB3B3B3);
   static const c8E8E8E = Color(0xff8E8E8E);
+  static const cFFA500 = Color(0xffFFA500);
+  static const cEA5823 = Color(0xffEA5823);
 }

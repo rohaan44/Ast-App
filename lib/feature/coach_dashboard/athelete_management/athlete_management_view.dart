@@ -17,8 +17,12 @@ class AthleteManagementView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     final model =
         Provider.of<AthleteManagementController>(context, listen: false);
+=======
+    final model = context.watch<AthleteManagementController>();
+>>>>>>> fbd93d8601f04aabb75b9077bdc2330f6ee4bc1a
     model.setContext(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (model.coachesList.isEmpty && !model.isLoading) {
@@ -29,7 +33,10 @@ class AthleteManagementView extends StatelessWidget {
       //   controller.getAtheletPendingRequest(context: context);
       // });
     });
+<<<<<<< HEAD
 
+=======
+>>>>>>> fbd93d8601f04aabb75b9077bdc2330f6ee4bc1a
     return Scaffold(
       body: SafeArea(
           child: GlobalSkeleton(
