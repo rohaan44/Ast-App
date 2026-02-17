@@ -54,7 +54,8 @@ class AssetUtils {
   static const String icon3 = "${svg}Icon (3).svg";
   static const String sofaIcon = "${svg}sofa.svg";
   static const String bicepIcon = "${svg}bicep.svg";
-
+  static const String maleIcon =  "${svg}anonymous_male.svg";
+  static const String femaleIcon =  "${svg}anonymous_female.svg";
   static const String tagIcon = "${svg}tag_icon.svg";
   static const String colonIcon = "${svg}colons.svg";
   static const String infoIcon = "${svg}info_icon.svg";
@@ -112,7 +113,7 @@ class AssetUtils {
   static const String appCrossIcon = "${svg}app_cross_icon.svg";
   static const String closeIcon = "${svg}close_icon.svg";
   static const String breadIcon = "${svg}bread_icon.svg";
-
+   
   static const String pinAppleIcon = "${svg}pinApple.svg";
   static const String fireIcon = "${svg}fire_icon.svg";
   static const String arrowUp = "${svg}arrow_up.svg";

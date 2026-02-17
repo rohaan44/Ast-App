@@ -1,12 +1,15 @@
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/coach_profile/coach_profile_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
-// import 'package:ast_official/utils/asset_utils.dart';
+import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
 import 'package:ast_official/utils/shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +20,8 @@ class CoachProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     // Ensuring controller exists in context is handled by parent provider
     final controller = context.watch<CoachProfileController>();
-
+    final flowData =
+        context.read<FlowDataProvider>().getFlowData(coachProfile)?["map"];
     return SafeArea(
       child: Scaffold(
         body: GlobalSkeleton(
@@ -28,7 +32,7 @@ class CoachProfileView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildHeader(context, controller),
+                _buildHeader(context, controller, flowData),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: cw(16)),
                   child: Column(
@@ -36,13 +40,21 @@ class CoachProfileView extends StatelessWidget {
                     children: [
                       SizedBox(height: ch(24)),
                       _buildActionButtons(
-                          onSendRequest: () {}, onMessage: () {}),
+                          reqIsLoading: controller.isLoading,
+                          model: controller,
+                          context: context,
+                          onSendRequest: () {
+                            controller.sendCoachRequest(
+                                coachId: flowData['user']["_id"],
+                                context: context);
+                          },
+                          onMessage: () {}),
                       SizedBox(height: ch(24)),
-                      _buildAboutSection(controller),
+                      _buildAboutSection(controller, flowData),
                       SizedBox(height: ch(24)),
-                      _buildWorkoutsSection(controller),
+                      _buildWorkoutsSection(controller, flowData),
                       SizedBox(height: ch(24)),
-                      _buildReviewsSection(controller),
+                      _buildReviewsSection(controller, flowData),
                     ],
                   ),
                 ),
@@ -54,7 +66,8 @@ class CoachProfileView extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context, CoachProfileController controller) {
+  Widget _buildHeader(BuildContext context, CoachProfileController controller,
+      Map<String, dynamic> flowData) {
     return Column(
       children: [
         // App Bar Row
@@ -64,84 +77,137 @@ class CoachProfileView extends StatelessWidget {
             children: [
               IconButton(
                 icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  controller.clearProfile();
+                  context.read<FlowDataProvider>().clearFlow(coachProfile);
+                  // final flowData = context
+                  //     .read<FlowDataProvider>()
+                  //     .getFlowData(coachProfile);
+                  // log(flowData.toString());
+                  Navigator.pop(context);
+                },
               ),
               const Spacer(),
             ],
           ),
         ),
-        // Profile Image
         Container(
           height: cw(100),
           width: cw(100),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(color: AppColor.c252525, width: 2),
-            image: DecorationImage(
-              image: NetworkImage(controller.coachData['image'] ?? ""),
-              fit: BoxFit.cover,
-            ),
+          ),
+          child: ClipOval(
+            child: (flowData["avatar"] != null &&
+                    flowData["avatar"].toString().startsWith("http"))
+                ? Image.network(
+                    flowData["avatar"],
+                    fit: BoxFit.cover,
+                    // errorBuilder: (context, error, stackTrace) =>
+                    //     Image.asset(AssetUtils.person, fit: BoxFit.cover),
+                  )
+                : (flowData["gender"] == "male")
+                    ? SvgPicture.asset(
+                        AssetUtils.maleIcon,
+                        fit: BoxFit.cover,
+                      )
+                    : SvgPicture.asset(
+                        AssetUtils.femaleIcon,
+                        fit: BoxFit.cover,
+                      ),
           ),
         ),
         SizedBox(height: ch(12)),
         // Name
-        AppText(
-          txt: controller.coachData['name'] ?? "Name",
-          fontSize: AppFontSize.f22,
-          fontWeight: FontWeight.w700,
-          color: AppColor.white,
-        ),
-        SizedBox(height: ch(8)),
+        (flowData['fullName'] == "")
+            ? AppText(
+                txt: "Anonymous ${flowData['_id'].toString().substring(0, 4)}",
+                fontSize: AppFontSize.f24,
+                fontWeight: FontWeight.w600,
+                color: AppColor.white,
+              )
+            : AppText(
+                txt: flowData['fullName'],
+                fontSize: AppFontSize.f24,
+                fontWeight: FontWeight.w600,
+                color: AppColor.white,
+              ),
+        SizedBox(height: ch(20)),
         // Specialties
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ...(controller.coachData['specialties'] as List)
-                .asMap()
-                .entries
-                .map((entry) {
-              final Map item = entry.value;
-              final index = entry.key;
-              return Row(
+            // Check if the list is empty
+            if ((flowData['fitnessGoals'] as List).isEmpty)
+              Row(
                 children: [
-                  // SvgPicture.asset(AssetUtils.heartIcon, height: 16, width: 16, color: AppColor.red), // Placeholder icon
-                  // Using dynamic icon logic or placeholders
                   Icon(
-                    item['label'] == "Cardio"
-                        ? Icons.favorite
-                        : item['label'] == "Anaerobico"
-                            ? Icons.bolt
-                            : Icons.balance,
-                    color: item['label'] == "Cardio"
-                        ? AppColor.red
-                        : item['label'] == "Anaerobico"
-                            ? Colors.amber
-                            : Colors.cyan,
+                    Icons.fitness_center,
+                    color: Colors.grey,
                     size: 16,
                   ),
                   SizedBox(width: cw(4)),
                   AppText(
-                      txt: item['label'],
+                    txt: "General Fitness",
+                    fontSize: AppFontSize.f16,
+                    color: AppColor.white.withOpacity(0.8),
+                  ),
+                ],
+              )
+            else
+              ...(flowData['fitnessGoals'] as List)
+                  .asMap()
+                  .entries
+                  .map((entry) {
+                final dynamic item = entry.value;
+                final index = entry.key;
+                final String label =
+                    item is Map ? (item['label'] ?? "") : item.toString();
+
+                return Row(
+                  children: [
+                    Icon(
+                      label == "Cardio"
+                          ? Icons.favorite
+                          : label == "Anaerobico"
+                              ? Icons.bolt
+                              : Icons.balance,
+                      color: label == "Cardio"
+                          ? AppColor.red
+                          : label == "Anaerobico"
+                              ? Colors.amber
+                              : Colors.cyan,
+                      size: 16,
+                    ),
+                    SizedBox(width: cw(4)),
+                    AppText(
+                      txt: label,
                       fontSize: AppFontSize.f16,
-                      color: AppColor.white.withOpacity(0.8)),
-                  if (index !=
-                      (controller.coachData['specialties'] as List).length - 1)
-                    Container(
+                      color: AppColor.white.withOpacity(0.8),
+                    ),
+                    // Add divider if not the last item
+                    if (index != (flowData['fitnessGoals'] as List).length - 1)
+                      Container(
                         height: 12,
                         width: 1,
                         color: Colors.white24,
-                        margin: EdgeInsets.symmetric(horizontal: cw(8))),
-                ],
-              );
-            }).toList(),
+                        margin: EdgeInsets.symmetric(horizontal: cw(8)),
+                      ),
+                  ],
+                );
+              }).toList(),
           ],
-        ),
+        )
       ],
     );
   }
 
   Widget _buildActionButtons(
-      {VoidCallback? onSendRequest, VoidCallback? onMessage}) {
+      {VoidCallback? onSendRequest,
+      VoidCallback? onMessage,
+      required CoachProfileController model,
+      required bool reqIsLoading,
+      required BuildContext context}) {
     return Row(
       children: [
         Expanded(
@@ -151,10 +217,11 @@ class CoachProfileView extends StatelessWidget {
           // borderColor: AppColor.c1E1E1E,
           // showIcon: true,
           // icon: const Icon(Icons.email_outlined, color: Colors.white, size: 20),
+          isLoading: reqIsLoading,
           textColor: AppColor.white,
           buttonColor: AppColor.red,
           onPressed: onSendRequest ?? () {},
-          text: "Send Request",
+          text: (model.isLoadingCoachRequest) ? "Request Send" : "Send Request",
         )),
         SizedBox(width: cw(12)),
         Expanded(
@@ -163,7 +230,8 @@ class CoachProfileView extends StatelessWidget {
           isBorder: true,
           borderColor: AppColor.c252525,
           showIcon: true,
-          icon: const Icon(Icons.email_outlined, color: Colors.white, size: 20),
+          icon:
+              const Icon(Icons.email_outlined, color: AppColor.white, size: 20),
           textColor: AppColor.white,
           buttonColor: AppColor.c171717,
           onPressed: onMessage ?? () {},
@@ -185,7 +253,8 @@ class CoachProfileView extends StatelessWidget {
     );
   }
 
-  Widget _buildAboutSection(CoachProfileController controller) {
+  Widget _buildAboutSection(
+      CoachProfileController controller, Map<String, dynamic> flowData) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -208,28 +277,39 @@ class CoachProfileView extends StatelessWidget {
           ),
         ),
         SizedBox(height: ch(8)),
-        GestureDetector(
-          onTap: () {
-            controller.toggleAboutExpanded();
-          },
-          child: Consumer<CoachProfileController>(
-              builder: (context, controller, child) {
-            return AppText(
-              txt: controller.coachData['about'] ?? "",
-              fontSize: AppFontSize.f15,
-              fontWeight: FontWeight.w400,
-              color: AppColor.white.withOpacity(0.7),
-              maxLines: controller.isAboutExpanded ? 100 : 4,
-              overflow: TextOverflow.ellipsis,
-              height: 1.5,
-            );
-          }),
-        ),
+        (flowData.containsKey("bio") || flowData["bio"] != "")
+            ? AppText(
+                txt: "No bio available",
+                fontSize: AppFontSize.f16,
+                fontWeight: FontWeight.w400,
+                color: AppColor.white.withOpacity(0.7),
+                maxLines: controller.isAboutExpanded ? 100 : 4,
+                overflow: TextOverflow.ellipsis,
+                height: 1.5,
+              )
+            : GestureDetector(
+                onTap: () {
+                  controller.toggleAboutExpanded();
+                },
+                child: Consumer<CoachProfileController>(
+                    builder: (context, controller, child) {
+                  return AppText(
+                    txt: flowData['bio'].toString(),
+                    fontSize: AppFontSize.f16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.white.withOpacity(0.7),
+                    maxLines: controller.isAboutExpanded ? 100 : 4,
+                    overflow: TextOverflow.ellipsis,
+                    height: 1.5,
+                  );
+                }),
+              )
       ],
     );
   }
 
-  Widget _buildWorkoutsSection(CoachProfileController controller) {
+  Widget _buildWorkoutsSection(
+      CoachProfileController controller, Map<String, dynamic> flowData) {
     return Column(
       children: [
         Row(
@@ -250,6 +330,7 @@ class CoachProfileView extends StatelessWidget {
         ),
         SizedBox(height: ch(12)),
         // Single Horizontal List (or just one card as per image reference)
+        // Single Horizontal List (or just one card as per image reference)
         ...controller.workouts
             .map((workout) => _buildWorkoutCard(workout))
             .toList(),
@@ -263,51 +344,71 @@ class CoachProfileView extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(cw(16)),
-        image: DecorationImage(
-          image: NetworkImage(workout['image']),
-          fit: BoxFit.cover,
-          colorFilter:
-              ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.darken),
-        ),
       ),
-      padding: EdgeInsets.all(cw(12)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          Row(
-            children: [
-              _buildBadge(workout['badges'][0], Icons.timer_outlined),
-              SizedBox(width: cw(8)),
-              _buildBadge(
-                  workout['badges'][1], Icons.local_fire_department_outlined),
-            ],
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(cw(16)),
+              child: (workout['image'] != null &&
+                      workout['image'].toString().startsWith("http"))
+                  ? Image.network(
+                      workout['image'],
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) =>
+                          Container(color: Colors.grey.withOpacity(0.2)),
+                    )
+                  : Container(color: Colors.grey.withOpacity(0.2)),
+            ),
           ),
-          const Spacer(),
-          AppText(
-            txt: workout['title'],
-            fontSize: AppFontSize.f20,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
+          Positioned.fill(
+              child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(cw(16)),
+                color: Colors.black.withOpacity(0.3)),
+          )),
+          Padding(
+            padding: EdgeInsets.all(cw(12)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    _buildBadge(workout['badges'][0], Icons.timer_outlined),
+                    SizedBox(width: cw(8)),
+                    _buildBadge(workout['badges'][1],
+                        Icons.local_fire_department_outlined),
+                  ],
+                ),
+                const Spacer(),
+                AppText(
+                  txt: workout['title'],
+                  fontSize: AppFontSize.f20,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+                AppText(
+                  txt: workout['subtitle'],
+                  fontSize: AppFontSize.f15,
+                  color: Colors.white70,
+                  fontWeight: FontWeight.w600,
+                ),
+                SizedBox(height: ch(8)),
+                Row(
+                  children: [
+                    _buildTag(workout['tags'][0], dark: true),
+                    SizedBox(width: cw(8)),
+                    _buildTag(workout['tags'][1], dark: true),
+                    const Spacer(),
+                    const CircleAvatar(
+                      backgroundColor: Colors.white24,
+                      child: Icon(Icons.play_arrow, color: Colors.white),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
-          AppText(
-            txt: workout['subtitle'],
-            fontSize: AppFontSize.f15,
-            color: Colors.white70,
-            fontWeight: FontWeight.w600,
-          ),
-          SizedBox(height: ch(8)),
-          Row(
-            children: [
-              _buildTag(workout['tags'][0], dark: true),
-              SizedBox(width: cw(8)),
-              _buildTag(workout['tags'][1], dark: true),
-              const Spacer(),
-              const CircleAvatar(
-                backgroundColor: Colors.white24,
-                child: Icon(Icons.play_arrow, color: Colors.white),
-              )
-            ],
-          )
         ],
       ),
     );
@@ -342,7 +443,8 @@ class CoachProfileView extends StatelessWidget {
     );
   }
 
-  Widget _buildReviewsSection(CoachProfileController controller) {
+  Widget _buildReviewsSection(
+      CoachProfileController controller, Map<String, dynamic> flowData) {
     return Column(
       children: [
         Row(

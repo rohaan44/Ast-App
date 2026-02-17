@@ -9,12 +9,11 @@ class DashboardHomeScreenController with ChangeNotifier {
   DashboardHomeScreenController({required this.appRepoService});
 
   int carouselValue = 0;
-
   void setCarouselValue(int index) {
     carouselValue = index;
     notifyListeners();
   }
-
+  
   List cardData = [
     {
       "title": "La sessione di allenamento\ndi oggi",

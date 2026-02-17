@@ -1,6 +1,10 @@
+import 'dart:developer';
+import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
+import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/ui_molecules/global_refresh_indicator/global_refresh_indicator.dart';
 import 'package:ast_official/ui_molecules/primary_textfield/primary_text_field.dart';
@@ -11,7 +15,6 @@ import 'package:ast_official/utils/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 
 class AtheletCoachesView extends StatelessWidget {
   const AtheletCoachesView({super.key});
@@ -26,70 +29,129 @@ class AtheletCoachesView extends StatelessWidget {
         controller.getCoaches(context: context);
       }
     });
-    return GlobalRefreshIndicator(
-      onRefresh: () async {
-        await controller.getCoaches(context: context);
-      },
-      child: AppDismissKeyboard(
-        child: SafeArea(
-          child: Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(ch(60)),
-              child: _appBar(context: context),
-            ),
-            body: Consumer<AtheletCoachesController>(
-              builder: (context, model, child) {
-                return Column(
-                  children: [
-                    SizedBox(height: ch(12)),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: cw(20)),
-                      child: primaryTextField(
-                        textFieldHeight: ch(46),
-                        prefixIcon: SvgPicture.asset(AssetUtils.searchIcon),
-                        hintText: "Cerca",
-                        borderRadius: cw(50),
-                        border: InputBorder.none,
-                        onChanged: (value) {
-                          model.setSearchQuery(value);
-                        },
-                      ),
+    return AppDismissKeyboard(
+      child: SafeArea(
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(ch(60)),
+            child: _appBar(context: context),
+          ),
+          body: Consumer<AtheletCoachesController>(
+            builder: (context, model, child) {
+              return Column(
+                children: [
+                  SizedBox(height: ch(12)),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: cw(20)),
+                    child: primaryTextField(
+                      textFieldHeight: ch(46),
+                      prefixIcon: SvgPicture.asset(AssetUtils.searchIcon),
+                      hintText: "Cerca",
+                      borderRadius: cw(50),
+                      border: InputBorder.none,
+                      onChanged: (value) {
+                        model.setSearchQuery(value);
+                      },
                     ),
-                    SizedBox(height: ch(20)),
-                    categorySelector(model),
-                    SizedBox(height: ch(12)),
-                    Expanded(
+                  ),
+                  SizedBox(height: ch(20)),
+                  categorySelector(model),
+                  SizedBox(height: ch(20)),
+                  Expanded(
+                    child: GlobalRefreshIndicator(
+                      onRefresh: () async {
+                        await model.getCoaches(context: context);
+                      },
                       child: GlobalSkeleton(
                         isLoading: model.isLoading,
                         child: ListView.separated(
                           controller: model.scrollController,
                           padding: EdgeInsets.symmetric(horizontal: cw(20)),
-                          physics: const BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
                           itemCount: model.filteredCoaches.length,
-                          separatorBuilder: (_, __) => SizedBox(height: ch(12)),
+                          separatorBuilder: (_, index) {
+                            return SizedBox(height: ch(12));
+                          },
                           itemBuilder: (context, index) {
                             final coach = model.filteredCoaches[index];
-                            final img = coach["img"]!;
-                            final title = coach["title"]!;
-                            final subTitle = coach["subTitle"]!;
+                            final img = coach["avatar"] ?? "";
+                            String title = coach["fullName"] ?? "Anonymous";
+                            final String subTitle = coach["bio"] ?? "";
+                            final String gender = coach["gender"] ?? "";
+                            final String? coachId = coach["_id"]?.toString() ??
+                                coach["id"]?.toString();
+                            final Map<String, dynamic>? user =
+                                coach['user'] is Map ? coach['user'] : null;
+                            final String? userId = user != null
+                                ? user['_id']?.toString()
+                                : coachId;
+
+                            if (title.isEmpty || title == "Anonymous") {
+                              if (userId != null && userId.length >= 8) {
+                                title = "Anonymous ${userId.substring(0, 8)}";
+                              }
+                            }
                             return InkWell(
                               onTap: () {
+                                log(coach["_id"].toString());
+                                log(coach.toString());
+                                context
+                                    .read<FlowDataProvider>()
+                                    .addOrUpdateFlow(
+                                        flowTag: coachProfile,
+                                        data: {
+                                      "id": coach["_id"].toString(),
+                                      "map": coach,
+                                    });
                                 Navigator.pushNamed(
                                     context, RoutePaths.coachProfileView);
                               },
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                // mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    height: ch(44),
-                                    width: cw(44),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image: NetworkImage(img),
-                                        fit: BoxFit.cover,
+                                  if (gender == "male") ...[
+                                    Container(
+                                      height: ch(44),
+                                      width: cw(44),
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
                                       ),
+                                      child:
+                                          SvgPicture.asset(AssetUtils.maleIcon),
                                     ),
-                                  ),
+                                  ] else if (gender == "female") ...[
+                                    Container(
+                                        height: ch(44),
+                                        width: cw(44),
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: SvgPicture.asset(
+                                            AssetUtils.femaleIcon)),
+                                  ] else
+                                    Container(
+                                      height: ch(44),
+                                      width: cw(44),
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: (img.isNotEmpty &&
+                                              img.startsWith("http"))
+                                          ? ClipOval(
+                                              child: Image.network(
+                                                img,
+                                                fit: BoxFit.cover,
+                                                errorBuilder: (context, error,
+                                                        stackTrace) =>
+                                                    SvgPicture.asset(
+                                                        AssetUtils.maleIcon),
+                                              ),
+                                            )
+                                          : SvgPicture.asset(
+                                              AssetUtils.maleIcon),
+                                    ),
                                   SizedBox(width: cw(8)),
                                   Column(
                                     crossAxisAlignment:
@@ -117,10 +179,11 @@ class AtheletCoachesView extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                  SizedBox(height: ch(110)),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -133,14 +196,9 @@ Widget _appBar({required BuildContext context}) {
     padding: EdgeInsets.symmetric(horizontal: cw(20)),
     child: Column(
       children: [
-        SizedBox(height: ch(20)),
+        SizedBox(height: ch(10)),
         Row(
           children: [
-            InkWell(
-              onTap: () => Navigator.pop(context),
-              child: SvgPicture.asset(AssetUtils.backArrow),
-            ),
-            const Spacer(),
             AppText(
               txt: "Allenatori",
               fontWeight: FontWeight.w600,
@@ -148,6 +206,24 @@ Widget _appBar({required BuildContext context}) {
               height: 1.5,
             ),
             const Spacer(),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(
+                    context, RoutePaths.athleteNotificationView);
+              },
+              child: Container(
+                height: ch(40),
+                width: cw(40),
+                padding: EdgeInsets.all(cw(2)),
+                decoration: BoxDecoration(
+                    border: Border.all(color: AppColor.c252525),
+                    shape: BoxShape.circle,
+                    color: AppColor.transparent),
+                child: const Center(
+                  child: Icon(Icons.notifications_none_outlined),
+                ),
+              ),
+            ),
           ],
         ),
       ],

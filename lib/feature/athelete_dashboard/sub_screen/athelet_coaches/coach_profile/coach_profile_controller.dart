@@ -1,8 +1,18 @@
+import 'package:ast_official/domain/repository/app_repo_service.dart';
+import 'package:ast_official/helpers/api_helper/api_helper.dart';
+import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
+
 import 'package:flutter/material.dart';
 
 class CoachProfileController with ChangeNotifier {
-  bool isLoading = true;
+  final AppRepoService appRepoService;
   bool isAboutExpanded = false;
+  String? _lastFetchedId;
+
+  CoachProfileController({required this.appRepoService}) {
+    // _init();
+    // getCoachProfileById(id: "", context: context);
+  }
 
   void toggleAboutExpanded() {
     isAboutExpanded = !isAboutExpanded;
@@ -39,14 +49,79 @@ class CoachProfileController with ChangeNotifier {
     "totalReviews": "31k",
     "distribution": [0.8, 0.6, 0.4, 0.2, 0.1], // 5 to 1 stars
   };
+  // void _init() async {
+  //   await Future.delayed(const Duration(seconds: 1));
+  //   isLoading = false;
+  //   notifyListeners();
+  // }
+  Map<String, dynamic>? _coachProfile;
+  Map<String, dynamic>? get coachProfile => _coachProfile;
 
-  CoachProfileController() {
-    _init();
+  void clearProfile() {
+    _coachProfile = null;
+    _lastFetchedId = null;
+    notifyListeners();
   }
 
-  void _init() async {
-    await Future.delayed(const Duration(seconds: 1));
-    isLoading = false;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  
+    bool _isLoadingCoachRequest = false;
+  bool get isLoadingCoachRequest => _isLoadingCoachRequest;
+
+  Future<void> sendCoachRequest(
+      {required String coachId, required BuildContext context}) async {
+    _isLoading = true;
     notifyListeners();
+    await runApiCall(
+        context: context,
+        apiCall: () => appRepoService.sendCoachRequest(coachId: coachId),
+        onSuccess: (response) async {
+          _isLoadingCoachRequest = true;
+          showApiSnackBar(
+            context,
+            title: "Success",
+            message: "Coach request sent successfully",
+            isSuccess: true,
+          );
+        });
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  // Future<void> getCoachProfileById(
+  //     {required String id, required BuildContext context}) async {
+  //   if (isLoading || _lastFetchedId == id) return;
+
+  //   _lastFetchedId = id;
+  //   isLoading = true;
+  //   notifyListeners();
+  //   await runApiCall(
+  //       apiCall: () => appRepoService.getCoachProfileById(id: id),
+  //       context: context,
+  //       onSuccess: (response) async {
+  //         // Robust parsing for different API response structures
+  //         final dynamic data = response['data'];
+  //         if (data is Map) {
+  //           final List? users = data['users'];
+  //           if (users != null && users.isNotEmpty) {
+  //             _coachProfile = users.first as Map<String, dynamic>;
+  //           } else if (data.containsKey('_id') || data.containsKey('id')) {
+  //             _coachProfile = data as Map<String, dynamic>;
+  //           } else {
+  //             _coachProfile = response as Map<String, dynamic>;
+  //           }
+  //         } else {
+  //           _coachProfile = response as Map<String, dynamic>;
+  //         }
+  //       });
+  //   isLoading = false;
+  //   notifyListeners();
+  // }
+
+  @override
+  void dispose() {
+    debugPrint("CoachProfileController DISPOSED");
+    super.dispose();
   }
 }

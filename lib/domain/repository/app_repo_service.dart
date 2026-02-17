@@ -17,6 +17,10 @@ class AppRepoService {
     return appRepo.getMyProfile();
   }
 
+  Future<Map<String, dynamic>> getCoachProfileById({required String id}) async {
+    return appRepo.getCoachProfileById(id: id);
+  }
+
   Future<Map<String, dynamic>> updateProfilePicture({
     required String imagePath,
   }) async {
@@ -67,6 +71,10 @@ class AppRepoService {
     return appRepo.getCoaches(page: page, limit: limit);
   }
 
+  Future<Map<String, dynamic>> sendCoachRequest({required String coachId}) async {
+    return appRepo.sendCoachRequest(coachId: coachId);
+  }
+
   // ================= ATHLETE =================
 
   Future<GetRollAthleteResponseModel> getRoleAthlete({
@@ -110,6 +118,34 @@ class AppRepoService {
     return false;
   }
 
+//  coach home screen
+  Future<Map<String, dynamic>> getCoachNotifications({
+    int page = 1,
+    int limit = 20,
+  }) async {
+    return appRepo.getCoahNotifications(page: page, limit: limit);
+  }
+
+  Future<Map<String, dynamic>> getCoahRelationshipAthelet({
+    int page = 1,
+    int limit = 20,
+  }) async {
+    return appRepo.getCoahRelationshipAthelet(page: page, limit: limit);
+  }
+
+  Future<Map<String, dynamic>> getCoahCheckins({
+    int page = 1,
+    int limit = 20,
+  }) async {
+    return appRepo.getCoahCheckins(page: page, limit: limit);
+  }
+
+  Future<Map<String, dynamic>> getCoahWorkoutsMyCreated({
+    int page = 1,
+    int limit = 20,
+  }) async {
+    return appRepo.getCoahWorkoutsMyCreated(page: page, limit: limit);
+  }
   // ================= TRAINING / PLANS =================
 
   Future<dynamic> createExcercise({

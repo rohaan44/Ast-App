@@ -21,7 +21,7 @@ class RoutePaths {
   static const String chooseYourPlan = '/chooseYourPlan';
   static const String walletView = '/walletView';
   static const String successView = '/successView';
-
+  static const String athleteNotificationView = '/athleteNotificationView';
   //***********Dashboard  *************/
 
   static const String dashboardView = '/dashboardView';

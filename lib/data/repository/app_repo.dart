@@ -19,6 +19,15 @@ class AppRepo {
     return GetMyProfile.fromJson(response);
   }
 
+  Future<Map<String, dynamic>> getCoachProfileById({required String id}) async {
+    var response = await _dioHelper.get(
+      isAuthRequired: true,
+      url: "${NetworkProperties.baseUrl}users/search",
+      queryParameters: {"role": "coach", "id": id},
+    );
+    return response;
+  }
+
   Future<GetDailyNutrition> getDailyNutrition() async {
     var response = await _dioHelper.get(
         isAuthRequired: true,
@@ -69,7 +78,7 @@ class AppRepo {
         isAuthRequired: true,
         url: "${NetworkProperties.baseUrl}users/profile",
         requestBody: {
-          "name": name,
+          "fullName": name,
           "email": email,
           "phone": phone,
           "bio": bio,
@@ -84,6 +93,15 @@ class AppRepo {
         isAuthRequired: true,
         queryParameters: {"role": "coach", "page": page, "limit": limit},
         url: "${NetworkProperties.baseUrl}users/search");
+    return response;
+  }
+
+  Future<Map<String, dynamic>> sendCoachRequest(
+      {required String coachId}) async {
+    var response = await _dioHelper.post(
+        isAuthRequired: true,
+        requestBody: {"coachId": coachId},
+        url: "${NetworkProperties.baseUrl}relationships/request");
     return response;
   }
 //   Coach Flow ...
@@ -151,6 +169,46 @@ class AppRepo {
         });
     return response;
   }
+
+// coach home screen
+
+  Future<Map<String, dynamic>> getCoahNotifications(
+      {int page = 1, int limit = 20}) async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        queryParameters: {"role": "coach", "page": page, "limit": limit},
+        url: "${NetworkProperties.baseUrl}notifications");
+    return response;
+  }
+
+  Future<Map<String, dynamic>> getCoahRelationshipAthelet(
+      {int page = 1, int limit = 20}) async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        queryParameters: {"role": "coach", "page": page, "limit": limit},
+        url: "${NetworkProperties.baseUrl}relationships/athletes");
+    return response;
+  }
+
+  Future<Map<String, dynamic>> getCoahCheckins(
+      {int page = 1, int limit = 20}) async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        queryParameters: {"role": "coach", "page": page, "limit": limit},
+        url: "${NetworkProperties.baseUrl}checkins");
+    return response;
+  }
+
+  Future<Map<String, dynamic>> getCoahWorkoutsMyCreated(
+      {int page = 1, int limit = 20}) async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        queryParameters: {"role": "coach", "page": page, "limit": limit},
+        url: "${NetworkProperties.baseUrl}workouts/my-created");
+    return response;
+  }
+
+  //  cochessss end here..
 
   Future<Map<String, dynamic>> sendCheckIn(
       {required Map<String, dynamic> requestBody}) async {
