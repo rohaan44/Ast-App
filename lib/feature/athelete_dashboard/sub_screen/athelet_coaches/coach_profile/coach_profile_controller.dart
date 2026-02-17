@@ -1,8 +1,14 @@
+import 'package:ast_official/domain/repository/app_repo_service.dart';
 import 'package:flutter/material.dart';
 
 class CoachProfileController with ChangeNotifier {
+ final AppRepoService appRepoService;
   bool isLoading = true;
   bool isAboutExpanded = false;
+
+  CoachProfileController(this.appRepoService) {
+    _init();
+  }
 
   void toggleAboutExpanded() {
     isAboutExpanded = !isAboutExpanded;
@@ -39,10 +45,6 @@ class CoachProfileController with ChangeNotifier {
     "totalReviews": "31k",
     "distribution": [0.8, 0.6, 0.4, 0.2, 0.1], // 5 to 1 stars
   };
-
-  CoachProfileController() {
-    _init();
-  }
 
   void _init() async {
     await Future.delayed(const Duration(seconds: 1));
