@@ -170,6 +170,46 @@ class AppRepo {
     return response;
   }
 
+// coach home screen
+
+  Future<Map<String, dynamic>> getCoahNotifications(
+      {int page = 1, int limit = 20}) async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        queryParameters: {"role": "coach", "page": page, "limit": limit},
+        url: "${NetworkProperties.baseUrl}notifications");
+    return response;
+  }
+
+  Future<Map<String, dynamic>> getCoahRelationshipAthelet(
+      {int page = 1, int limit = 20}) async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        queryParameters: {"role": "coach", "page": page, "limit": limit},
+        url: "${NetworkProperties.baseUrl}relationships/athletes");
+    return response;
+  }
+
+  Future<Map<String, dynamic>> getCoahCheckins(
+      {int page = 1, int limit = 20}) async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        queryParameters: {"role": "coach", "page": page, "limit": limit},
+        url: "${NetworkProperties.baseUrl}checkins");
+    return response;
+  }
+
+  Future<Map<String, dynamic>> getCoahWorkoutsMyCreated(
+      {int page = 1, int limit = 20}) async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        queryParameters: {"role": "coach", "page": page, "limit": limit},
+        url: "${NetworkProperties.baseUrl}workouts/my-created");
+    return response;
+  }
+
+  //  cochessss end here..
+
   Future<Map<String, dynamic>> sendCheckIn(
       {required Map<String, dynamic> requestBody}) async {
     var response = await _dioHelper.post(

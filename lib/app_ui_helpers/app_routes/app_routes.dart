@@ -34,6 +34,7 @@ import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/sub_
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/sub_screen/training_detail/training_detail_view.dart';
 import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_management_view.dart';
 import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_profile/athelete_profile_view.dart';
+import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_profile/athlete_profile_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/check_in/edit_ai_suggestion/edit_ai_suggestion_view.dart';
 import 'package:ast_official/feature/coach_dashboard/check_in/seleted_check_in/selected_check_in_view.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_Message/selected_chat/selected_chat_view.dart';
@@ -81,6 +82,7 @@ import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/sub_screens/tutor_course_section_s3/tutor_course_section_s3.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/sub_screens/tutor_course_section_s4/tutor_course_section_s4.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/sub_screens/tutor_course_section_s5/tutor_course_section_s5.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/sub_screens/tutor_course_section_s5/tutor_course_section_s5_controller.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/tutor_course_section.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_profile_settings_section/sub_screens/tutor_profile_settings_section_s1/tutor_profile_settings_section_s1.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_profile_settings_section/sub_screens/tutor_profile_settings_section_s2/tutor_profile_settings_section_s2.dart';
@@ -927,8 +929,10 @@ class AppRouter {
       case RoutePaths.tutorCourseSectionS5View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            // S5 doesn't seem to have a controller in imports yet?
-            return const TutorCourseSectionS5View();
+            return ChangeNotifierProvider(
+              create: (context) => TutorCourseSectionS5Controller(),
+              child: const TutorCourseSectionS5View(),
+            );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -997,8 +1001,11 @@ class AppRouter {
       case RoutePaths.athleteProfileView:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return const AthleteProfileView(
-              athlete: null,
+            return ChangeNotifierProvider(
+              create: (context) => AthleteProfileController(),
+              child: const AthleteProfileView(
+                athlete: null,
+              ),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {

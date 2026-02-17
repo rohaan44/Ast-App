@@ -62,7 +62,6 @@ List<SingleChildWidget> providersList = [
     create: (context) => AthleteProfileController(),
     lazy: true,
   ),
-
   ChangeNotifierProvider(
     create: (_) => FlowDataProvider(),
   ),

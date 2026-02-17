@@ -118,6 +118,34 @@ class AppRepoService {
     return false;
   }
 
+//  coach home screen
+  Future<Map<String, dynamic>> getCoachNotifications({
+    int page = 1,
+    int limit = 20,
+  }) async {
+    return appRepo.getCoahNotifications(page: page, limit: limit);
+  }
+
+  Future<Map<String, dynamic>> getCoahRelationshipAthelet({
+    int page = 1,
+    int limit = 20,
+  }) async {
+    return appRepo.getCoahRelationshipAthelet(page: page, limit: limit);
+  }
+
+  Future<Map<String, dynamic>> getCoahCheckins({
+    int page = 1,
+    int limit = 20,
+  }) async {
+    return appRepo.getCoahCheckins(page: page, limit: limit);
+  }
+
+  Future<Map<String, dynamic>> getCoahWorkoutsMyCreated({
+    int page = 1,
+    int limit = 20,
+  }) async {
+    return appRepo.getCoahWorkoutsMyCreated(page: page, limit: limit);
+  }
   // ================= TRAINING / PLANS =================
 
   Future<dynamic> createExcercise({
