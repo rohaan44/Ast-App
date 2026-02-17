@@ -1,7 +1,6 @@
 import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_management_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_profile/athelete_profile_view.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
-import 'package:ast_official/ui_molecules/appbar/appbar.dart';
 import 'package:ast_official/ui_molecules/listtile/athelet_notification_listtile.dart';
 import 'package:ast_official/ui_molecules/listtile/athlete_listtile.dart';
 import 'package:ast_official/ui_molecules/primary_textfield/primary_text_field.dart';
@@ -18,20 +17,19 @@ class AthleteManagementView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller =
+    final model =
         Provider.of<AthleteManagementController>(context, listen: false);
-    controller.setContext(context);
+    model.setContext(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (controller.coachesList.isEmpty && !controller.isLoading) {
-        controller.getAllMyAtheletes(context: context);
+      if (model.coachesList.isEmpty && !model.isLoading) {
+        model.getAllMyAtheletes(context: context);
       }
 
       // Future.delayed(const Duration(minutes: 1), () {
       //   controller.getAtheletPendingRequest(context: context);
       // });
     });
-    final model =
-        Provider.of<AthleteManagementController>(context, listen: false);
+
     return Scaffold(
       body: SafeArea(
           child: GlobalSkeleton(
@@ -40,22 +38,22 @@ class AthleteManagementView extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: cw(20)),
           child: Column(
             children: [
-              textProfileSettingAppbar(
-                  context: context,
-                  text: "Atlete",
-                  isNotificationIcon: true,
-                  isNotificationScreen: model.isNotificationScreen,
-                  notificationOnTap: () {
-                    model.isAtheletScreen = false;
-                    model.isNotificationScreen = true;
-                  },
-                  isAtheletIcon: true,
-                  isAtheletScreen: model.isAtheletScreen,
-                  atheletScreenOnTap: () {
-                    model.isAtheletScreen = true;
-                    model.isNotificationScreen = false;
-                  }),
-              if (model.isAtheletScreen) ...[
+              // textProfileSettingAppbar(
+              //     context: context,
+              //     text: "Atlete",
+              //     isNotificationIcon: true,
+              //     isNotificationScreen: model.isNotificationScreen,
+              //     notificationOnTap: () {
+              //       model.isAtheletScreen = false;
+              //       model.isNotificationScreen = true;
+              //     },
+              //     isAtheletIcon: true,
+              //     isAtheletScreen: model.isAtheletScreen,
+              //     atheletScreenOnTap: () {
+              //       model.isAtheletScreen = true;
+              //       model.isNotificationScreen = false;
+              //     }),
+              if (!model.isAtheletScreen) ...[
                 primaryTextField(
                     hintText: "Ricerca",
                     prefixIcon: SvgPicture.asset(AssetUtils.searchIcon),

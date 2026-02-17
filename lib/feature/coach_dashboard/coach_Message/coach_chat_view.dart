@@ -22,32 +22,32 @@ class CoachChatView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
           child: Column(
-                  children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: cw(20), vertical: ch(10)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AppText(
-                  txt: "Chats",
-                  fontSize: AppFontSize.f24,
-                  isItalic: true,
-                  color: AppColor.white,
-                  fontWeight: FontWeight.w600,
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: SvgPicture.asset(
-                    AssetUtils.addIcon,
-                    height: ch(30),
-                  ),
-                )
-              ],
-            ),
-          ),
+        children: [
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: cw(20), vertical: ch(10)),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       AppText(
+          //         txt: "Chats",
+          //         fontSize: AppFontSize.f24,
+          //         isItalic: true,
+          //         color: AppColor.white,
+          //         fontWeight: FontWeight.w600,
+          //       ),
+          //       IconButton(
+          //         onPressed: () {},
+          //         icon: SvgPicture.asset(
+          //           AssetUtils.addIcon,
+          //           height: ch(30),
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
           //SizedBox(height: ch(),),
           Padding(
-             padding: EdgeInsets.symmetric(horizontal: cw(20)),
+            padding: EdgeInsets.symmetric(horizontal: cw(20)),
             child: primaryTextField(
                 hintText: "Ricerca",
                 prefixIcon: SvgPicture.asset(AssetUtils.searchIcon),
@@ -56,10 +56,14 @@ class CoachChatView extends StatelessWidget {
                 border: InputBorder.none,
                 borderRadius: cw(50)),
           ),
-          SizedBox(height: ch(20),),
+          SizedBox(
+            height: ch(20),
+          ),
           Expanded(
             child: ListView.separated(
-              separatorBuilder: (c,incex){return appDivider();},
+              separatorBuilder: (c, incex) {
+                return appDivider();
+              },
               physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: cw(20)),
               itemCount: model.chats.length,
@@ -69,7 +73,7 @@ class CoachChatView extends StatelessWidget {
                   onTap: () {
                     context.read<FlowDataProvider>().addOrUpdateFlow(
                         flowTag: customerOnboarding, data: model.chats[index]);
-          
+
                     Navigator.pushNamed(context, RoutePaths.selectedChatScreen);
                   },
                   child: Padding(
@@ -84,7 +88,7 @@ class CoachChatView extends StatelessWidget {
                               NetworkImage(chat["image"].toString()),
                         ),
                         SizedBox(width: cw(12)),
-          
+
                         /// Chat Info
                         Expanded(
                           child: Column(
@@ -106,7 +110,7 @@ class CoachChatView extends StatelessWidget {
                             ],
                           ),
                         ),
-          
+
                         /// Time + Unread badge
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -140,7 +144,7 @@ class CoachChatView extends StatelessWidget {
                 );
               },
             ),
-          
+
             // ListTile(
             //   contentPadding: EdgeInsets.zero,
             //   leading: CircleAvatar(
@@ -159,8 +163,8 @@ class CoachChatView extends StatelessWidget {
             //   ),
             // )
           )
-                  ],
-                )),
+        ],
+      )),
     );
   }
 }

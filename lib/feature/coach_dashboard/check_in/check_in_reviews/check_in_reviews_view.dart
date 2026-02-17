@@ -7,7 +7,6 @@ import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
 import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
 import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
-import 'package:ast_official/ui_molecules/appbar/appbar.dart';
 import 'package:ast_official/ui_molecules/primary_textfield/primary_text_field.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
@@ -22,6 +21,14 @@ class CheckInReviewsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<CheckInReviewsController>(context, listen: false);
+
+    // controller.setContext(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (model.coachesList.isEmpty && !model.isLoading) {
+        model.getCoahCheckInReview(context: context);
+      }
+    });
+
     return AppDismissKeyboard(
       child: Scaffold(
         body: SafeArea(
@@ -34,10 +41,10 @@ class CheckInReviewsView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              textProfileSettingAppbar(
-                  context: context,
-                  text: "Recensioni del check-in",
-                  fontSize: AppFontSize.f24 - 4),
+              // textProfileSettingAppbar(
+              //     context: context,
+              //     text: "Recensioni del check-in",
+              //     fontSize: AppFontSize.f24 - 4),
               primaryTextField(
                   hintText: "Ricerca",
                   prefixIcon: SvgPicture.asset(AssetUtils.searchIcon),
@@ -74,8 +81,7 @@ class CheckInReviewsView extends StatelessWidget {
 Widget _buildAthleteList(BuildContext context) {
   return Consumer<CheckInReviewsController>(
     builder: (context, model, child) {
-      final athletes =
-          model.filteredAthletes;
+      final athletes = model.filteredAthletes;
       return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -87,8 +93,8 @@ Widget _buildAthleteList(BuildContext context) {
             context
                 .read<FlowDataProvider>()
                 .addOrUpdateFlow(flowTag: checkIn, data: athletes[index]);
-                Navigator.pushNamed(context, RoutePaths.selectedCheckInScreen);
-                // Navigator.push(context, MaterialPageRoute(builder: (context)=>const SelectedCheckInView()));
+            Navigator.pushNamed(context, RoutePaths.selectedCheckInScreen);
+            // Navigator.push(context, MaterialPageRoute(builder: (context)=>const SelectedCheckInView()));
           });
         },
       );
@@ -216,5 +222,3 @@ Widget buildAthleteTile(
     ],
   );
 }
-
-
