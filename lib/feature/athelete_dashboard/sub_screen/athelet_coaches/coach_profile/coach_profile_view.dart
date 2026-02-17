@@ -141,7 +141,7 @@ class CoachProfileView extends StatelessWidget {
             if ((flowData['fitnessGoals'] as List).isEmpty)
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.fitness_center,
                     color: Colors.grey,
                     size: 16,
@@ -195,7 +195,7 @@ class CoachProfileView extends StatelessWidget {
                       ),
                   ],
                 );
-              }).toList(),
+              }),
           ],
         )
       ],
@@ -333,7 +333,7 @@ class CoachProfileView extends StatelessWidget {
         // Single Horizontal List (or just one card as per image reference)
         ...controller.workouts
             .map((workout) => _buildWorkoutCard(workout))
-            .toList(),
+            ,
       ],
     );
   }

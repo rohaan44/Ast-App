@@ -280,7 +280,7 @@ class SelectedCheckInView extends StatelessWidget {
                                     borderRadius: cw(12),
                                     fontSize: AppFontSize.f15,
                                     onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (builder)=>EditAiSuggestionView()));
+                                      Navigator.push(context, MaterialPageRoute(builder: (builder)=>const EditAiSuggestionView()));
                                     },
                                   ),
                                 ),

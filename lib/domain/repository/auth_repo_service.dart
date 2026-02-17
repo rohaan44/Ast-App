@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:ast_official/core/network/auth_service/auth_service.dart';
 import 'package:ast_official/data/models/auth_response_model.dart';
 import 'package:ast_official/data/repository/auth_repo.dart';
@@ -17,15 +18,15 @@ class AuthRepoService {
 
     if (response.success == true && response.data != null) {
       if (response.data!.accessToken != null) {
-        print("ACCESS TOKEN => ${response.data?.accessToken}");
+        debugPrint("ACCESS TOKEN => ${response.data?.accessToken}");
         await AuthStorage.saveToken(response.data!.accessToken!);
       }
       if (response.data!.user?.id != null) {
-        print("ACCESS TOKEN2 => ${response.data?.user?.id}");
+        debugPrint("ACCESS TOKEN2 => ${response.data?.user?.id}");
         await AuthStorage.saveUserId(response.data!.user!.id!);
       }
       if (response.data!.refreshToken != null) {
-        print("ACCESS TOKEN3 => ${response.data?.refreshToken}");
+        debugPrint("ACCESS TOKEN3 => ${response.data?.refreshToken}");
         await AuthStorage.saveRefreshToken(response.data!.refreshToken!);
       }
       // Save role
@@ -38,44 +39,44 @@ class AuthRepoService {
 
   Future<AuthResponseModel> login(
       {required String email, required String password}) async {
-    print("📧 Login attempt for: $email");
+    debugPrint("📧 Login attempt for: $email");
     final response =
         await authRepository.login(email: email, password: password);
 
-    print(
+    debugPrint(
         "📥 Login response - success: ${response.success}, hasData: ${response.data != null}");
 
     if (response.success == true && response.data != null) {
-      print("🔑 Processing auth tokens...");
+      debugPrint("🔑 Processing auth tokens...");
 
       if (response.data!.accessToken != null) {
-        print("💾 Saving access token...");
+        debugPrint("💾 Saving access token...");
         await AuthStorage.saveToken(response.data!.accessToken!);
       } else {
-        print("⚠️ No access token in response");
+        debugPrint("⚠️ No access token in response");
       }
 
       if (response.data!.user?.id != null) {
-        print("💾 Saving user ID: ${response.data!.user!.id}");
+        debugPrint("💾 Saving user ID: ${response.data!.user!.id}");
         await AuthStorage.saveUserId(response.data!.user!.id!);
       }
 
       if (response.data!.refreshToken != null) {
-        print("💾 Saving refresh token...");
+        debugPrint("💾 Saving refresh token...");
         await AuthStorage.saveRefreshToken(response.data!.refreshToken!);
       } else {
-        print("⚠️ No refresh token in response");
+        debugPrint("⚠️ No refresh token in response");
       }
 
       if (response.data!.user?.role != null) {
-        print("💾 Saving role: ${response.data!.user!.role}");
+        debugPrint("💾 Saving role: ${response.data!.user!.role}");
         await AuthStorage.saveRole(response.data!.user!.role!);
       }
 
       return response;
     }
 
-    print("❌ Login failed or no data in response");
+    debugPrint("❌ Login failed or no data in response");
     return response;
   }
 
@@ -100,25 +101,25 @@ class AuthRepoService {
 
       // Save token if present
       if (data['accessToken'] != null) {
-        print("💾 Saving access token from verify-otp...");
+        debugPrint("💾 Saving access token from verify-otp...");
         await AuthStorage.saveToken(data['accessToken']);
       }
 
       // Save refresh token if present
       if (data['refreshToken'] != null) {
-        print("💾 Saving refresh token from verify-otp...");
+        debugPrint("💾 Saving refresh token from verify-otp...");
         await AuthStorage.saveRefreshToken(data['refreshToken']);
       }
 
       // Save user ID if present
       if (data['user'] != null && data['user']['id'] != null) {
-        print("💾 Saving user ID from verify-otp...");
+        debugPrint("💾 Saving user ID from verify-otp...");
         await AuthStorage.saveUserId(data['user']['id']);
       }
 
       // Save role if present
       if (data['user'] != null && data['user']['role'] != null) {
-        print("💾 Saving role from verify-otp: ${data['user']['role']}");
+        debugPrint("💾 Saving role from verify-otp: ${data['user']['role']}");
         await AuthStorage.saveRole(data['user']['role']);
       }
     }
@@ -154,7 +155,7 @@ class AuthRepoService {
 
       return false;
     } catch (e) {
-      print("❌ Error during refreshToken: $e");
+      debugPrint("❌ Error during refreshToken: $e");
       return false;
     }
   }

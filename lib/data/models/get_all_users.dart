@@ -57,7 +57,7 @@ class Address {
 
   Address.fromJson(Map<String, dynamic> json) {
     geolocation = json['geolocation'] != null
-        ? new Geolocation.fromJson(json['geolocation'])
+        ? Geolocation.fromJson(json['geolocation'])
         : null;
     city = json['city'];
     street = json['street'];
@@ -66,14 +66,14 @@ class Address {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.geolocation != null) {
-      data['geolocation'] = this.geolocation!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (geolocation != null) {
+      data['geolocation'] = geolocation!.toJson();
     }
-    data['city'] = this.city;
-    data['street'] = this.street;
-    data['number'] = this.number;
-    data['zipcode'] = this.zipcode;
+    data['city'] = city;
+    data['street'] = street;
+    data['number'] = number;
+    data['zipcode'] = zipcode;
     return data;
   }
 }
@@ -90,9 +90,9 @@ class Geolocation {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lat'] = this.lat;
-    data['long'] = this.long;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['lat'] = lat;
+    data['long'] = long;
     return data;
   }
 }
@@ -109,9 +109,9 @@ class Name {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['firstname'] = this.firstname;
-    data['lastname'] = this.lastname;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['firstname'] = firstname;
+    data['lastname'] = lastname;
     return data;
   }
 }

@@ -99,18 +99,18 @@ class _SwipeableWidgetState extends State<SwipeableWidget>
             final swipeValue = 60.0 / widgetSize;
             if (delta > deltaNeededToBeSwiped) {
               _controller.animateTo(swipeValue,
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   curve: Curves.fastOutSlowIn);
               widget.onSwipeCallback();
             } else {
               _controller.animateTo(1.0,
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   curve: Curves.fastOutSlowIn);
               widget.onSwipeValueCallback(1.0);
             }
           }
         },
-        child: Container(
+        child: SizedBox(
           height: widget.height,
           child: Align(
             alignment: Alignment.centerRight,
@@ -124,4 +124,4 @@ class _SwipeableWidgetState extends State<SwipeableWidget>
   }
 }
 
-typedef SwipeValueCallBack(double value);
+typedef SwipeValueCallBack = Function(double value);

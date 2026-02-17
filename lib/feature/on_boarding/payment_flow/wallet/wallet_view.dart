@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/on_boarding/payment_flow/wallet/wallet_controller.dart';
-import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
+// import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
 import 'package:ast_official/ui_molecules/app_helper/app_helpers.dart';
@@ -23,7 +23,7 @@ class WalletView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<SelectRoleController>();
+    final controller = context.read<WalletController>();
     final flowData =
         context.read<FlowDataProvider>().getFlowData(certificationRenew);
     final isRenew = flowData != null ? flowData["isRenew"] ?? false : false;
@@ -114,13 +114,15 @@ class WalletView extends StatelessWidget {
                     SizedBox(
                       height: ch(20),
                     ),
-                    if (context.read<SelectRoleController>().selectedRole ==
-                        "Athlete") ...[
+                    if (context
+                            .read<FlowDataProvider>()
+                            .getFlowData(customerOnboarding)!["value"] ==
+                        "athlete") ...[
                       paymentSummaryCard("Piano", "Base", "Importo", "€79.00"),
                     ] else if (context
-                            .read<SelectRoleController>()
-                            .selectedRole ==
-                        "Coach") ...[
+                            .read<FlowDataProvider>()
+                            .getFlowData(customerOnboarding)!["value"] ==
+                        "coach") ...[
                       if (isRenew) ...[
                         paymentSummaryCard("Rinnovo", "Rinnovo della licenza",
                             "Annuale", "€249.00")
@@ -131,15 +133,18 @@ class WalletView extends StatelessWidget {
                     const Spacer(),
                     AppButton(
                       onPressed: () {
-                        if (model.selectedRole == "stripe") {
-                          log("stripe");
-                        } else if (model.selectedRole == "apple") {
-                          log("apple");
-                        } else if (model.selectedRole == "paypal") {
-                          log("paypal");
-                        } else if (model.selectedRole == "google") {
-                          log("google");
-                        }
+                        context.read<FlowDataProvider>().addOrUpdateFlow(
+                            flowTag: customerOnboarding,
+                            data: {"selectMethod": controller.selectedMethod});
+                        // if (model.selectedRole == "stripe") {
+                        //   log("stripe");
+                        // } else if (model.selectedRole == "apple") {
+                        //   log("apple");
+                        // } else if (model.selectedRole == "paypal") {
+                        //   log("paypal");
+                        // } else if (model.selectedRole == "google") {
+                        //   log("google");
+                        // }
                         Navigator.pushNamedAndRemoveUntil(
                             context, RoutePaths.successView, (route) => false);
                       },

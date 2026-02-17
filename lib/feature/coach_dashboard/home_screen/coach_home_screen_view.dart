@@ -2,7 +2,6 @@ import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
-import 'package:ast_official/ui_molecules/appbar/appbar.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
@@ -17,20 +16,18 @@ class CoachHomeScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller =
+    final model =
         Provider.of<CoachHomeScreenController>(context, listen: false);
     // controller.setContext(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (controller.coachesList.isEmpty && !controller.isLoading) {
-        controller.getAllMyAtheletes(context: context);
+      if (model.coachesList.isEmpty && !model.isLoading) {
+        model.getAllMyAtheletes(context: context);
       }
 
       // Future.delayed(const Duration(minutes: 1), () {
       //   controller.getAtheletPendingRequest(context: context);
       // });
     });
-    final model =
-        Provider.of<CoachHomeScreenController>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: GlobalSkeleton(
@@ -39,8 +36,8 @@ class CoachHomeScreenView extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: cw(20)),
             child: Column(
               children: [
-                textProfileSettingAppbar(
-                    context: context, text: "Pannello Di Controllo"),
+                // textProfileSettingAppbar(
+                //     context: context, text: "Pannello Di Controllo"),
                 // Padding(
                 //   padding:
                 //       EdgeInsets.symmetric(horizontal: cw(20), vertical: ch(20)),

@@ -5,9 +5,7 @@ import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
 import 'package:ast_official/utils/gradients/app_gradients.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 

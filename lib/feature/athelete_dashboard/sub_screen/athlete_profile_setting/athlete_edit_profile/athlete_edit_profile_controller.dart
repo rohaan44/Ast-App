@@ -97,6 +97,22 @@ class AthleteEditProfileController with ChangeNotifier {
     notifyListeners();
   }
 
+  void addFitnessGoal(String goal) {
+    if (!_fitnessGoals.contains(goal)) {
+      _fitnessGoals.add(goal);
+      notifyListeners();
+    }
+  }
+
+  void toggleFitnessGoal(String goal) {
+    if (_fitnessGoals.contains(goal)) {
+      _fitnessGoals.remove(goal);
+    } else {
+      _fitnessGoals.add(goal);
+    }
+    notifyListeners();
+  }
+
   String bio = "";
   String fullName = "";
 

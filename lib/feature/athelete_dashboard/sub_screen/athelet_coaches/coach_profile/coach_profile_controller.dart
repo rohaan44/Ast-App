@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 class CoachProfileController with ChangeNotifier {
   final AppRepoService appRepoService;
   bool isAboutExpanded = false;
-  String? _lastFetchedId;
 
   CoachProfileController({required this.appRepoService}) {
     // _init();
@@ -59,14 +58,13 @@ class CoachProfileController with ChangeNotifier {
 
   void clearProfile() {
     _coachProfile = null;
-    _lastFetchedId = null;
     notifyListeners();
   }
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  
-    bool _isLoadingCoachRequest = false;
+
+  bool _isLoadingCoachRequest = false;
   bool get isLoadingCoachRequest => _isLoadingCoachRequest;
 
   Future<void> sendCoachRequest(

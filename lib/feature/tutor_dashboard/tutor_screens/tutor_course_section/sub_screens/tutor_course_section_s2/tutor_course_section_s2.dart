@@ -75,10 +75,10 @@ class TutorCourseSectionS2View extends StatelessWidget {
                             //     hintText: "Nozioni di base sulla nutrizione",
                             //     controller: model.shortDescriptionController),
                             TextField(
-                              style: TextStyle(color: AppColor.white),
+                              style: const TextStyle(color: AppColor.white),
                               decoration: InputDecoration(
                                 hintText: "Inserisci nome corso",
-                                hintStyle: TextStyle(color: Colors.grey),
+                                hintStyle: const TextStyle(color: Colors.grey),
                                 filled: true,
                                 fillColor: AppColor.c151515,
                                 border: OutlineInputBorder(
@@ -91,10 +91,10 @@ class TutorCourseSectionS2View extends StatelessWidget {
                             const SizedBox(height: 20),
                             TextField(
                               maxLines: 5,
-                              style: TextStyle(color: AppColor.white),
+                              style: const TextStyle(color: AppColor.white),
                               decoration: InputDecoration(
                                 hintText: "Scrivi una breve descrizione...",
-                                hintStyle: TextStyle(color: Colors.grey),
+                                hintStyle: const TextStyle(color: Colors.grey),
                                 filled: true,
                                 fillColor: AppColor.c151515,
                                 border: OutlineInputBorder(
@@ -128,10 +128,10 @@ class TutorCourseSectionS2View extends StatelessWidget {
                               height: ch(20),
                             ),
                             TextField(
-                              style: TextStyle(color: AppColor.white),
+                              style: const TextStyle(color: AppColor.white),
                               decoration: InputDecoration(
                                 hintText: "Es. 3 mesi",
-                                hintStyle: TextStyle(color: Colors.grey),
+                                hintStyle: const TextStyle(color: Colors.grey),
                                 filled: true,
                                 fillColor: AppColor.c151515,
                                 border: OutlineInputBorder(
@@ -144,10 +144,10 @@ class TutorCourseSectionS2View extends StatelessWidget {
                               height: ch(20),
                             ),
                             TextField(
-                              style: TextStyle(color: AppColor.white),
+                              style: const TextStyle(color: AppColor.white),
                               decoration: InputDecoration(
                                 hintText: "Inserisci numero studenti",
-                                hintStyle: TextStyle(color: Colors.grey),
+                                hintStyle: const TextStyle(color: Colors.grey),
                                 filled: true,
                                 fillColor: AppColor.c151515,
                                 border: OutlineInputBorder(
@@ -209,10 +209,10 @@ class TutorCourseSectionS2View extends StatelessWidget {
                               height: ch(20),
                             ),
                             TextField(
-                              style: TextStyle(color: AppColor.white),
+                              style: const TextStyle(color: AppColor.white),
                               decoration: InputDecoration(
                                 hintText: "Scrivi una nota finale...",
-                                hintStyle: TextStyle(color: Colors.grey),
+                                hintStyle: const TextStyle(color: Colors.grey),
                                 filled: true,
                                 fillColor: AppColor.c151515,
                                 border: OutlineInputBorder(

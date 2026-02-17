@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 import 'dart:ui';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_edit_profile/athlete_edit_profile_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
@@ -60,7 +59,7 @@ class AthleteEditProfileView extends StatelessWidget {
                                     radius: cw(55),
                                     backgroundColor: AppColor.grey,
                                     backgroundImage: model.profileImage != null
-                                        ? FileImage(model.profileImage! as File)
+                                        ? FileImage(model.profileImage!)
                                         : const AssetImage(
                                                 AssetUtils.scholarCap)
                                             as ImageProvider,
@@ -224,16 +223,8 @@ class AthleteEditProfileView extends StatelessWidget {
                                       isSelected: model.fitnessGoals.contains(
                                           model.allFitnessGoals[index]),
                                       onTap: () {
-                                        if (model.fitnessGoals.contains(
-                                            model.allFitnessGoals[index])) {
-                                          model.removeFitnessGoal(
-                                              model.fitnessGoals.indexOf(model
-                                                  .allFitnessGoals[index]));
-                                        } else {
-                                          model.fitnessGoals.add(
-                                              model.allFitnessGoals[index]);
-                                          model.notifyListeners();
-                                        }
+                                        model.toggleFitnessGoal(
+                                            model.allFitnessGoals[index]);
                                       },
                                     );
                                   })),

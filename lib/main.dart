@@ -20,7 +20,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-await AuthStorage.init();
+  await AuthStorage.init();
   AppNotificationService notificationService = AppNotificationService();
 
   runApp(

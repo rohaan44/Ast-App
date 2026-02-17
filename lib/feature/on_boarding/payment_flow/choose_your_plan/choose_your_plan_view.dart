@@ -61,8 +61,10 @@ class ChooseYourPlanView extends StatelessWidget {
                   SizedBox(
                     height: ch(30),
                   ),
-                  if (context.read<SelectRoleController>().selectedRole ==
-                      "Coach") ...[
+                  if (context
+                          .read<FlowDataProvider>()
+                          .getFlowData(customerOnboarding)!["value"] ==
+                      "coach") ...[
                     AppText(
                       txt: "Piano di Certificazione",
                       fontSize: AppFontSize.f24,
@@ -82,8 +84,10 @@ class ChooseYourPlanView extends StatelessWidget {
                   SizedBox(
                     height: ch(8),
                   ),
-                  if (context.read<SelectRoleController>().selectedRole ==
-                      "Coach") ...[
+                  if (context
+                          .read<FlowDataProvider>()
+                          .getFlowData(customerOnboarding)!["value"] ==
+                      "coach") ...[
                     AppText(
                       txt:
                           "Allenatori che utilizzano l'app per l'allenamento Smart.",
@@ -125,8 +129,10 @@ class ChooseYourPlanView extends StatelessWidget {
                   SizedBox(
                     height: ch(50),
                   ),
-                  if (context.read<SelectRoleController>().selectedRole ==
-                      "Coach") ...[
+                  if (context
+                          .read<FlowDataProvider>()
+                          .getFlowData(customerOnboarding)!["value"] ==
+                      "coach") ...[
                     plainCard(
                         "Quota di Certificazione ",
                         "€599/mese",
