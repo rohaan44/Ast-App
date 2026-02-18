@@ -1,7 +1,6 @@
 class RoutePaths {
   static const String walkthrough = '/walkthrough';
   static const String splashScreen = '/splashScreen';
-  static const String athleteManagementView = "/athleteManagementView";
   static const String selectRole = '/selectRole';
 
   static const String signIn = '/signIn';
@@ -52,7 +51,7 @@ class RoutePaths {
   static const String coachMainScreenView = '/coachMainScreenView';
   static const String coachHomeScreenView = '/coachHomeScreenView';
   static const String trainingPlanView = '/trainingPlanView';
-  static const String atheletManagementView = '/atheletManagementView';
+  static const String athleteManagementView = "/athleteManagementView";
   static const String coachProfileSettingScreen = '/coachProfileSettingScreen';
   static const String plansManagementScreen = '/plansManagementScreen';
   static const String planPreviewScreen = '/planPreviewScreen';

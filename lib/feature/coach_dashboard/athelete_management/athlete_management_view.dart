@@ -7,6 +7,7 @@ import 'package:ast_official/ui_molecules/primary_textfield/primary_text_field.d
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
+import 'package:ast_official/ui_molecules/app_text/app_text.dart';
 import 'package:ast_official/utils/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,26 +18,16 @@ class AthleteManagementView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    final model =
-        Provider.of<AthleteManagementController>(context, listen: false);
-=======
+    final modelRead = context.read<AthleteManagementController>();
     final model = context.watch<AthleteManagementController>();
->>>>>>> fbd93d8601f04aabb75b9077bdc2330f6ee4bc1a
-    model.setContext(context);
+
+    modelRead.setContext(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (model.coachesList.isEmpty && !model.isLoading) {
-        model.getAllMyAtheletes(context: context);
+      if (!modelRead.isFirstFetchDone && !modelRead.isLoading) {
+        modelRead.getAllMyAtheletes(context: context);
       }
-
-      // Future.delayed(const Duration(minutes: 1), () {
-      //   controller.getAtheletPendingRequest(context: context);
-      // });
     });
-<<<<<<< HEAD
 
-=======
->>>>>>> fbd93d8601f04aabb75b9077bdc2330f6ee4bc1a
     return Scaffold(
       body: SafeArea(
           child: GlobalSkeleton(
@@ -76,84 +67,96 @@ class AthleteManagementView extends StatelessWidget {
                   height: ch(20),
                 ),
                 Expanded(
-                  child: ListView.separated(
-                      separatorBuilder: (context, index) => Padding(
-                            padding: EdgeInsets.only(left: cw(0), right: cw(0)),
-                            child: const Divider(
-                                color: Color(0xFF2B2B2B),
-                                height: 1,
-                                thickness: 0.5),
-                          ),
-                      padding: EdgeInsets.zero,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: model.athletes.length,
-                      itemBuilder: (context, index) {
-                        final athlete = model.athletes[index];
-                        final fullAthleteData = model.athletes;
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: ch(10)),
-                          child: AthleteListTile(
-                              expiryDate: "exp oct 20",
-                              name: athlete['name']!,
-                              status: athlete['status']!,
-                              type: athlete['type']!,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AthleteProfileView(
-                                        athlete: fullAthleteData[index]),
-                                  ),
-                                );
-                              },
-                              lastCheckin: athlete['lastCheckin']!,
-                              imageUrl: AssetUtils.avatar),
-                        );
-                      }),
+                  child: model.coachesList.isEmpty && !model.isLoading
+                      ? Center(
+                          child: AppText(
+                          txt: "Nessun atleta trovato",
+                          color: AppColor.white,
+                          fontSize: AppFontSize.f16,
+                        ))
+                      : ListView.separated(
+                          separatorBuilder: (context, index) => Padding(
+                                padding:
+                                    EdgeInsets.only(left: cw(0), right: cw(0)),
+                                child: const Divider(
+                                    color: Color(0xFF2B2B2B),
+                                    height: 1,
+                                    thickness: 0.5),
+                              ),
+                          padding: EdgeInsets.zero,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: model.coachesList.length,
+                          itemBuilder: (context, index) {
+                            final athlete = model.coachesList[index];
+                            return Padding(
+                              padding: EdgeInsets.symmetric(vertical: ch(10)),
+                              child: AthleteListTile(
+                                  expiryDate: "exp oct 20",
+                                  name: athlete['name'] ?? "N/A",
+                                  status: athlete['status'] ?? "N/A",
+                                  type: "PRO", // Default or value from API
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            AthleteProfileView(
+                                                athlete: athlete),
+                                      ),
+                                    );
+                                  },
+                                  lastCheckin: "N/A",
+                                  imageUrl:
+                                      athlete['avatar'] ?? AssetUtils.avatar),
+                            );
+                          }),
                 ),
               ] else if (model.isNotificationScreen) ...[
                 Expanded(
-                  child: ListView.separated(
-                      separatorBuilder: (context, index) => Padding(
-                            padding: EdgeInsets.only(left: cw(0), right: cw(0)),
-                            child: const Divider(
-                                color: Color(0xFF2B2B2B),
-                                height: 1,
-                                thickness: 0.5),
-                          ),
-                      padding: EdgeInsets.zero,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: model.athletes.length,
-                      itemBuilder: (context, index) {
-                        final athlete = model.athletes[index];
-                        final fullAthleteData = model.athletes;
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: ch(10)),
-                          child: AthleteNotificationTile(
-                              expiryDate: "exp oct 20",
-                              name: athlete['name']!,
-                              status: athlete['status']!,
-                              type: athlete['type']!,
-                              accepOnTap: () {
-                                // print("object");
-                                // model.acceptReqAthelet(context, "accept");
-                              },
-                              rejectOnTap: () {
-                                // model.rejectReqAthelet(context, "reject");
-                              },
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AthleteProfileView(
-                                        athlete: fullAthleteData[index]),
-                                  ),
-                                );
-                              },
-                              lastCheckin: athlete['lastCheckin']!,
-                              imageUrl: AssetUtils.avatar),
-                        );
-                      }),
+                  child: model.coachesList.isEmpty && !model.isLoading
+                      ? Center(child: AppText(txt: "Nessuna notifica"))
+                      : ListView.separated(
+                          separatorBuilder: (context, index) => Padding(
+                                padding:
+                                    EdgeInsets.only(left: cw(0), right: cw(0)),
+                                child: const Divider(
+                                    color: Color(0xFF2B2B2B),
+                                    height: 1,
+                                    thickness: 0.5),
+                              ),
+                          padding: EdgeInsets.zero,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: model.coachesList.length,
+                          itemBuilder: (context, index) {
+                            final athlete = model.coachesList[index];
+                            return Padding(
+                              padding: EdgeInsets.symmetric(vertical: ch(10)),
+                              child: AthleteNotificationTile(
+                                  expiryDate: "exp oct 20",
+                                  name: athlete['name'] ?? "N/A",
+                                  status: athlete['status'] ?? "N/A",
+                                  type: "PRO",
+                                  accepOnTap: () {
+                                    // model.acceptReqAthelet(context, "accept");
+                                  },
+                                  rejectOnTap: () {
+                                    // model.rejectReqAthelet(context, "reject");
+                                  },
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            AthleteProfileView(
+                                                athlete: athlete),
+                                      ),
+                                    );
+                                  },
+                                  lastCheckin: "N/A",
+                                  imageUrl:
+                                      athlete['avatar'] ?? AssetUtils.avatar),
+                            );
+                          }),
                 ),
               ],
             ],

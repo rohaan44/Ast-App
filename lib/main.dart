@@ -26,7 +26,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: providersList,
-      child: const MyApp(),
+      builder: (context, child) => const MyApp(),
     ),
   );
 }

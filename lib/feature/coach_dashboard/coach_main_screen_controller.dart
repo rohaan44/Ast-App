@@ -68,15 +68,18 @@ class CoachMainScreenController extends ChangeNotifier {
 
   Timer? _refreshTimer;
 
+  bool _timerStarted = false;
+
   void startPendingRequestsTimer(BuildContext context) {
+    if (_timerStarted) return;
+    _timerStarted = true;
+
     // 1. Pehli baar call karein (Initial Call)
     getAtheletPendingRequest(context: context);
 
-    // 2. Har 5 minutes (300 seconds) baad ke liye timer set karein
-    _refreshTimer?.cancel(); // Purane timer ko khatam karein agar koi hai
+    // 2. Har 1 minute baad ke liye timer set karein
+    _refreshTimer?.cancel();
     _refreshTimer = Timer.periodic(const Duration(minutes: 1), (timer) {
-      // Ye har 5 min baad background mein chalega
-      // Note: loadMore false rakhein taake list refresh ho
       getAtheletPendingRequest(context: context, loadMore: false);
     });
   }
@@ -101,9 +104,10 @@ class CoachMainScreenController extends ChangeNotifier {
           page: _currentPage, limit: _limit),
       context: context,
       onSuccess: (response) async {
-        List<dynamic> newUsers = response['data']['users'];
-        Map<String, dynamic> pagination = response['data']['pagination'];
-        int totalPages = pagination['pages'];
+        final data = response['data'] ?? {};
+        List<dynamic> newUsers = data['users'] ?? [];
+        Map<String, dynamic> pagination = data['pagination'] ?? {};
+        int totalPages = pagination['pages'] ?? 1;
 
         if (loadMore) {
           _coachesList.addAll(newUsers);
