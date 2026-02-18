@@ -16,18 +16,15 @@ class CoachHomeScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model =
-        Provider.of<CoachHomeScreenController>(context, listen: false);
-    // controller.setContext(context);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (model.coachesList.isEmpty && !model.isLoading) {
-        model.getAllMyAtheletes(context: context);
-      }
+    final modelRead = context.read<CoachHomeScreenController>();
+    final model = context.watch<CoachHomeScreenController>();
 
-      // Future.delayed(const Duration(minutes: 1), () {
-      //   controller.getAtheletPendingRequest(context: context);
-      // });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!modelRead.isFirstFetchDone && !modelRead.isLoading) {
+        modelRead.getAllMyAtheletes(context: context);
+      }
     });
+
     return Scaffold(
       body: SafeArea(
         child: GlobalSkeleton(

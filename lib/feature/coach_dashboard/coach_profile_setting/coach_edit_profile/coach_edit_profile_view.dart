@@ -46,12 +46,7 @@ class CoachEditProfileView extends StatelessWidget {
                               radius: cw(55),
                               backgroundColor: AppColor.grey,
                               backgroundImage: model.profileImage != null
-<<<<<<< HEAD
-                                  // ignore: unnecessary_cast
-                                  ? FileImage(model.profileImage! as File)
-=======
                                   ? FileImage(model.profileImage!)
->>>>>>> fbd93d8601f04aabb75b9077bdc2330f6ee4bc1a
                                   : const AssetImage(AssetUtils.scholarCap)
                                       as ImageProvider,
                             ),

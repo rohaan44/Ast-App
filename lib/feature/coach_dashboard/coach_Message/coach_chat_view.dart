@@ -23,7 +23,6 @@ class CoachChatView extends StatelessWidget {
       body: SafeArea(
           child: Column(
         children: [
-<<<<<<< HEAD
           // Padding(
           //   padding: EdgeInsets.symmetric(horizontal: cw(20), vertical: ch(10)),
           //   child: Row(
@@ -46,30 +45,6 @@ class CoachChatView extends StatelessWidget {
           //     ],
           //   ),
           // ),
-=======
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: cw(20), vertical: ch(10)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AppText(
-                  txt: "Chats",
-                  fontSize: AppFontSize.f24,
-                  isItalic: true,
-                  color: AppColor.white,
-                  fontWeight: FontWeight.w600,
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: SvgPicture.asset(
-                    AssetUtils.addIcon,
-                    height: ch(30),
-                  ),
-                )
-              ],
-            ),
-          ),
->>>>>>> fbd93d8601f04aabb75b9077bdc2330f6ee4bc1a
           //SizedBox(height: ch(),),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: cw(20)),
@@ -96,10 +71,6 @@ class CoachChatView extends StatelessWidget {
                 final chat = model.chats[index];
                 return InkWell(
                   onTap: () {
-<<<<<<< HEAD
-                    context.read<FlowDataProvider>().addOrUpdateFlow(
-                        flowTag: customerOnboarding, data: model.chats[index]);
-=======
                     final selectedConv = model.conversations[index];
                     context
                         .read<FlowDataProvider>()
@@ -109,7 +80,6 @@ class CoachChatView extends StatelessWidget {
                       "image": chat["image"],
                       "isOnline": chat["isOnline"]
                     });
->>>>>>> fbd93d8601f04aabb75b9077bdc2330f6ee4bc1a
 
                     Navigator.pushNamed(context, RoutePaths.selectedChatScreen);
                   },

@@ -43,7 +43,7 @@ class CoachMainScreen extends StatelessWidget {
       ),
       bottomNavigationBar: coachBottomBar(),
       body: PageView(
-        onPageChanged: (index) => model.setSelectedIndex(index),
+        onPageChanged: (index) => model.setSelectedIndex(index, context),
         controller: model.pageController,
         children: const [
           CoachHomeScreenView(),
