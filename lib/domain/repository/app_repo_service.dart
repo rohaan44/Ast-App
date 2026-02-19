@@ -117,7 +117,9 @@ class AppRepoService {
     }
     return false;
   }
-
+  Future<Map<String, dynamic>> getCoachProfile() async {
+    return appRepo.getCoachProfile();
+  }
 //  coach home screen
   Future<Map<String, dynamic>> getCoachNotifications({
     int page = 1,
