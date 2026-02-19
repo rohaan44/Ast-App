@@ -169,6 +169,13 @@ class AppRepo {
         });
     return response;
   }
+  
+  Future<Map<String, dynamic>> getCoachProfile() async {
+    var response = await _dioHelper.get(
+        isAuthRequired: true,
+        url: "${NetworkProperties.baseUrl}users/profile");
+    return response;
+  }
 
 // coach home screen
 

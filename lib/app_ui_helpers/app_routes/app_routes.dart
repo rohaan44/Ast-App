@@ -708,6 +708,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => CoachProfileSettingController(
+                  appRepoService: context.read<AppRepoService>(),
                   authRepoService: context.read<AuthRepoService>()),
               builder: (context, child) => const CoachProfileSettingView(),
             );
