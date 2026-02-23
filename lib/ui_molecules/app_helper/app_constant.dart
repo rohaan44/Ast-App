@@ -5,4 +5,5 @@ const String resetPassword = '@resetPassword';
 const String checkIn = '@checkIn';
 const String checkInDiet = '@checkInDiet';
 const String coachProfile = '@coachProfile';
+const String tutorCertificationFlow = '@tutorCertificationFlow';
 // const String providerFlowCleanup = 'providerFlowCleanup';

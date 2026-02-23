@@ -107,6 +107,8 @@ class RoutePaths {
 
   static const String tutorCertificateSectionView =
       '/tutorCertificateSectionView';
+  static const String tutorCertificateSectionS0View =
+      '/tutorCertificateSectionS0View';
   static const String tutorCertificateSectionS1View =
       '/tutorCertificateSectionS1View';
   static const String tutorCertificateSectionS2View =

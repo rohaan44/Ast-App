@@ -58,11 +58,42 @@ class TutorCertificateSectionS4Controller with ChangeNotifier {
     notifyListeners();
   }
 
-  /// --- Computed Helper for Certificate Preview ---
+  /// Text Controllers
+  final TextEditingController searchController = TextEditingController();
+  final TextEditingController issueDateController = TextEditingController();
+  final TextEditingController expiryDateController = TextEditingController();
+  final TextEditingController noteController = TextEditingController();
+
+  TutorCertificateSectionS4Controller() {
+    searchController.addListener(notifyListeners);
+    issueDateController.addListener(notifyListeners);
+    expiryDateController.addListener(notifyListeners);
+    noteController.addListener(notifyListeners);
+  }
+
   String get studentName => selectedStudent?['name'] ?? "—";
   String get courseTitle =>
       selectedStudent?['course'] ??
       "Seleziona uno studente per vedere i dettagli.";
   String get courseDuration => selectedStudent?['duration'] ?? "—";
   String get completionDate => selectedStudent?['completionDate'] ?? "—";
+
+  bool get isFormValid =>
+      selectedStudent != null &&
+      selectedCertificateType != null &&
+      issueDateController.text.isNotEmpty &&
+      expiryDateController.text.isNotEmpty;
+
+  Future<void> generateCertificate(BuildContext context) async {
+    await Future.delayed(const Duration(seconds: 1));
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    issueDateController.dispose();
+    expiryDateController.dispose();
+    noteController.dispose();
+    super.dispose();
+  }
 }

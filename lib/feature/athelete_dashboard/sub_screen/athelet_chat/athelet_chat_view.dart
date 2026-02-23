@@ -30,7 +30,7 @@ class AtheletChatView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppText(
-                  txt: model.delegate.chats,
+                  txt: "Chats",
                   fontSize: AppFontSize.f24,
                   isItalic: true,
                   color: AppColor.white,

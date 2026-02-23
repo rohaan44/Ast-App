@@ -1,6 +1,5 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/domain/repository/app_repo_service.dart';
-import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/coach_profile/coach_profile_controller.dart';
@@ -72,6 +71,8 @@ import 'package:ast_official/feature/on_boarding/walk_through/walk_through_view.
 import 'package:ast_official/feature/splash_screen/splash_screen.dart';
 import 'package:ast_official/feature/on_boarding/welcome_screen/welcome_view.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_main_screen.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_certificate_section/sub_screens/tutor_certificate_section_s0/tutor_certificate_section_s0.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_certificate_section/sub_screens/tutor_certificate_section_s0/tutor_certificate_section_s0_controller.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_certificate_section/sub_screens/tutor_certificate_section_s1/tutor_certificate_section_s1.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_certificate_section/sub_screens/tutor_certificate_section_s2/tutor_certificate_section_s2.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_certificate_section/sub_screens/tutor_certificate_section_s3/tutor_certificate_section_s3.dart';
@@ -944,8 +945,22 @@ class AppRouter {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
-              create: (context) => TutorCertificateSectionController(),
+              create: (context) => TutorCertificateSectionController(
+                appRepoService: context.read<AppRepoService>(),
+              ),
               child: const TutorCertificateSectionView(),
+            );
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        );
+      case RoutePaths.tutorCertificateSectionS0View:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return ChangeNotifierProvider(
+              create: (context) => TutorCertificateSectionS0Controller(),
+              child: const TutorCertificateSectionS0View(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {

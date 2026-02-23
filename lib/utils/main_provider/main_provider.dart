@@ -96,7 +96,9 @@ List<SingleChildWidget> providersList = [
     create: (context) => TutorProfileSettingsSectionController(),
   ),
   ChangeNotifierProvider(
-    create: (context) => TutorCertificateSectionController(),
+    create: (context) => TutorCertificateSectionController(
+      appRepoService: context.read<AppRepoService>(),
+    ),
   ),
   ChangeNotifierProvider(
     create: (context) => TutorSubmissionSectionController(),

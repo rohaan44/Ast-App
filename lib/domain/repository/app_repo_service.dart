@@ -71,7 +71,8 @@ class AppRepoService {
     return appRepo.getCoaches(page: page, limit: limit);
   }
 
-  Future<Map<String, dynamic>> sendCoachRequest({required String coachId}) async {
+  Future<Map<String, dynamic>> sendCoachRequest(
+      {required String coachId}) async {
     return appRepo.sendCoachRequest(coachId: coachId);
   }
 
@@ -181,5 +182,32 @@ class AppRepoService {
     int limit = 20,
   }) async {
     return appRepo.getCheckins(page: page, limit: limit);
+  }
+
+  // ================= CERTIFICATIONS =================
+  Future<Map<String, dynamic>> getCertifications({
+    String status = "active",
+  }) async {
+    return appRepo.getCertifications(
+      status: status,
+    );
+  }
+
+  Future<Map<String, dynamic>> renewCertification({
+    required String certificationId,
+    required String expiryDate,
+    String? issueDate,
+    String? notes,
+    required String filePath,
+    required bool sendEmailNotification,
+  }) async {
+    return appRepo.renewCertification(
+      certificationId: certificationId,
+      expiryDate: expiryDate,
+      issueDate: issueDate,
+      notes: notes,
+      filePath: filePath,
+      sendEmailNotification: sendEmailNotification,
+    );
   }
 }

@@ -61,6 +61,7 @@ class TutorCertificateSectionS4View extends StatelessWidget {
                     child: Column(
                       children: [
                         _buildSearchTextField(
+                          controller: model.searchController, // Bind controller
                           hintText: "Cerca per nome o ID.",
                           svgIconPath: AssetUtils.searchIcon,
                         ),
@@ -140,11 +141,14 @@ class TutorCertificateSectionS4View extends StatelessWidget {
                           onChanged: model.selectCertificateType,
                         ),
                         SizedBox(height: ch(16)),
-                        _buildTextField("Data di emissione"),
+                        _buildTextField("Data di emissione",
+                            model.issueDateController), // Bind
                         SizedBox(height: ch(16)),
-                        _buildTextField("Data di scadenza"),
+                        _buildTextField("Data di scadenza",
+                            model.expiryDateController), // Bind
                         SizedBox(height: ch(16)),
-                        _buildTextField("Note (facoltative)"),
+                        _buildTextField(
+                            "Note (facoltative)", model.noteController), // Bind
                       ],
                     ),
                   ),
@@ -180,6 +184,8 @@ class TutorCertificateSectionS4View extends StatelessWidget {
                             fontSize: AppFontSize.f14 + 2,
                             fontWeight: FontWeight.w400,
                             color: AppColor.white,
+                            height: 1.2,
+                            textAlign: TextAlign.center,
                           ),
                           SizedBox(height: ch(12)),
                           AppText(
@@ -200,6 +206,8 @@ class TutorCertificateSectionS4View extends StatelessWidget {
                             fontSize: AppFontSize.f16,
                             color: AppColor.white,
                             fontWeight: FontWeight.w500,
+                            height: 1.2,
+                            textAlign: TextAlign.center,
                           ),
                           SizedBox(height: ch(20)),
                           Container(
@@ -231,7 +239,8 @@ class TutorCertificateSectionS4View extends StatelessWidget {
 
                   /// --- Generate Certificate Button ---
                   AppButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      await model.generateCertificate(context);
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
@@ -239,9 +248,8 @@ class TutorCertificateSectionS4View extends StatelessWidget {
                         (route) => false,
                       );
                     },
+                    isButtonEnable: model.isFormValid,
                     text: "Genera certificato",
-                    color: AppColor.white,
-                    textColor: AppColor.black,
                   ),
 
                   SizedBox(height: ch(32)),
@@ -324,8 +332,9 @@ class TutorCertificateSectionS4View extends StatelessWidget {
   }
 
   /// --- TextField ---
-  Widget _buildTextField(String hintText) {
+  Widget _buildTextField(String hintText, [TextEditingController? controller]) {
     return TextField(
+      controller: controller,
       style: const TextStyle(color: AppColor.white),
       decoration: InputDecoration(
         hintText: hintText,
@@ -353,10 +362,12 @@ class TutorCertificateSectionS4View extends StatelessWidget {
   Widget _buildSearchTextField({
     required String hintText,
     required String svgIconPath,
+    TextEditingController? controller,
   }) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: ch(8)),
       child: TextField(
+        controller: controller,
         style: const TextStyle(color: AppColor.white),
         decoration: InputDecoration(
           hintText: hintText,

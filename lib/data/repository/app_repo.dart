@@ -256,4 +256,41 @@ class AppRepo {
       );
     }
   }
+
+  Future<Map<String, dynamic>> getCertifications({
+    String status = "active",
+  }) async {
+    var response = await _dioHelper.get(
+      isAuthRequired: true,
+      queryParameters: {
+        "status": status,
+      },
+      url: "${NetworkProperties.baseUrl}certifications",
+    );
+    return response;
+  }
+
+  Future<Map<String, dynamic>> renewCertification({
+    required String certificationId,
+    required String expiryDate,
+    String? issueDate,
+    String? notes,
+    required String filePath,
+    required bool sendEmailNotification,
+  }) async {
+    var response = await _dioHelper.post(
+      isAuthRequired: true,
+      url: "${NetworkProperties.baseUrl}certifications/$certificationId/renew",
+      isMultipart: true,
+      formData: FormData.fromMap({
+        "expiryDate": expiryDate,
+        if (issueDate != null) "issueDate": issueDate,
+        if (notes != null) "notes": notes,
+        "sendEmailNotification": sendEmailNotification.toString(),
+        if (filePath.isNotEmpty)
+          "certificate": await MultipartFile.fromFile(filePath),
+      }),
+    );
+    return response;
+  }
 }
