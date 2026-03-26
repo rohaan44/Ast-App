@@ -142,7 +142,7 @@ class AppRepo {
     var response = await _dioHelper.get(
         isAuthRequired: true,
         queryParameters: {"role": "coach", "page": page, "limit": limit},
-        url: "${NetworkProperties.baseUrl}relationships/pending");
+        url: "${NetworkProperties.baseUrl}relationships/my-athletes");
     return response;
   }
 
@@ -169,11 +169,10 @@ class AppRepo {
         });
     return response;
   }
-  
+
   Future<Map<String, dynamic>> getCoachProfile() async {
     var response = await _dioHelper.get(
-        isAuthRequired: true,
-        url: "${NetworkProperties.baseUrl}users/profile");
+        isAuthRequired: true, url: "${NetworkProperties.baseUrl}users/profile");
     return response;
   }
 
