@@ -20,12 +20,12 @@ class AtheletCoachesView extends StatelessWidget {
   const AtheletCoachesView({super.key});
 
   @override
-  Widget build( BuildContext context) {
+  Widget build(BuildContext context) {
     final controller =
         Provider.of<AtheletCoachesController>(context, listen: false);
     controller.setContext(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (controller.coachesList.isEmpty && !controller.isLoading) {
+      if (!controller.isFirstFetchDone && !controller.isLoading) {
         controller.getCoaches(context: context);
       }
     });
@@ -63,18 +63,32 @@ class AtheletCoachesView extends StatelessWidget {
                         await model.getCoaches(context: context);
                       },
                       child: GlobalSkeleton(
-                        isLoading: model.isLoading,
+                        isLoading:
+                            model.isFirstLoading && model.coachesList.isEmpty,
                         child: ListView.separated(
+                          key: const PageStorageKey('athelet_coaches_list'),
                           controller: model.scrollController,
                           padding: EdgeInsets.symmetric(horizontal: cw(20)),
                           physics: const BouncingScrollPhysics(
                               parent: AlwaysScrollableScrollPhysics()),
-                          itemCount: model.filteredCoaches.length,
+                          itemCount: model.filteredCoaches.length +
+                              (model.isLoadingMore ? 1 : 0),
                           separatorBuilder: (_, index) {
                             return SizedBox(height: ch(12));
                           },
                           itemBuilder: (context, index) {
+                            if (index == model.filteredCoaches.length) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(vertical: ch(20)),
+                                child: const Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColor.primary,
+                                  ),
+                                ),
+                              );
+                            }
                             final coach = model.filteredCoaches[index];
+                            if (coach == null) return const SizedBox.shrink();
                             final img = coach["avatar"] ?? "";
                             String title = coach["fullName"] ?? "Anonymous";
                             final String subTitle = coach["bio"] ?? "";

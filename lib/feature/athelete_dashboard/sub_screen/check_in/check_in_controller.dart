@@ -12,6 +12,8 @@ class CheckInController extends ChangeNotifier {
   bool get isLoading => _isLoading;
   ApiResponse<CheckInsResponseData>? checkinsResponse;
   List<Map<String, dynamic>>? checkinsData;
+  bool _isFirstFetchDone = false;
+  bool get isFirstFetchDone => _isFirstFetchDone;
 
   Future<void> getCheckins({required BuildContext context}) async {
     _isLoading = true;
@@ -26,6 +28,7 @@ class CheckInController extends ChangeNotifier {
             checkinsResponse!.data?.checkIns?.map((e) => e.toJson()).toList();
       },
     );
+    _isFirstFetchDone = true;
     _isLoading = false;
     notifyListeners();
   }

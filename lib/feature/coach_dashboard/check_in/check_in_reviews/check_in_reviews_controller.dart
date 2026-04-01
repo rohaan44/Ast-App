@@ -127,14 +127,15 @@ class CheckInReviewsController extends ChangeNotifier {
       _hasMore = true;
     }
 
-    await runApiCall(
+    await runApiCallWithError(
       apiCall: () =>
-          appRepoService.getCheckins(page: _currentPage, limit: _limit),
+          appRepoService.getCoahCheckins(page: _currentPage, limit: _limit),
       context: context,
       onSuccess: (response) async {
-        List<dynamic> newUsers = response['data']['users'];
-        Map<String, dynamic> pagination = response['data']['pagination'];
-        int totalPages = pagination['pages'];
+        final data = response['data'] ?? {};
+        final list = data['checkIns'] ?? data['users'] ?? [];
+        final pagination = data['pagination'] ?? {};
+        final int totalPages = pagination['pages'] ?? 1;
 
         // Future.delayed(
         //  const   Duration(
@@ -148,9 +149,9 @@ class CheckInReviewsController extends ChangeNotifier {
         //   );
         // });
         if (loadMore) {
-          _coachesList.addAll(newUsers);
+          _coachesList.addAll(list);
         } else {
-          _coachesList = newUsers;
+          _coachesList = list;
         }
         _hasMore = _currentPage < totalPages;
       },

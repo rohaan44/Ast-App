@@ -144,6 +144,7 @@ import 'package:provider/provider.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    debugPrint("🚀 App Router: Requesting route => ${settings.name}");
     switch (settings.name) {
       // Walkthrougn screens
       case RoutePaths.walkthrough:
@@ -520,6 +521,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => AthleteProfileSettingController(
+                  appRepoService: context.read<AppRepoService>(),
                   authRepoService: context.read<AuthRepoService>()),
               builder: (context, child) => const AthleteProfileSettingView(),
             );

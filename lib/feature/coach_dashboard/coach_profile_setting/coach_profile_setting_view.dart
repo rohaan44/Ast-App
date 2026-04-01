@@ -43,9 +43,6 @@ class CoachProfileSettingView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // SizedBox(height: ch(20)),
-
-                            /// Profile Image Section
                             Consumer<CoachProfileSettingController>(
                                 builder: (context, model, child) {
                               return Stack(
@@ -227,7 +224,7 @@ class CoachProfileSettingView extends StatelessWidget {
                               label: "Cambiare la password",
                               onTap: () {
                                 Navigator.pushNamed(context,
-                                    RoutePaths.resetPasswordEmailScreen);
+                                    RoutePaths.resetPasswordScreen);
                               },
                             ),
                             _buildMenuItem(

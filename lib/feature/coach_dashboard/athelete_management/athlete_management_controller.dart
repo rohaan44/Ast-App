@@ -187,43 +187,43 @@ class AthleteManagementController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> acceptReqAthelet(context, String status) async {
+  Future<void> acceptReqAthelet(context, String relationshipId) async {
     final response = await appRepoService.acceptReqAthelet(
-      status: status,
+      relationshipId: relationshipId,
     );
     if (response == true) {
       showApiSnackBar(
         context,
         title: "Success",
-        message: "Exercise create successfully",
+        message: "Request accepted successfully",
         isSuccess: true,
       );
     } else {
       showApiSnackBar(
         context,
         title: "Error",
-        message: "Failed to resend OTP",
+        message: "Failed to accept request",
         isSuccess: false,
       );
     }
   }
 
-  Future<void> rejectReqAthelet(context, String status) async {
+  Future<void> rejectReqAthelet(context, String relationshipId) async {
     final response = await appRepoService.rejectReqAthelet(
-      status: status,
+      relationshipId: relationshipId,
     );
     if (response == true) {
       showApiSnackBar(
         context,
         title: "Success",
-        message: "Exercise create successfully",
+        message: "Request rejected successfully",
         isSuccess: true,
       );
     } else {
       showApiSnackBar(
         context,
         title: "Error",
-        message: "Failed to resend OTP",
+        message: "Failed to reject request",
         isSuccess: false,
       );
     }

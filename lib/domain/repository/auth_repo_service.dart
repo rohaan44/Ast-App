@@ -185,4 +185,87 @@ class AuthRepoService {
     }
     return false;
   }
+
+  // ================= OTP LOGIN =================
+
+  Future<dynamic> loginWithOTP({required String email}) async {
+    final response = await authRepository.loginWithOTP(email: email);
+    if (response is Map) {
+      return response['success'] == true ? response : response;
+    }
+    return false;
+  }
+
+  Future<Map<String, dynamic>> verifyLoginOTP(
+      {required String email, required String otp}) async {
+    final response =
+        await authRepository.verifyLoginOTP(email: email, otp: otp);
+
+    if (response['success'] == true && response['data'] != null) {
+      final data = response['data'];
+      if (data['accessToken'] != null) {
+        debugPrint("💾 Saving access token from verify-login-otp...");
+        await AuthStorage.saveToken(data['accessToken']);
+      }
+      if (data['refreshToken'] != null) {
+        await AuthStorage.saveRefreshToken(data['refreshToken']);
+      }
+      if (data['user'] != null && data['user']['id'] != null) {
+        await AuthStorage.saveUserId(data['user']['id']);
+      }
+      if (data['user'] != null && data['user']['role'] != null) {
+        await AuthStorage.saveRole(data['user']['role']);
+      }
+    }
+    return response;
+  }
+
+  // ================= GET ME =================
+
+  Future<Map<String, dynamic>> getMe() async {
+    final response = await authRepository.getMe();
+    return response;
+  }
+
+  // ================= SOCIAL LOGIN =================
+
+  Future<AuthResponseModel> googleLogin({required String idToken}) async {
+    final response = await authRepository.googleLogin(idToken: idToken);
+    if (response.success == true && response.data != null) {
+      if (response.data!.accessToken != null) {
+        await AuthStorage.saveToken(response.data!.accessToken!);
+      }
+      if (response.data!.user?.id != null) {
+        await AuthStorage.saveUserId(response.data!.user!.id!);
+      }
+      if (response.data!.refreshToken != null) {
+        await AuthStorage.saveRefreshToken(response.data!.refreshToken!);
+      }
+      if (response.data!.user?.role != null) {
+        await AuthStorage.saveRole(response.data!.user!.role!);
+      }
+    }
+    return response;
+  }
+
+  Future<AuthResponseModel> appleLogin(
+      {required String identityToken}) async {
+    final response =
+        await authRepository.appleLogin(identityToken: identityToken);
+    if (response.success == true && response.data != null) {
+      if (response.data!.accessToken != null) {
+        await AuthStorage.saveToken(response.data!.accessToken!);
+      }
+      if (response.data!.user?.id != null) {
+        await AuthStorage.saveUserId(response.data!.user!.id!);
+      }
+      if (response.data!.refreshToken != null) {
+        await AuthStorage.saveRefreshToken(response.data!.refreshToken!);
+      }
+      if (response.data!.user?.role != null) {
+        await AuthStorage.saveRole(response.data!.user!.role!);
+      }
+    }
+    return response;
+  }
 }
