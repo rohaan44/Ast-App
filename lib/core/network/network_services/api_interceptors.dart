@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/core/utils/navigation_service.dart';
@@ -27,6 +28,17 @@ class AppInterceptors extends Interceptor {
     }
 
     log("➡️ REQUEST [${options.method}] => ${options.uri}");
+    if (options.headers.containsKey("Authorization")) {
+      log("Auth: ${options.headers["Authorization"]}");
+    }
+    if (options.data != null) {
+      try {
+        final prettyJson = const JsonEncoder.withIndent('  ').convert(options.data);
+        log("Payload:\n$prettyJson");
+      } catch (_) {
+        log("Payload: ${options.data}");
+      }
+    }
     handler.next(options);
   }
 
@@ -61,7 +73,7 @@ class AppInterceptors extends Interceptor {
           if (newToken != null) {
             final opts = response.requestOptions;
             opts.headers['Authorization'] = "Bearer $newToken";
-
+            log("Authentication Token: $newToken");
             // Retry using a fresh Dio to avoid interceptor recursion if it fails again
             final retryResponse = await Dio().fetch(opts);
             _isRefreshing = false;
@@ -79,6 +91,14 @@ class AppInterceptors extends Interceptor {
       }
     }
 
+    log("⬅️ RESPONSE [${response.statusCode}] => ${response.requestOptions.uri}");
+    try {
+      final prettyJson = const JsonEncoder.withIndent('  ').convert(response.data);
+      log("Data:\n$prettyJson");
+    } catch (_) {
+      log("Data: ${response.data}");
+    }
+
     handler.next(response);
   }
 
@@ -92,6 +112,9 @@ class AppInterceptors extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) {
     log("❌ ERROR [${err.response?.statusCode}] => ${err.requestOptions.uri}");
     log("Message: ${err.message}");
+    if (err.response?.data != null) {
+      log("Error Data: ${err.response?.data}");
+    }
 
     if (err.response?.data is Map && err.response?.data["message"] != null) {
       err.response?.data["errorMessage"] = err.response?.data["message"];

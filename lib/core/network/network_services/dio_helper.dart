@@ -1,7 +1,6 @@
 import 'package:ast_official/core/network/auth_service/auth_service.dart';
 import 'package:ast_official/core/network/network_services/api_interceptors.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
 class DioHelper {
   final Dio dio = getDio();
@@ -18,9 +17,6 @@ class DioHelper {
     Map<String, dynamic>? headers,
     Map<String, dynamic>? queryParameters,
   }) async {
-    debugPrint("\n🔍 GET Request Debug:");
-    debugPrint("📍 URL: $url");
-    debugPrint("🔐 Auth Required: $isAuthRequired");
 
     final token = isAuthRequired ? await AuthStorage.getToken() : null;
 
@@ -57,9 +53,6 @@ class DioHelper {
     bool isAuthRequired = false,
     Map<String, dynamic>? headers,
   }) async {
-    debugPrint("\n🔍 POST Request Debug:");
-    debugPrint("📍 URL: $url");
-    debugPrint("🔐 Auth Required: $isAuthRequired");
 
     final token = isAuthRequired ? await AuthStorage.getToken() : null;
 
@@ -94,9 +87,6 @@ class DioHelper {
     bool isAuthRequired = false,
     Map<String, dynamic>? headers,
   }) async {
-    debugPrint("\n🔍 PUT Request Debug:");
-    debugPrint("📍 URL: $url");
-    debugPrint("🔐 Auth Required: $isAuthRequired");
 
     final token = isAuthRequired ? await AuthStorage.getToken() : null;
 
@@ -131,9 +121,6 @@ class DioHelper {
     bool isAuthRequired = false,
     Map<String, dynamic>? headers,
   }) async {
-    debugPrint("\n🔍 DELETE Request Debug:");
-    debugPrint("📍 URL: $url");
-    debugPrint("🔐 Auth Required: $isAuthRequired");
 
     final token = isAuthRequired ? await AuthStorage.getToken() : null;
 

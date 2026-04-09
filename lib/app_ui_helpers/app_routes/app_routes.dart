@@ -733,7 +733,8 @@ class AppRouter {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
-              create: (context) => CoachEditProfileController(),
+              create: (context) => CoachEditProfileController(
+                  appRepoService: context.read<AppRepoService>()),
               builder: (context, child) => const CoachEditProfileView(),
             );
           },
