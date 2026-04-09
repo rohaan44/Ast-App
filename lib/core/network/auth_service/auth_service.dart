@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -28,8 +29,6 @@ class AuthStorage {
       _userId = await _storage.read(key: _userIdKey);
       _role = await _storage.read(key: _roleKey);
       debugPrint("🚀 AuthStorage Initialized: Tokens Loaded in Memory");
-      debugPrint(
-          "📍 Initial Access Token: ${_accessToken != null ? 'Present' : 'Missing'}");
     } catch (e) {
       debugPrint("❌ AuthStorage Init Error: $e");
     }
@@ -69,15 +68,65 @@ class AuthStorage {
     return _role;
   }
 
-  // GET TOKEN
+  // GET TOKEN — with expiry guard
   static Future<String?> getToken() async {
     try {
-      if (_accessToken != null) return _accessToken;
+      // If in-memory token exists, check it's not expired first
+      if (_accessToken != null) {
+        if (_isTokenExpired(_accessToken!)) {
+          debugPrint("⚠️ Cached access token is EXPIRED — clearing memory cache");
+          _accessToken = null; // force re-read from storage (or refresh)
+        } else {
+          return _accessToken;
+        }
+      }
       _accessToken = await _storage.read(key: _tokenKey);
+      // Also check the freshly loaded token
+      if (_accessToken != null && _isTokenExpired(_accessToken!)) {
+        debugPrint("⚠️ Stored access token is EXPIRED — clearing");
+        _accessToken = null;
+      }
       return _accessToken;
     } catch (e) {
       debugPrint("❌ Error in getToken: $e");
       return null;
+    }
+  }
+
+  /// Returns true if the JWT is expired.
+  static bool _isTokenExpired(String token) {
+    try {
+      final parts = token.split('.');
+      if (parts.length != 3) return true;
+
+      // Base64Url decode payload
+      String payload = parts[1].replaceAll('-', '+').replaceAll('_', '/');
+      switch (payload.length % 4) {
+        case 0: break;
+        case 2: payload += '=='; break;
+        case 3: payload += '='; break;
+        default: return true;
+      }
+
+      final String decoded = utf8.decode(base64Url.decode(payload));
+      final Map<String, dynamic> claims = json.decode(decoded);
+      
+      final exp = claims['exp'];
+      if (exp == null) return false;
+
+      final expiry = DateTime.fromMillisecondsSinceEpoch(
+          (exp as int) * 1000, isUtc: true);
+      
+      // Give 30 seconds buffer for clock skew
+      final isExpired = DateTime.now().toUtc().add(const Duration(seconds: 30)).isAfter(expiry);
+      
+      if (isExpired) {
+        debugPrint("🕐 Token expired at: $expiry | Now: ${DateTime.now().toUtc()}");
+      }
+      return isExpired;
+    } catch (e) {
+      debugPrint("❌ Error decoding JWT: $e");
+      return true; // If we can't decode, assume expired to be safe
     }
   }
 

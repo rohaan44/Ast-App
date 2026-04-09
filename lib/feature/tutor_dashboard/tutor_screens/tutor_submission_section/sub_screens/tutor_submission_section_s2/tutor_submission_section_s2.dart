@@ -1,4 +1,4 @@
-import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_main_screen.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_submission_section/sub_screens/tutor_submission_section_s2/tutor_submission_section_s2_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
@@ -155,8 +155,12 @@ class TutorSubmissionSectionS2View extends StatelessWidget {
                   SizedBox(height: ch(24)),
                   AppButton(
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context, RoutePaths.tutorSubmissionSectionView);
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const TutorMainScreen()),
+                        (route) => false,
+                      );
                     },
                     text: "Scarica file",
                     // icon: SvgPicture.asset(AssetUtils.fireIcon),

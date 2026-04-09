@@ -39,7 +39,7 @@ class _AthleteProfileViewState extends State<AthleteProfileView>
 
   @override
   Widget build(BuildContext context) {
-    // final model = context.read<AthleteProfileController>();
+    final model = context.read<AthleteProfileController>();
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
       body: SafeArea(

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ast_official/domain/repository/app_repo_service.dart';
 import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
@@ -98,6 +97,22 @@ class AthleteEditProfileController with ChangeNotifier {
     notifyListeners();
   }
 
+  void addFitnessGoal(String goal) {
+    if (!_fitnessGoals.contains(goal)) {
+      _fitnessGoals.add(goal);
+      notifyListeners();
+    }
+  }
+
+  void toggleFitnessGoal(String goal) {
+    if (_fitnessGoals.contains(goal)) {
+      _fitnessGoals.remove(goal);
+    } else {
+      _fitnessGoals.add(goal);
+    }
+    notifyListeners();
+  }
+
   String bio = "";
   String fullName = "";
 
@@ -115,6 +130,7 @@ class AthleteEditProfileController with ChangeNotifier {
         debugPrint("FullName: '$fullName'");
         nameController.text = fullName;
         emailController.text = response.data?.profile?.email ?? "";
+        phoneController.text = response.data?.profile?.phone ?? "";
         bio = response.data?.profile?.bio ?? "";
         bioController.text = bio;
         _fitnessGoals.clear();
@@ -142,8 +158,8 @@ class AthleteEditProfileController with ChangeNotifier {
         );
       }
       debugPrint("Error fetching profile: $e");
-      _isProfileFetched = false; 
     } finally {
+      _isProfileFetched = true;
       _isLoading = false;
       notifyListeners();
     }
@@ -153,8 +169,9 @@ class AthleteEditProfileController with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
+      debugPrint("Updating Profile with Name: '${nameController.text}' and Bio: '${bioController.text}'");
       final response = await appRepoService.updateProfile(
-        bio: bio,
+        bio: bioController.text,
         email: emailController.text,
         fitnessGoals: _fitnessGoals,
         name: nameController.text,
@@ -169,11 +186,7 @@ class AthleteEditProfileController with ChangeNotifier {
             isSuccess: true,
           );
 
-          Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    RoutePaths.coachProfileSettingScreen,
-                                    (route) => false,
-                                  );
+          Navigator.pop(context, true); // Go back to profile settings after update
         }
         _isProfileFetched = true;
       } else {

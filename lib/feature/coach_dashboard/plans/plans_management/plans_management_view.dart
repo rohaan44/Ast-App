@@ -2,7 +2,6 @@ import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/coach_dashboard/plans/plans_management/plans_management_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
-import 'package:ast_official/ui_molecules/appbar/appbar.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
@@ -24,7 +23,7 @@ class PlansManagementView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            textProfileSettingAppbar(context: context, text: "Plans"),
+            // textProfileSettingAppbar(context: context, text: "Plans"),
             Expanded(
                 child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),

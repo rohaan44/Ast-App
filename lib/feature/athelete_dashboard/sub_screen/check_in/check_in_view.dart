@@ -15,24 +15,26 @@ class CheckIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.read<CheckInController>();
+    final model = context.watch<CheckInController>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (model.checkinsResponse == null && !model.isLoading) {
+      if (!model.isFirstFetchDone && !model.isLoading) {
         model.getCheckins(context: context);
       }
     });
-    return GlobalRefreshIndicator(
-        onRefresh: () async {
-          model.getCheckins(context: context);
-        },
-        child: SafeArea(
-          child: Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(ch(50)),
-              child: _appBar(context: context),
-            ),
-            body: GlobalSkeleton(
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(ch(50)),
+          child: _appBar(context: context),
+        ),
+        body: GlobalRefreshIndicator(
+          onRefresh: () async {
+            model.getCheckins(context: context);
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: GlobalSkeleton(
               isLoading: model.isLoading,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: cw(20)),
@@ -45,18 +47,26 @@ class CheckIn extends StatelessWidget {
                       builder: (context, controller, _) {
                         final checkIns =
                             controller.checkinsResponse?.data?.checkIns ?? [];
+                        if (controller.isLoading && checkIns.isEmpty) {
+                          return Column(
+                            children: List.generate(
+                                3,
+                                (index) => _checkInCard(
+                                    date: "2024-01-01",
+                                    time: "12:00",
+                                    notes:
+                                        "Carica peso, foto e misure per tenere aggiornato il tuo coach.")),
+                          );
+                        }
                         if (checkIns.isEmpty) {
                           return _emptyCheckInCard();
                         }
-
                         return ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: checkIns.length,
                           itemBuilder: (context, index) {
                             final checkIn = checkIns[index];
-
-                            // Parse date and time from ISO 8601 format
                             String formattedDate = "";
                             String formattedTime = "";
 
@@ -87,7 +97,7 @@ class CheckIn extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        //   model.getCheckins(context: context);
+                        model.getCheckins(context: context);
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(
@@ -164,7 +174,9 @@ class CheckIn extends StatelessWidget {
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
@@ -199,7 +211,7 @@ Widget _checkInCard({required String date, String? time, String? notes}) {
                   SizedBox(height: ch(10)),
                   AppText(
                     txt: time,
-                    fontSize: AppFontSize.f15, 
+                    fontSize: AppFontSize.f15,
                     color: AppColor.cFFFFFF.withOpacity(0.5),
                   ),
                 ],
@@ -257,7 +269,9 @@ Widget _appBar({required BuildContext context}) {
               height: 1.5,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                
+              },
               child: SvgPicture.asset(AssetUtils.icon3),
             ),
           ],

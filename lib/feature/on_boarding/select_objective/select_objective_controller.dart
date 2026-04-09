@@ -1,7 +1,6 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/domain/repository/onboarding_repo_service.dart';
 import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SelectObjectiveController extends ChangeNotifier {

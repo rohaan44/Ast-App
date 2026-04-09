@@ -9,12 +9,11 @@ class DashboardHomeScreenController with ChangeNotifier {
   DashboardHomeScreenController({required this.appRepoService});
 
   int carouselValue = 0;
-
   void setCarouselValue(int index) {
     carouselValue = index;
     notifyListeners();
   }
-
+  
   List cardData = [
     {
       "title": "La sessione di allenamento\ndi oggi",
@@ -120,7 +119,6 @@ class DashboardHomeScreenController with ChangeNotifier {
       if (profileResponse.success == true) {
         profileData = profileResponse.data?.profile?.toJson() ?? {};
         getMyAssignedMealsData(context);
-        _isProfileFetched = true;
       } else {
         if (context.mounted) {
           showApiSnackBar(
@@ -130,7 +128,6 @@ class DashboardHomeScreenController with ChangeNotifier {
             isSuccess: false,
           );
         }
-        return;
       }
       final nutritionResponse = await appRepoService.getDailyNutrition();
 
@@ -156,6 +153,7 @@ class DashboardHomeScreenController with ChangeNotifier {
         );
       }
     } finally {
+      _isProfileFetched = true;
       _isLoading = false;
       notifyListeners();
     }

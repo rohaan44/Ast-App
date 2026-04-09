@@ -13,16 +13,29 @@ void showApiSnackBar(
   required String message,
   required bool isSuccess,
 }) {
-  ScaffoldMessenger.of(context).showSnackBar(
+  final messenger = ScaffoldMessenger.of(context);
+  final mediaQuery = MediaQuery.of(context);
+  final screenHeight = mediaQuery.size.height;
+
+  // 1. Clear previous snackbars to prevent overlapping/queueing issues
+  messenger.clearSnackBars();
+
+  // 2. Safer math for top-positioning (Floating SnackBar behavior)
+  // We use a larger headroom (180 instead of 140) to accommodate taller snackbars
+  // and ensure we don't push it off-screen at the top.
+  final bottomMargin = screenHeight > 200 ? screenHeight - 200 : 20.0;
+
+  messenger.showSnackBar(
     SnackBar(
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
       elevation: 0,
       margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.height - 140,
-          left: 10,
-          right: 10),
-      duration: const Duration(milliseconds: 1000),
+        bottom: bottomMargin,
+        left: 10,
+        right: 10,
+      ),
+      duration: const Duration(seconds: 3),
       content: AnimatedApiSnackBar(
         title: title,
         message: message,

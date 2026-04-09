@@ -4,4 +4,5 @@ const String certificationRenew = '@certificationRenew';
 const String resetPassword = '@resetPassword';
 const String checkIn = '@checkIn';
 const String checkInDiet = '@checkInDiet';
+const String coachProfile = '@coachProfile';
 // const String providerFlowCleanup = 'providerFlowCleanup';

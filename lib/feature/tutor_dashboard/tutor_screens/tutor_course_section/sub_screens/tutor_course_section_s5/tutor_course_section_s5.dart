@@ -1,4 +1,4 @@
-import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/feature/tutor_dashboard/tutor_main_screen.dart';
 import 'package:ast_official/ui_molecules/app_dismis_keyboard.dart';
 import 'package:ast_official/ui_molecules/buttons/app_primary_button.dart';
 import 'package:ast_official/utils/asset_utils.dart';
@@ -66,10 +66,10 @@ class TutorCourseSectionS5View extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextField(
-                              style: TextStyle(color: AppColor.white),
+                              style: const TextStyle(color: AppColor.white),
                               decoration: InputDecoration(
                                 hintText: "Inserisci nome corso",
-                                hintStyle: TextStyle(color: Colors.grey),
+                                hintStyle: const TextStyle(color: Colors.grey),
                                 filled: true,
                                 fillColor: AppColor.c151515,
                                 border: OutlineInputBorder(
@@ -80,10 +80,10 @@ class TutorCourseSectionS5View extends StatelessWidget {
                             ),
                             const SizedBox(height: 20),
                             TextField(
-                              style: TextStyle(color: AppColor.white),
+                              style: const TextStyle(color: AppColor.white),
                               decoration: InputDecoration(
                                 hintText: "Scrivi una breve descrizione...",
-                                hintStyle: TextStyle(color: Colors.grey),
+                                hintStyle: const TextStyle(color: Colors.grey),
                                 filled: true,
                                 fillColor: AppColor.c151515,
                                 border: OutlineInputBorder(
@@ -130,8 +130,12 @@ class TutorCourseSectionS5View extends StatelessWidget {
                       ),
                       AppButton(
                         onPressed: () {
-                          Navigator.pushNamed(
-                              context, RoutePaths.tutorMainScreen);
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TutorMainScreen()),
+                            (route) => false,
+                          );
                         },
                         text: "Aggiorna e salva",
                         fontSize: AppFontSize.f18,

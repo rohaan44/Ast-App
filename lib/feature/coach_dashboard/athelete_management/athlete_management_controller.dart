@@ -99,6 +99,8 @@ class AthleteManagementController with ChangeNotifier {
   // 1. Change this to a List (to store the accumulated users)
   List<dynamic> _coachesList = [];
   List<dynamic> get coachesList => _coachesList;
+  bool _isFirstFetchDone = false;
+  bool get isFirstFetchDone => _isFirstFetchDone;
 
   // Keep the other variables
   bool _isLoading = false;
@@ -128,21 +130,11 @@ class AthleteManagementController with ChangeNotifier {
           appRepoService.getAllMyAtheletes(page: _currentPage, limit: _limit),
       context: context,
       onSuccess: (response) async {
-        List<dynamic> newUsers = response['data']['users'];
-        Map<String, dynamic> pagination = response['data']['pagination'];
-        int totalPages = pagination['pages'];
+        final data = response['data'] ?? {};
+        List<dynamic> newUsers = data['users'] ?? [];
+        Map<String, dynamic> pagination = data['pagination'] ?? {};
+        int totalPages = pagination['pages'] ?? 1;
 
-        // Future.delayed(
-        //  const   Duration(
-        //       minutes: 1,
-        //     ), () {
-        //   showApiSnackBar(
-        //     context,
-        //     title: "ponka",
-        //     message: "ponkaaaa",
-        //     isSuccess: false,
-        //   );
-        // });
         if (loadMore) {
           _coachesList.addAll(newUsers);
         } else {
@@ -151,8 +143,8 @@ class AthleteManagementController with ChangeNotifier {
         _hasMore = _currentPage < totalPages;
       },
     );
-
     _isLoading = false;
+    _isFirstFetchDone = true;
     notifyListeners();
   }
 
@@ -176,9 +168,10 @@ class AthleteManagementController with ChangeNotifier {
           page: _currentPage, limit: _limit),
       context: context,
       onSuccess: (response) async {
-        List<dynamic> newUsers = response['data']['users'];
-        Map<String, dynamic> pagination = response['data']['pagination'];
-        int totalPages = pagination['pages'];
+        final data = response['data'] ?? {};
+        List<dynamic> newUsers = data['users'] ?? [];
+        Map<String, dynamic> pagination = data['pagination'] ?? {};
+        int totalPages = pagination['pages'] ?? 1;
 
         if (loadMore) {
           _coachesList.addAll(newUsers);
@@ -190,46 +183,47 @@ class AthleteManagementController with ChangeNotifier {
     );
 
     _isLoading = false;
+    _isFirstFetchDone = true;
     notifyListeners();
   }
 
-  Future<void> acceptReqAthelet(context, String status) async {
+  Future<void> acceptReqAthelet(context, String relationshipId) async {
     final response = await appRepoService.acceptReqAthelet(
-      status: status,
+      relationshipId: relationshipId,
     );
     if (response == true) {
       showApiSnackBar(
         context,
         title: "Success",
-        message: "Exercise create successfully",
+        message: "Request accepted successfully",
         isSuccess: true,
       );
     } else {
       showApiSnackBar(
         context,
         title: "Error",
-        message: "Failed to resend OTP",
+        message: "Failed to accept request",
         isSuccess: false,
       );
     }
   }
 
-  Future<void> rejectReqAthelet(context, String status) async {
+  Future<void> rejectReqAthelet(context, String relationshipId) async {
     final response = await appRepoService.rejectReqAthelet(
-      status: status,
+      relationshipId: relationshipId,
     );
     if (response == true) {
       showApiSnackBar(
         context,
         title: "Success",
-        message: "Exercise create successfully",
+        message: "Request rejected successfully",
         isSuccess: true,
       );
     } else {
       showApiSnackBar(
         context,
         title: "Error",
-        message: "Failed to resend OTP",
+        message: "Failed to reject request",
         isSuccess: false,
       );
     }

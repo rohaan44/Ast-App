@@ -1,5 +1,5 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/personalize_your_experience/personalize_your_experience_Controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/personalize_your_experience/personalize_your_experience_controller.dart';
 
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
@@ -39,20 +39,19 @@ class _PersonalizYourExperienceState extends State<PersonalizYourExperience> {
               children: [
                 // Left logo
 
-
                 GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () =>Navigator.pop(context),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0), // small tap area
-              child: SvgPicture.asset(
-                AssetUtils.backArrow,
-                height: ch(20),
-                width: cw(20),
-              ),
-            ),
-          ),
-                
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => Navigator.pop(context),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0), // small tap area
+                    child: SvgPicture.asset(
+                      AssetUtils.backArrow,
+                      height: ch(20),
+                      width: cw(20),
+                    ),
+                  ),
+                ),
+
                 SizedBox(
                     width: cw(160), child: customSlider(5, 1, AppColor.white)),
                 Container(
@@ -189,8 +188,8 @@ class _PersonalizYourExperienceState extends State<PersonalizYourExperience> {
             AppButton(
                 buttonColor: AppColor.primary,
                 onPressed: () {
-                  Navigator.pushNamed(context,
-                      RoutePaths.whatIsYourActivityView);
+                  Navigator.pushNamed(
+                      context, RoutePaths.whatIsYourActivityView);
                 },
                 text: "Avanti",
                 fontSize: 16,

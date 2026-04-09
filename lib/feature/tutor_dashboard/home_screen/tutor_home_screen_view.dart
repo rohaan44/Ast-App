@@ -52,17 +52,18 @@ class TutorHomeScreenView extends StatelessWidget {
                           child: Column(
                             children: [
                               activityCardItem(
-                                width: cw(171),
-                                height: ch(121),
-                                title: "Corsi Attivi",
-                                countLabel: "5",
-                                isGradient: true,
-                                onTap: () {},
-                              ),
+                                  width: cw(171),
+                                  height: ch(121),
+                                  title: "Corsi\nAttivi",
+                                  countLabel: "5",
+                                  isGradient: true,
+                                  onTap: () {},
+                                  iconPath: AssetUtils.scholarCap),
                               SizedBox(
                                 height: ch(10),
                               ),
                               activityCardItem(
+                                iconPath: AssetUtils.notePad,
                                 width: cw(171),
                                 height: ch(121),
                                 title: "Esami In\nSospeso",
@@ -77,6 +78,7 @@ class TutorHomeScreenView extends StatelessWidget {
                           width: cw(11),
                         ),
                         activityCardItem(
+                          iconPath: AssetUtils.certificate,
                           image: const AssetImage(AssetUtils.tutorContainerBG),
                           title: "Certificati Emessi",
                           countLabel: "30",
@@ -223,7 +225,7 @@ Widget activityCardItem({
   required String title,
   String? subtitle,
   String? countLabel,
-  String? iconPath,
+  String? iconPath, // optional top-right SVG icon
   bool isGradient = true,
   double? width,
   double? height,
@@ -239,6 +241,7 @@ Widget activityCardItem({
       height: height,
       child: Stack(
         children: [
+          // Optional background image
           if (image != null)
             Positioned(
               top: 0,
@@ -261,6 +264,21 @@ Widget activityCardItem({
                 ),
               ),
             ),
+
+          // Optional top-right SVG icon
+          if (iconPath != null)
+            Positioned(
+              top: 8,
+              right: 8,
+              child: SvgPicture.asset(
+                iconPath,
+                width: cw(32),
+                height: ch(32),
+                color: AppColor.cEA5823, // optional color/tint
+              ),
+            ),
+
+          // Text content
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -31,14 +31,13 @@ Widget coachBottomBar() {
               return InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {
-                  if (model.selectedIndex == index) return;
                   model.pageController.animateToPage(
                     index,
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                   );
                   Future.delayed(const Duration(milliseconds: 50), () {
-                    model.setSelectedIndex(index);
+                    model.setSelectedIndex(index, context);
                   });
                 },
                 child: AnimatedContainer(

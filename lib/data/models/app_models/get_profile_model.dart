@@ -61,6 +61,7 @@ class Profile {
   String? fullName;
   String? id;
   String? email;
+  String? phone;
 
   Profile({
     this.height,
@@ -80,6 +81,7 @@ class Profile {
     this.bio,
     this.fullName,
     this.id,
+    this.phone,
   });
 
   Profile.fromJson(Map<String, dynamic> json) {
@@ -114,6 +116,7 @@ class Profile {
     bio = json['bio'];
     fullName = json['fullName'];
     id = json['id'];
+    phone = json['phone'];
   }
 
   Map<String, dynamic> toJson() {
@@ -135,6 +138,7 @@ class Profile {
       'bio': bio,
       'fullName': fullName,
       'id': id,
+      'phone': phone,
     };
   }
 }

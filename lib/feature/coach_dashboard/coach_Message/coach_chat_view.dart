@@ -23,28 +23,28 @@ class CoachChatView extends StatelessWidget {
       body: SafeArea(
           child: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: cw(20), vertical: ch(10)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AppText(
-                  txt: "Chats",
-                  fontSize: AppFontSize.f24,
-                  isItalic: true,
-                  color: AppColor.white,
-                  fontWeight: FontWeight.w600,
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: SvgPicture.asset(
-                    AssetUtils.addIcon,
-                    height: ch(30),
-                  ),
-                )
-              ],
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: cw(20), vertical: ch(10)),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       AppText(
+          //         txt: "Chats",
+          //         fontSize: AppFontSize.f24,
+          //         isItalic: true,
+          //         color: AppColor.white,
+          //         fontWeight: FontWeight.w600,
+          //       ),
+          //       IconButton(
+          //         onPressed: () {},
+          //         icon: SvgPicture.asset(
+          //           AssetUtils.addIcon,
+          //           height: ch(30),
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
           //SizedBox(height: ch(),),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: cw(20)),

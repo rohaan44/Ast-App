@@ -1,236 +1,287 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
+import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_text/app_text.dart';
-import 'package:ast_official/ui_molecules/appbar/appbar.dart';
 import 'package:ast_official/utils/asset_utils.dart';
 import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
 import 'package:ast_official/utils/gradients/app_gradients.dart';
+import 'package:ast_official/utils/shimmer.dart';
+import 'package:ast_official/ui_molecules/bottombar/coach_bottombar/coach_bottombar_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class CoachHomeScreenView extends StatelessWidget {
   const CoachHomeScreenView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final modelRead = context.read<CoachHomeScreenController>();
+    final model = context.watch<CoachHomeScreenController>();
+    final bottomBar = context.read<CoachBottomBar>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!modelRead.isFirstFetchDone && !modelRead.isLoading) {
+        modelRead.getAllMyAtheletes(context: context);
+      }
+    });
+
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-           padding: EdgeInsets.symmetric(horizontal: cw(20)),
-          child: Column(
-            children: [
-              textProfileSettingAppbar(
-                  context: context, text: "Pannello Di Controllo"),
-              // Padding(
-              //   padding:
-              //       EdgeInsets.symmetric(horizontal: cw(20), vertical: ch(20)),
-              //   child: textProfileSettingAppbar(
-              //       context: context, text: "Pannello Di Controllo"),
-              // ),
-          
-              Expanded(
-                child: SingleChildScrollView(
-                 
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              children: [
-                                activityCardItem(
-                                  title: "Check-in",
-                                  subtitle: "In Sospeso",
-                                  countLabel: "12 In attesa di",
-                                  iconPath: AssetUtils.arrowGoto,
-                                  isGradient: true,
-                                  width: cw(171),
-                                  onTap: () {},
-                                ),
-                                SizedBox(
-                                  height: ch(10),
-                                ),
-                                activityCardItem(
-                                  title: "Atleti",
-                                  subtitle: "Attivi",
-                                  countLabel: "8 Attivo",
-                                  iconPath: AssetUtils.arrowGoto,
-                                  isGradient: false,
-                                  width: cw(171),
-                                  onTap: () {
-                                    // Navigate to Check-in screen
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: cw(11),
-                          ),
-                          Expanded(
-                              child: activityCardItem(
-                            image: const AssetImage(AssetUtils.cardBg),
-                            title: "Suggerimenti",
-                            subtitle: "Dell'intelligenza\nArtificiale",
-                            countLabel: "5 Suggerimenti",
-                            iconPath: AssetUtils.arrowGoto,
-                            isGradient: false,
-                            height: ch(252),
-                            isSpacer: true,
-                            width: cw(171),
-                            onTap: () {
-                              // Navigate to Check-in screen
-                            },
-                          ))
-                        ],
-                      ),
-                      SizedBox(
-                        height: ch(30),
-                      ),
-                      AppText(
-                        txt: "Azioni rapide",
-                        fontSize: AppFontSize.f19,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      SizedBox(
-                        height: ch(20),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            child: Container(
-                              padding: EdgeInsets.all(cw(14)),
-                              height: ch(85),
-                              width: cw(160),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(cw(16)),
-                                  gradient: AppGradients.redGradient),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+        child: GlobalSkeleton(
+          isLoading: model.isLoading,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: cw(20)),
+            child: Column(
+              children: [
+                // textProfileSettingAppbar(
+                //     context: context, text: "Pannello Di Controllo"),
+                // Padding(
+                //   padding:
+                //       EdgeInsets.symmetric(horizontal: cw(20), vertical: ch(20)),
+                //   child: textProfileSettingAppbar(
+                //       context: context, text: "Pannello Di Controllo"),
+                // ),
+
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Column(
                                 children: [
-                                  CircleAvatar(
-                                    backgroundColor: AppColor.c252525,
-                                    child: SvgPicture.asset(
-                                      AssetUtils.arrowGoto,
-                                      width: 15,
-                                    ),
+                                  activityCardItem(
+                                    title: "Check-in",
+                                    subtitle: "In Sospeso",
+                                    countLabel: "12 In attesa di",
+                                    iconPath: AssetUtils.arrowGoto,
+                                    isGradient: true,
+                                    width: cw(171),
+                                    onTap: () {
+                                      bottomBar.setSelectedIndex(3, context);
+                                      bottomBar.pageController.animateToPage(
+                                        3,
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        curve: Curves.easeInOut,
+                                      );
+                                    },
                                   ),
                                   SizedBox(
-                                    width: cw(15),
+                                    height: ch(10),
                                   ),
-                                  AppText(
-                                    txt: "Recensi\nOni Del\nCheck-in",
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: AppFontSize.f20 - 3,
+                                  activityCardItem(
+                                    title: "Atleti",
+                                    subtitle: "Attivi",
+                                    countLabel: "8 Attivo",
+                                    iconPath: AssetUtils.arrowGoto,
+                                    isGradient: false,
+                                    width: cw(171),
+                                    onTap: () {
+                                      bottomBar.setSelectedIndex(1, context);
+                                      bottomBar.pageController.animateToPage(
+                                        1,
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        curve: Curves.easeInOut,
+                                      );
+                                    },
                                   )
                                 ],
                               ),
                             ),
-                          ),
-                          GestureDetector(
-                            child: Container(
-                              padding: EdgeInsets.all(cw(14)),
-                              height: ch(85),
-                              width: cw(160),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(cw(16)),
-                                  gradient: AppGradients.redGradient),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: AppColor.c252525,
-                                    child: SvgPicture.asset(
-                                      AssetUtils.arrowGoto,
-                                      width: 15,
+                            SizedBox(
+                              width: cw(11),
+                            ),
+                            Expanded(
+                                child: activityCardItem(
+                              image: const AssetImage(AssetUtils.cardBg),
+                              title: "Suggerimenti",
+                              subtitle: "Dell'intelligenza\nArtificiale",
+                              countLabel: "5 Suggerimenti",
+                              iconPath: AssetUtils.arrowGoto,
+                              isGradient: false,
+                              height: ch(252),
+                              isSpacer: true,
+                              width: cw(171),
+                              onTap: () {
+                                bottomBar.setSelectedIndex(3, context);
+                                bottomBar.pageController.animateToPage(
+                                  3,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              },
+                            ))
+                          ],
+                        ),
+                        SizedBox(
+                          height: ch(30),
+                        ),
+                        AppText(
+                          txt: "Azioni rapide",
+                          fontSize: AppFontSize.f19,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        SizedBox(
+                          height: ch(20),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                bottomBar.setSelectedIndex(3, context);
+                                bottomBar.pageController.animateToPage(
+                                  3,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(cw(14)),
+                                height: ch(85),
+                                width: cw(160),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(cw(16)),
+                                    gradient: AppGradients.redGradient),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor: AppColor.c252525,
+                                      child: SvgPicture.asset(
+                                        AssetUtils.arrowGoto,
+                                        width: 15,
+                                      ),
                                     ),
+                                    SizedBox(
+                                      width: cw(15),
+                                    ),
+                                    AppText(
+                                      txt: "Recensi\nOni Del\nCheck-in",
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: AppFontSize.f20 - 3,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                bottomBar.setSelectedIndex(2, context);
+                                bottomBar.pageController.animateToPage(
+                                  2,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(cw(14)),
+                                height: ch(85),
+                                width: cw(160),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(cw(16)),
+                                    gradient: AppGradients.redGradient),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor: AppColor.c252525,
+                                      child: SvgPicture.asset(
+                                        AssetUtils.arrowGoto,
+                                        width: 15,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: cw(15),
+                                    ),
+                                    AppText(
+                                      txt: "Nuovi Piani",
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: AppFontSize.f20 - 4,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: ch(20),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            AppText(
+                              txt: "Notifiche",
+                              fontSize: AppFontSize.f19,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RoutePaths.notificationScreen);
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  AppText(
+                                    txt: "Visualizza tutto",
+                                    fontSize: AppFontSize.f16,
+                                    color: AppColor.c42A8FF,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: AppColor.c42A8FF,
                                   ),
                                   SizedBox(
-                                    width: cw(15),
+                                    width: cw(4),
                                   ),
-                                  AppText(
-                                    txt: "Nuovi Piani",
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: AppFontSize.f20 - 4,
+                                  SvgPicture.asset(
+                                    AssetUtils.arrowForward,
+                                    color: AppColor.c42A8FF,
                                   )
                                 ],
                               ),
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: ch(20),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          AppText(
-                            txt: "Notifiche",
-                            fontSize: AppFontSize.f19,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, RoutePaths.notificationScreen);
-                            },
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                AppText(
-                                  txt: "Visualizza tutto",
-                                  fontSize: AppFontSize.f16,
-                                  color: AppColor.c42A8FF,
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: AppColor.c42A8FF,
-                                ),
-                                SizedBox(
-                                  width: cw(4),
-                                ),
-                                SvgPicture.asset(
-                                  AssetUtils.arrowForward,
-                                  color: AppColor.c42A8FF,
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: ch(15),
-                      ),
-                      notificationCard(
-                          title: "Check-in",
-                          title_2: " In Ritardo",
-                          subtitle: "L'atleta John Doe ha una causa in sospeso"),
-                      SizedBox(
-                        height: ch(15),
-                      ),
-                      notificationCard(
-                          title: "Nuovo Piano: ",
-                          title_2: " Parte Superiore Del Corpo",
-                          subtitle:
-                              "L'intelligenza artificiale ha generato un nuovo piano"),
-                      SizedBox(
-                        height: ch(15),
-                      ),
-                      notificationCard(
-                          title: "Check-in ",
-                          title_2: " inviato",
-                          subtitle: "L'atleta Jane Roe ha inviato"),
-                      SizedBox(
-                        height: ch(50),
-                      )
-                    ],
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: ch(15),
+                        ),
+                        notificationCard(
+                            title: "Check-in",
+                            title_2: " In Ritardo",
+                            subtitle:
+                                "L'atleta John Doe ha una causa in sospeso"),
+                        SizedBox(
+                          height: ch(15),
+                        ),
+                        notificationCard(
+                            title: "Nuovo Piano: ",
+                            title_2: " Parte Superiore Del Corpo",
+                            subtitle:
+                                "L'intelligenza artificiale ha generato un nuovo piano"),
+                        SizedBox(
+                          height: ch(15),
+                        ),
+                        notificationCard(
+                            title: "Check-in ",
+                            title_2: " inviato",
+                            subtitle: "L'atleta Jane Roe ha inviato"),
+                        SizedBox(
+                          height: ch(50),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
