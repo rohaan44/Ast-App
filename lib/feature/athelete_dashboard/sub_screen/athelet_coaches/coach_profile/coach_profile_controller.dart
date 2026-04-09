@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 class CoachProfileController with ChangeNotifier {
   final AppRepoService appRepoService;
   bool isAboutExpanded = false;
-  String? _lastFetchedId;
 
   CoachProfileController({required this.appRepoService}) {
     // _init();
@@ -18,19 +17,6 @@ class CoachProfileController with ChangeNotifier {
     isAboutExpanded = !isAboutExpanded;
     notifyListeners();
   }
-
-  final Map<String, dynamic> coachData = {
-    "name": "Darleen Bratt",
-    "image":
-        "https://static.vecteezy.com/system/resources/thumbnails/046/836/977/small/african-male-fitness-trainer-in-gym-fitness-and-wellness-african-american-coach-healthy-lifestyle-photo.jpg",
-    "specialties": [
-      {"label": "Cardio", "icon": "heart"},
-      {"label": "Anaerobico", "icon": "bolt"},
-      {"label": "Equilibrio", "icon": "scale"},
-    ],
-    "about":
-        "Sono Darleen Bratt, una coach certificata nel fitness, appassionata nell'aiutare le persone a muoversi meglio, sentirsi più forti e vivere in salute. Con oltre 8 anni di esperienza nell'allenamento anaerobico, nei movimenti di equilibrio e nel potenziamento muscolare, ho guidato centinaia di atleti verso i loro obiettivi. Il mio approccio combina disciplina e divertimento, assicurando che ogni sessione sia efficace e motivante. Credo fermamente che il benessere sia un viaggio e sono qui per supportarti in ogni passo.",
-  };
 
   final List<Map<String, dynamic>> workouts = [
     {
@@ -59,37 +45,81 @@ class CoachProfileController with ChangeNotifier {
 
   void clearProfile() {
     _coachProfile = null;
-    _lastFetchedId = null;
+    _isFirstFetchDone = false;
+    isPending = false;
+    myCoaches.clear();
     notifyListeners();
   }
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-  
-    bool _isLoadingCoachRequest = false;
-  bool get isLoadingCoachRequest => _isLoadingCoachRequest;
+  bool _isSendingRequest = false;
+  bool get isSendingRequest => _isSendingRequest;
 
-  Future<void> sendCoachRequest(
-      {required String coachId, required BuildContext context}) async {
-    _isLoading = true;
+  bool _isFetchingCoaches = false;
+  bool get isFetchingCoaches => _isFetchingCoaches;
+
+  bool _isFirstFetchDone = false;
+  bool get isFirstFetchDone => _isFirstFetchDone;
+
+  final List<dynamic> myCoaches = [];
+  bool isPending = false;
+
+  Future<void> sendCoachRequest({
+    required String coachId,
+    required BuildContext context,
+  }) async {
+    if (_isSendingRequest) return;
+    _isSendingRequest = true;
     notifyListeners();
+
     await runApiCall(
-        context: context,
-        apiCall: () => appRepoService.sendCoachRequest(coachId: coachId),
-        onSuccess: (response) async {
-          _isLoadingCoachRequest = true;
-          showApiSnackBar(
-            context,
-            title: "Success",
-            message: "Coach request sent successfully",
-            isSuccess: true,
-          );
-        });
-    _isLoading = false;
+      context: context,
+      apiCall: () => appRepoService.sendCoachRequest(coachId: coachId),
+      onSuccess: (_) async {
+        showApiSnackBar(
+          context,
+          title: "Success",
+          message: "Coach request sent successfully",
+          isSuccess: true,
+        );
+        _isFirstFetchDone = false; // Reset to allow refresh
+        await getMyCoaches(context: context, coachId: coachId);
+      },
+    );
+
+    _isSendingRequest = false;
     notifyListeners();
   }
 
-  // Future<void> getCoachProfileById(
+  Future<void> getMyCoaches({
+    required BuildContext context,
+    required String coachId,
+    bool forceRefresh = false,
+  }) async {
+    if ((_isFetchingCoaches || _isFirstFetchDone) && !forceRefresh) return;
+
+    _isFetchingCoaches = true;
+    notifyListeners();
+
+    await runApiCall(
+      context: context,
+      apiCall: () => appRepoService.getMyCoaches(),
+      onSuccess: (response) async {
+        myCoaches
+          ..clear()
+          ..addAll(response['data']['relationships']);
+
+        isPending = myCoaches.any((r) =>
+            (r['coachId'] == coachId || r['coach']?['_id'] == coachId) &&
+            r['status'] == 'pending');
+      },
+    );
+
+    _isFirstFetchDone = true;
+    _isFetchingCoaches = false;
+    notifyListeners();
+  }
+
+  // Future<void> getCoachProfileById(ui
   //     {required String id, required BuildContext context}) async {
   //   if (isLoading || _lastFetchedId == id) return;
 
@@ -118,6 +148,13 @@ class CoachProfileController with ChangeNotifier {
   //   isLoading = false;
   //   notifyListeners();
   // }
+  bool isCoachRequestPending({
+    required List<dynamic> requests,
+    required String coachId,
+  }) {
+    return requests.any((item) =>
+        item['coach']?['_id'] == coachId && item['status'] == "pending");
+  }
 
   @override
   void dispose() {

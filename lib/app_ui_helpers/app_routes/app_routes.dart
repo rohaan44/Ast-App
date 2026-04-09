@@ -1,9 +1,53 @@
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/domain/repository/app_repo_service.dart';
-import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_controller.dart';
+import 'package:ast_official/domain/repository/auth_repo_service.dart';
+import 'package:ast_official/domain/repository/onboarding_repo_service.dart';
+
+// Controllers
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_Info/athlete_info_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_edit_profile/athlete_edit_profile_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_integration/athlete_integration_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_language/athlete_language_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_profile_setting_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_renew_certificate/athlete_renew_certificate_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/home_screen_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/breakfast_time/breakfast_time_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/dinner_time/dinner_time_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/personalize_your_experience/personalize_your_experience_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/what_is_your_activity/what_is_your_activity_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/what_is_your_diet_type/what_is_your_diet_type_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/sub_screen/training_detail/training_detail_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/check_in/edit_ai_suggestion/edit_ai_suggestion_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/coach_Message/selected_chat/selected_chat_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach_edit_profile/coach_edit_profile_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach_profile_setting_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/language/language_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/plans/nutrition_plan/nutrition_plan_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/integration/integration_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/plans/plan_preview/plan_preview_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/plans/trainning_plan/training_plan_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/plans_royalties/athlete_subscriptions/athlete_subscriptions_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/plans_royalties/payments_royalties_controller.dart';
+import 'package:ast_official/feature/coach_dashboard/plans_royalties/transaction_history/transaction_history_controller.dart';
+import 'package:ast_official/feature/on_boarding/auth/forget_password/forgot_password_1/forget_password_controller.dart';
+import 'package:ast_official/feature/on_boarding/auth/forget_password/reset_password/reset_password_controller.dart';
+import 'package:ast_official/feature/on_boarding/auth/sign_in/sign_in_controller.dart';
+import 'package:ast_official/feature/on_boarding/auth/sign_up/sign_up_controller.dart';
+import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_controller.dart';
+import 'package:ast_official/feature/on_boarding/otp_view/otp_controller.dart';
+import 'package:ast_official/feature/on_boarding/payment_flow/choose_your_plan/choose_your_plan_controller.dart';
+import 'package:ast_official/feature/on_boarding/payment_flow/success/success_controller.dart';
+import 'package:ast_official/feature/on_boarding/payment_flow/wallet/wallet_controller.dart';
+import 'package:ast_official/feature/on_boarding/person_height/person_height_controller.dart';
+import 'package:ast_official/feature/on_boarding/select_gender/select_gender_controller.dart';
+import 'package:ast_official/feature/on_boarding/select_objective/select_objective_controller.dart';
+import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
+import 'package:ast_official/feature/on_boarding/select_weight/select_weight_controller.dart';
+import 'package:ast_official/feature/on_boarding/welcome_screen/welcome_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/sub_screen/training_complete/training_complete_controller.dart';
+
+// Views
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_view.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/coach_profile/coach_profile_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/coach_profile/coach_profile_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_Info/athlete_info_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_edit_profile/athlete_edit_profile_view.dart';
@@ -11,16 +55,20 @@ import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profi
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_language/athlete_language_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_profile_setting_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_renew_certificate/athlete_renew_certificate_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/body_measurement/body_measurement_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/checkin_diet/checkin_diet_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/review_your_checkin/review_your_checkin_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/status_feedback/status_feedback_view.dart';
+
+// Missing Controllers
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/athelet_coaches_controller.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/coach_profile/coach_profile_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/body_measurement/body_measurement_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/checkin_diet/checkin_diet_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/review_your_checkin/review_your_checkin_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/status_feedback/status_feedback_controller.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/dashboard_home_screen/dashboard_home_screen.dart';
 import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_view.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/body_measurement/body_measurement_view.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/checkin_diet/checkin_diet_view.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/review_your_checkin/review_your_checkin_view.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/check_in/sub_screen/status_feedback/status_feedback_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/home_screen_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/breakfast_time/breakfast_time_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/dinner_time/dinner_time_view.dart';
@@ -28,13 +76,11 @@ import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/s
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/what_is_your_activity/what_is_your_activity_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/what_is_your_diet_type/what_is_your_diet_type_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/your_personalized_plan/your_personalized_plan_view.dart';
+import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/sub_screen/training_detail/training_detail_view.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/notification/notification_screen.dart';
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/sub_screen/training_complete/training_complete.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/sub_screen/training_complete/training_complete_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/sub_screen/training_detail/training_detail_view.dart';
 import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_management_view.dart';
 import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_profile/athelete_profile_view.dart';
-import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_profile/athlete_profile_controller.dart';
 import 'package:ast_official/feature/coach_dashboard/check_in/edit_ai_suggestion/edit_ai_suggestion_view.dart';
 import 'package:ast_official/feature/coach_dashboard/check_in/seleted_check_in/selected_check_in_view.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_Message/selected_chat/selected_chat_view.dart';
@@ -43,11 +89,11 @@ import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach_edit_profile/coach_edit_profile_view.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach_profile_setting_view.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach_renew_certificate/coach_renew_certificate_view.dart';
-import 'package:ast_official/feature/on_boarding/auth/forget_password/reset_password/reset_password_view.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/integration/integration_view.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/language/language_view.dart';
 import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_view.dart';
-import 'package:ast_official/feature/coach_dashboard/notification/notification_screen.dart';
+import 'package:ast_official/feature/coach_dashboard/notification/notification_screen.dart'
+    as coach_notif;
 import 'package:ast_official/feature/coach_dashboard/plans/nutrition_plan/nutrition_plan_view.dart';
 import 'package:ast_official/feature/coach_dashboard/plans/plan_preview/plan_preview_view.dart';
 import 'package:ast_official/feature/coach_dashboard/plans/plans_management/plans_management_view.dart';
@@ -56,6 +102,7 @@ import 'package:ast_official/feature/coach_dashboard/plans_royalties/athlete_sub
 import 'package:ast_official/feature/coach_dashboard/plans_royalties/payments_royalties_view.dart';
 import 'package:ast_official/feature/coach_dashboard/plans_royalties/transaction_history/transaction_history_view.dart';
 import 'package:ast_official/feature/on_boarding/auth/forget_password/forgot_password_1/forget_password_view.dart';
+import 'package:ast_official/feature/on_boarding/auth/forget_password/reset_password/reset_password_view.dart';
 import 'package:ast_official/feature/on_boarding/auth/sign_in/sign_in_view.dart';
 import 'package:ast_official/feature/on_boarding/auth/sign_up/sign_up_view.dart';
 import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_view.dart';
@@ -82,84 +129,22 @@ import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/sub_screens/tutor_course_section_s3/tutor_course_section_s3.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/sub_screens/tutor_course_section_s4/tutor_course_section_s4.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/sub_screens/tutor_course_section_s5/tutor_course_section_s5.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/sub_screens/tutor_course_section_s5/tutor_course_section_s5_controller.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/tutor_course_section.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_profile_settings_section/sub_screens/tutor_profile_settings_section_s1/tutor_profile_settings_section_s1.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_profile_settings_section/sub_screens/tutor_profile_settings_section_s2/tutor_profile_settings_section_s2.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_profile_settings_section/sub_screens/tutor_profile_settings_section_s3/tutor_profile_settings_section_s3.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_profile_settings_section/sub_screens/tutor_profile_settings_section_s3/tutor_profile_settings_section_s3_controller.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_profile_settings_section/sub_screens/tutor_profile_settings_section_s4/tutor_profile_settings_section_s4.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_profile_settings_section/sub_screens/tutor_profile_settings_section_s4/tutor_profile_settings_section_s4_controller.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_profile_settings_section/tutor_profile_settings_section.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_submission_section/sub_screens/tutor_submission_section_s1/tutor_submission_section_s1.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_submission_section/sub_screens/tutor_submission_section_s2/tutor_submission_section_s2.dart';
 import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_submission_section/tutor_submission_section.dart';
-import 'package:ast_official/domain/repository/auth_repo_service.dart';
-import 'package:ast_official/domain/repository/onboarding_repo_service.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_Info/athlete_info_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_edit_profile/athlete_edit_profile_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_integration/athlete_integration_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_language/athlete_language_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_profile_setting_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/athlete_profile_setting/athlete_renew_certificate/athlete_renew_certificate_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/home_screen_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/breakfast_time/breakfast_time_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/dinner_time/dinner_time_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/personalize_your_experience/personalize_your_experience_Controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/what_is_your_activity/what_is_your_activity_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/home_screen/sub_screen/what_is_your_diet_type/what_is_your_diet_type_controller.dart';
-import 'package:ast_official/feature/athelete_dashboard/sub_screen/training/sub_screen/training_detail/training_detail_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/athelete_management/athlete_management_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/check_in/edit_ai_suggestion/edit_ai_suggestion_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/coach_Message/selected_chat/selected_chat_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach_edit_profile/coach_edit_profile_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach_profile_setting_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/integration/integration_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/language/language_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/home_screen/coach_home_screen_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/plans/nutrition_plan/nutrition_plan_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/plans/plan_preview/plan_preview_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/plans/plans_management/plans_management_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/plans/trainning_plan/training_plan_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/plans_royalties/athlete_subscriptions/athlete_subscriptions_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/plans_royalties/payments_royalties_controller.dart';
-import 'package:ast_official/feature/coach_dashboard/plans_royalties/transaction_history/transaction_history_controller.dart';
-import 'package:ast_official/feature/on_boarding/auth/forget_password/forgot_password_1/forget_password_controller.dart';
-import 'package:ast_official/feature/on_boarding/auth/forget_password/reset_password/reset_password_controller.dart';
-import 'package:ast_official/feature/on_boarding/auth/sign_in/sign_in_controller.dart';
-import 'package:ast_official/feature/on_boarding/auth/sign_up/sign_up_controller.dart';
-import 'package:ast_official/feature/on_boarding/date_of_birth/date_of_birth_controller.dart';
-import 'package:ast_official/feature/on_boarding/otp_view/otp_controller.dart';
-import 'package:ast_official/feature/on_boarding/payment_flow/choose_your_plan/choose_your_plan_controller.dart';
-import 'package:ast_official/feature/on_boarding/payment_flow/success/success_controller.dart';
-import 'package:ast_official/feature/on_boarding/payment_flow/wallet/wallet_controller.dart';
-import 'package:ast_official/feature/on_boarding/person_height/person_height_controller.dart';
-import 'package:ast_official/feature/on_boarding/select_gender/select_gender_controller.dart';
-import 'package:ast_official/feature/on_boarding/select_objective/select_objective_controller.dart';
-import 'package:ast_official/feature/on_boarding/select_role/select_role_controller.dart';
-import 'package:ast_official/feature/on_boarding/select_weight/select_weight_controller.dart';
-import 'package:ast_official/feature/on_boarding/welcome_screen/welcome_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_certificate_section/sub_screens/tutor_certificate_section_s1/tutor_certificate_section_s1_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_certificate_section/sub_screens/tutor_certificate_section_s2/tutor_certificate_section_s2_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_certificate_section/sub_screens/tutor_certificate_section_s3/tutor_certificate_section_s3_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_certificate_section/sub_screens/tutor_certificate_section_s4/tutor_certificate_section_s4_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_certificate_section/tutor_certificate_section_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/sub_screens/tutor_course_section_s1/tutor_course_section_s1_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/sub_screens/tutor_course_section_s2/tutor_course_section_s2_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/sub_screens/tutor_course_section_s3/tutor_course_section_s3_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/sub_screens/tutor_course_section_s4/tutor_course_section_s4_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_course_section/tutor_course_section_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_profile_settings_section/sub_screens/tutor_profile_settings_section_s1/tutor_profile_settings_section_s1_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_profile_settings_section/sub_screens/tutor_profile_settings_section_s2/tutor_profile_settings_section_s2_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_profile_settings_section/tutor_profile_settings_section_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_submission_section/sub_screens/tutor_submission_section_s1/tutor_submission_section_s1_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_submission_section/sub_screens/tutor_submission_section_s2/tutor_submission_section_s2_controller.dart';
-import 'package:ast_official/feature/tutor_dashboard/tutor_screens/tutor_submission_section/tutor_submission_section_controller.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    debugPrint("🚀 App Router: Requesting route => ${settings.name}");
     switch (settings.name) {
       // Walkthrougn screens
       case RoutePaths.walkthrough:
@@ -186,7 +171,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => SelectRoleController(),
-              child: const SelectRoleView(),
+              builder: (context, child) => const SelectRoleView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -200,7 +185,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => SignUpController(
                   authRepoService: context.read<AuthRepoService>()),
-              child: const SignUpView(),
+              builder: (context, child) => const SignUpView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -215,7 +200,7 @@ class AppRouter {
               create: (context) => SignInController(
                 authRepoService: context.read<AuthRepoService>(),
               ),
-              child: const SignInView(),
+              builder: (context, child) => const SignInView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -229,7 +214,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => ForgetPasswordController(
                   authRepoService: context.read<AuthRepoService>()),
-              child: const ForgetPasswordView(),
+              builder: (context, child) => const ForgetPasswordView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -244,7 +229,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => SelectGenderController(
                   onboardingRepoService: context.read<OnboardingRepoService>()),
-              child: const SelectGenderView(),
+              builder: (context, child) => const SelectGenderView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -257,7 +242,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => PersonHeightController(),
-              child: const PersonHeightView(),
+              builder: (context, child) => const PersonHeightView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -272,7 +257,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => OtpController(
                   authRepoService: context.read<AuthRepoService>()),
-              child: const OtpView(),
+              builder: (context, child) => const OtpView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -287,7 +272,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => SelectWeightController(
                   onboardingRepoService: context.read<OnboardingRepoService>()),
-              child: const SelectWeightView(),
+              builder: (context, child) => const SelectWeightView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -302,7 +287,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => DateOfBirthController(
                   onboardingRepoService: context.read<OnboardingRepoService>()),
-              child: const DateOfBirthView(),
+              builder: (context, child) => const DateOfBirthView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -316,7 +301,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => SelectObjectiveController(
                   onboardingRepoService: context.read<OnboardingRepoService>()),
-              child: const SelectObjectiveView(),
+              builder: (context, child) => const SelectObjectiveView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -328,7 +313,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => WelcomeController(),
-              child: const WelcomeView(),
+              builder: (context, child) => const WelcomeView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -341,7 +326,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => ChooseYourPlanController(
                   onboardingRepoService: context.read<OnboardingRepoService>()),
-              child: const ChooseYourPlanView(),
+              builder: (context, child) => const ChooseYourPlanView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -354,7 +339,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => WalletController(
                   onboardingRepoService: context.read<OnboardingRepoService>()),
-              child: const WalletView(),
+              builder: (context, child) => const WalletView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -366,7 +351,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => SuccessController(),
-              child: const SuccessView(),
+              builder: (context, child) => const SuccessView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -393,7 +378,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => HomeScreenController(),
-              child: const HomeScreenview(),
+              builder: (context, child) => const HomeScreenview(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -405,7 +390,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => PersonalizYourExperienceController(),
-              child: const PersonalizYourExperience(),
+              builder: (context, child) => const PersonalizYourExperience(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -417,7 +402,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => WhatIsYourActivityController(),
-              child: const WhatIsYourActivity(),
+              builder: (context, child) => const WhatIsYourActivity(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -429,7 +414,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => WhatIsYourDietTypeController(),
-              child: const WhatIsYourDietTypeView(),
+              builder: (context, child) => const WhatIsYourDietTypeView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -442,7 +427,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => BreakFastTimeController(),
-              child: const BreakFastTimeView(),
+              builder: (context, child) => const BreakFastTimeView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -454,7 +439,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => DinnerTimeController(),
-              child: const DinnerTimeView(),
+              builder: (context, child) => const DinnerTimeView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -486,7 +471,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => AthleteLanguageController(),
-              child: const AthleteLanguageView(),
+              builder: (context, child) => const AthleteLanguageView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -498,7 +483,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => AthleteInfoController(),
-              child: const AthleteInfoView(),
+              builder: (context, child) => const AthleteInfoView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -510,7 +495,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => AthleteIntegrationController(),
-              child: const AthleteIntegrationView(),
+              builder: (context, child) => const AthleteIntegrationView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -522,7 +507,8 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => AthleteRenewCertificateController(),
-              child: const AthletehRenewCertificationView(),
+              builder: (context, child) =>
+                  const AthletehRenewCertificationView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -535,8 +521,9 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => AthleteProfileSettingController(
+                  appRepoService: context.read<AppRepoService>(),
                   authRepoService: context.read<AuthRepoService>()),
-              child: const AthleteProfileSettingView(),
+              builder: (context, child) => const AthleteProfileSettingView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -550,7 +537,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => AthleteEditProfileController(
                   appRepoService: context.read<AppRepoService>()),
-              child: const AthleteEditProfileView(),
+              builder: (context, child) => const AthleteEditProfileView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -570,10 +557,9 @@ class AppRouter {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             final args = settings.arguments as Map?;
-
             return ChangeNotifierProvider(
               create: (context) => TrainingDetailController(),
-              child: TrainingDetailView(
+              builder: (context, child) => TrainingDetailView(
                 title: args?["title"] ?? "",
                 subTitle: args?["subTitle"],
                 difficultyLevel: args?["difficultyLevel"],
@@ -600,12 +586,7 @@ class AppRouter {
       case RoutePaths.coachHomeScreenView:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => CoachHomeScreenController(
-                appRepoService: context.read<AppRepoService>(),
-              ),
-              child: const CoachHomeScreenView(),
-            );
+            return const CoachHomeScreenView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -615,7 +596,7 @@ class AppRouter {
       case RoutePaths.notificationScreen:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return const NotificationScreen();
+            return const coach_notif.NotificationScreen();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -627,7 +608,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => PlanPreviewController(),
-              child: const PlanPreviewView(),
+              builder: (context, child) => const PlanPreviewView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -635,13 +616,14 @@ class AppRouter {
           },
         );
 
+      case RoutePaths.trainingPlanView:
       case RoutePaths.trainingPlanScreen:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => TrainingPlanController(
                   appRepoService: context.read<AppRepoService>()),
-              child: const TrainingPlanView(),
+              builder: (context, child) => const TrainingPlanView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -652,10 +634,7 @@ class AppRouter {
       case RoutePaths.plansManagementScreen:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => PlansManagementController(),
-              child: const PlansManagementView(),
-            );
+            return const PlansManagementView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -667,7 +646,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => NutritionPlanController(),
-              child: const NutritionPlanView(),
+              builder: (context, child) => const NutritionPlanView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -680,7 +659,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => PaymentsRoyaltiesController(),
-              child: const PaymentsRoyaltiesView(),
+              builder: (context, child) => const PaymentsRoyaltiesView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -693,7 +672,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => TransactionsHistoryController(),
-              child: const TransactionsHistoryView(),
+              builder: (context, child) => const TransactionsHistoryView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -706,7 +685,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => AthleteSubscriptionsController(),
-              child: const AthleteSubscriptionsView(),
+              builder: (context, child) => const AthleteSubscriptionsView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -718,7 +697,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => SelectedChatController(),
-              child: const SelectedChatView(),
+              builder: (context, child) => const SelectedChatView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -731,8 +710,9 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => CoachProfileSettingController(
+                  appRepoService: context.read<AppRepoService>(),
                   authRepoService: context.read<AuthRepoService>()),
-              child: const CoachProfileSettingView(),
+              builder: (context, child) => const CoachProfileSettingView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -742,11 +722,7 @@ class AppRouter {
       case RoutePaths.athleteManagementView:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => AthleteManagementController(
-                  appRepoService: context.read<AppRepoService>()),
-              child: const AthleteManagementView(),
-            );
+            return const AthleteManagementView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -757,8 +733,9 @@ class AppRouter {
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
-              create: (context) => CoachEditProfileController(),
-              child: const CoachEditProfileView(),
+              create: (context) => CoachEditProfileController(
+                  appRepoService: context.read<AppRepoService>()),
+              builder: (context, child) => const CoachEditProfileView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -789,7 +766,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => IntegrationController(),
-              child: const IntegrationView(),
+              builder: (context, child) => const IntegrationView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -802,7 +779,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => LanguageSelectorController(),
-              child: const LanguageView(),
+              builder: (context, child) => const LanguageView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -826,7 +803,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => ResetPasswordController(
                   authRepoService: context.read<AuthRepoService>()),
-              child: const ResetPasswordView(),
+              builder: (context, child) => const ResetPasswordView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -849,7 +826,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => EditAiSuggestionController(),
-              child: const EditAiSuggestionView(),
+              builder: (context, child) => const EditAiSuggestionView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -860,10 +837,7 @@ class AppRouter {
       case RoutePaths.tutorCourseSectionView:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorCourseSectionController(),
-              child: const TutorCourseSectionView(),
-            );
+            return const TutorCourseSectionView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -883,10 +857,7 @@ class AppRouter {
       case RoutePaths.tutorCourseSectionS1View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorCourseSectionS1Controller(),
-              child: const TutorCourseSectionS1View(),
-            );
+            return const TutorCourseSectionS1View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -895,10 +866,7 @@ class AppRouter {
       case RoutePaths.tutorCourseSectionS2View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorCourseSectionS2Controller(),
-              child: const TutorCourseSectionS2View(),
-            );
+            return const TutorCourseSectionS2View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -907,10 +875,7 @@ class AppRouter {
       case RoutePaths.tutorCourseSectionS3View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorCourseSectionS3Controller(),
-              child: const TutorCourseSectionS3View(),
-            );
+            return const TutorCourseSectionS3View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -919,10 +884,7 @@ class AppRouter {
       case RoutePaths.tutorCourseSectionS4View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorCourseSectionS4Controller(),
-              child: const TutorCourseSectionS4View(),
-            );
+            return const TutorCourseSectionS4View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -931,10 +893,7 @@ class AppRouter {
       case RoutePaths.tutorCourseSectionS5View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorCourseSectionS5Controller(),
-              child: const TutorCourseSectionS5View(),
-            );
+            return const TutorCourseSectionS5View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -943,10 +902,7 @@ class AppRouter {
       case RoutePaths.tutorCertificateSectionView:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorCertificateSectionController(),
-              child: const TutorCertificateSectionView(),
-            );
+            return const TutorCertificateSectionView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -955,10 +911,7 @@ class AppRouter {
       case RoutePaths.tutorCertificateSectionS1View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorCertificateSectionS1Controller(),
-              child: const TutorCertificateSectionS1View(),
-            );
+            return const TutorCertificateSectionS1View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -967,10 +920,7 @@ class AppRouter {
       case RoutePaths.tutorCertificateSectionS2View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorCertificateSectionS2Controller(),
-              child: const TutorCertificateSectionS2View(),
-            );
+            return const TutorCertificateSectionS2View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -979,10 +929,7 @@ class AppRouter {
       case RoutePaths.tutorCertificateSectionS3View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorCertificateSectionS3Controller(),
-              child: const TutorCertificateSectionS3View(),
-            );
+            return const TutorCertificateSectionS3View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -991,10 +938,7 @@ class AppRouter {
       case RoutePaths.tutorCertificateSectionS4View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorCertificateSectionS4Controller(),
-              child: const TutorCertificateSectionS4View(),
-            );
+            return const TutorCertificateSectionS4View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -1002,12 +946,11 @@ class AppRouter {
         );
       case RoutePaths.athleteProfileView:
         return PageRouteBuilder(
+          settings: settings,
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => AthleteProfileController(),
-              child: const AthleteProfileView(
-                athlete: null,
-              ),
+            final athlete = settings.arguments;
+            return AthleteProfileView(
+              athlete: athlete,
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -1017,10 +960,7 @@ class AppRouter {
       case RoutePaths.tutorSubmissionSectionView:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorSubmissionSectionController(),
-              child: const TutorSubmissionSectionView(),
-            );
+            return const TutorSubmissionSectionView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -1029,10 +969,7 @@ class AppRouter {
       case RoutePaths.tutorSubmissionSectionS1View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorSubmissionSectionS1Controller(),
-              child: const TutorSubmissionSectionS1View(),
-            );
+            return const TutorSubmissionSectionS1View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -1041,10 +978,7 @@ class AppRouter {
       case RoutePaths.tutorSubmissionSectionS2View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorSubmissionSectionS2Controller(),
-              child: const TutorSubmissionSectionS2View(),
-            );
+            return const TutorSubmissionSectionS2View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -1053,10 +987,7 @@ class AppRouter {
       case RoutePaths.tutorProfileSettingsSectionView:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorProfileSettingsSectionController(),
-              child: const TutorProfileSettingsSectionView(),
-            );
+            return const TutorProfileSettingsSectionView();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -1065,10 +996,7 @@ class AppRouter {
       case RoutePaths.tutorProfileSettingsSectionS1View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorProfileSettingsSectionS1Controller(),
-              child: const TutorProfileSettingsSectionS1View(),
-            );
+            return const TutorProfileSettingsSectionS1View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -1077,10 +1005,7 @@ class AppRouter {
       case RoutePaths.tutorProfileSettingsSectionS2View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorProfileSettingsSectionS2Controller(),
-              child: const TutorProfileSettingsSectionS2View(),
-            );
+            return const TutorProfileSettingsSectionS2View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -1089,10 +1014,7 @@ class AppRouter {
       case RoutePaths.tutorProfileSettingsSectionS3View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorProfileSettingsSectionS3Controller(),
-              child: const TutorProfileSettingsSectionS3View(),
-            );
+            return const TutorProfileSettingsSectionS3View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -1102,10 +1024,7 @@ class AppRouter {
       case RoutePaths.tutorProfileSettingsSectionS4View:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TutorProfileSettingsSectionS4Controller(),
-              child: const TutorProfileSettingsSectionS4View(),
-            );
+            return const TutorProfileSettingsSectionS4View();
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
@@ -1117,7 +1036,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => TrainingCompleteController(),
-              child: const TrainingComplete(),
+              builder: (context, child) => const TrainingComplete(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -1130,7 +1049,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => CheckInDietController(),
-              child: const CheckInDietView(),
+              builder: (context, child) => const CheckInDietView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -1142,7 +1061,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => BodyMeasurementController(),
-              child: const BodyMeasurementView(),
+              builder: (context, child) => const BodyMeasurementView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -1154,7 +1073,7 @@ class AppRouter {
           pageBuilder: (context, animation, secondaryAnimation) {
             return ChangeNotifierProvider(
               create: (context) => StatusFeedbackController(),
-              child: const StatusFeedbackView(),
+              builder: (context, child) => const StatusFeedbackView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -1167,7 +1086,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => ReviewYourCheckInController(
                   appRepoService: context.read<AppRepoService>()),
-              child: const ReviewYourCheckInView(),
+              builder: (context, child) => const ReviewYourCheckInView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -1180,7 +1099,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => AtheletCoachesController(
                   appRepoService: context.read<AppRepoService>()),
-              child: const AtheletCoachesView(),
+              builder: (context, child) => const AtheletCoachesView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -1193,33 +1112,7 @@ class AppRouter {
             return ChangeNotifierProvider(
               create: (context) => CoachProfileController(
                   appRepoService: context.read<AppRepoService>()),
-              child: const CoachProfileView(),
-            );
-          },
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return child;
-          },
-        );
-      case RoutePaths.trainingPlanView:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => TrainingPlanController(
-                  appRepoService: context.read<AppRepoService>()),
-              child: const TrainingPlanView(),
-            );
-          },
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return child;
-          },
-        );
-      case RoutePaths.atheletManagementView:
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) {
-            return ChangeNotifierProvider(
-              create: (context) => AthleteManagementController(
-                  appRepoService: context.read<AppRepoService>()),
-              child: const AthleteManagementView(),
+              builder: (context, child) => const CoachProfileView(),
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {

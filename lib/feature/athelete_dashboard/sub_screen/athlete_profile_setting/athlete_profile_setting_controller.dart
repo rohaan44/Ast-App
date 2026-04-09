@@ -1,13 +1,19 @@
 import 'dart:io';
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/core/network/auth_service/auth_service.dart';
+import 'package:ast_official/domain/repository/app_repo_service.dart';
 import 'package:ast_official/domain/repository/auth_repo_service.dart';
 import 'package:ast_official/helpers/api_helper/api_helper.dart';
+import 'package:ast_official/ui_molecules/snackbar/snackbar.dart';
 import 'package:flutter/material.dart';
 
 class AthleteProfileSettingController with ChangeNotifier {
   final AuthRepoService authRepoService;
-  AthleteProfileSettingController({required this.authRepoService});
+  final AppRepoService appRepoService;
+  AthleteProfileSettingController({
+    required this.authRepoService,
+    required this.appRepoService,
+  });
   File? _profileImage;
 
   File? get profileImage => _profileImage;
@@ -18,6 +24,43 @@ class AthleteProfileSettingController with ChangeNotifier {
   set isNotification(bool value) {
     _isNotification = value;
     notifyListeners();
+  }
+
+  Map<String, dynamic> _profileData = {};
+  Map<String, dynamic> get profileData => _profileData;
+
+  bool _isProfileFetched = false;
+  bool get isProfileFetched => _isProfileFetched;
+
+  Future<void> getProfileData(BuildContext context,
+      {bool forceRefresh = false}) async {
+    if (_isProfileFetched && !forceRefresh) return;
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await appRepoService.getMyProfile();
+      if (response.success == true) {
+        _profileData = response.data?.profile?.toJson() ?? {};
+        _isProfileFetched = true;
+      } else {
+        if (context.mounted) {
+          showApiSnackBar(
+            context,
+            title: "Error",
+            message: response.error ?? "Something went wrong",
+            isSuccess: false,
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint("Error fetching profile: $e");
+    } finally {
+      _isProfileFetched = true;
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   /// Pick image using file_picker

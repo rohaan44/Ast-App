@@ -12,6 +12,7 @@ analyzer:
     unused_local_variable: ignore
     sort_child_properties_last: ignore
     deprecated_member_use: ignore
+    unnecessary_cast: ignore
 include: package:flutter_lints/flutter.yaml
 
 linter:

@@ -56,14 +56,14 @@ class SelectedCheckInView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 AppText(
-                                  txt: flowData!["name"],
+                                  txt: flowData?["name"] ?? "N/A",
                                   fontSize: AppFontSize.f20,
                                 ),
                                 SizedBox(
                                   height: ch(8),
                                 ),
                                 AppText(
-                                  txt: flowData["date"],
+                                  txt: flowData?["date"] ?? "N/A",
                                   fontSize: AppFontSize.f15 - 2,
                                 )
                               ],
@@ -84,7 +84,7 @@ class SelectedCheckInView extends StatelessWidget {
                                 child: activityInfoContent(
                                     topText: 'Peso',
                                     mainValue:
-                                        "${flowData["weight"].toString()} Kg",
+                                        "${flowData?["weight"]?.toString() ?? "N/A"} Kg",
                                     changeValue: '+0.2kg',
                                     isPositiveChange: true)),
 
@@ -96,7 +96,7 @@ class SelectedCheckInView extends StatelessWidget {
                                 child: activityInfoContent(
                                     topText: 'Vita',
                                     mainValue:
-                                        '${flowData["waist"].toString()} cm',
+                                        '${flowData?["waist"]?.toString() ?? "N/A"} cm',
                                     changeValue: '-0.5 cm',
                                     isPositiveChange: false)),
 
@@ -280,7 +280,7 @@ class SelectedCheckInView extends StatelessWidget {
                                     borderRadius: cw(12),
                                     fontSize: AppFontSize.f15,
                                     onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (builder)=>EditAiSuggestionView()));
+                                      Navigator.push(context, MaterialPageRoute(builder: (builder)=>const EditAiSuggestionView()));
                                     },
                                   ),
                                 ),

@@ -32,6 +32,7 @@ class CoachChatController with ChangeNotifier {
     await _initPusher();
     await loadTotalUnreadCount();
   }
+
   Future<void> _initPusher() async {
     if (_currentUserId == null) return;
     await _pusherService.init();
@@ -46,6 +47,7 @@ class CoachChatController with ChangeNotifier {
   }
 
   Future<void> loadConversations() async {
+    if (_isLoading) return;
     _setLoading(true);
     try {
       _conversations = await _chatRepo.getConversations();

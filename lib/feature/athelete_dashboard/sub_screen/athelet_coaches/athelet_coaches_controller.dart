@@ -29,6 +29,7 @@ class AtheletCoachesController extends ChangeNotifier {
 
   @override
   void dispose() {
+    scrollController.removeListener(_onScroll);
     scrollController.dispose();
     super.dispose();
   }
@@ -154,13 +155,23 @@ class AtheletCoachesController extends ChangeNotifier {
     }).toList();
   }
 
-// 1. Change this to a List (to store the accumulated users)
+  // 1. Change this to a List (to store the accumulated users)
   List<dynamic> _coachesList = [];
   List<dynamic> get coachesList => _coachesList;
 
-  // Keep the other variables
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+  bool _isFirstFetchDone = false;
+  bool get isFirstFetchDone => _isFirstFetchDone;
+
+  // Flags for loading states
+  bool _isFirstLoading = false;
+  bool get isFirstLoading => _isFirstLoading;
+
+  bool _isLoadingMore = false;
+  bool get isLoadingMore => _isLoadingMore;
+
+  // Keep isLoading for compatibility or overall status
+  bool get isLoading => _isFirstLoading;
+
   bool _hasMore = true;
   bool get hasMore => _hasMore;
   int _currentPage = 1;
@@ -168,17 +179,21 @@ class AtheletCoachesController extends ChangeNotifier {
 
   Future<void> getCoaches(
       {required BuildContext context, bool loadMore = false}) async {
-    if (_isLoading) return;
+    if (_isFirstFetchDone && !loadMore) return;
+    if (_isFirstLoading || _isLoadingMore) return;
     if (loadMore && !_hasMore) return;
 
-    _isLoading = true;
+    if (loadMore) {
+      _isLoadingMore = true;
+    } else {
+      _isFirstLoading = true;
+      _currentPage = 1;
+      _hasMore = true;
+    }
     notifyListeners();
 
     if (loadMore) {
       _currentPage++;
-    } else {
-      _currentPage = 1;
-      _hasMore = true;
     }
 
     await runApiCall(
@@ -199,7 +214,9 @@ class AtheletCoachesController extends ChangeNotifier {
       },
     );
 
-    _isLoading = false;
+    _isFirstLoading = false;
+    _isLoadingMore = false;
+    _isFirstFetchDone = true;
     notifyListeners();
   }
 }

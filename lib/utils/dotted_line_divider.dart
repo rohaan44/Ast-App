@@ -8,12 +8,12 @@ class DottedDivider extends StatelessWidget {
   final double spaceWidth;
 
   const DottedDivider({
-    Key? key,
+    super.key,
     this.color = Colors.white54,
     this.height = 1.0,
     this.dashWidth = 5.0,
     this.spaceWidth = 5.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -66,10 +66,10 @@ class TutorCourseSectionS5View extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextField(
-                              style: TextStyle(color: AppColor.white),
+                              style: const TextStyle(color: AppColor.white),
                               decoration: InputDecoration(
                                 hintText: "Inserisci nome corso",
-                                hintStyle: TextStyle(color: Colors.grey),
+                                hintStyle: const TextStyle(color: Colors.grey),
                                 filled: true,
                                 fillColor: AppColor.c151515,
                                 border: OutlineInputBorder(
@@ -80,10 +80,10 @@ class TutorCourseSectionS5View extends StatelessWidget {
                             ),
                             const SizedBox(height: 20),
                             TextField(
-                              style: TextStyle(color: AppColor.white),
+                              style: const TextStyle(color: AppColor.white),
                               decoration: InputDecoration(
                                 hintText: "Scrivi una breve descrizione...",
-                                hintStyle: TextStyle(color: Colors.grey),
+                                hintStyle: const TextStyle(color: Colors.grey),
                                 filled: true,
                                 fillColor: AppColor.c151515,
                                 border: OutlineInputBorder(

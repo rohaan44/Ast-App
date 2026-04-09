@@ -1,4 +1,5 @@
-import 'dart:io';
+import 'dart:developer';
+
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/coach_dashboard/coach_profile_setting/coach_edit_profile/coach_edit_profile_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
@@ -18,7 +19,14 @@ class CoachEditProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<CoachEditProfileController>(context);
+
+      final model = context.watch<CoachEditProfileController>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!model.isProfileFetched && !model.isLoading) {
+        model.getProfileData(context);
+        log("""""message""" "${model.profileData}");
+      }
+    });
     return AppDismissKeyboard(
       child: Scaffold(
         body: SafeArea(
@@ -47,7 +55,7 @@ class CoachEditProfileView extends StatelessWidget {
                               radius: cw(55),
                               backgroundColor: AppColor.grey,
                               backgroundImage: model.profileImage != null
-                                  ? FileImage(model.profileImage! as File)
+                                  ? FileImage(model.profileImage!)
                                   : const AssetImage(AssetUtils.scholarCap)
                                       as ImageProvider,
                             ),
@@ -116,7 +124,8 @@ class CoachEditProfileView extends StatelessWidget {
                           fillColor: AppColor.transparent,
                           border: InputBorder.none,
                           hintText: "Nome e cognome",
-                          controller: TextEditingController()),
+                          controller: model.nameController
+                          ),
                       SizedBox(
                         height: ch(20),
                       ),
@@ -124,7 +133,7 @@ class CoachEditProfileView extends StatelessWidget {
                           fillColor: AppColor.transparent,
                           border: InputBorder.none,
                           hintText: "Indirizzo e-mail",
-                          controller: TextEditingController()),
+                          controller: model.emailController),
                       SizedBox(
                         height: ch(20),
                       ),
@@ -132,7 +141,7 @@ class CoachEditProfileView extends StatelessWidget {
                           fillColor: AppColor.transparent,
                           border: InputBorder.none,
                           hintText: "Numero di telefono",
-                          controller: TextEditingController()),
+                          controller: model.phoneController),
                       SizedBox(
                         height: ch(20),
                       ),
@@ -140,7 +149,7 @@ class CoachEditProfileView extends StatelessWidget {
                           fillColor: AppColor.transparent,
                           border: InputBorder.none,
                           hintText: "biografia del profilo",
-                          controller: TextEditingController()),
+                          controller: model.bioController),
                       SizedBox(
                         height: ch(20),
                       ),
@@ -148,7 +157,7 @@ class CoachEditProfileView extends StatelessWidget {
                           border: InputBorder.none,
                           fillColor: AppColor.transparent,
                           hintText: "Specializzazione",
-                          controller: TextEditingController()),
+                          controller: model.spcializationController),
                       SizedBox(
                         height: ch(20),
                       ),
@@ -156,34 +165,46 @@ class CoachEditProfileView extends StatelessWidget {
                           border: InputBorder.none,
                           fillColor: AppColor.transparent,
                           hintText: "Identificativo della certificazione",
-                          controller: TextEditingController()),
+                          controller: model.certificationController
+                          ),
                       SizedBox(
                         height: ch(20),
                       ),
                       Container(
-                        // width: cw(327),
-                        
                         height: ch(52),
-                        padding: EdgeInsets.symmetric(horizontal: ch(16),vertical: ch(16)),
+                        padding: EdgeInsets.symmetric(
+                        horizontal: ch(16), vertical: ch(16)),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
+                        borderRadius: BorderRadius.circular(
                             cw(14),
                           ),
                           border: Border.all(color: AppColor.c252525),
                           color: AppColor.transparent,
                         ),
-                        child: Row(children: [
-                          AppText(txt: "Nessun documento caricato",fontSize: AppFontSize.f18, ),
-                          const Spacer(),
-                          AppText(txt:"+ Aggiungi file", color: AppColor.cFF8D28,fontSize: AppFontSize.f16-3,)
-                        ],),
+                        child: Row(
+                          children: [
+                            AppText(
+                              txt: "Nessun documento caricato",
+                              fontSize: AppFontSize.f18,
+                            ),
+                            const Spacer(),
+                            AppText(
+                              txt: "+ Aggiungi file",
+                              color: AppColor.cFF8D28,
+                              fontSize: AppFontSize.f16 - 3,
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: ch(30),
                       ),
                       AppButton(
                         onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(context, RoutePaths.coachProfileSettingScreen, (route) => false);
+                          Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              RoutePaths.coachProfileSettingScreen,
+                              (route) => false);
                         },
                         text: "Salva modifiche",
                       ),

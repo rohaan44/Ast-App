@@ -9,6 +9,8 @@ class CoachHomeScreenController with ChangeNotifier {
 
   List<dynamic> _coachesList = [];
   List<dynamic> get coachesList => _coachesList;
+  bool _isFirstFetchDone = false;
+  bool get isFirstFetchDone => _isFirstFetchDone;
 
   // Keep the other variables
   bool _isLoading = false;
@@ -151,8 +153,9 @@ class CoachHomeScreenController with ChangeNotifier {
         limit: _limit,
       ),
       onSuccess: (response1) async {
-        final users = response1['data']['users'];
-        final pages = response1['data']['pagination']['pages'];
+        final data = response1['data'] ?? {};
+        final users = data['users'] ?? [];
+        final pages = (data['pagination'] ?? {})['pages'] ?? 1;
 
         if (loadMore) {
           _coachesList.addAll(users);
@@ -183,7 +186,7 @@ class CoachHomeScreenController with ChangeNotifier {
     try {
       await runApiCallWithError(
         context: context,
-        apiCall: () => appRepoService.getCheckins(),
+        apiCall: () => appRepoService.getCoahCheckins(),
         onSuccess: (response3) async {},
       );
     } catch (e) {}
@@ -234,6 +237,7 @@ class CoachHomeScreenController with ChangeNotifier {
 
     /// 🔥 Ab sab APIs COMPLETE (success ya fail)
     _isLoading = false;
+    _isFirstFetchDone = true;
     notifyListeners();
   }
 }

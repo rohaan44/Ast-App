@@ -23,6 +23,9 @@ class AtheletChatController extends ChangeNotifier {
   int get totalUnreadCount => _totalUnreadCount;
 
   Set<String> _onlineUserIds = {};
+  String _searchQuery = "";
+  dynamic _eventSubscription;
+  dynamic _memberSubscription;
 
   AtheletChatController() {
     _init();
@@ -44,8 +47,8 @@ class AtheletChatController extends ChangeNotifier {
     await _pusherService.subscribe(
       'private-user-$_currentUserId',
       onEvent: (event) {
-        if (event?.eventName == 'conversation-updated') {
-          _handleConversationUpdated(event!);
+        if (event.eventName == 'conversation-updated') {
+          _handleConversationUpdated(event);
         }
       },
     );
@@ -53,11 +56,28 @@ class AtheletChatController extends ChangeNotifier {
     // Subscribe to presence channel for online status
     await _pusherService.subscribe(
       'presence-online-users',
-      onEvent: (event) {
-        // Presence events are handled by PusherService callbacks,
-        // but we can also listen here if needed.
-      },
+      onEvent: (event) {},
     );
+
+    // Listen to global streams from PusherService
+    _eventSubscription = _pusherService.eventStream.listen((event) {
+      if (event != null &&
+          event.eventName == 'conversation-updated' &&
+          event.channelName == 'private-user-$_currentUserId') {
+        _handleConversationUpdated(event);
+      }
+    });
+
+    _memberSubscription = _pusherService.memberStream.listen((data) {
+      if (data['channel'] == 'presence-online-users') {
+        final member = data['member'];
+        if (data['action'] == 'added') {
+          onUserOnline(member.userId.toString());
+        } else if (data['action'] == 'removed') {
+          onUserOffline(member.userId.toString());
+        }
+      }
+    });
   }
 
   Future<void> loadConversations() async {
@@ -109,6 +129,26 @@ class AtheletChatController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateOnlineUsers(List<String> userIds) {
+    _onlineUserIds = Set.from(userIds);
+    notifyListeners();
+  }
+
+  void onUserOnline(String userId) {
+    _onlineUserIds.add(userId);
+    notifyListeners();
+  }
+
+  void onUserOffline(String userId) {
+    _onlineUserIds.remove(userId);
+    notifyListeners();
+  }
+
+  void filterConversations(String query) {
+    _searchQuery = query.toLowerCase();
+    notifyListeners();
+  }
+
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
@@ -122,7 +162,13 @@ class AtheletChatController extends ChangeNotifier {
 
   // Compat with old UI field name 'chats'
   List<Map<String, dynamic>> get chats {
-    return _conversations.map((c) {
+    final filtered = _conversations.where((c) {
+      final other = c.getOtherParticipant(_currentUserId ?? "");
+      final name = other.fullName.isEmpty ? other.email : other.fullName;
+      return name.toLowerCase().contains(_searchQuery);
+    }).toList();
+
+    return filtered.map((c) {
       final other = c.getOtherParticipant(_currentUserId ?? "");
       return {
         "id": c.id,
@@ -133,6 +179,7 @@ class AtheletChatController extends ChangeNotifier {
             "https://ui-avatars.com/api/?name=${other.fullName}",
         "unread": c.unreadCount,
         "isOnline": isUserOnline(other.id),
+        "conversation": c, // Store original conversation object
       };
     }).toList();
   }
@@ -151,7 +198,11 @@ class AtheletChatController extends ChangeNotifier {
 
   @override
   void dispose() {
-    _pusherService.disconnect();
+    _eventSubscription?.cancel();
+    _memberSubscription?.cancel();
+    // Don't disconnect global pusher service, just unsubscribe if needed
+    _pusherService.unsubscribe('private-user-$_currentUserId');
+    _pusherService.unsubscribe('presence-online-users');
     super.dispose();
   }
 }
