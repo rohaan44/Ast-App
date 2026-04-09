@@ -7,6 +7,7 @@ import 'package:ast_official/utils/colors_utils.dart';
 import 'package:ast_official/utils/font_size.dart';
 import 'package:ast_official/utils/gradients/app_gradients.dart';
 import 'package:ast_official/utils/shimmer.dart';
+import 'package:ast_official/ui_molecules/bottombar/coach_bottombar/coach_bottombar_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ class CoachHomeScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     final modelRead = context.read<CoachHomeScreenController>();
     final model = context.watch<CoachHomeScreenController>();
+    final bottomBar = context.read<CoachBottomBar>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!modelRead.isFirstFetchDone && !modelRead.isLoading) {
@@ -60,7 +62,15 @@ class CoachHomeScreenView extends StatelessWidget {
                                     iconPath: AssetUtils.arrowGoto,
                                     isGradient: true,
                                     width: cw(171),
-                                    onTap: () {},
+                                    onTap: () {
+                                      bottomBar.setSelectedIndex(3, context);
+                                      bottomBar.pageController.animateToPage(
+                                        3,
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        curve: Curves.easeInOut,
+                                      );
+                                    },
                                   ),
                                   SizedBox(
                                     height: ch(10),
@@ -73,7 +83,13 @@ class CoachHomeScreenView extends StatelessWidget {
                                     isGradient: false,
                                     width: cw(171),
                                     onTap: () {
-                                      // Navigate to Check-in screen
+                                      bottomBar.setSelectedIndex(1, context);
+                                      bottomBar.pageController.animateToPage(
+                                        1,
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        curve: Curves.easeInOut,
+                                      );
                                     },
                                   )
                                 ],
@@ -94,7 +110,12 @@ class CoachHomeScreenView extends StatelessWidget {
                               isSpacer: true,
                               width: cw(171),
                               onTap: () {
-                                // Navigate to Check-in screen
+                                bottomBar.setSelectedIndex(3, context);
+                                bottomBar.pageController.animateToPage(
+                                  3,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
                               },
                             ))
                           ],
@@ -114,6 +135,14 @@ class CoachHomeScreenView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GestureDetector(
+                              onTap: () {
+                                bottomBar.setSelectedIndex(3, context);
+                                bottomBar.pageController.animateToPage(
+                                  3,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              },
                               child: Container(
                                 padding: EdgeInsets.all(cw(14)),
                                 height: ch(85),
@@ -144,6 +173,14 @@ class CoachHomeScreenView extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
+                              onTap: () {
+                                bottomBar.setSelectedIndex(2, context);
+                                bottomBar.pageController.animateToPage(
+                                  2,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              },
                               child: Container(
                                 padding: EdgeInsets.all(cw(14)),
                                 height: ch(85),

@@ -59,7 +59,12 @@ Future<bool> runApiCallWithError({
     }
 
     // ❌ API returned failure
-    debugPrint("❌ API failed: ${response['error'] ?? errorMessage}");
+    if (response is Map) {
+      debugPrint("❌ API failed: ${response['error'] ?? errorMessage}");
+    } else {
+      debugPrint("❌ API failed: $errorMessage (Response is not a map: $response)");
+    }
+
     if (context.mounted && response is Map) {
       showApiSnackBar(
         context,

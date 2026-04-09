@@ -24,6 +24,8 @@ class TrainingViewController with ChangeNotifier {
   ];
 
   List workoutPlans = [];
+  bool _isPlanLoaded = false;
+  bool get isPlanLoaded => _isPlanLoaded;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -34,6 +36,7 @@ class TrainingViewController with ChangeNotifier {
   final int _limit = 20;
 
   Future getAllExercises(BuildContext context, {bool loadMore = false}) async {
+    if (_isPlanLoaded && !loadMore) return;
     if (_isLoading) return;
 
     if (!loadMore) {
@@ -79,6 +82,7 @@ class TrainingViewController with ChangeNotifier {
         isSuccess: false,
       );
     } finally {
+      _isPlanLoaded = true;
       _isLoading = false;
       notifyListeners();
     }

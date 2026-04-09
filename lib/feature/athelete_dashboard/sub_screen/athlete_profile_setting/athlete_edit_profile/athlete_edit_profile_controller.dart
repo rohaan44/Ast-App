@@ -130,6 +130,7 @@ class AthleteEditProfileController with ChangeNotifier {
         debugPrint("FullName: '$fullName'");
         nameController.text = fullName;
         emailController.text = response.data?.profile?.email ?? "";
+        phoneController.text = response.data?.profile?.phone ?? "";
         bio = response.data?.profile?.bio ?? "";
         bioController.text = bio;
         _fitnessGoals.clear();
@@ -157,8 +158,8 @@ class AthleteEditProfileController with ChangeNotifier {
         );
       }
       debugPrint("Error fetching profile: $e");
-      _isProfileFetched = false;
     } finally {
+      _isProfileFetched = true;
       _isLoading = false;
       notifyListeners();
     }
@@ -168,8 +169,9 @@ class AthleteEditProfileController with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
+      debugPrint("Updating Profile with Name: '${nameController.text}' and Bio: '${bioController.text}'");
       final response = await appRepoService.updateProfile(
-        bio: bio,
+        bio: bioController.text,
         email: emailController.text,
         fitnessGoals: _fitnessGoals,
         name: nameController.text,
@@ -184,7 +186,7 @@ class AthleteEditProfileController with ChangeNotifier {
             isSuccess: true,
           );
 
-          Navigator.pop(context); // Go back to profile settings after update
+          Navigator.pop(context, true); // Go back to profile settings after update
         }
         _isProfileFetched = true;
       } else {

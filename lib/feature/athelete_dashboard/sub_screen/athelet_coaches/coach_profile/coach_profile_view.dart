@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ast_official/feature/athelete_dashboard/sub_screen/athelet_coaches/coach_profile/coach_profile_controller.dart';
 import 'package:ast_official/helpers/app_layout_helper.dart';
 import 'package:ast_official/ui_molecules/app_helper/app_constant.dart';
@@ -22,10 +24,23 @@ class CoachProfileView extends StatelessWidget {
     final controller = context.watch<CoachProfileController>();
     final flowData =
         context.read<FlowDataProvider>().getFlowData(coachProfile)?["map"];
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (flowData != null && !controller.isFirstFetchDone && !controller.isFetchingCoaches) {
+        controller.getMyCoaches(
+            context: context, coachId: flowData?['user']?["_id"]);
+      }
+    });
+
+    if (flowData == null) {
+      return const Scaffold(
+        body: Center(child: Text("Profile data not found")),
+      );
+    }
+
     return SafeArea(
       child: Scaffold(
         body: GlobalSkeleton(
-          isLoading: controller.isLoading,
+          isLoading: controller.isFetchingCoaches,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.only(bottom: ch(50)),
@@ -40,15 +55,21 @@ class CoachProfileView extends StatelessWidget {
                     children: [
                       SizedBox(height: ch(24)),
                       _buildActionButtons(
-                          reqIsLoading: controller.isLoading,
+                          reqIsLoading: controller.isSendingRequest,
                           model: controller,
                           context: context,
-                          onSendRequest: () {
-                            controller.sendCoachRequest(
-                                coachId: flowData['user']["_id"],
-                                context: context);
-                          },
-                          onMessage: () {}),
+                          onSendRequest: (!controller.isPending)
+                              ? () {
+                                  controller.sendCoachRequest(
+                                      coachId: flowData['user']?["_id"],
+                                      context: context);
+                                }
+                              : () {},
+                          onMessage: () {
+                            log(controller.isPending.toString());
+                            // log("My Coaches " +
+                            //     controller.myCoaches.toString());
+                          }),
                       SizedBox(height: ch(24)),
                       _buildAboutSection(controller, flowData),
                       SizedBox(height: ch(24)),
@@ -221,7 +242,7 @@ class CoachProfileView extends StatelessWidget {
           textColor: AppColor.white,
           buttonColor: AppColor.red,
           onPressed: onSendRequest ?? () {},
-          text: (model.isLoadingCoachRequest) ? "Request Send" : "Send Request",
+          text: (model.isPending) ? "Request Send" : "Send Request",
         )),
         SizedBox(width: cw(12)),
         Expanded(
@@ -331,9 +352,7 @@ class CoachProfileView extends StatelessWidget {
         SizedBox(height: ch(12)),
         // Single Horizontal List (or just one card as per image reference)
         // Single Horizontal List (or just one card as per image reference)
-        ...controller.workouts
-            .map((workout) => _buildWorkoutCard(workout))
-            ,
+        ...controller.workouts.map((workout) => _buildWorkoutCard(workout)),
       ],
     );
   }

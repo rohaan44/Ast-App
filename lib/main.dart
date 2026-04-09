@@ -12,6 +12,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:ast_official/core/utils/navigation_service.dart';
 import 'firebase_options.dart';
 import 'package:ast_official/services/connectivity_service.dart';
 
@@ -72,6 +73,7 @@ class _MyAppState extends State<MyApp> {
 
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
+        navigatorKey: NavigationService.navigatorKey,
         scaffoldMessengerKey: _scaffoldMessengerKey,
         locale: null, // 👈 AUTO detect (English / Spanish)
         // supportedLocales: S.delegate.supportedLocales,

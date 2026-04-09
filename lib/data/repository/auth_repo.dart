@@ -72,4 +72,45 @@ class AuthRepository {
         requestBody: {});
     return response;
   }
+
+  // ================= OTP LOGIN =================
+
+  Future<dynamic> loginWithOTP({required String email}) async {
+    final response = await _dioHelper.post(
+        url: "${NetworkProperties.baseUrl}auth/login-with-otp",
+        requestBody: {"email": email});
+    return response;
+  }
+
+  Future<Map<String, dynamic>> verifyLoginOTP(
+      {required String email, required String otp}) async {
+    final response = await _dioHelper.post(
+        url: "${NetworkProperties.baseUrl}auth/verify-login-otp",
+        requestBody: {"email": email, "otp": otp});
+    return response;
+  }
+
+  // ================= GET ME =================
+
+  Future<Map<String, dynamic>> getMe() async {
+    final response = await _dioHelper.get(
+        isAuthRequired: true, url: "${NetworkProperties.baseUrl}auth/me");
+    return response;
+  }
+
+  // ================= SOCIAL LOGIN =================
+
+  Future<AuthResponseModel> googleLogin({required String idToken}) async {
+    final response = await _dioHelper.post(
+        url: "${NetworkProperties.baseUrl}auth/google-login",
+        requestBody: {"idToken": idToken});
+    return AuthResponseModel.fromJson(response);
+  }
+
+  Future<AuthResponseModel> appleLogin({required String identityToken}) async {
+    final response = await _dioHelper.post(
+        url: "${NetworkProperties.baseUrl}auth/apple-login",
+        requestBody: {"identityToken": identityToken});
+    return AuthResponseModel.fromJson(response);
+  }
 }

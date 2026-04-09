@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 import 'package:ast_official/app_ui_helpers/app_routes/route_paths.dart';
 import 'package:ast_official/feature/athelete_dashboard/dashboard/dashboard_controller.dart';
@@ -21,6 +22,13 @@ class AthleteProfileSettingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<AthleteProfileSettingController>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!model.isProfileFetched && !model.isLoading) {
+        model.getProfileData(context);
+      }
+    });
+
+    final profile = model.profileData;
 
     return AppDismissKeyboard(
       child: Scaffold(
@@ -66,8 +74,16 @@ class AthleteProfileSettingView extends StatelessWidget {
                                   child: CircleAvatar(
                                     radius: cw(55),
                                     backgroundColor: AppColor.grey,
-                                    backgroundImage:
-                                        const AssetImage(AssetUtils.profilePic),
+                                    backgroundImage: (profile['avatar'] !=
+                                                null &&
+                                            profile['avatar']
+                                                .toString()
+                                                .isNotEmpty)
+                                        ? NetworkImage(
+                                                profile['avatar'].toString())
+                                            as ImageProvider
+                                        : const AssetImage(
+                                            AssetUtils.profilePic),
                                   ),
                                 ),
                                 Positioned(
@@ -129,7 +145,7 @@ class AthleteProfileSettingView extends StatelessWidget {
 
                             /// Name
                             AppText(
-                              txt: "Timothy Doe",
+                              txt: profile['fullName'] ?? "N/A",
                               fontSize: AppFontSize.f24,
                               fontWeight: FontWeight.w600,
                               color: AppColor.cFFFFFF,
@@ -139,7 +155,7 @@ class AthleteProfileSettingView extends StatelessWidget {
 
                             /// Subtext
                             AppText(
-                              txt: "Allenatore di forza certificato",
+                              txt: profile['bio'] ?? "No bio available",
                               fontSize: AppFontSize.f15,
                               color: AppColor.white.withOpacity(0.7),
                             ),
@@ -148,7 +164,9 @@ class AthleteProfileSettingView extends StatelessWidget {
 
                             /// View Profile Button
                             AppButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                log(profile.toString());
+                              },
                               width: cw(110),
                               height: ch(35),
                               borderRadius: cw(10),
@@ -165,9 +183,13 @@ class AthleteProfileSettingView extends StatelessWidget {
                             _buildMenuItem(
                               icon: AssetUtils.user,
                               label: "Modifica profilo",
-                              onTap: () {
-                                Navigator.pushNamed(
+                              onTap: () async {
+                                final result = await Navigator.pushNamed(
                                     context, RoutePaths.athleteEditProfile);
+                                if (result == true) {
+                                  model.getProfileData(context,
+                                      forceRefresh: true);
+                                }
                               },
                             ),
                             _buildMenuItem(

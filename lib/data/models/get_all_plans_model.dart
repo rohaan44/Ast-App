@@ -46,7 +46,7 @@ class Plan {
   String? sId;
   String? name;
   String? description;
-  int? price;
+  num? price;
   String? currency;
   String? interval;
   bool? isActive;
@@ -76,16 +76,38 @@ class Plan {
     sId = json['_id'];
     name = json['name'];
     description = json['description'];
-    price = json['price'];
+    
+    // Handling price if it's a Map or num
+    if (json['price'] is Map) {
+      price = json['price']['value'] ?? json['price']['amount'];
+    } else {
+      price = json['price'];
+    }
+    
     currency = json['currency'];
     interval = json['interval'];
     isActive = json['isActive'];
     stripePriceId = json['stripePriceId'];
     type = json['type'];
-    features = json['features'].cast<String>();
+    
+    // Handling features safely
+    if (json['features'] is List) {
+      features = List<String>.from(json['features']);
+    } else {
+      features = [];
+    }
+    
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    iV = json['__v'];
+    
+    // Handling __v safely
+    if (json['__v'] is int) {
+      iV = json['__v'];
+    } else if (json['__v'] is String) {
+      iV = int.tryParse(json['__v']);
+    } else if (json['__v'] is Map) {
+      iV = json['__v']['value']; // Extra safety
+    }
   }
 
   Map<String, dynamic> toJson() {

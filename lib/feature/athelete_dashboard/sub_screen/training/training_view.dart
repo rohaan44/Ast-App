@@ -29,7 +29,7 @@ class TrainingView extends StatelessWidget {
       }
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (controller.workoutPlans.isEmpty && !controller.isLoading) {
+      if (!controller.isPlanLoaded && !controller.isLoading) {
         controller.getAllExercises(context);
       }
     });
@@ -312,7 +312,7 @@ Widget _appBar() {
                   height: 1.5,
                 ),
                 AppText(
-                  txt: "L’allenamento di oggi",
+                  txt: "L'allenamento di oggi",
                   color: AppColor.cFFFFFF.withOpacity(0.7),
                   fontSize: 18,
                   height: 1.5,

@@ -18,7 +18,7 @@ class CheckIn extends StatelessWidget {
     final model = context.watch<CheckInController>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (model.checkinsResponse == null && !model.isLoading) {
+      if (!model.isFirstFetchDone && !model.isLoading) {
         model.getCheckins(context: context);
       }
     });

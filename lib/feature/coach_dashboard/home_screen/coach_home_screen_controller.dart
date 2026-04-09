@@ -186,7 +186,7 @@ class CoachHomeScreenController with ChangeNotifier {
     try {
       await runApiCallWithError(
         context: context,
-        apiCall: () => appRepoService.getCheckins(),
+        apiCall: () => appRepoService.getCoahCheckins(),
         onSuccess: (response3) async {},
       );
     } catch (e) {}
